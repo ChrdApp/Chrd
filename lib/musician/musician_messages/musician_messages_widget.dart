@@ -489,10 +489,13 @@ class _MusicianMessagesWidgetState extends State<MusicianMessagesWidget> {
                                                   CrossAxisAlignment.end,
                                               children: [
                                                 Text(
-                                                  getJsonField(
+                                                  functions.formatMessageTime(
+                                                      functions
+                                                          .parseDateTimeSafe(
+                                                              getJsonField(
                                                     allGigsItem,
                                                     r'''$.updated_at''',
-                                                  ).toString(),
+                                                  ).toString())!),
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -521,10 +524,18 @@ class _MusicianMessagesWidgetState extends State<MusicianMessagesWidget> {
                                                                 .fontStyle,
                                                       ),
                                                 ),
-                                                if (getJsonField(
-                                                  allGigsItem,
-                                                  r'''$.has_any_thread_message_unread_musician''',
-                                                ))
+                                                if (('true' ==
+                                                            getJsonField(
+                                                              allGigsItem,
+                                                              r'''$.has_any_thread_message_unread_musician''',
+                                                            ).toString()) &&
+                                                        (getJsonField(
+                                                              allGigsItem,
+                                                              r'''$.has_any_thread_message_unread_musician''',
+                                                            ) ==
+                                                            null)
+                                                    ? true
+                                                    : false)
                                                   Container(
                                                     width: 12.0,
                                                     height: 12.0,

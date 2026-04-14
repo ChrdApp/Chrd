@@ -741,6 +741,12 @@ class _MusicianProfileWidgetState extends State<MusicianProfileWidget> {
                                                       });
                                                     }
 
+                                                    safeSetState(() => _model
+                                                            .apiRequestCompleter =
+                                                        null);
+                                                    await _model
+                                                        .waitForApiRequestCompleted();
+
                                                     safeSetState(() {});
                                                   },
                                                 ),
@@ -842,6 +848,9 @@ class _MusicianProfileWidgetState extends State<MusicianProfileWidget> {
                                                                           callBackAction:
                                                                               () async {
                                                                             safeSetState(() {});
+                                                                            safeSetState(() =>
+                                                                                _model.apiRequestCompleter = null);
+                                                                            await _model.waitForApiRequestCompleted();
                                                                           },
                                                                         ),
                                                                       ),
@@ -900,6 +909,9 @@ class _MusicianProfileWidgetState extends State<MusicianProfileWidget> {
                                                                           callbackAction:
                                                                               () async {
                                                                             safeSetState(() {});
+                                                                            safeSetState(() =>
+                                                                                _model.apiRequestCompleter = null);
+                                                                            await _model.waitForApiRequestCompleted();
                                                                           },
                                                                         ),
                                                                       ),
@@ -2007,6 +2019,10 @@ class _MusicianProfileWidgetState extends State<MusicianProfileWidget> {
                                                                             () async {
                                                                           safeSetState(
                                                                               () {});
+                                                                          safeSetState(() =>
+                                                                              _model.apiRequestCompleter = null);
+                                                                          await _model
+                                                                              .waitForApiRequestCompleted();
                                                                         },
                                                                       ),
                                                                     ),
@@ -2130,6 +2146,10 @@ class _MusicianProfileWidgetState extends State<MusicianProfileWidget> {
                                                                             () async {
                                                                           safeSetState(
                                                                               () {});
+                                                                          safeSetState(() =>
+                                                                              _model.apiRequestCompleter = null);
+                                                                          await _model
+                                                                              .waitForApiRequestCompleted();
                                                                         },
                                                                       ),
                                                                     ),
@@ -2445,6 +2465,12 @@ class _MusicianProfileWidgetState extends State<MusicianProfileWidget> {
                                                             FFAppState()
                                                                     .isDataUploading =
                                                                 false;
+                                                            safeSetState(() {});
+                                                            safeSetState(() =>
+                                                                _model.apiRequestCompleter =
+                                                                    null);
+                                                            await _model
+                                                                .waitForApiRequestCompleted();
                                                             safeSetState(() {});
 
                                                             safeSetState(() {});

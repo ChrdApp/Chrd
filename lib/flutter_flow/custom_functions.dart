@@ -543,3 +543,8 @@ String formatMessageTime(DateTime timestamp) {
 DateTime? toUtcTimestamp(DateTime timestamp) {
   return timestamp.toUtc();
 }
+
+DateTime? parseDateTimeSafe(String? input) {
+  if (input == null || input.isEmpty) return null;
+  return DateTime.tryParse(input);
+}
