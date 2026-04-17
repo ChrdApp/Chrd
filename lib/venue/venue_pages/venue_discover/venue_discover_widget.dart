@@ -224,347 +224,426 @@ class _VenueDiscoverWidgetState extends State<VenueDiscoverWidget> {
                       ),
                     ),
                   Expanded(
-                    child: ListView(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      children: [
-                        Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 26.0, 0.0, 0.0),
-                              child: Text(
-                                'Trending',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      font: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.w600,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                      fontSize: 18.0,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w600,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 6.0, 0.0, 0.0),
-                              child: Container(
-                                width: double.infinity,
-                                height: 300.0,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryBackground,
-                                ),
-                                child: Builder(
-                                  builder: (context) {
-                                    final trendingList =
-                                        VenueGroup.getMusicianByCategoryCall
-                                                .trending(
-                                                  venueDiscoverGetMusicianByCategoryResponse
-                                                      .jsonBody,
-                                                )
-                                                ?.toList() ??
-                                            [];
-                                    if (trendingList.isEmpty) {
-                                      return EmptyListImageWidget(
-                                        msg: 'No result Found',
-                                      );
-                                    }
-
-                                    return ListView.separated(
-                                      padding: EdgeInsets.fromLTRB(
-                                        21.0,
-                                        0,
-                                        21.0,
-                                        0,
-                                      ),
-                                      shrinkWrap: true,
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: trendingList.length,
-                                      separatorBuilder: (_, __) =>
-                                          SizedBox(width: 16.0),
-                                      itemBuilder:
-                                          (context, trendingListIndex) {
-                                        final trendingListItem =
-                                            trendingList[trendingListIndex];
-                                        return Container(
-                                          width: 270.0,
-                                          height: 297.0,
-                                          decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                              fit: BoxFit.cover,
-                                              image: Image.network(
-                                                'https://tse4.mm.bing.net/th/id/OIP.pr9z-vjVCHf_lmnbh_mlpwHaE7?pid=Api&P=0&h=220',
-                                              ).image,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(14.0),
-                                          ),
-                                          child: InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () async {
-                                              context.pushNamed(
-                                                VenueMusicianProfile1Widget
-                                                    .routeName,
-                                                queryParameters: {
-                                                  'musicianId': serializeParam(
-                                                    getJsonField(
-                                                      trendingListItem,
-                                                      r'''$.musician_id''',
-                                                    ),
-                                                    ParamType.int,
-                                                  ),
-                                                  'isDiscoverFlow':
-                                                      serializeParam(
-                                                    true,
-                                                    ParamType.bool,
-                                                  ),
-                                                }.withoutNulls,
-                                              );
-                                            },
-                                            child: CHRDTrendingWidget(
-                                              key: Key(
-                                                  'Keyfff_${trendingListIndex}_of_${trendingList.length}'),
-                                              musicianName: getJsonField(
-                                                trendingListItem,
-                                                r'''$.musician_name''',
-                                              ).toString(),
-                                              gigsCount: getJsonField(
-                                                trendingListItem,
-                                                r'''$.gigs_count''',
-                                              ).toString(),
-                                              postsCount: getJsonField(
-                                                trendingListItem,
-                                                r'''$.posts_count''',
-                                              ),
-                                              musicianImage: getJsonField(
-                                                trendingListItem,
-                                                r'''$.profile_photo''',
-                                              ).toString(),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
-                            Builder(
-                              builder: (context) {
-                                final musicianCategory =
-                                    VenueGroup.getMusicianByCategoryCall
-                                            .genre(
-                                              venueDiscoverGetMusicianByCategoryResponse
-                                                  .jsonBody,
-                                            )
-                                            ?.toList() ??
-                                        [];
-
-                                return ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: musicianCategory.length,
-                                  itemBuilder:
-                                      (context, musicianCategoryIndex) {
-                                    final musicianCategoryItem =
-                                        musicianCategory[musicianCategoryIndex];
-                                    return Padding(
+                    child: Builder(
+                      builder: (context) {
+                        if ((VenueGroup.getMusicianByCategoryCall.trending(
+                                      venueDiscoverGetMusicianByCategoryResponse
+                                          .jsonBody,
+                                    ) !=
+                                    null &&
+                                (VenueGroup.getMusicianByCategoryCall.trending(
+                                  venueDiscoverGetMusicianByCategoryResponse
+                                      .jsonBody,
+                                ))!
+                                    .isNotEmpty) ||
+                            (VenueGroup.getMusicianByCategoryCall.genre(
+                                      venueDiscoverGetMusicianByCategoryResponse
+                                          .jsonBody,
+                                    ) !=
+                                    null &&
+                                (VenueGroup.getMusicianByCategoryCall.genre(
+                                  venueDiscoverGetMusicianByCategoryResponse
+                                      .jsonBody,
+                                ))!
+                                    .isNotEmpty)) {
+                          return ListView(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            children: [
+                              Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  if (VenueGroup.getMusicianByCategoryCall
+                                          .trending(
+                                            venueDiscoverGetMusicianByCategoryResponse
+                                                .jsonBody,
+                                          )
+                                          ?.length !=
+                                      0)
+                                    Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 26.0, 0.0, 0.0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    25.0, 0.0, 0.0, 14.0),
-                                            child: Text(
-                                              getJsonField(
-                                                musicianCategoryItem,
-                                                r'''$.genre_type''',
-                                              ).toString(),
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    font:
-                                                        GoogleFonts.montserrat(
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .fontStyle,
-                                                    ),
-                                                    fontSize: 18.0,
-                                                    letterSpacing: 0.0,
-                                                    fontWeight: FontWeight.w600,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontStyle,
-                                                  ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 5.0, 0.0, 0.0),
-                                            child: Container(
-                                              width: double.infinity,
-                                              height: 230.0,
-                                              decoration: BoxDecoration(
-                                                color:
+                                          16.0, 26.0, 0.0, 0.0),
+                                      child: Text(
+                                        'Trending',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              font: GoogleFonts.montserrat(
+                                                fontWeight: FontWeight.w600,
+                                                fontStyle:
                                                     FlutterFlowTheme.of(context)
-                                                        .primaryBackground,
+                                                        .bodyMedium
+                                                        .fontStyle,
                                               ),
-                                              child: Builder(
-                                                builder: (context) {
-                                                  final musiciansList =
-                                                      getJsonField(
-                                                    musicianCategoryItem,
-                                                    r'''$.musicians''',
-                                                  ).toList();
+                                              fontSize: 18.0,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w600,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                      ),
+                                    ),
+                                  if (VenueGroup.getMusicianByCategoryCall
+                                          .trending(
+                                            venueDiscoverGetMusicianByCategoryResponse
+                                                .jsonBody,
+                                          )
+                                          ?.length !=
+                                      0)
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 6.0, 0.0, 0.0),
+                                      child: Container(
+                                        width: double.infinity,
+                                        height: 300.0,
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryBackground,
+                                        ),
+                                        child: Builder(
+                                          builder: (context) {
+                                            final trendingList = VenueGroup
+                                                    .getMusicianByCategoryCall
+                                                    .trending(
+                                                      venueDiscoverGetMusicianByCategoryResponse
+                                                          .jsonBody,
+                                                    )
+                                                    ?.toList() ??
+                                                [];
+                                            if (trendingList.isEmpty) {
+                                              return EmptyListImageWidget(
+                                                msg: 'No result Found',
+                                              );
+                                            }
 
-                                                  return ListView.separated(
-                                                    padding:
-                                                        EdgeInsets.fromLTRB(
-                                                      25.0,
-                                                      0,
-                                                      25.0,
-                                                      0,
+                                            return ListView.separated(
+                                              padding: EdgeInsets.fromLTRB(
+                                                21.0,
+                                                0,
+                                                21.0,
+                                                0,
+                                              ),
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.horizontal,
+                                              itemCount: trendingList.length,
+                                              separatorBuilder: (_, __) =>
+                                                  SizedBox(width: 16.0),
+                                              itemBuilder:
+                                                  (context, trendingListIndex) {
+                                                final trendingListItem =
+                                                    trendingList[
+                                                        trendingListIndex];
+                                                return Container(
+                                                  width: 270.0,
+                                                  height: 297.0,
+                                                  decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                      fit: BoxFit.cover,
+                                                      image: Image.network(
+                                                        'https://tse4.mm.bing.net/th/id/OIP.pr9z-vjVCHf_lmnbh_mlpwHaE7?pid=Api&P=0&h=220',
+                                                      ).image,
                                                     ),
-                                                    shrinkWrap: true,
-                                                    scrollDirection:
-                                                        Axis.horizontal,
-                                                    itemCount:
-                                                        musiciansList.length,
-                                                    separatorBuilder: (_, __) =>
-                                                        SizedBox(width: 16.0),
-                                                    itemBuilder: (context,
-                                                        musiciansListIndex) {
-                                                      final musiciansListItem =
-                                                          musiciansList[
-                                                              musiciansListIndex];
-                                                      return Container(
-                                                        width: 162.0,
-                                                        height: 223.0,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      14.0),
-                                                        ),
-                                                        child: InkWell(
-                                                          splashColor: Colors
-                                                              .transparent,
-                                                          focusColor: Colors
-                                                              .transparent,
-                                                          hoverColor: Colors
-                                                              .transparent,
-                                                          highlightColor: Colors
-                                                              .transparent,
-                                                          onTap: () async {
-                                                            context.pushNamed(
-                                                              VenueMusicianProfile1Widget
-                                                                  .routeName,
-                                                              queryParameters: {
-                                                                'musicianId':
-                                                                    serializeParam(
-                                                                  getJsonField(
-                                                                    musiciansListItem,
-                                                                    r'''$.musician_id''',
-                                                                  ),
-                                                                  ParamType.int,
-                                                                ),
-                                                                'isDiscoverFlow':
-                                                                    serializeParam(
-                                                                  true,
-                                                                  ParamType
-                                                                      .bool,
-                                                                ),
-                                                              }.withoutNulls,
-                                                            );
-                                                          },
-                                                          child:
-                                                              CHRDPopArtistsWidget(
-                                                            key: Key(
-                                                                'Key5he_${musiciansListIndex}_of_${musiciansList.length}'),
-                                                            image: getJsonField(
-                                                              musiciansListItem,
-                                                              r'''$.profile_photo''',
-                                                            ).toString(),
-                                                            events: '',
-                                                            eventName:
-                                                                getJsonField(
-                                                              musiciansListItem,
-                                                              r'''$.musician_name''',
-                                                            ).toString(),
-                                                            gigs:
-                                                                '${getJsonField(
-                                                              musiciansListItem,
-                                                              r'''$.gigs_count''',
-                                                            ).toString()} Gigs',
-                                                            posts:
-                                                                '${getJsonField(
-                                                              musiciansListItem,
-                                                              r'''$.posts_count''',
-                                                            ).toString()} Posts',
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            14.0),
+                                                  ),
+                                                  child: InkWell(
+                                                    splashColor:
+                                                        Colors.transparent,
+                                                    focusColor:
+                                                        Colors.transparent,
+                                                    hoverColor:
+                                                        Colors.transparent,
+                                                    highlightColor:
+                                                        Colors.transparent,
+                                                    onTap: () async {
+                                                      context.pushNamed(
+                                                        VenueMusicianProfile1Widget
+                                                            .routeName,
+                                                        queryParameters: {
+                                                          'musicianId':
+                                                              serializeParam(
+                                                            getJsonField(
+                                                              trendingListItem,
+                                                              r'''$.musician_id''',
+                                                            ),
+                                                            ParamType.int,
                                                           ),
-                                                        ),
+                                                          'isDiscoverFlow':
+                                                              serializeParam(
+                                                            true,
+                                                            ParamType.bool,
+                                                          ),
+                                                        }.withoutNulls,
                                                       );
                                                     },
-                                                  );
-                                                },
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
+                                                    child: CHRDTrendingWidget(
+                                                      key: Key(
+                                                          'Keyfff_${trendingListIndex}_of_${trendingList.length}'),
+                                                      musicianName:
+                                                          getJsonField(
+                                                        trendingListItem,
+                                                        r'''$.musician_name''',
+                                                      ).toString(),
+                                                      gigsCount: getJsonField(
+                                                        trendingListItem,
+                                                        r'''$.gigs_count''',
+                                                      ).toString(),
+                                                      postsCount: getJsonField(
+                                                        trendingListItem,
+                                                        r'''$.posts_count''',
+                                                      ),
+                                                      musicianImage:
+                                                          getJsonField(
+                                                        trendingListItem,
+                                                        r'''$.profile_photo''',
+                                                      ).toString(),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  Builder(
+                                    builder: (context) {
+                                      final musicianCategory =
+                                          VenueGroup.getMusicianByCategoryCall
+                                                  .genre(
+                                                    venueDiscoverGetMusicianByCategoryResponse
+                                                        .jsonBody,
+                                                  )
+                                                  ?.toList() ??
+                                              [];
+
+                                      return ListView.builder(
+                                        padding: EdgeInsets.zero,
+                                        primary: false,
+                                        shrinkWrap: true,
+                                        scrollDirection: Axis.vertical,
+                                        itemCount: musicianCategory.length,
+                                        itemBuilder:
+                                            (context, musicianCategoryIndex) {
+                                          final musicianCategoryItem =
+                                              musicianCategory[
+                                                  musicianCategoryIndex];
+                                          return Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    25.0, 20.0, 14.0, 20.0),
-                                            child: Container(
-                                              width: double.infinity,
-                                              height: 1.0,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .neutralDark800,
-                                              ),
+                                                    0.0, 26.0, 0.0, 0.0),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          25.0, 0.0, 0.0, 14.0),
+                                                  child: Text(
+                                                    getJsonField(
+                                                      musicianCategoryItem,
+                                                      r'''$.genre_type''',
+                                                    ).toString(),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          font: GoogleFonts
+                                                              .montserrat(
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            fontStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontStyle,
+                                                          ),
+                                                          fontSize: 18.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontStyle,
+                                                        ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 5.0, 0.0, 0.0),
+                                                  child: Container(
+                                                    width: double.infinity,
+                                                    height: 230.0,
+                                                    decoration: BoxDecoration(
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .primaryBackground,
+                                                    ),
+                                                    child: Builder(
+                                                      builder: (context) {
+                                                        final musiciansList =
+                                                            getJsonField(
+                                                          musicianCategoryItem,
+                                                          r'''$.musicians''',
+                                                        ).toList();
+
+                                                        return ListView
+                                                            .separated(
+                                                          padding: EdgeInsets
+                                                              .fromLTRB(
+                                                            25.0,
+                                                            0,
+                                                            25.0,
+                                                            0,
+                                                          ),
+                                                          shrinkWrap: true,
+                                                          scrollDirection:
+                                                              Axis.horizontal,
+                                                          itemCount:
+                                                              musiciansList
+                                                                  .length,
+                                                          separatorBuilder: (_,
+                                                                  __) =>
+                                                              SizedBox(
+                                                                  width: 16.0),
+                                                          itemBuilder: (context,
+                                                              musiciansListIndex) {
+                                                            final musiciansListItem =
+                                                                musiciansList[
+                                                                    musiciansListIndex];
+                                                            return Container(
+                                                              width: 162.0,
+                                                              height: 223.0,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            14.0),
+                                                              ),
+                                                              child: InkWell(
+                                                                splashColor: Colors
+                                                                    .transparent,
+                                                                focusColor: Colors
+                                                                    .transparent,
+                                                                hoverColor: Colors
+                                                                    .transparent,
+                                                                highlightColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                onTap:
+                                                                    () async {
+                                                                  context
+                                                                      .pushNamed(
+                                                                    VenueMusicianProfile1Widget
+                                                                        .routeName,
+                                                                    queryParameters:
+                                                                        {
+                                                                      'musicianId':
+                                                                          serializeParam(
+                                                                        getJsonField(
+                                                                          musiciansListItem,
+                                                                          r'''$.musician_id''',
+                                                                        ),
+                                                                        ParamType
+                                                                            .int,
+                                                                      ),
+                                                                      'isDiscoverFlow':
+                                                                          serializeParam(
+                                                                        true,
+                                                                        ParamType
+                                                                            .bool,
+                                                                      ),
+                                                                    }.withoutNulls,
+                                                                  );
+                                                                },
+                                                                child:
+                                                                    CHRDPopArtistsWidget(
+                                                                  key: Key(
+                                                                      'Key5he_${musiciansListIndex}_of_${musiciansList.length}'),
+                                                                  image:
+                                                                      getJsonField(
+                                                                    musiciansListItem,
+                                                                    r'''$.profile_photo''',
+                                                                  ).toString(),
+                                                                  events: '',
+                                                                  eventName:
+                                                                      getJsonField(
+                                                                    musiciansListItem,
+                                                                    r'''$.musician_name''',
+                                                                  ).toString(),
+                                                                  gigs:
+                                                                      '${getJsonField(
+                                                                    musiciansListItem,
+                                                                    r'''$.gigs_count''',
+                                                                  ).toString()} Gigs',
+                                                                  posts:
+                                                                      '${getJsonField(
+                                                                    musiciansListItem,
+                                                                    r'''$.posts_count''',
+                                                                  ).toString()} Posts',
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(25.0, 20.0,
+                                                          14.0, 20.0),
+                                                  child: Container(
+                                                    width: double.infinity,
+                                                    height: 1.0,
+                                                    decoration: BoxDecoration(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .neutralDark800,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ],
+                          );
+                        } else {
+                          return Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Expanded(
+                                child: wrapWithModel(
+                                  model: _model.emptyListImageModel,
+                                  updateCallback: () => safeSetState(() {}),
+                                  child: EmptyListImageWidget(
+                                    msg: 'No Performer Found',
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        }
+                      },
                     ),
                   ),
                   Padding(

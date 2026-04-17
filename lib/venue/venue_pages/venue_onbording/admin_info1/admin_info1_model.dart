@@ -24,7 +24,7 @@ class AdminInfo1Model extends FlutterFlowModel<AdminInfo1Widget> {
 
   bool hideMobileField = false;
 
-  bool hideEmailField = false;
+  bool hideEmailField = true;
 
   String mobileNoValue = '';
 

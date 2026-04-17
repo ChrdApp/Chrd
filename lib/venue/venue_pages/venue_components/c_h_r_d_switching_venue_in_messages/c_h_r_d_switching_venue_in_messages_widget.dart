@@ -1,5 +1,6 @@
 import '/backend/schema/structs/index.dart';
 import '/backend/supabase/supabase.dart';
+import '/components/empty_list_image_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -113,6 +114,14 @@ class _CHRDSwitchingVenueInMessagesWidgetState
                       );
                     }
                     List<VenuesRow> listViewVenuesRowList = snapshot.data!;
+
+                    if (listViewVenuesRowList.isEmpty) {
+                      return Center(
+                        child: EmptyListImageWidget(
+                          msg: 'No Venues available',
+                        ),
+                      );
+                    }
 
                     return ListView.separated(
                       padding: EdgeInsets.fromLTRB(

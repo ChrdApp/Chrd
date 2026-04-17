@@ -1189,6 +1189,7 @@ class MusicianGroup {
   static BackOutCall backOutCall = BackOutCall();
   static GetMusicianOfferCountCall getMusicianOfferCountCall =
       GetMusicianOfferCountCall();
+  static CheckBookingSlotCall checkBookingSlotCall = CheckBookingSlotCall();
 }
 
 class GetOpenSlotsThisWeekCall {
@@ -1657,6 +1658,40 @@ class GetMusicianOfferCountCall {
     return ApiManager.instance.makeApiCall(
       callName: 'Get Musician Offer Count',
       apiUrl: '${baseUrl}/rpc/get_musician_open_offer_count',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization':
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'apikey':
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class CheckBookingSlotCall {
+  Future<ApiCallResponse> call({
+    int? pSlotId,
+  }) async {
+    final baseUrl = MusicianGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+{
+  "p_slot_id": ${pSlotId}
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Check Booking Slot',
+      apiUrl: '${baseUrl}/rpc/check_slot_booking_status',
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',

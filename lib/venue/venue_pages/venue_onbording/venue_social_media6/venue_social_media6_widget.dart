@@ -487,7 +487,6 @@ class _VenueSocialMedia6WidgetState extends State<VenueSocialMedia6Widget> {
                                             .bodyMedium
                                             .fontStyle,
                                       ),
-                                  keyboardType: TextInputType.name,
                                   cursorColor:
                                       FlutterFlowTheme.of(context).primaryText,
                                   enableInteractiveSelection: true,
@@ -734,7 +733,6 @@ class _VenueSocialMedia6WidgetState extends State<VenueSocialMedia6Widget> {
                                             .bodyMedium
                                             .fontStyle,
                                       ),
-                                  keyboardType: TextInputType.name,
                                   cursorColor:
                                       FlutterFlowTheme.of(context).primaryText,
                                   enableInteractiveSelection: true,
@@ -989,7 +987,6 @@ class _VenueSocialMedia6WidgetState extends State<VenueSocialMedia6Widget> {
                                             .bodyMedium
                                             .fontStyle,
                                       ),
-                                  keyboardType: TextInputType.name,
                                   cursorColor:
                                       FlutterFlowTheme.of(context).primaryText,
                                   enableInteractiveSelection: true,
@@ -1244,7 +1241,6 @@ class _VenueSocialMedia6WidgetState extends State<VenueSocialMedia6Widget> {
                                             .bodyMedium
                                             .fontStyle,
                                       ),
-                                  keyboardType: TextInputType.name,
                                   cursorColor:
                                       FlutterFlowTheme.of(context).primaryText,
                                   enableInteractiveSelection: true,

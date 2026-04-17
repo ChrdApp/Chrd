@@ -2,6 +2,7 @@ import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/schema/structs/index.dart';
 import '/backend/supabase/supabase.dart';
+import '/components/empty_list_image_widget.dart';
 import '/components/musician_nav_bar_widget.dart';
 import '/components/no_data_found_widget.dart';
 import '/components/notification_icon_widget.dart';
@@ -771,6 +772,14 @@ class _DiscoverWidgetState extends State<DiscoverWidget> {
                                                           .toList()
                                                           ?.toList() ??
                                                       [];
+                                              if (recurringGigsList.isEmpty) {
+                                                return Center(
+                                                  child: EmptyListImageWidget(
+                                                    msg:
+                                                        'No reocurring gigs available',
+                                                  ),
+                                                );
+                                              }
 
                                               return SingleChildScrollView(
                                                 scrollDirection:
@@ -1106,6 +1115,14 @@ class _DiscoverWidgetState extends State<DiscoverWidget> {
                                                       .toList()
                                                       ?.toList() ??
                                                   [];
+                                              if (onetimeGigsList.isEmpty) {
+                                                return Center(
+                                                  child: EmptyListImageWidget(
+                                                    msg:
+                                                        'No one-time gigs available',
+                                                  ),
+                                                );
+                                              }
 
                                               return SingleChildScrollView(
                                                 scrollDirection:

@@ -1100,173 +1100,228 @@ class _AcceptDeclineGigOverlayWidgetState
                                                                 .jsonBody,
                                                           )!,
                                                     acceptBtnAction: () async {
-                                                      _model.userOutputAccept =
-                                                          await UsersTable()
-                                                              .queryRows(
-                                                        queryFn: (q) =>
-                                                            q.eqOrNull(
-                                                          'id',
-                                                          FFAppState().userId,
-                                                        ),
-                                                      );
-                                                      await GigContractsTable()
-                                                          .update(
-                                                        data: {
-                                                          'contract_status':
-                                                              GigStatus
-                                                                  .Booked.name,
-                                                          'updated_at':
-                                                              supaSerialize<
-                                                                      DateTime>(
-                                                                  getCurrentTimestamp),
-                                                          'accepted_at':
-                                                              supaSerialize<
-                                                                      DateTime>(
-                                                                  getCurrentTimestamp),
-                                                        },
-                                                        matchingRows: (rows) =>
-                                                            rows.eqOrNull(
-                                                          'gig_thread_id',
-                                                          widget!.threadId,
-                                                        ),
-                                                      );
-                                                      await ThreadMessagesTable()
-                                                          .insert({
-                                                        'created_at': supaSerialize<
-                                                                DateTime>(
-                                                            getCurrentTimestamp),
-                                                        'thread_id':
-                                                            widget!.threadId,
-                                                        'sender_id':
-                                                            FFAppState().userId,
-                                                        'message_type': 'toast',
-                                                        'message_content':
-                                                            'Musician Accepted Gig',
-                                                        'alternate_message':
-                                                            'Gig Accepted by You',
-                                                      });
-                                                      await MusicianGroup
-                                                          .bookGigCall
-                                                          .call(
-                                                        threadId:
-                                                            widget!.threadId,
-                                                        price: (String var1) {
-                                                          return double.parse(
-                                                              var1
-                                                                  .replaceAll(
-                                                                      '\$', '')
-                                                                  .replaceAll(
-                                                                      ' ', ''));
-                                                        }(MusicianGroup
-                                                            .getContractDetailsCall
-                                                            .contractPrice(
-                                                          acceptDeclineGigOverlayGetContractDetailsResponse
-                                                              .jsonBody,
-                                                        )!),
-                                                      );
-
-                                                      _model.sendNotificationAcceptedOutput =
-                                                          await NotificationGroup
-                                                              .sendNotificationCall
-                                                              .call(
-                                                        title:
-                                                            '${_model.userOutputAccept?.firstOrNull?.name} accepted your request',
-                                                        description:
-                                                            '${_model.userOutputAccept?.firstOrNull?.name} accepted your booking. View details.',
-                                                        sendToList: (int var1) {
-                                                          return List<
-                                                              String>.from([
-                                                            var1.toString()
-                                                          ]);
-                                                        }(getJsonField(
-                                                          acceptDeclineGigOverlayGetContractDetailsResponse
-                                                              .jsonBody,
-                                                          r'''$..created_by''',
-                                                        )),
-                                                        type:
-                                                            'PerformerAccepted',
-                                                        usertype: FFAppState()
-                                                            .userType
-                                                            ?.name,
-                                                        dataJson: <String,
-                                                            dynamic>{
-                                                          'thread_id':
-                                                              widget!.threadId,
-                                                          'is_venue': 'true',
-                                                          'image': _model
-                                                              .userOutputAccept
-                                                              ?.firstOrNull
-                                                              ?.profilePhoto,
-                                                        },
-                                                      );
-
-                                                      await NotificationTable()
-                                                          .insert({
-                                                        'user_id': getJsonField(
-                                                          acceptDeclineGigOverlayGetContractDetailsResponse
-                                                              .jsonBody,
-                                                          r'''$..created_by''',
-                                                        ),
-                                                        'title':
-                                                            '${_model.userOutputAccept?.firstOrNull?.name} accepted your request',
-                                                        'description':
-                                                            '${_model.userOutputAccept?.firstOrNull?.name} accepted your booking. View details.',
-                                                        'type':
-                                                            'PerformerAccepted',
-                                                        'usertype': FFAppState()
-                                                            .userType
-                                                            ?.name,
-                                                        'data':
-                                                            <String, dynamic>{
-                                                          'thread_id':
-                                                              widget!.threadId,
-                                                          'is_venue': 'true',
-                                                          'image': _model
-                                                              .userOutputAccept
-                                                              ?.firstOrNull
-                                                              ?.profilePhoto,
-                                                        },
-                                                        'is_read': false,
-                                                        'created_at': supaSerialize<
-                                                                DateTime>(
-                                                            functions
-                                                                .toUtcTimestamp(
-                                                                    getCurrentTimestamp)),
-                                                        'updated_at': supaSerialize<
-                                                                DateTime>(
-                                                            functions
-                                                                .toUtcTimestamp(
-                                                                    getCurrentTimestamp)),
-                                                      });
-                                                      Navigator.pop(context);
-                                                      _model.showConfetti =
-                                                          true;
-                                                      safeSetState(() {});
-                                                      await Future.delayed(
-                                                        Duration(
-                                                          milliseconds: 4000,
-                                                        ),
-                                                      );
-                                                      _model.showConfetti =
+                                                      var _shouldSetState =
                                                           false;
-                                                      safeSetState(() {});
-
-                                                      context.goNamed(
-                                                        CustomChatVenueWidget
-                                                            .routeName,
-                                                        queryParameters: {
-                                                          'threadId':
-                                                              serializeParam(
-                                                            widget!.threadId,
-                                                            ParamType.int,
-                                                          ),
-                                                          'isVenue':
-                                                              serializeParam(
-                                                            false,
-                                                            ParamType.bool,
-                                                          ),
-                                                        }.withoutNulls,
+                                                      _model.checkBookingSlot =
+                                                          await MusicianGroup
+                                                              .checkBookingSlotCall
+                                                              .call(
+                                                        pSlotId: widget!.slotId,
                                                       );
+
+                                                      _shouldSetState = true;
+                                                      if ('200' ==
+                                                          getJsonField(
+                                                            (_model.checkBookingSlot
+                                                                    ?.jsonBody ??
+                                                                ''),
+                                                            r'''$.status''',
+                                                          ).toString()) {
+                                                        _model.userOutputAccept =
+                                                            await UsersTable()
+                                                                .queryRows(
+                                                          queryFn: (q) =>
+                                                              q.eqOrNull(
+                                                            'id',
+                                                            FFAppState().userId,
+                                                          ),
+                                                        );
+                                                        _shouldSetState = true;
+                                                        await GigContractsTable()
+                                                            .update(
+                                                          data: {
+                                                            'contract_status':
+                                                                GigStatus.Booked
+                                                                    .name,
+                                                            'updated_at':
+                                                                supaSerialize<
+                                                                        DateTime>(
+                                                                    getCurrentTimestamp),
+                                                            'accepted_at':
+                                                                supaSerialize<
+                                                                        DateTime>(
+                                                                    getCurrentTimestamp),
+                                                          },
+                                                          matchingRows:
+                                                              (rows) =>
+                                                                  rows.eqOrNull(
+                                                            'gig_thread_id',
+                                                            widget!.threadId,
+                                                          ),
+                                                        );
+                                                        await ThreadMessagesTable()
+                                                            .insert({
+                                                          'created_at':
+                                                              supaSerialize<
+                                                                      DateTime>(
+                                                                  getCurrentTimestamp),
+                                                          'thread_id':
+                                                              widget!.threadId,
+                                                          'sender_id':
+                                                              FFAppState()
+                                                                  .userId,
+                                                          'message_type':
+                                                              'toast',
+                                                          'message_content':
+                                                              'Musician Accepted Gig',
+                                                          'alternate_message':
+                                                              'Gig Accepted by You',
+                                                        });
+                                                        await MusicianGroup
+                                                            .bookGigCall
+                                                            .call(
+                                                          threadId:
+                                                              widget!.threadId,
+                                                          price: (String var1) {
+                                                            return double.parse(
+                                                                var1
+                                                                    .replaceAll(
+                                                                        '\$',
+                                                                        '')
+                                                                    .replaceAll(
+                                                                        ' ',
+                                                                        ''));
+                                                          }(MusicianGroup
+                                                              .getContractDetailsCall
+                                                              .contractPrice(
+                                                            acceptDeclineGigOverlayGetContractDetailsResponse
+                                                                .jsonBody,
+                                                          )!),
+                                                        );
+
+                                                        _model.sendNotificationAcceptedOutput =
+                                                            await NotificationGroup
+                                                                .sendNotificationCall
+                                                                .call(
+                                                          title:
+                                                              '${_model.userOutputAccept?.firstOrNull?.name} accepted your request',
+                                                          description:
+                                                              '${_model.userOutputAccept?.firstOrNull?.name} accepted your booking. View details.',
+                                                          sendToList:
+                                                              (int var1) {
+                                                            return List<
+                                                                String>.from([
+                                                              var1.toString()
+                                                            ]);
+                                                          }(getJsonField(
+                                                            acceptDeclineGigOverlayGetContractDetailsResponse
+                                                                .jsonBody,
+                                                            r'''$..created_by''',
+                                                          )),
+                                                          type:
+                                                              'PerformerAccepted',
+                                                          usertype: FFAppState()
+                                                              .userType
+                                                              ?.name,
+                                                          dataJson: <String,
+                                                              dynamic>{
+                                                            'thread_id': widget!
+                                                                .threadId,
+                                                            'is_venue': 'true',
+                                                            'image': _model
+                                                                .userOutputAccept
+                                                                ?.firstOrNull
+                                                                ?.profilePhoto,
+                                                          },
+                                                        );
+
+                                                        _shouldSetState = true;
+                                                        await NotificationTable()
+                                                            .insert({
+                                                          'user_id':
+                                                              getJsonField(
+                                                            acceptDeclineGigOverlayGetContractDetailsResponse
+                                                                .jsonBody,
+                                                            r'''$..created_by''',
+                                                          ),
+                                                          'title':
+                                                              '${_model.userOutputAccept?.firstOrNull?.name} accepted your request',
+                                                          'description':
+                                                              '${_model.userOutputAccept?.firstOrNull?.name} accepted your booking. View details.',
+                                                          'type':
+                                                              'PerformerAccepted',
+                                                          'usertype':
+                                                              FFAppState()
+                                                                  .userType
+                                                                  ?.name,
+                                                          'data':
+                                                              <String, dynamic>{
+                                                            'thread_id': widget!
+                                                                .threadId,
+                                                            'is_venue': 'true',
+                                                            'image': _model
+                                                                .userOutputAccept
+                                                                ?.firstOrNull
+                                                                ?.profilePhoto,
+                                                          },
+                                                          'is_read': false,
+                                                          'created_at': supaSerialize<
+                                                                  DateTime>(
+                                                              functions
+                                                                  .toUtcTimestamp(
+                                                                      getCurrentTimestamp)),
+                                                          'updated_at': supaSerialize<
+                                                                  DateTime>(
+                                                              functions
+                                                                  .toUtcTimestamp(
+                                                                      getCurrentTimestamp)),
+                                                        });
+                                                        Navigator.pop(context);
+                                                        _model.showConfetti =
+                                                            true;
+                                                        safeSetState(() {});
+                                                        await Future.delayed(
+                                                          Duration(
+                                                            milliseconds: 4000,
+                                                          ),
+                                                        );
+                                                        _model.showConfetti =
+                                                            false;
+                                                        safeSetState(() {});
+
+                                                        context.goNamed(
+                                                          CustomChatVenueWidget
+                                                              .routeName,
+                                                          queryParameters: {
+                                                            'threadId':
+                                                                serializeParam(
+                                                              widget!.threadId,
+                                                              ParamType.int,
+                                                            ),
+                                                            'isVenue':
+                                                                serializeParam(
+                                                              false,
+                                                              ParamType.bool,
+                                                            ),
+                                                          }.withoutNulls,
+                                                        );
+                                                      } else {
+                                                        await showDialog(
+                                                          context: context,
+                                                          builder:
+                                                              (alertDialogContext) {
+                                                            return AlertDialog(
+                                                              content: Text(
+                                                                  getJsonField(
+                                                                (_model.checkBookingSlot
+                                                                        ?.jsonBody ??
+                                                                    ''),
+                                                                r'''$.message''',
+                                                              ).toString()),
+                                                              actions: [
+                                                                TextButton(
+                                                                  onPressed: () =>
+                                                                      Navigator.pop(
+                                                                          alertDialogContext),
+                                                                  child: Text(
+                                                                      'Ok'),
+                                                                ),
+                                                              ],
+                                                            );
+                                                          },
+                                                        );
+                                                        return;
+                                                      }
                                                     },
                                                   ),
                                                 ),

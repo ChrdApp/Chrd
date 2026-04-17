@@ -152,11 +152,16 @@ class _HomeMWidgetState extends State<HomeMWidget> {
                                       Expanded(
                                         child: Text(
                                           'Welcome, ${getJsonField(
-                                            (_model.offerCountOutput
-                                                    ?.jsonBody ??
-                                                ''),
-                                            r'''$.musician_name''',
-                                          ).toString()}',
+                                                (_model.offerCountOutput
+                                                        ?.jsonBody ??
+                                                    ''),
+                                                r'''$.musician_name''',
+                                              ) == null ? '' : getJsonField(
+                                              (_model.offerCountOutput
+                                                      ?.jsonBody ??
+                                                  ''),
+                                              r'''$.musician_name''',
+                                            ).toString()}',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(

@@ -1289,7 +1289,7 @@ class _MusicianProfileWidgetState extends State<MusicianProfileWidget> {
                                                           getJsonField(
                                                         musicianProfileGetPerformerDetailsResponse
                                                             .jsonBody,
-                                                        r'''$.social_media.instagram''',
+                                                        r'''$.social_media.x''',
                                                       ).toString());
                                                     },
                                                     child: Row(
@@ -1927,7 +1927,7 @@ class _MusicianProfileWidgetState extends State<MusicianProfileWidget> {
                                                   SliverGridDelegateWithFixedCrossAxisCount(
                                                 crossAxisCount: 3,
                                                 crossAxisSpacing: 10.0,
-                                                mainAxisSpacing: 10.0,
+                                                mainAxisSpacing: 18.0,
                                                 childAspectRatio: 1.0,
                                               ),
                                               primary: false,

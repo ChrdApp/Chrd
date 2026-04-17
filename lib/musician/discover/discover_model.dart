@@ -2,6 +2,7 @@ import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/schema/structs/index.dart';
 import '/backend/supabase/supabase.dart';
+import '/components/empty_list_image_widget.dart';
 import '/components/musician_nav_bar_widget.dart';
 import '/components/no_data_found_widget.dart';
 import '/components/notification_icon_widget.dart';

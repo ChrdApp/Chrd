@@ -63,6 +63,8 @@ class AcceptDeclineGigOverlayModel
   ApiCallResponse? sendNotificationAcceptedOutput;
   // Stores action output result for [Backend Call - Query Rows] action in CHRD_Label_Btn widget.
   List<UsersRow>? userOutputAccept;
+  // Stores action output result for [Backend Call - API (Check Booking Slot)] action in CHRD_Label_Btn widget.
+  ApiCallResponse? checkBookingSlot;
 
   @override
   void initState(BuildContext context) {

@@ -21,6 +21,8 @@ import 'package:provider/provider.dart';
 class VenueDiscoverModel extends FlutterFlowModel<VenueDiscoverWidget> {
   ///  State fields for stateful widgets in this page.
 
+  // Model for empty_list_image component.
+  late EmptyListImageModel emptyListImageModel;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;
@@ -30,11 +32,13 @@ class VenueDiscoverModel extends FlutterFlowModel<VenueDiscoverWidget> {
 
   @override
   void initState(BuildContext context) {
+    emptyListImageModel = createModel(context, () => EmptyListImageModel());
     venueNavBarModel = createModel(context, () => VenueNavBarModel());
   }
 
   @override
   void dispose() {
+    emptyListImageModel.dispose();
     textFieldFocusNode?.dispose();
     textController?.dispose();
 
