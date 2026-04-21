@@ -469,6 +469,12 @@ class _VenuesWidgetState extends State<VenuesWidget> {
                                           'https://kasnaqcqfuqnfydsjvpy.supabase.co/storage/v1/object/public/venueC/loginGradient.png',
                                         ),
                                         ontap: () async {
+                                          FFAppState().vanueName = getJsonField(
+                                            venuesListItem,
+                                            r'''$.name''',
+                                          ).toString();
+                                          safeSetState(() {});
+
                                           context.pushNamed(
                                             VenuesProfileViewWidget.routeName,
                                             queryParameters: {

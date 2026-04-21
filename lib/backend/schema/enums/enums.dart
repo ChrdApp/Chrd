@@ -3,6 +3,7 @@ import 'package:collection/collection.dart';
 enum Type {
   Venue,
   Musician,
+  Fan,
 }
 
 enum WhichScreenMusicianNavBar {

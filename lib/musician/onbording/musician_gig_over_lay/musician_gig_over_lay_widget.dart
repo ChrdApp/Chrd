@@ -319,11 +319,15 @@ class _MusicianGigOverLayWidgetState extends State<MusicianGigOverLayWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 0.0, 55.0, 0.0),
                                     child: Text(
-                                      getJsonField(
+                                      '${getJsonField(
+                                        musicianGigOverLayGetSingleSlotDetailsResponse
+                                            .jsonBody,
+                                        r'''$.data.start_date''',
+                                      ).toString()} - ${getJsonField(
                                         musicianGigOverLayGetSingleSlotDetailsResponse
                                             .jsonBody,
                                         r'''$.data.end_date''',
-                                      ).toString(),
+                                      ).toString()}',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(

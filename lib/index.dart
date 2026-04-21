@@ -147,3 +147,8 @@ export '/venue/venue_pages/venue_gig_contract_overlay_copy/venue_gig_contract_ov
     show VenueGigContractOverlayCopyWidget;
 export '/venue/venue_pages/gig_offer_choose_slot_copy/gig_offer_choose_slot_copy_widget.dart'
     show GigOfferChooseSlotCopyWidget;
+export '/fan/fan_info/fan_info_widget.dart' show FanInfoWidget;
+export '/fan/home_fan/home_fan_widget.dart' show HomeFanWidget;
+export '/fan/bookamrked_fan/bookamrked_fan_widget.dart'
+    show BookamrkedFanWidget;
+export '/fan/home_fan_copy/home_fan_copy_widget.dart' show HomeFanCopyWidget;

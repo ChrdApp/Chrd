@@ -603,8 +603,8 @@ class _EditMusicianProfileWidgetState extends State<EditMusicianProfileWidget> {
                                     model: _model.cHRDContainerModel3,
                                     updateCallback: () => safeSetState(() {}),
                                     child: CHRDContainerWidget(
-                                      heading: 'Social Login',
-                                      subHeading: 'Edit Social Login',
+                                      heading: 'Social Media',
+                                      subHeading: 'Edit Social Media',
                                       iconButton: Icon(
                                         Icons.arrow_forward_ios,
                                         color: Colors.white,

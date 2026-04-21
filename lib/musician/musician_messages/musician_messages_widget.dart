@@ -532,7 +532,7 @@ class _MusicianMessagesWidgetState extends State<MusicianMessagesWidget> {
                                                         (getJsonField(
                                                               allGigsItem,
                                                               r'''$.has_any_thread_message_unread_musician''',
-                                                            ) ==
+                                                            ) !=
                                                             null)
                                                     ? true
                                                     : false)

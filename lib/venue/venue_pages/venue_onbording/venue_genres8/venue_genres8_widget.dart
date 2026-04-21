@@ -1,4 +1,5 @@
 import '/backend/api_requests/api_calls.dart';
+import '/backend/schema/enums/enums.dart';
 import '/backend/schema/structs/index.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -568,6 +569,21 @@ class _VenueGenres8WidgetState extends State<VenueGenres8Widget> {
 
                       if (_shouldSetState) safeSetState(() {});
                       return;
+                    } else if (FFAppState().userType == Type.Fan) {
+                      FFAppState().updateFanUserDataStruct(
+                        (e) => e..fanGenreId = _model.selectedGenres.toList(),
+                      );
+                      safeSetState(() {});
+
+                      context.pushNamed(
+                        NavPageWidget.routeName,
+                        queryParameters: {
+                          'index': serializeParam(
+                            0,
+                            ParamType.int,
+                          ),
+                        }.withoutNulls,
+                      );
                     } else {
                       FFAppState().updateVenueAccountCreateStruct(
                         (e) => e..genreId = _model.selectedGenres.toList(),

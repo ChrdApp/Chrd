@@ -52,6 +52,17 @@ class FFAppState extends ChangeNotifier {
         }
       }
     });
+    _safeInit(() {
+      if (prefs.containsKey('ff_fanUserData')) {
+        try {
+          final serializedData = prefs.getString('ff_fanUserData') ?? '{}';
+          _fanUserData =
+              FanDataStruct.fromSerializableMap(jsonDecode(serializedData));
+        } catch (e) {
+          print("Can't decode persisted data type. Error: $e.");
+        }
+      }
+    });
   }
 
   void update(VoidCallback callback) {
@@ -398,6 +409,18 @@ class FFAppState extends ChangeNotifier {
   int get selectedMsgId => _selectedMsgId;
   set selectedMsgId(int value) {
     _selectedMsgId = value;
+  }
+
+  FanDataStruct _fanUserData = FanDataStruct();
+  FanDataStruct get fanUserData => _fanUserData;
+  set fanUserData(FanDataStruct value) {
+    _fanUserData = value;
+    prefs.setString('ff_fanUserData', value.serialize());
+  }
+
+  void updateFanUserDataStruct(Function(FanDataStruct) updateFn) {
+    updateFn(_fanUserData);
+    prefs.setString('ff_fanUserData', _fanUserData.serialize());
   }
 
   final _genreQueryResponseManager = FutureRequestManager<List<GenresRow>>();

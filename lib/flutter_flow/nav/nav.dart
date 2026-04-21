@@ -863,6 +863,26 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.int,
             ),
           ),
+        ),
+        FFRoute(
+          name: FanInfoWidget.routeName,
+          path: FanInfoWidget.routePath,
+          builder: (context, params) => FanInfoWidget(),
+        ),
+        FFRoute(
+          name: HomeFanWidget.routeName,
+          path: HomeFanWidget.routePath,
+          builder: (context, params) => HomeFanWidget(),
+        ),
+        FFRoute(
+          name: BookamrkedFanWidget.routeName,
+          path: BookamrkedFanWidget.routePath,
+          builder: (context, params) => BookamrkedFanWidget(),
+        ),
+        FFRoute(
+          name: HomeFanCopyWidget.routeName,
+          path: HomeFanCopyWidget.routePath,
+          builder: (context, params) => HomeFanCopyWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],

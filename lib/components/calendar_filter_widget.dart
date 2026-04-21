@@ -45,6 +45,7 @@ class _CalendarFilterWidgetState extends State<CalendarFilterWidget> {
           FFAppState().userId,
         ),
       );
+      safeSetState(() {});
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));

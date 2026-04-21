@@ -8,6 +8,7 @@ export 'content_list_struct.dart';
 export 'discover_gigs_combine_model_struct.dart';
 export 'entertainments_count_list_struct.dart';
 export 'entertainments_model_struct.dart';
+export 'fan_data_struct.dart';
 export 'genre_model_struct.dart';
 export 'genres_struct.dart';
 export 'gig_offer_struct.dart';

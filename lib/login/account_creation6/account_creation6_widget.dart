@@ -1,5 +1,5 @@
-import '/auth/supabase_auth/auth_util.dart';
 import '/backend/schema/enums/enums.dart';
+import '/fan/fan_creation/fan_creation_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -83,16 +83,7 @@ class _AccountCreation6WidgetState extends State<AccountCreation6Widget> {
                       focusColor: Colors.transparent,
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
-                      onTap: () async {
-                        FFAppState().userType = null;
-                        safeSetState(() {});
-                        GoRouter.of(context).prepareAuthEvent();
-                        await authManager.signOut();
-                        GoRouter.of(context).clearRedirectLocation();
-
-                        context.goNamedAuth(
-                            SplashScreenWidget.routeName, context.mounted);
-                      },
+                      onTap: () async {},
                       child: wrapWithModel(
                         model: _model.cHRDLabelColumnTextModel,
                         updateCallback: () => safeSetState(() {}),
@@ -115,6 +106,26 @@ class _AccountCreation6WidgetState extends State<AccountCreation6Widget> {
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
+                    if (false)
+                      InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          FFAppState().userType = Type.Fan;
+                          safeSetState(() {});
+                        },
+                        child: wrapWithModel(
+                          model: _model.fanCreationModel,
+                          updateCallback: () => safeSetState(() {}),
+                          child: FanCreationWidget(
+                            isSelected: FFAppState().userType == Type.Fan
+                                ? true
+                                : false,
+                          ),
+                        ),
+                      ),
                     InkWell(
                       splashColor: Colors.transparent,
                       focusColor: Colors.transparent,
@@ -177,6 +188,8 @@ class _AccountCreation6WidgetState extends State<AccountCreation6Widget> {
                   onTab: () async {
                     if (FFAppState().userType == Type.Musician) {
                       context.pushNamed(VenueProfilePic4Widget.routeName);
+                    } else if (FFAppState().userType == Type.Fan) {
+                      context.pushNamed(FanInfoWidget.routeName);
                     } else {
                       context.pushNamed(AdminInfo1Widget.routeName);
                     }

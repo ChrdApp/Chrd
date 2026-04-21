@@ -1,5 +1,5 @@
-import '/auth/supabase_auth/auth_util.dart';
 import '/backend/schema/enums/enums.dart';
+import '/fan/fan_creation/fan_creation_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -19,6 +19,8 @@ class AccountCreation6Model extends FlutterFlowModel<AccountCreation6Widget> {
 
   // Model for CHRD_label_Column_Text component.
   late CHRDLabelColumnTextModel cHRDLabelColumnTextModel;
+  // Model for fan_creation component.
+  late FanCreationModel fanCreationModel;
   // Model for musician_creation component.
   late MusicianCreationModel musicianCreationModel;
   // Model for venue_creation component.
@@ -30,6 +32,7 @@ class AccountCreation6Model extends FlutterFlowModel<AccountCreation6Widget> {
   void initState(BuildContext context) {
     cHRDLabelColumnTextModel =
         createModel(context, () => CHRDLabelColumnTextModel());
+    fanCreationModel = createModel(context, () => FanCreationModel());
     musicianCreationModel = createModel(context, () => MusicianCreationModel());
     venueCreationModel = createModel(context, () => VenueCreationModel());
     cHRDLabelBtnModel = createModel(context, () => CHRDLabelBtnModel());
@@ -38,6 +41,7 @@ class AccountCreation6Model extends FlutterFlowModel<AccountCreation6Widget> {
   @override
   void dispose() {
     cHRDLabelColumnTextModel.dispose();
+    fanCreationModel.dispose();
     musicianCreationModel.dispose();
     venueCreationModel.dispose();
     cHRDLabelBtnModel.dispose();

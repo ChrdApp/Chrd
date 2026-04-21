@@ -646,52 +646,56 @@ class _MusicianAccountInfoWidgetState extends State<MusicianAccountInfoWidget> {
                       ),
                     );
                     _shouldSetState = true;
-                    if (_model.authOutput?.length == 0) {
-                      _model.userOutput = await UsersTable().update(
-                        data: {
-                          'name':
-                              '${_model.firstNameModel.textController.text} ${_model.lastNameModel.textController.text}',
-                          'user_type': Type.Musician.name,
-                          'step': 2,
-                          'email': _model.emailModel.textController.text,
-                          'entertainment_id': functions.stringListToIntList(
-                              _model.selectedEntertainment.toList()),
-                          'genre_id': functions.stringListToIntList(
-                              _model.selectedGenre.toList()),
-                          'musician_statement':
-                              _model.musicianStatementTextController.text,
-                        },
-                        matchingRows: (rows) => rows.eqOrNull(
-                          'id',
-                          FFAppState().userId,
-                        ),
-                        returnRows: true,
-                      );
-                      _shouldSetState = true;
-                      FFAppState().step = 2;
-                      safeSetState(() {});
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            'Email already exists. Try with different one.',
-                            style: TextStyle(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16.0,
+                    if (_model.authOutput?.length != 0) {
+                      if ((_model.authOutput?.firstOrNull?.email ==
+                              _model.emailModel.textController.text) &&
+                          (_model.authOutput?.firstOrNull?.id !=
+                              FFAppState().userId)) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Email already exists. Try with different one.',
+                              style: TextStyle(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16.0,
+                              ),
+                              textAlign: TextAlign.center,
                             ),
-                            textAlign: TextAlign.center,
+                            duration: Duration(milliseconds: 4000),
+                            backgroundColor: FlutterFlowTheme.of(context).error,
                           ),
-                          duration: Duration(milliseconds: 4000),
-                          backgroundColor: FlutterFlowTheme.of(context).error,
-                        ),
-                      );
-                      if (_shouldSetState) safeSetState(() {});
-                      return;
+                        );
+                        if (_shouldSetState) safeSetState(() {});
+                        return;
+                      }
                     }
+                    _model.userOutput = await UsersTable().update(
+                      data: {
+                        'name':
+                            '${_model.firstNameModel.textController.text} ${_model.lastNameModel.textController.text}',
+                        'user_type': Type.Musician.name,
+                        'step': 2,
+                        'email': _model.emailModel.textController.text,
+                        'entertainment_id': functions.stringListToIntList(
+                            _model.selectedEntertainment.toList()),
+                        'genre_id': functions
+                            .stringListToIntList(_model.selectedGenre.toList()),
+                        'musician_statement':
+                            _model.musicianStatementTextController.text,
+                      },
+                      matchingRows: (rows) => rows.eqOrNull(
+                        'id',
+                        FFAppState().userId,
+                      ),
+                      returnRows: true,
+                    );
+                    _shouldSetState = true;
+                    FFAppState().step = 2;
+                    safeSetState(() {});
 
-                    context.pushNamed(
+                    context.goNamed(
                       VenueEntertainment7Widget.routeName,
                       queryParameters: {
                         'musicianID': serializeParam(

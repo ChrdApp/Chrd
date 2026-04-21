@@ -321,19 +321,26 @@ class _AddPerformanceStages9WidgetState
                   headingFontSize: 14,
                   isDisiable: false,
                   onTab: () async {
-                    await UsersTable().update(
-                      data: {
-                        'step': 4,
-                      },
-                      matchingRows: (rows) => rows.eqOrNull(
-                        'id',
-                        FFAppState().userId,
-                      ),
-                    );
-                    FFAppState().step = 4;
-                    safeSetState(() {});
+                    if (widget!.venueId == null) {
+                      await UsersTable().update(
+                        data: {
+                          'step': 4,
+                        },
+                        matchingRows: (rows) => rows.eqOrNull(
+                          'id',
+                          FFAppState().userId,
+                        ),
+                      );
+                      FFAppState().step = 4;
+                      safeSetState(() {});
 
-                    context.pushNamed(AddVenueOpenSlots10Widget.routeName);
+                      context.pushNamed(AddVenueOpenSlots10Widget.routeName);
+
+                      return;
+                    } else {
+                      context.safePop();
+                      return;
+                    }
                   },
                 ),
               ),
