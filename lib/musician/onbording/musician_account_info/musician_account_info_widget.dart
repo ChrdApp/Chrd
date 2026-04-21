@@ -695,7 +695,7 @@ class _MusicianAccountInfoWidgetState extends State<MusicianAccountInfoWidget> {
                     FFAppState().step = 2;
                     safeSetState(() {});
 
-                    context.goNamed(
+                    context.pushNamed(
                       VenueEntertainment7Widget.routeName,
                       queryParameters: {
                         'musicianID': serializeParam(

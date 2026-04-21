@@ -429,6 +429,10 @@ class _VenueGigContractOverlayWidgetState
                                         venueGigContractOverlayGetSingleSlotDetailsResponse
                                             .jsonBody,
                                         r'''$.data.repeat_type''',
+                                      ).toString()} from ${getJsonField(
+                                        venueGigContractOverlayGetSingleSlotDetailsResponse
+                                            .jsonBody,
+                                        r'''$.data.start_date''',
                                       ).toString()} until ${getJsonField(
                                         venueGigContractOverlayGetSingleSlotDetailsResponse
                                             .jsonBody,

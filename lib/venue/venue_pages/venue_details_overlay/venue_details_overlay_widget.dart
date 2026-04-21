@@ -357,6 +357,10 @@ class _VenueDetailsOverlayWidgetState extends State<VenueDetailsOverlayWidget> {
                                         venueDetailsOverlayGetSingleSlotDetailsResponse
                                             .jsonBody,
                                         r'''$.data.repeat_type''',
+                                      ).toString()} from ${getJsonField(
+                                        venueDetailsOverlayGetSingleSlotDetailsResponse
+                                            .jsonBody,
+                                        r'''$.data.start_date''',
                                       ).toString()} until ${getJsonField(
                                         venueDetailsOverlayGetSingleSlotDetailsResponse
                                             .jsonBody,

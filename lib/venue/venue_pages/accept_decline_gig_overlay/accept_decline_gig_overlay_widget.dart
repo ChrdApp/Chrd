@@ -400,6 +400,10 @@ class _AcceptDeclineGigOverlayWidgetState
                                             acceptDeclineGigOverlayGetContractDetailsResponse
                                                 .jsonBody,
                                             r'''$.data.repeat_type''',
+                                          ).toString()} from ${getJsonField(
+                                            acceptDeclineGigOverlayGetContractDetailsResponse
+                                                .jsonBody,
+                                            r'''$.data.start_date''',
                                           ).toString()} until ${getJsonField(
                                             acceptDeclineGigOverlayGetContractDetailsResponse
                                                 .jsonBody,

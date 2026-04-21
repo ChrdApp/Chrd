@@ -486,6 +486,11 @@ class _VenueGigContractOverlayCopyWidgetState
                                                     ?.jsonBody ??
                                                 ''),
                                             r'''$.data.repeat_type''',
+                                          ).toString()} from ${getJsonField(
+                                            (_model.singleSlotOutput
+                                                    ?.jsonBody ??
+                                                ''),
+                                            r'''$.data.start_date''',
                                           ).toString()} until ${getJsonField(
                                             (_model.singleSlotOutput
                                                     ?.jsonBody ??
