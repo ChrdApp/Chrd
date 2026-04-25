@@ -505,7 +505,7 @@ class _VenueMessagesWidgetState extends State<VenueMessagesWidget> {
                                                             allGigsItem,
                                                             r'''$.last_message_content''',
                                                           ).toString()
-                                                        : 'Say Hi!',
+                                                        : 'Click to View Thread',
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .bodyMedium
@@ -864,7 +864,7 @@ class _VenueMessagesWidgetState extends State<VenueMessagesWidget> {
                                                       valueOrDefault<String>(
                                                         realTimeListViewGigsRow
                                                             .lastMessageContent,
-                                                        'Say Hi!',
+                                                        'Click to View Thread',
                                                       ),
                                                       style:
                                                           FlutterFlowTheme.of(

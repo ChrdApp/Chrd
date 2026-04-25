@@ -18,6 +18,8 @@ import '/flutter_flow/custom_functions.dart';
 import 'index.dart';
 import '/index.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class VenueNavBar extends StatefulWidget {
   const VenueNavBar({
@@ -37,6 +39,9 @@ class VenueNavBar extends StatefulWidget {
 
 class _VenueNavBarState extends State<VenueNavBar> {
   int currentIndex = 0;
+  int _unreadGigThreadCount = 0;
+  List<int> _venueIds = [];
+  RealtimeChannel? _gigsChannel;
 
   // ✅ Pages list
   List<Widget> pages = [
@@ -54,6 +59,104 @@ class _VenueNavBarState extends State<VenueNavBar> {
     WidgetsBinding.instance.addPostFrameCallback((t) {
       listenForNewBannerNotifications(context);
     });
+    _initUnreadListener();
+  }
+
+  @override
+  void dispose() {
+    // Clean up realtime subscription
+    if (_gigsChannel != null) {
+      SupaFlow.client.removeChannel(_gigsChannel!);
+    }
+    super.dispose();
+  }
+
+  /// Initialize: fetch venue IDs → fetch unread count → subscribe to realtime
+  Future<void> _initUnreadListener() async {
+    try {
+      final userId = FFAppState().userId;
+      if (userId == null || userId == 0) return;
+
+      // Step 1: Get all venue IDs for this user
+      final venueRows = await SupaFlow.client
+          .from('venues')
+          .select('id')
+          .eq('created_by', userId);
+
+      _venueIds = (venueRows as List).map((row) => row['id'] as int).toList();
+
+      if (_venueIds.isEmpty) return;
+
+      // Step 2: Initial fetch
+      await _fetchUnreadGigThreads();
+
+      // Step 3: Subscribe to realtime changes on gigs table
+      _gigsChannel = SupaFlow.client
+          .channel('venue-nav-gigs-unread')
+          .onPostgresChanges(
+            event: PostgresChangeEvent.update,
+            schema: 'public',
+            table: 'gigs',
+            callback: (payload) {
+              final newRow = payload.newRecord;
+              final venueId = newRow['venue_id'];
+
+              // Only re-fetch if the changed gig belongs to one of our venues
+              if (venueId != null && _venueIds.contains(venueId)) {
+                _fetchUnreadGigThreads();
+              }
+            },
+          )
+          .onPostgresChanges(
+            event: PostgresChangeEvent.insert,
+            schema: 'public',
+            table: 'gigs',
+            callback: (payload) {
+              final newRow = payload.newRecord;
+              final venueId = newRow['venue_id'];
+
+              if (venueId != null && _venueIds.contains(venueId)) {
+                _fetchUnreadGigThreads();
+              }
+            },
+          )
+          .onPostgresChanges(
+            event: PostgresChangeEvent.delete,
+            schema: 'public',
+            table: 'gigs',
+            callback: (payload) {
+              // On delete, just re-fetch to update count
+              _fetchUnreadGigThreads();
+            },
+          )
+          .subscribe();
+    } catch (e) {
+      debugPrint('Error initializing unread listener: $e');
+    }
+  }
+
+  /// Fetch unread gig thread count using cached venue IDs
+  Future<void> _fetchUnreadGigThreads() async {
+    try {
+      if (_venueIds.isEmpty) {
+        if (mounted) setState(() => _unreadGigThreadCount = 0);
+        return;
+      }
+
+      final gigRows = await SupaFlow.client
+          .from('gigs')
+          .select('id')
+          .inFilter('venue_id', _venueIds)
+          .eq('has_any_thread_message_unread', true);
+
+      if (mounted) {
+        setState(() {
+          _unreadGigThreadCount = (gigRows as List).length;
+        });
+      }
+    } catch (e) {
+      debugPrint('Error fetching unread gig threads: $e');
+    }
   }
 
   static const _selectedIcons = [
@@ -124,6 +227,9 @@ class _VenueNavBarState extends State<VenueNavBar> {
     final double iconW = _iconSizes[index][0];
     final double iconH = _iconSizes[index][1];
 
+    // Show unread dot only on gig threads tab (index 3)
+    final bool showUnreadDot = index == 3 && _unreadGigThreadCount > 0;
+
     return Expanded(
       child: GestureDetector(
         onTap: () {
@@ -136,15 +242,44 @@ class _VenueNavBarState extends State<VenueNavBar> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(0),
-              child: Image.network(
-                iconUrl,
-                width: iconW,
-                height: iconH,
-                fit: BoxFit.contain,
-                alignment: Alignment.center,
-              ),
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                CachedNetworkImage(
+                  imageUrl: iconUrl,
+                  width: iconW,
+                  height: iconH,
+                  fit: BoxFit.contain,
+                  alignment: Alignment.center,
+                  memCacheWidth: (iconW * 2).toInt(),
+                  memCacheHeight: (iconH * 2).toInt(),
+                  fadeInDuration: Duration.zero,
+                  fadeOutDuration: Duration.zero,
+                  placeholder: (context, url) => SizedBox(
+                    width: iconW,
+                    height: iconH,
+                  ),
+                  errorWidget: (context, url, error) => SizedBox(
+                    width: iconW,
+                    height: iconH,
+                    child: const Icon(Icons.error, size: 16),
+                  ),
+                ),
+                // Purple unread dot
+                if (showUnreadDot)
+                  Positioned(
+                    top: -3,
+                    right: -3,
+                    child: Container(
+                      width: 10,
+                      height: 10,
+                      decoration: const BoxDecoration(
+                        color: Color(0xFF8B2BE3),
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+              ],
             ),
             const SizedBox(height: 3),
             Text(

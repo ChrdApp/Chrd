@@ -205,8 +205,8 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/dropdown_button2"
-      ref: "9bbeb2fd68e12615251a67208eb21bc75628c02c"
-      resolved-ref: "9bbeb2fd68e12615251a67208eb21bc75628c02c"
+      ref: "514178337dfbea442f617daed39c704b57593fc9"
+      resolved-ref: "514178337dfbea442f617daed39c704b57593fc9"
       url: "https://github.com/FlutterFlow/dropdown_button2.git"
     source: git
     version: "2.3.9"

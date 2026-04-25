@@ -423,6 +423,37 @@ class FFAppState extends ChangeNotifier {
     prefs.setString('ff_fanUserData', _fanUserData.serialize());
   }
 
+  List<ContentListStruct> _performanceStageContent = [];
+  List<ContentListStruct> get performanceStageContent =>
+      _performanceStageContent;
+  set performanceStageContent(List<ContentListStruct> value) {
+    _performanceStageContent = value;
+  }
+
+  void addToPerformanceStageContent(ContentListStruct value) {
+    performanceStageContent.add(value);
+  }
+
+  void removeFromPerformanceStageContent(ContentListStruct value) {
+    performanceStageContent.remove(value);
+  }
+
+  void removeAtIndexFromPerformanceStageContent(int index) {
+    performanceStageContent.removeAt(index);
+  }
+
+  void updatePerformanceStageContentAtIndex(
+    int index,
+    ContentListStruct Function(ContentListStruct) updateFn,
+  ) {
+    performanceStageContent[index] = updateFn(_performanceStageContent[index]);
+  }
+
+  void insertAtIndexInPerformanceStageContent(
+      int index, ContentListStruct value) {
+    performanceStageContent.insert(index, value);
+  }
+
   final _genreQueryResponseManager = FutureRequestManager<List<GenresRow>>();
   Future<List<GenresRow>> genreQueryResponse({
     String? uniqueQueryKey,

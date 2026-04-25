@@ -2,6 +2,7 @@ import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
+import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -18,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'accept_decline_gig_overlay_model.dart';
 export 'accept_decline_gig_overlay_model.dart';
@@ -849,57 +851,144 @@ class _AcceptDeclineGigOverlayWidgetState
                                     onTap: () async {},
                                   ),
                                 ),
+                                if (false)
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 18.0, 0.0, 0.0),
+                                    child: Builder(
+                                      builder: (context) {
+                                        final stageImages = getJsonField(
+                                          acceptDeclineGigOverlayGetContractDetailsResponse
+                                              .jsonBody,
+                                          r'''$.data.stage_images''',
+                                        ).toList();
+
+                                        return SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: List.generate(
+                                                stageImages.length,
+                                                (stageImagesIndex) {
+                                              final stageImagesItem =
+                                                  stageImages[stageImagesIndex];
+                                              return InkWell(
+                                                splashColor: Colors.transparent,
+                                                focusColor: Colors.transparent,
+                                                hoverColor: Colors.transparent,
+                                                highlightColor:
+                                                    Colors.transparent,
+                                                onTap: () async {
+                                                  await Navigator.push(
+                                                    context,
+                                                    PageTransition(
+                                                      type: PageTransitionType
+                                                          .fade,
+                                                      child:
+                                                          FlutterFlowExpandedImageView(
+                                                        image: Image.network(
+                                                          'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHwzfHxiZWF1dGlmdWwlMjBvY2VhbnxlbnwwfHx8fDE3NzY4MzQ3MDJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
+                                                          fit: BoxFit.contain,
+                                                          errorBuilder: (context,
+                                                                  error,
+                                                                  stackTrace) =>
+                                                              Image.asset(
+                                                            'assets/images/error_image.jpg',
+                                                            fit: BoxFit.contain,
+                                                          ),
+                                                        ),
+                                                        allowRotation: false,
+                                                        tag: 'imageTag2',
+                                                        useHeroAnimation: true,
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Hero(
+                                                  tag: 'imageTag2',
+                                                  transitionOnUserGestures:
+                                                      true,
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12.0),
+                                                    child: Image.network(
+                                                      'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHwzfHxiZWF1dGlmdWwlMjBvY2VhbnxlbnwwfHx8fDE3NzY4MzQ3MDJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
+                                                      width: 110.0,
+                                                      height: 120.0,
+                                                      fit: BoxFit.cover,
+                                                      errorBuilder: (context,
+                                                              error,
+                                                              stackTrace) =>
+                                                          Image.asset(
+                                                        'assets/images/error_image.jpg',
+                                                        width: 110.0,
+                                                        height: 120.0,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            }).divide(SizedBox(width: 12.0)),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
                                 Divider(
                                   thickness: 0.5,
                                   color: Color(0x4DFFFFFF),
                                 ),
-                                if (false)
-                                  Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Venue notes',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              font: GoogleFonts.montserrat(
-                                                fontWeight: FontWeight.normal,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
-                                              ),
-                                              letterSpacing: 0.0,
+                                Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Venue notes',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            font: GoogleFonts.montserrat(
                                               fontWeight: FontWeight.normal,
                                               fontStyle:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMedium
                                                       .fontStyle,
                                             ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 55.0, 0.0),
-                                        child: Text(
-                                          'We have a strict policy of no drinking. We will provide 1 meal per person',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                font: GoogleFonts.montserrat(
-                                                  fontWeight: FontWeight.normal,
-                                                  fontStyle: FontStyle.italic,
-                                                ),
-                                                fontSize: 12.0,
-                                                letterSpacing: 0.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.normal,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 55.0, 0.0),
+                                      child: Text(
+                                        getJsonField(
+                                          acceptDeclineGigOverlayGetContractDetailsResponse
+                                              .jsonBody,
+                                          r'''$.data.venue_description''',
+                                        ).toString(),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              font: GoogleFonts.montserrat(
                                                 fontWeight: FontWeight.normal,
                                                 fontStyle: FontStyle.italic,
                                               ),
-                                        ),
+                                              fontSize: 12.0,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.normal,
+                                              fontStyle: FontStyle.italic,
+                                            ),
                                       ),
-                                    ].divide(SizedBox(height: 3.0)),
-                                  ),
+                                    ),
+                                  ].divide(SizedBox(height: 3.0)),
+                                ),
                               ]
                                   .divide(SizedBox(height: 13.0))
                                   .addToStart(SizedBox(height: 28.0))

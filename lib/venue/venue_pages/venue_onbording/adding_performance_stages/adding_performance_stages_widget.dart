@@ -1,4 +1,8 @@
+import '/backend/schema/enums/enums.dart';
+import '/backend/schema/structs/index.dart';
 import '/backend/supabase/supabase.dart';
+import '/components/upload_file_btn_widget.dart';
+import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -10,12 +14,14 @@ import '/musician/components/c_h_r_d_label_column_text/c_h_r_d_label_column_text
 import '/musician/components/c_h_r_d_label_text_field_with_border/c_h_r_d_label_text_field_with_border_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_video_player_component/c_h_r_d_video_player_component_widget.dart';
 import 'dart:ui';
+import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'adding_performance_stages_model.dart';
 export 'adding_performance_stages_model.dart';
@@ -882,6 +888,460 @@ class _AddingPerformanceStagesWidgetState
                             ]
                                 .divide(SizedBox(height: 11.0))
                                 .addToStart(SizedBox(height: 8.0)),
+                          ),
+                        if (false)
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Expanded(
+                                    child: Builder(
+                                      builder: (context) {
+                                        final venueContent = functions
+                                                .addSampleFirstIndex(
+                                                    FFAppState()
+                                                        .contentList
+                                                        .toList())
+                                                ?.toList() ??
+                                            [];
+
+                                        return GridView.builder(
+                                          padding: EdgeInsets.fromLTRB(
+                                            0,
+                                            0,
+                                            0,
+                                            12.0,
+                                          ),
+                                          gridDelegate:
+                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 3,
+                                            crossAxisSpacing: 10.0,
+                                            mainAxisSpacing: 10.0,
+                                            childAspectRatio: 1.0,
+                                          ),
+                                          shrinkWrap: true,
+                                          scrollDirection: Axis.vertical,
+                                          itemCount: venueContent.length,
+                                          itemBuilder:
+                                              (context, venueContentIndex) {
+                                            final venueContentItem =
+                                                venueContent[venueContentIndex];
+                                            return Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                if (((venueContentItem
+                                                                    .thumbnailImage !=
+                                                                null &&
+                                                            venueContentItem
+                                                                    .thumbnailImage !=
+                                                                '') &&
+                                                        (venueContentItem
+                                                                    .content !=
+                                                                null &&
+                                                            venueContentItem
+                                                                    .content !=
+                                                                '')) &&
+                                                    (venueContentIndex != 0))
+                                                  Builder(
+                                                    builder: (context) =>
+                                                        InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: () async {
+                                                        await showDialog(
+                                                          barrierColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .primaryBackground,
+                                                          context: context,
+                                                          builder:
+                                                              (dialogContext) {
+                                                            return Dialog(
+                                                              elevation: 0,
+                                                              insetPadding:
+                                                                  EdgeInsets
+                                                                      .zero,
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              alignment: AlignmentDirectional(
+                                                                      0.0, 0.0)
+                                                                  .resolve(
+                                                                      Directionality.of(
+                                                                          context)),
+                                                              child:
+                                                                  GestureDetector(
+                                                                onTap: () {
+                                                                  FocusScope.of(
+                                                                          dialogContext)
+                                                                      .unfocus();
+                                                                  FocusManager
+                                                                      .instance
+                                                                      .primaryFocus
+                                                                      ?.unfocus();
+                                                                },
+                                                                child:
+                                                                    CHRDVideoPlayerComponentWidget(
+                                                                  videoUrl:
+                                                                      '${venueContentItem.content}',
+                                                                  callBackAction:
+                                                                      () async {},
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
+                                                        );
+                                                      },
+                                                      child: Container(
+                                                        width: 110.0,
+                                                        height: 120.0,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color:
+                                                              Color(0x693B006D),
+                                                          image:
+                                                              DecorationImage(
+                                                            fit: BoxFit.cover,
+                                                            image:
+                                                                Image.network(
+                                                              '${venueContentItem.thumbnailImage}',
+                                                            ).image,
+                                                          ),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      12.0),
+                                                        ),
+                                                        child: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Align(
+                                                              alignment:
+                                                                  AlignmentDirectional(
+                                                                      1.0,
+                                                                      -1.0),
+                                                              child: Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0.0,
+                                                                            4.0,
+                                                                            4.0,
+                                                                            0.0),
+                                                                child:
+                                                                    FlutterFlowIconButton(
+                                                                  borderRadius:
+                                                                      100.0,
+                                                                  buttonSize:
+                                                                      32.0,
+                                                                  fillColor: Color(
+                                                                      0x8D000000),
+                                                                  icon: Icon(
+                                                                    Icons.close,
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .info,
+                                                                    size: 16.0,
+                                                                  ),
+                                                                  onPressed:
+                                                                      () async {
+                                                                    await deleteSupabaseFileFromPublicUrl(
+                                                                        '${venueContentItem.content}');
+                                                                    await deleteSupabaseFileFromPublicUrl(
+                                                                        '${venueContentItem.thumbnailImage}');
+                                                                    FFAppState()
+                                                                        .removeFromContentList(
+                                                                            ContentListStruct(
+                                                                      thumbnailImage:
+                                                                          venueContentItem
+                                                                              .thumbnailImage,
+                                                                      content:
+                                                                          venueContentItem
+                                                                              .content,
+                                                                    ));
+                                                                    safeSetState(
+                                                                        () {});
+                                                                  },
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0.0,
+                                                                          12.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                              child: Icon(
+                                                                Icons
+                                                                    .play_arrow,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                                size: 24.0,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                if (((venueContentItem
+                                                                    .thumbnailImage !=
+                                                                null &&
+                                                            venueContentItem
+                                                                    .thumbnailImage !=
+                                                                '') &&
+                                                        (venueContentItem
+                                                                    .content ==
+                                                                null ||
+                                                            venueContentItem
+                                                                    .content ==
+                                                                '')) &&
+                                                    (venueContentIndex != 0))
+                                                  Container(
+                                                    width: 110.0,
+                                                    height: 120.0,
+                                                    child: Stack(
+                                                      children: [
+                                                        if (((venueContentItem
+                                                                            .thumbnailImage !=
+                                                                        null &&
+                                                                    venueContentItem
+                                                                            .thumbnailImage !=
+                                                                        '') &&
+                                                                (venueContentItem
+                                                                            .content ==
+                                                                        null ||
+                                                                    venueContentItem
+                                                                            .content ==
+                                                                        '')) &&
+                                                            (venueContentIndex !=
+                                                                0))
+                                                          InkWell(
+                                                            splashColor: Colors
+                                                                .transparent,
+                                                            focusColor: Colors
+                                                                .transparent,
+                                                            hoverColor: Colors
+                                                                .transparent,
+                                                            highlightColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            onTap: () async {
+                                                              await Navigator
+                                                                  .push(
+                                                                context,
+                                                                PageTransition(
+                                                                  type:
+                                                                      PageTransitionType
+                                                                          .fade,
+                                                                  child:
+                                                                      FlutterFlowExpandedImageView(
+                                                                    image: Image
+                                                                        .network(
+                                                                      '${venueContentItem.thumbnailImage}',
+                                                                      fit: BoxFit
+                                                                          .contain,
+                                                                      errorBuilder: (context,
+                                                                              error,
+                                                                              stackTrace) =>
+                                                                          Image
+                                                                              .asset(
+                                                                        'assets/images/error_image.jpg',
+                                                                        fit: BoxFit
+                                                                            .contain,
+                                                                      ),
+                                                                    ),
+                                                                    allowRotation:
+                                                                        false,
+                                                                    tag:
+                                                                        '${venueContentItem.thumbnailImage}',
+                                                                    useHeroAnimation:
+                                                                        true,
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                            child: Hero(
+                                                              tag:
+                                                                  '${venueContentItem.thumbnailImage}',
+                                                              transitionOnUserGestures:
+                                                                  true,
+                                                              child: ClipRRect(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            12.0),
+                                                                child: Image
+                                                                    .network(
+                                                                  '${venueContentItem.thumbnailImage}',
+                                                                  width: 110.0,
+                                                                  height: 120.0,
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                  errorBuilder: (context,
+                                                                          error,
+                                                                          stackTrace) =>
+                                                                      Image
+                                                                          .asset(
+                                                                    'assets/images/error_image.jpg',
+                                                                    width:
+                                                                        110.0,
+                                                                    height:
+                                                                        120.0,
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        Align(
+                                                          alignment:
+                                                              AlignmentDirectional(
+                                                                  1.0, -1.0),
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        4.0,
+                                                                        4.0,
+                                                                        0.0),
+                                                            child:
+                                                                FlutterFlowIconButton(
+                                                              borderRadius:
+                                                                  100.0,
+                                                              buttonSize: 32.0,
+                                                              fillColor: Color(
+                                                                  0x8D000000),
+                                                              icon: Icon(
+                                                                Icons.close,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .info,
+                                                                size: 16.0,
+                                                              ),
+                                                              onPressed:
+                                                                  () async {
+                                                                await deleteSupabaseFileFromPublicUrl(
+                                                                    venueContentItem
+                                                                        .thumbnailImage);
+                                                                FFAppState()
+                                                                    .removeFromContentList(
+                                                                        ContentListStruct(
+                                                                  thumbnailImage:
+                                                                      venueContentItem
+                                                                          .thumbnailImage,
+                                                                ));
+                                                                safeSetState(
+                                                                    () {});
+                                                              },
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                if (venueContentIndex == 0)
+                                                  Expanded(
+                                                    child: Container(
+                                                      width: 110.0,
+                                                      height: 120.0,
+                                                      decoration:
+                                                          BoxDecoration(),
+                                                      child:
+                                                          UploadFileBtnWidget(
+                                                        key: Key(
+                                                            'Key6tx_${venueContentIndex}_of_${venueContent.length}'),
+                                                        isContentUpload: true,
+                                                        uploadAction:
+                                                            (uploadedImage,
+                                                                uploadedFile) async {
+                                                          if (uploadedFile
+                                                                  .length ==
+                                                              2) {
+                                                            _model.uploadMediaFIles =
+                                                                await actions
+                                                                    .uploadMediaToSupabase(
+                                                              uploadedFile
+                                                                  .lastOrNull!,
+                                                              FFAppState().userType ==
+                                                                      Type.Musician
+                                                                  ? 'musician'
+                                                                  : 'venueC',
+                                                              FFAppState().userType ==
+                                                                      Type.Musician
+                                                                  ? 'Musician Content'
+                                                                  : 'venueContent',
+                                                            );
+                                                            if (FFAppState()
+                                                                    .userType ==
+                                                                Type.Venue) {
+                                                              FFAppState()
+                                                                  .addToContentList(
+                                                                      ContentListStruct(
+                                                                thumbnailImage:
+                                                                    uploadedImage,
+                                                                content: _model
+                                                                    .uploadMediaFIles,
+                                                              ));
+                                                              safeSetState(
+                                                                  () {});
+                                                            }
+                                                          } else {
+                                                            if (FFAppState()
+                                                                    .userType ==
+                                                                Type.Venue) {
+                                                              FFAppState()
+                                                                  .addToContentList(
+                                                                      ContentListStruct(
+                                                                thumbnailImage:
+                                                                    uploadedImage,
+                                                              ));
+                                                              safeSetState(
+                                                                  () {});
+                                                            }
+                                                          }
+
+                                                          FFAppState()
+                                                                  .isDataUploading =
+                                                              false;
+                                                          safeSetState(() {});
+
+                                                          safeSetState(() {});
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ]
+                                    .divide(SizedBox(height: 14.0))
+                                    .addToStart(SizedBox(height: 20.0)),
+                              ),
+                            ),
                           ),
                       ]
                           .divide(SizedBox(height: 14.0))

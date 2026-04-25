@@ -363,7 +363,7 @@ class _RealTimeGigThreadListState extends State<RealTimeGigThreadList> {
                     ),
                     SizedBox(height: 6.0),
                     Text(
-                      gig.lastMessageContent ?? 'Say Hi!',
+                      gig.lastMessageContent ?? 'Click to View Thread',
                       style: FlutterFlowTheme.of(context).bodyMedium,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,

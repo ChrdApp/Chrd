@@ -10,22 +10,23 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-import 'index.dart';
+import '/custom_code/actions/index.dart';
 import '/flutter_flow/custom_functions.dart';
 
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:mime_type/mime_type.dart';
 
 Future<FFUploadedFile?> pickFileWithSizeLimit(
   double maxSizeMB,
-  String fileType, // "image" or "video"
+  String fileType,
 ) async {
   try {
     FileType pickerType;
 
-    // ✅ IMPORTANT FIX FOR iOS
     if (fileType.toLowerCase() == 'video') {
-      // Allows BOTH images & videos on iOS
       pickerType = FileType.media;
     } else {
       pickerType = FileType.image;
@@ -33,44 +34,54 @@ Future<FFUploadedFile?> pickFileWithSizeLimit(
 
     final result = await FilePicker.platform.pickFiles(
       type: pickerType,
-      withData: true, // required for FlutterFlow & web
+      withData: kIsWeb, // only force bytes on web; on native we read from path
     );
 
     if (result == null || result.files.isEmpty) {
-      return null; // User cancelled
+      return null;
     }
 
     final file = result.files.first;
-    final fileBytes = file.bytes;
+    Uint8List? fileBytes = file.bytes;
     final filePath = file.path;
 
-    double sizeMB;
-
-    if (fileBytes != null) {
-      sizeMB = fileBytes.lengthInBytes / (1024 * 1024);
-    } else if (filePath != null) {
+    // --- Ensure we have bytes (iOS/Android fallback) ---
+    if (fileBytes == null && filePath != null && !kIsWeb) {
       final f = File(filePath);
-      sizeMB = (await f.length()) / (1024 * 1024);
-    } else {
+      if (await f.exists()) {
+        fileBytes = await f.readAsBytes();
+      }
+    }
+
+    if (fileBytes == null) {
       return null;
     }
 
+    // --- Size check ---
+    final double sizeMB = fileBytes.lengthInBytes / (1024 * 1024);
     if (sizeMB > maxSizeMB) {
-      print('❌ File too large: ${sizeMB.toStringAsFixed(2)} MB');
       return null;
     }
 
-    print('✅ File accepted: ${file.name} (${sizeMB.toStringAsFixed(2)} MB)');
+    // --- Build a safe file name with extension ---
+    String fileName = file.name;
+
+    // iOS sometimes gives names without extensions; fix that
+    if (!fileName.contains('.') && filePath != null) {
+      final ext = filePath.split('.').last;
+      if (ext.isNotEmpty && ext.length <= 5) {
+        fileName = '$fileName.$ext';
+      }
+    }
 
     return FFUploadedFile(
-      name: file.name,
+      name: fileName,
       bytes: fileBytes,
       height: null,
       width: null,
       blurHash: null,
     );
   } catch (e) {
-    print('❌ Error picking file: $e');
     return null;
   }
 }

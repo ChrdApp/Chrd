@@ -287,7 +287,7 @@ class _EditProfilePictureWidgetState extends State<EditProfilePictureWidget> {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text(
-                                        'Sucess',
+                                        'Success',
                                         style: GoogleFonts.montserrat(
                                           color: FlutterFlowTheme.of(context)
                                               .primaryText,

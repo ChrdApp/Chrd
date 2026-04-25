@@ -18,6 +18,8 @@ import '/flutter_flow/custom_functions.dart';
 import 'index.dart';
 import '/index.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'dart:async';
 
 class MusicianNavBar extends StatefulWidget {
   const MusicianNavBar({
@@ -37,8 +39,10 @@ class MusicianNavBar extends StatefulWidget {
 
 class _MusicianNavBarState extends State<MusicianNavBar> {
   int currentIndex = 0;
+  bool hasUnreadGigThreads = false;
+  bool _iconsCached = false;
+  StreamSubscription? _unreadSubscription;
 
-  // ✅ Pages list
   List<Widget> pages = [
     HomeMWidget(),
     DiscoverWidget(),
@@ -46,15 +50,6 @@ class _MusicianNavBarState extends State<MusicianNavBar> {
     MusicianMessagesWidget(),
     MusicianProfileWidget(),
   ];
-
-  @override
-  void initState() {
-    super.initState();
-    currentIndex = widget.currentIndex;
-    WidgetsBinding.instance.addPostFrameCallback((t) {
-      listenForNewBannerNotifications(context);
-    });
-  }
 
   static const _selectedIcons = [
     'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/c-h-r-d-m-v-p-musician-p-o-v-qiusbj/assets/ad6e4rd2ys9x/homeS.png',
@@ -89,11 +84,83 @@ class _MusicianNavBarState extends State<MusicianNavBar> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    currentIndex = widget.currentIndex;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      listenForNewBannerNotifications(context);
+      _precacheAllIcons();
+    });
+    _checkUnreadGigThreads();
+    _listenForUnreadChanges();
+  }
+
+  @override
+  void dispose() {
+    _unreadSubscription?.cancel();
+    super.dispose();
+  }
+
+  /// Precache all 10 icons into the image cache on first load
+  Future<void> _precacheAllIcons() async {
+    final allUrls = [..._selectedIcons, ..._unselectedIcons];
+    await Future.wait(
+      allUrls.map((url) => precacheImage(
+            CachedNetworkImageProvider(url),
+            context,
+          )),
+    );
+    if (mounted) {
+      setState(() {
+        _iconsCached = true;
+      });
+    }
+  }
+
+  Future<void> _checkUnreadGigThreads() async {
+    try {
+      final userId = FFAppState().userId;
+      final result = await SupaFlow.client
+          .from('gigs')
+          .select('id')
+          .eq('musician_id', userId)
+          .eq('has_any_thread_message_unread_musician', true);
+
+      if (mounted) {
+        setState(() {
+          hasUnreadGigThreads = (result as List).isNotEmpty;
+        });
+      }
+    } catch (_) {}
+  }
+
+  void _listenForUnreadChanges() {
+    final userId = FFAppState().userId;
+    _unreadSubscription = SupaFlow.client
+        .from('gigs')
+        .stream(primaryKey: ['id'])
+        .eq('musician_id', userId)
+        .listen((data) {
+          if (!mounted) return;
+          final unreadCount = data
+              .where((row) =>
+                  row['has_any_thread_message_unread_musician'] == true)
+              .length;
+          setState(() {
+            hasUnreadGigThreads = unreadCount > 0;
+          });
+        });
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (currentIndex >= pages.length) currentIndex = 0;
 
     return Scaffold(
-      body: pages[currentIndex],
+      body: IndexedStack(
+        index: currentIndex,
+        children: pages,
+      ),
       bottomNavigationBar: Container(
         height: 90,
         decoration: BoxDecoration(
@@ -123,28 +190,62 @@ class _MusicianNavBarState extends State<MusicianNavBar> {
         isSelected ? _selectedIcons[index] : _unselectedIcons[index];
     final double iconW = _iconSizes[index][0];
     final double iconH = _iconSizes[index][1];
+    final bool showDot = index == 3 && hasUnreadGigThreads;
 
     return Expanded(
       child: GestureDetector(
         onTap: () {
+          if (currentIndex == index) return;
           setState(() {
             currentIndex = index;
           });
+          if (index == 3) {
+            _checkUnreadGigThreads();
+          }
         },
         behavior: HitTestBehavior.opaque,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(0),
-              child: Image.network(
-                iconUrl,
-                width: iconW,
-                height: iconH,
-                fit: BoxFit.contain,
-                alignment: Alignment.center,
-              ),
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                SizedBox(
+                  width: iconW,
+                  height: iconH,
+                  child: CachedNetworkImage(
+                    imageUrl: iconUrl,
+                    width: iconW,
+                    height: iconH,
+                    fit: BoxFit.contain,
+                    alignment: Alignment.center,
+                    fadeInDuration: Duration.zero,
+                    fadeOutDuration: Duration.zero,
+                    placeholder: (context, url) =>
+                        SizedBox(width: iconW, height: iconH),
+                    errorWidget: (context, url, error) =>
+                        SizedBox(width: iconW, height: iconH),
+                  ),
+                ),
+                if (showDot)
+                  Positioned(
+                    top: -3,
+                    right: -3,
+                    child: Container(
+                      width: 10,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF8B2BE3),
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: FlutterFlowTheme.of(context).primaryBackground,
+                          width: 1.5,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
             ),
             const SizedBox(height: 3),
             Text(

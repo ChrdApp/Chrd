@@ -1,6 +1,7 @@
 import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
+import '/components/confirmation_dialog_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -1133,41 +1134,102 @@ class _VenueGigContractOverlayCopyWidgetState
                                       children: [
                                         if (FFAppState().userType == Type.Venue)
                                           Expanded(
-                                            child: wrapWithModel(
-                                              model: _model.cHRDLabelBtnModel1,
-                                              updateCallback: () =>
-                                                  safeSetState(() {}),
-                                              child: CHRDLabelBtnWidget(
-                                                heading: 'Remove Event',
-                                                txtColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                                btnColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .btnColor,
-                                                borderColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .btnColor,
-                                                hight: 45.0,
-                                                headingFontSize: 14,
-                                                isDisiable: false,
-                                                onTab: () async {
-                                                  _model.deleteGig =
-                                                      await VenueGroup
-                                                          .deleteVenueOpenSlotsCall
-                                                          .call(
-                                                    slotId: widget!.slotId,
-                                                  );
+                                            child: Builder(
+                                              builder: (context) =>
+                                                  wrapWithModel(
+                                                model:
+                                                    _model.cHRDLabelBtnModel1,
+                                                updateCallback: () =>
+                                                    safeSetState(() {}),
+                                                child: CHRDLabelBtnWidget(
+                                                  heading: 'Remove Event',
+                                                  txtColor: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  btnColor: FlutterFlowTheme.of(
+                                                          context)
+                                                      .btnColor,
+                                                  borderColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .btnColor,
+                                                  hight: 45.0,
+                                                  headingFontSize: 14,
+                                                  isDisiable: false,
+                                                  onTab: () async {
+                                                    await showDialog(
+                                                      context: context,
+                                                      builder: (dialogContext) {
+                                                        return Dialog(
+                                                          elevation: 0,
+                                                          insetPadding:
+                                                              EdgeInsets.zero,
+                                                          backgroundColor:
+                                                              Colors
+                                                                  .transparent,
+                                                          alignment: AlignmentDirectional(
+                                                                  0.0, 0.0)
+                                                              .resolve(
+                                                                  Directionality.of(
+                                                                      context)),
+                                                          child:
+                                                              GestureDetector(
+                                                            onTap: () {
+                                                              FocusScope.of(
+                                                                      dialogContext)
+                                                                  .unfocus();
+                                                              FocusManager
+                                                                  .instance
+                                                                  .primaryFocus
+                                                                  ?.unfocus();
+                                                            },
+                                                            child:
+                                                                ConfirmationDialogWidget(
+                                                              acceptbtnText:
+                                                                  'Remove',
+                                                              title:
+                                                                  'Are you sure you want to remove this event?',
+                                                              acceptBtnAction:
+                                                                  () async {
+                                                                _model.deleteGig =
+                                                                    await VenueGroup
+                                                                        .deleteVenueOpenSlotsCall
+                                                                        .call(
+                                                                  slotId: widget!
+                                                                      .slotId,
+                                                                );
 
-                                                  if ((_model.deleteGig
-                                                          ?.succeeded ??
-                                                      true)) {
-                                                    Navigator.pop(context);
-                                                    context.safePop();
-                                                  }
+                                                                if ((_model
+                                                                        .deleteGig
+                                                                        ?.succeeded ??
+                                                                    true)) {
+                                                                  await NotificationGroup
+                                                                      .sendVenueCancelledNotificationsCall
+                                                                      .call(
+                                                                    jsonJson:
+                                                                        getJsonField(
+                                                                      (_model.deleteGig
+                                                                              ?.jsonBody ??
+                                                                          ''),
+                                                                      r'''$..thread_data''',
+                                                                    ),
+                                                                  );
 
-                                                  safeSetState(() {});
-                                                },
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                  context
+                                                                      .safePop();
+                                                                }
+                                                              },
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+
+                                                    safeSetState(() {});
+                                                  },
+                                                ),
                                               ),
                                             ),
                                           ),

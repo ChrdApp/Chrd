@@ -408,7 +408,7 @@ class _VenueProfilePic4WidgetState extends State<VenueProfilePic4Widget> {
                         returnRows: true,
                       );
 
-                      context.goNamed(MusicianAccountInfoWidget.routeName);
+                      context.pushNamed(MusicianAccountInfoWidget.routeName);
                     } else {
                       FFAppState().updateVenueAccountCreateStruct(
                         (e) =>
