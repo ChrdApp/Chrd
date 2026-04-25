@@ -220,9 +220,12 @@ class _VenueProfilePic4WidgetState extends State<VenueProfilePic4Widget> {
                                           safeSetState(() {});
                                         return;
                                       } else {
+                                        FFAppState().errorMessage = '';
+                                        safeSetState(() {});
                                         _model.imagePath =
                                             await actions.pickFileWithSizeLimit(
-                                          5.0,
+                                          context,
+                                          10.0,
                                           'image',
                                         );
                                         _shouldSetState = true;
@@ -339,6 +342,28 @@ class _VenueProfilePic4WidgetState extends State<VenueProfilePic4Widget> {
                                             return;
                                           }
                                         } else {
+                                          if (FFAppState().errorMessage !=
+                                                  null &&
+                                              FFAppState().errorMessage != '') {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  FFAppState().errorMessage,
+                                                  style: TextStyle(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                  ),
+                                                ),
+                                                duration: Duration(
+                                                    milliseconds: 4000),
+                                                backgroundColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .error,
+                                              ),
+                                            );
+                                          }
                                           if (_shouldSetState)
                                             safeSetState(() {});
                                           return;

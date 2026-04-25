@@ -19,10 +19,24 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:mime_type/mime_type.dart';
 
+/// Returns the picked file on success, or null on failure.
+/// On failure, [errorMessage] app state is updated with the reason.
+///
+/// Error messages set in FFAppState().errorMessage:
+///   - "No file selected"
+///   - "File size exceeds {maxSizeMB} MB limit. Your file is {actualSize} MB."
+///   - "Unsupported file format. Please select a JPG, PNG, GIF, or WEBP image."
+///   - "Unsupported video format. Please select an MP4, MOV, or AVI video."
+///   - "Could not read the selected file. Please try again."
+///   - "Something went wrong. Please try again."
 Future<FFUploadedFile?> pickFileWithSizeLimit(
+  BuildContext context,
   double maxSizeMB,
   String fileType,
 ) async {
+  // Clear any previous error
+  FFAppState().errorMessage = '';
+
   try {
     FileType pickerType;
 
@@ -34,10 +48,11 @@ Future<FFUploadedFile?> pickFileWithSizeLimit(
 
     final result = await FilePicker.platform.pickFiles(
       type: pickerType,
-      withData: kIsWeb, // only force bytes on web; on native we read from path
+      withData: kIsWeb,
     );
 
     if (result == null || result.files.isEmpty) {
+      FFAppState().errorMessage = 'No file selected';
       return null;
     }
 
@@ -54,17 +69,54 @@ Future<FFUploadedFile?> pickFileWithSizeLimit(
     }
 
     if (fileBytes == null) {
+      FFAppState().errorMessage =
+          'Could not read the selected file. Please try again.';
       return null;
+    }
+
+    // --- Format check ---
+    String fileName = file.name.toLowerCase();
+    final String? mimeType = mime(fileName);
+
+    if (fileType.toLowerCase() == 'video') {
+      final allowedVideoMimes = [
+        'video/mp4',
+        'video/quicktime',
+        'video/x-msvideo',
+        'video/mpeg',
+        'video/webm',
+      ];
+      if (mimeType == null || !allowedVideoMimes.contains(mimeType)) {
+        FFAppState().errorMessage =
+            'Unsupported video format. Please select an MP4, MOV, or AVI video.';
+        return null;
+      }
+    } else {
+      final allowedImageMimes = [
+        'image/jpeg',
+        'image/png',
+        'image/gif',
+        'image/webp',
+        'image/heic',
+        'image/heif',
+      ];
+      if (mimeType == null || !allowedImageMimes.contains(mimeType)) {
+        FFAppState().errorMessage =
+            'Unsupported file format. Please select a JPG, PNG, GIF, or WEBP image.';
+        return null;
+      }
     }
 
     // --- Size check ---
     final double sizeMB = fileBytes.lengthInBytes / (1024 * 1024);
     if (sizeMB > maxSizeMB) {
+      FFAppState().errorMessage =
+          'File size exceeds ${maxSizeMB.toStringAsFixed(0)} MB limit. Your file is ${sizeMB.toStringAsFixed(1)} MB.';
       return null;
     }
 
     // --- Build a safe file name with extension ---
-    String fileName = file.name;
+    fileName = file.name; // reset to original casing
 
     // iOS sometimes gives names without extensions; fix that
     if (!fileName.contains('.') && filePath != null) {
@@ -82,6 +134,7 @@ Future<FFUploadedFile?> pickFileWithSizeLimit(
       blurHash: null,
     );
   } catch (e) {
+    FFAppState().errorMessage = 'Something went wrong. Please try again.';
     return null;
   }
 }

@@ -454,6 +454,12 @@ class FFAppState extends ChangeNotifier {
     performanceStageContent.insert(index, value);
   }
 
+  String _errorMessage = '';
+  String get errorMessage => _errorMessage;
+  set errorMessage(String value) {
+    _errorMessage = value;
+  }
+
   final _genreQueryResponseManager = FutureRequestManager<List<GenresRow>>();
   Future<List<GenresRow>> genreQueryResponse({
     String? uniqueQueryKey,

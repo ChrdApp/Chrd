@@ -164,6 +164,7 @@ class _AddVenueContent5CopyWidgetState
 
                                         _model.imageVideoPath =
                                             await actions.pickFileWithSizeLimit(
+                                          context,
                                           20.0,
                                           'video',
                                         );

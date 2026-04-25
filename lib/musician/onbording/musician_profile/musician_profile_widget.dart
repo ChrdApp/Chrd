@@ -1566,6 +1566,7 @@ class _MusicianProfileWidgetState extends State<MusicianProfileWidget> {
                                                           _model.imageVideoPath =
                                                               await actions
                                                                   .pickFileWithSizeLimit(
+                                                            context,
                                                             20.0,
                                                             'video',
                                                           );
@@ -2207,6 +2208,7 @@ class _MusicianProfileWidgetState extends State<MusicianProfileWidget> {
                                                                 _model.imageVideoPathOutput =
                                                                     await actions
                                                                         .pickFileWithSizeLimit(
+                                                                  context,
                                                                   20.0,
                                                                   'video',
                                                                 );

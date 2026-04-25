@@ -210,6 +210,7 @@ class _MusicianAddHighlightWidgetState
                                         false) {
                                       _model.uploadVideoImage =
                                           await actions.pickFileWithSizeLimit(
+                                        context,
                                         5.0,
                                         'video',
                                       );
@@ -430,6 +431,7 @@ class _MusicianAddHighlightWidgetState
                                           false) {
                                         _model.uploadImage =
                                             await actions.pickFileWithSizeLimit(
+                                          context,
                                           5.0,
                                           'image',
                                         );
