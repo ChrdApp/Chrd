@@ -62,6 +62,16 @@ class _FanInfoWidgetState extends State<FanInfoWidget> {
         safeSetState(() {
           _model.emailAddressModel.textController?.text = currentUserEmail;
         });
+        safeSetState(() {
+          _model.cHRDPhoneNumberInitialModel.phoneNumberTextController?.text =
+              _model.userData!.firstOrNull!.phoneNumber!;
+          _model.cHRDPhoneNumberInitialModel.phoneNumberMask.updateMask(
+            newValue: TextEditingValue(
+              text: _model
+                  .cHRDPhoneNumberInitialModel.phoneNumberTextController!.text,
+            ),
+          );
+        });
         safeSetState(() {});
       } else {
         _model.hideMobileField =
@@ -77,6 +87,16 @@ class _FanInfoWidgetState extends State<FanInfoWidget> {
         safeSetState(() {});
         safeSetState(() {
           _model.emailAddressModel.textController?.text = currentUserEmail;
+        });
+        safeSetState(() {
+          _model.cHRDPhoneNumberInitialModel.phoneNumberTextController?.text =
+              _model.userData!.firstOrNull!.phoneNumber!;
+          _model.cHRDPhoneNumberInitialModel.phoneNumberMask.updateMask(
+            newValue: TextEditingValue(
+              text: _model
+                  .cHRDPhoneNumberInitialModel.phoneNumberTextController!.text,
+            ),
+          );
         });
       }
     });
@@ -210,26 +230,25 @@ class _FanInfoWidgetState extends State<FanInfoWidget> {
                           child: CHRDLabelTextFieldWithBorderWidget(
                             labelText: 'Name',
                             hintText: 'John Doe',
-                            freezeEmailInput: false,
+                            freezeEmailInput: true,
                             onChange: () async {
                               safeSetState(() {});
                             },
                           ),
                         ),
-                        if (!_model.hideMobileField)
-                          wrapWithModel(
-                            model: _model.cHRDPhoneNumberInitialModel,
-                            updateCallback: () => safeSetState(() {}),
-                            child: CHRDPhoneNumberWidget(
-                              freezeMobileInput: !_model.hideMobileField,
-                              initialValue: _model.mobileNoValue,
-                              onChange: () async {
-                                _model.hideMobileField = false;
-                                _model.showMobileError = false;
-                                safeSetState(() {});
-                              },
-                            ),
+                        wrapWithModel(
+                          model: _model.cHRDPhoneNumberInitialModel,
+                          updateCallback: () => safeSetState(() {}),
+                          child: CHRDPhoneNumberWidget(
+                            freezeMobileInput: !_model.hideMobileField,
+                            initialValue: _model.mobileNoValue,
+                            onChange: () async {
+                              _model.hideMobileField = false;
+                              _model.showMobileError = false;
+                              safeSetState(() {});
+                            },
                           ),
+                        ),
                         if (_model.showMobileError)
                           Align(
                             alignment: AlignmentDirectional(-1.0, 0.0),

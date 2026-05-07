@@ -172,10 +172,20 @@ String formatTime(String dateString) {
   if (dateString.isEmpty) return '';
 
   // Replace space with 'T' to make it ISO-8601 compatible
-  final isoString = dateString.replaceFirst(' ', 'T');
+  String isoString = dateString.replaceFirst(' ', 'T');
 
-  // Parse DateTime (handles timezone)
-  final DateTime messageTime = DateTime.parse(isoString).toLocal();
+  // Parse the datetime then force it to UTC, then convert to local
+  DateTime parsed = DateTime.parse(isoString);
+  final DateTime messageTime = DateTime.utc(
+    parsed.year,
+    parsed.month,
+    parsed.day,
+    parsed.hour,
+    parsed.minute,
+    parsed.second,
+    parsed.millisecond,
+    parsed.microsecond,
+  ).toLocal();
 
   final now = DateTime.now();
   final today = DateTime(now.year, now.month, now.day);
@@ -355,9 +365,21 @@ DateTime parseDate(String dateStr) {
     // Try ISO format first (Supabase / API format)
     return DateTime.parse(dateStr);
   } catch (e) {
-    // Fallback to formatted string like "Mon, Apr 15, 2026"
-    final formatter = DateFormat('EEE, MMM dd, yyyy');
-    return formatter.parse(dateStr);
+    try {
+      // Try "EEE, MMM dd, yyyy" like "Mon, Apr 15, 2026"
+      final formatter = DateFormat('EEE, MMM dd, yyyy');
+      return formatter.parse(dateStr);
+    } catch (e) {
+      // Fallback for "Thursday May 7th, 2026" style strings
+      // Remove ordinal suffixes (st, nd, rd, th) from day numbers
+      String cleaned = dateStr.replaceAllMapped(
+        RegExp(r'(\d+)(st|nd|rd|th)'),
+        (match) => match.group(1)!,
+      );
+      // Now it looks like "Thursday May 7, 2026"
+      final formatter = DateFormat('EEEE MMMM d, yyyy');
+      return formatter.parse(cleaned);
+    }
   }
 }
 
@@ -447,29 +469,49 @@ DateTime? stringToDateTime(
   String time,
 ) {
   final formats = [
-    // 12-hour formats
+    // 12-hour with minutes
     "EEE, MMM dd, yyyy h:mm a",
     "EEE, MMM d, yyyy h:mm a",
     "MMM dd, yyyy h:mm a",
     "MMM d, yyyy h:mm a",
 
-    // 24-hour formats
+    // 12-hour WITHOUT minutes (e.g. "10 AM", "10AM")
+    "EEE, MMM dd, yyyy h a",
+    "EEE, MMM d, yyyy h a",
+    "MMM dd, yyyy h a",
+    "MMM d, yyyy h a",
+
+    // 24-hour with minutes
     "EEE, MMM dd, yyyy HH:mm",
     "EEE, MMM d, yyyy HH:mm",
     "MMM dd, yyyy HH:mm",
     "MMM d, yyyy HH:mm",
+
+    // 24-hour WITHOUT minutes (e.g. "10", "23")
+    "EEE, MMM dd, yyyy HH",
+    "EEE, MMM d, yyyy HH",
+    "MMM dd, yyyy HH",
+    "MMM d, yyyy HH",
   ];
+
+  // Normalize the time string: "10AM" → "10 AM", "10am" → "10 AM"
+  String normalizedTime = time.trim().toUpperCase();
+  // Insert space between number and AM/PM if missing: "10AM" → "10 AM"
+  normalizedTime = normalizedTime.replaceAllMapped(
+    RegExp(r'(\d)(AM|PM)'),
+    (m) => '${m[1]} ${m[2]}',
+  );
 
   for (final pattern in formats) {
     try {
       final format = DateFormat(pattern, "en_US");
-      return format.parse("$date $time");
+      return format.parse("$date $normalizedTime");
     } catch (_) {
       // try next format
     }
   }
 
-  print("❌ Failed to parse: $date $time");
+  print("❌ Failed to parse: $date $normalizedTime");
   return null;
 }
 

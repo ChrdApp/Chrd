@@ -596,6 +596,10 @@ class GetGigThreadDetailCall {
         response,
         r'''$[:].venue_photo''',
       ));
+  String? stageName(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].stage_name''',
+      ));
 }
 
 class GetEntertainmetCall {
@@ -1244,9 +1248,15 @@ class GetOpenSlotsThisWeekCall {
 }
 
 class DiscoverOpenGigsCall {
-  Future<ApiCallResponse> call() async {
+  Future<ApiCallResponse> call({
+    int? pCurrentUserId,
+  }) async {
     final baseUrl = MusicianGroup.getBaseUrl();
 
+    final ffApiRequestBody = '''
+{
+  "p_current_user_id": ${pCurrentUserId}
+}''';
     return ApiManager.instance.makeApiCall(
       callName: 'Discover Open Gigs',
       apiUrl: '${baseUrl}/rpc/get_gigs_summary',
@@ -1259,6 +1269,7 @@ class DiscoverOpenGigsCall {
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
       },
       params: {},
+      body: ffApiRequestBody,
       bodyType: BodyType.JSON,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -1846,6 +1857,104 @@ class NotifyMusicianForVenueCall {
 }
 
 /// End Notification Group Code
+
+/// Start Fan Group Code
+
+class FanGroup {
+  static String getBaseUrl() =>
+      'https://kasnaqcqfuqnfydsjvpy.supabase.co/rest/v1/rpc';
+  static Map<String, String> headers = {
+    'Content-Type': 'application/json',
+    'Authorization':
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+    'apikey':
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+  };
+  static GetGigsForFanCall getGigsForFanCall = GetGigsForFanCall();
+  static GigDetailFanCall gigDetailFanCall = GigDetailFanCall();
+}
+
+class GetGigsForFanCall {
+  Future<ApiCallResponse> call({
+    String? pCurrentTime = '',
+    String? pSearch = '',
+    String? pSelectDate = '',
+    String? pEntertainmentType = '',
+    int? currentUserId,
+    bool? pShowBookmarked,
+  }) async {
+    final baseUrl = FanGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+{
+  "p_current_time": "${escapeStringForJson(pCurrentTime)}",
+  "p_fan_id": "${currentUserId}",
+  "p_search": "${escapeStringForJson(pSearch)}",
+  "p_select_date": "${escapeStringForJson(pSelectDate)}",
+  "p_entertainment_type": "${escapeStringForJson(pEntertainmentType)}",
+  "p_show_bookmarked": "${pShowBookmarked}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Get Gigs for Fan',
+      apiUrl: '${baseUrl}/get_gigs_for_fan',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization':
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'apikey':
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class GigDetailFanCall {
+  Future<ApiCallResponse> call({
+    String? pGroupUuid = '',
+    int? pFanId,
+  }) async {
+    final baseUrl = FanGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+{
+  "p_group_uuid": "${escapeStringForJson(pGroupUuid)}",
+  "p_fan_id": ${pFanId}
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Gig Detail Fan',
+      apiUrl: '${baseUrl}/show_gig_detail_fan',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization':
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'apikey':
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End Fan Group Code
 
 class CreateNewVenueCall {
   static Future<ApiCallResponse> call({

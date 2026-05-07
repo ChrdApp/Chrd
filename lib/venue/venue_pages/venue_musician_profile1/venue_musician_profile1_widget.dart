@@ -1,4 +1,5 @@
 import '/backend/api_requests/api_calls.dart';
+import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/c_h_r_d_profile_post_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -582,53 +583,16 @@ class _VenueMusicianProfile1WidgetState
                                       ),
                                     ].divide(SizedBox(width: 16.0)),
                                   ),
-                                  Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Expanded(
-                                        child: FFButtonWidget(
-                                          onPressed: () async {
-                                            if ('true' ==
-                                                valueOrDefault<String>(
-                                                  getJsonField(
-                                                    venueMusicianProfile1GetPerformerDetailsResponse
-                                                        .jsonBody,
-                                                    r'''$.is_favorite''',
-                                                  )?.toString(),
-                                                  '0',
-                                                )) {
-                                              await VenueFavoritesTable()
-                                                  .delete(
-                                                matchingRows: (rows) => rows
-                                                    .eqOrNull(
-                                                      'created_by',
-                                                      FFAppState().userId,
-                                                    )
-                                                    .eqOrNull(
-                                                      'musician_id',
-                                                      widget!.musicianId,
-                                                    ),
-                                              );
-                                            } else {
-                                              await VenueFavoritesTable()
-                                                  .insert({
-                                                'created_at':
-                                                    supaSerialize<DateTime>(
-                                                        getCurrentTimestamp),
-                                                'created_by':
-                                                    FFAppState().userId,
-                                                'musician_id':
-                                                    widget!.musicianId,
-                                              });
-                                            }
-
-                                            safeSetState(() => _model
-                                                .apiRequestCompleter = null);
-                                            await _model
-                                                .waitForApiRequestCompleted();
-                                          },
-                                          text: 'true' ==
+                                  if (FFAppState().userType != Type.Fan)
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                          child: FFButtonWidget(
+                                            onPressed: () async {
+                                              if ('true' ==
                                                   valueOrDefault<String>(
                                                     getJsonField(
                                                       venueMusicianProfile1GetPerformerDetailsResponse
@@ -636,18 +600,38 @@ class _VenueMusicianProfile1WidgetState
                                                       r'''$.is_favorite''',
                                                     )?.toString(),
                                                     '0',
-                                                  )
-                                              ? 'Remove from Favorite'
-                                              : 'Add to Favorite',
-                                          options: FFButtonOptions(
-                                            height: 44.0,
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 0.0, 16.0, 0.0),
-                                            iconPadding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            color: 'true' ==
+                                                  )) {
+                                                await VenueFavoritesTable()
+                                                    .delete(
+                                                  matchingRows: (rows) => rows
+                                                      .eqOrNull(
+                                                        'created_by',
+                                                        FFAppState().userId,
+                                                      )
+                                                      .eqOrNull(
+                                                        'musician_id',
+                                                        widget!.musicianId,
+                                                      ),
+                                                );
+                                              } else {
+                                                await VenueFavoritesTable()
+                                                    .insert({
+                                                  'created_at':
+                                                      supaSerialize<DateTime>(
+                                                          getCurrentTimestamp),
+                                                  'created_by':
+                                                      FFAppState().userId,
+                                                  'musician_id':
+                                                      widget!.musicianId,
+                                                });
+                                              }
+
+                                              safeSetState(() => _model
+                                                  .apiRequestCompleter = null);
+                                              await _model
+                                                  .waitForApiRequestCompleted();
+                                            },
+                                            text: 'true' ==
                                                     valueOrDefault<String>(
                                                       getJsonField(
                                                         venueMusicianProfile1GetPerformerDetailsResponse
@@ -656,51 +640,8 @@ class _VenueMusicianProfile1WidgetState
                                                       )?.toString(),
                                                       '0',
                                                     )
-                                                ? FlutterFlowTheme.of(context)
-                                                    .primaryViolet
-                                                : Color(0x27FFFFFF),
-                                            textStyle: FlutterFlowTheme.of(
-                                                    context)
-                                                .titleSmall
-                                                .override(
-                                                  font: GoogleFonts.interTight(
-                                                    fontWeight:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .titleSmall
-                                                            .fontWeight,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .titleSmall
-                                                            .fontStyle,
-                                                  ),
-                                                  color: Colors.white,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .titleSmall
-                                                          .fontWeight,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .titleSmall
-                                                          .fontStyle,
-                                                ),
-                                            elevation: 0.0,
-                                            borderRadius:
-                                                BorderRadius.circular(37.0),
-                                          ),
-                                        ),
-                                      ),
-                                      if (false)
-                                        Expanded(
-                                          child: FFButtonWidget(
-                                            onPressed: () {
-                                              print('Button pressed ...');
-                                            },
-                                            text: 'Share',
+                                                ? 'Remove from Favorite'
+                                                : 'Add to Favorite',
                                             options: FFButtonOptions(
                                               height: 44.0,
                                               padding: EdgeInsetsDirectional
@@ -708,9 +649,18 @@ class _VenueMusicianProfile1WidgetState
                                                       16.0, 0.0, 16.0, 0.0),
                                               iconPadding: EdgeInsetsDirectional
                                                   .fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryBackground,
+                                              color: 'true' ==
+                                                      valueOrDefault<String>(
+                                                        getJsonField(
+                                                          venueMusicianProfile1GetPerformerDetailsResponse
+                                                              .jsonBody,
+                                                          r'''$.is_favorite''',
+                                                        )?.toString(),
+                                                        '0',
+                                                      )
+                                                  ? FlutterFlowTheme.of(context)
+                                                      .primaryViolet
+                                                  : Color(0x27FFFFFF),
                                               textStyle: FlutterFlowTheme.of(
                                                       context)
                                                   .titleSmall
@@ -742,16 +692,71 @@ class _VenueMusicianProfile1WidgetState
                                                             .fontStyle,
                                                   ),
                                               elevation: 0.0,
-                                              borderSide: BorderSide(
-                                                color: Color(0x60E8EBEE),
-                                              ),
                                               borderRadius:
                                                   BorderRadius.circular(37.0),
                                             ),
                                           ),
                                         ),
-                                    ].divide(SizedBox(width: 10.0)),
-                                  ),
+                                        if (false)
+                                          Expanded(
+                                            child: FFButtonWidget(
+                                              onPressed: () {
+                                                print('Button pressed ...');
+                                              },
+                                              text: 'Share',
+                                              options: FFButtonOptions(
+                                                height: 44.0,
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        16.0, 0.0, 16.0, 0.0),
+                                                iconPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                            0.0, 0.0, 0.0, 0.0),
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryBackground,
+                                                textStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleSmall
+                                                        .override(
+                                                          font: GoogleFonts
+                                                              .interTight(
+                                                            fontWeight:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .titleSmall
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .titleSmall
+                                                                    .fontStyle,
+                                                          ),
+                                                          color: Colors.white,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleSmall
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleSmall
+                                                                  .fontStyle,
+                                                        ),
+                                                elevation: 0.0,
+                                                borderSide: BorderSide(
+                                                  color: Color(0x60E8EBEE),
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(37.0),
+                                              ),
+                                            ),
+                                          ),
+                                      ].divide(SizedBox(width: 10.0)),
+                                    ),
                                   Align(
                                     alignment: AlignmentDirectional(-1.0, 0.0),
                                     child: SingleChildScrollView(
@@ -1710,318 +1715,364 @@ class _VenueMusicianProfile1WidgetState
                     ),
                   ),
                 ),
-                if (((widget!.venueId != null) && (widget!.slotId != null)) ||
-                    widget!.isDiscoverFlow)
-                  Builder(
-                    builder: (context) => Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
-                      child: wrapWithModel(
-                        model: _model.cHRDLabelBtnModel1,
-                        updateCallback: () => safeSetState(() {}),
-                        child: CHRDLabelBtnWidget(
-                          heading: widget!.isBooked ? 'Close' : 'Send Offer',
-                          txtColor: FlutterFlowTheme.of(context).primaryText,
-                          btnColor: FlutterFlowTheme.of(context).primaryViolet,
-                          borderColor:
-                              FlutterFlowTheme.of(context).primaryViolet,
-                          hight: 45.0,
-                          headingFontSize: 14,
-                          isDisiable: false,
-                          onTab: () async {
-                            if (widget!.isDiscoverFlow) {
-                              await showDialog(
-                                context: context,
-                                builder: (dialogContext) {
-                                  return Dialog(
-                                    elevation: 0,
-                                    insetPadding: EdgeInsets.zero,
-                                    backgroundColor: Colors.transparent,
-                                    alignment: AlignmentDirectional(0.0, 0.0)
-                                        .resolve(Directionality.of(context)),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        FocusScope.of(dialogContext).unfocus();
-                                        FocusManager.instance.primaryFocus
-                                            ?.unfocus();
-                                      },
-                                      child: CHRDSendOfferPopUpWidget(
-                                        image: valueOrDefault<String>(
-                                          getJsonField(
-                                            venueMusicianProfile1GetPerformerDetailsResponse
-                                                .jsonBody,
-                                            r'''$.user.profile_photo''',
-                                          )?.toString(),
-                                          'https://kasnaqcqfuqnfydsjvpy.supabase.co/storage/v1/object/public/venueC/error.png',
-                                        ),
-                                        musicianName: getJsonField(
-                                          venueMusicianProfile1GetPerformerDetailsResponse
-                                              .jsonBody,
-                                          r'''$.user.name''',
-                                        ).toString(),
-                                        offerBtnAction: () async {
-                                          Navigator.pop(context);
-
-                                          context.pushNamed(
-                                            GigOfferChooseVenueWidget.routeName,
-                                            queryParameters: {
-                                              'musicianImage': serializeParam(
-                                                valueOrDefault<String>(
-                                                  getJsonField(
-                                                    venueMusicianProfile1GetPerformerDetailsResponse
-                                                        .jsonBody,
-                                                    r'''$.user.profile_photo''',
-                                                  )?.toString(),
-                                                  'https://kasnaqcqfuqnfydsjvpy.supabase.co/storage/v1/object/public/venueC/error.png',
-                                                ),
-                                                ParamType.String,
-                                              ),
-                                              'musicianName': serializeParam(
+                if (FFAppState().userType != Type.Fan)
+                  Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      if (((widget!.venueId != null) &&
+                              (widget!.slotId != null)) ||
+                          widget!.isDiscoverFlow)
+                        Builder(
+                          builder: (context) => Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                20.0, 0.0, 20.0, 0.0),
+                            child: wrapWithModel(
+                              model: _model.cHRDLabelBtnModel1,
+                              updateCallback: () => safeSetState(() {}),
+                              child: CHRDLabelBtnWidget(
+                                heading:
+                                    widget!.isBooked ? 'Close' : 'Send Offer',
+                                txtColor:
+                                    FlutterFlowTheme.of(context).primaryText,
+                                btnColor:
+                                    FlutterFlowTheme.of(context).primaryViolet,
+                                borderColor:
+                                    FlutterFlowTheme.of(context).primaryViolet,
+                                hight: 45.0,
+                                headingFontSize: 14,
+                                isDisiable: false,
+                                onTab: () async {
+                                  if (widget!.isDiscoverFlow) {
+                                    await showDialog(
+                                      context: context,
+                                      builder: (dialogContext) {
+                                        return Dialog(
+                                          elevation: 0,
+                                          insetPadding: EdgeInsets.zero,
+                                          backgroundColor: Colors.transparent,
+                                          alignment: AlignmentDirectional(
+                                                  0.0, 0.0)
+                                              .resolve(
+                                                  Directionality.of(context)),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              FocusScope.of(dialogContext)
+                                                  .unfocus();
+                                              FocusManager.instance.primaryFocus
+                                                  ?.unfocus();
+                                            },
+                                            child: CHRDSendOfferPopUpWidget(
+                                              image: valueOrDefault<String>(
                                                 getJsonField(
                                                   venueMusicianProfile1GetPerformerDetailsResponse
                                                       .jsonBody,
-                                                  r'''$.user.name''',
-                                                ).toString(),
-                                                ParamType.String,
+                                                  r'''$.user.profile_photo''',
+                                                )?.toString(),
+                                                'https://kasnaqcqfuqnfydsjvpy.supabase.co/storage/v1/object/public/venueC/error.png',
                                               ),
-                                              'musicianId': serializeParam(
-                                                widget!.musicianId,
-                                                ParamType.int,
-                                              ),
-                                              'venueName': serializeParam(
-                                                widget!.venueName,
-                                                ParamType.String,
-                                              ),
-                                              'venueImage': serializeParam(
-                                                widget!.venueImage,
-                                                ParamType.String,
-                                              ),
-                                            }.withoutNulls,
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  );
-                                },
-                              );
-                            } else {
-                              await showDialog(
-                                context: context,
-                                builder: (dialogContext) {
-                                  return Dialog(
-                                    elevation: 0,
-                                    insetPadding: EdgeInsets.zero,
-                                    backgroundColor: Colors.transparent,
-                                    alignment: AlignmentDirectional(0.0, 0.0)
-                                        .resolve(Directionality.of(context)),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        FocusScope.of(dialogContext).unfocus();
-                                        FocusManager.instance.primaryFocus
-                                            ?.unfocus();
-                                      },
-                                      child: CHRDSendOfferPopUpWidget(
-                                        image: valueOrDefault<String>(
-                                          getJsonField(
-                                            venueMusicianProfile1GetPerformerDetailsResponse
-                                                .jsonBody,
-                                            r'''$.user.profile_photo''',
-                                          )?.toString(),
-                                          'https://kasnaqcqfuqnfydsjvpy.supabase.co/storage/v1/object/public/venueC/error.png',
-                                        ),
-                                        musicianName: getJsonField(
-                                          venueMusicianProfile1GetPerformerDetailsResponse
-                                              .jsonBody,
-                                          r'''$.user.name''',
-                                        ).toString(),
-                                        offerBtnAction: () async {
-                                          var _shouldSetState = false;
-                                          if (widget!.isBooked) {
-                                            context.safePop();
-                                            return;
-                                          } else {
-                                            _model.upsertOutput =
-                                                await VenueGroup.upsertGigsCall
-                                                    .call(
-                                              venueId: widget!.venueId,
-                                              musicianId: widget!.musicianId,
-                                              slotid: widget!.slotId,
-                                              venueOwnerId: FFAppState().userId,
-                                            );
+                                              musicianName: getJsonField(
+                                                venueMusicianProfile1GetPerformerDetailsResponse
+                                                    .jsonBody,
+                                                r'''$.user.name''',
+                                              ).toString(),
+                                              offerBtnAction: () async {
+                                                Navigator.pop(context);
 
-                                            _shouldSetState = true;
-                                            if ((_model
-                                                    .upsertOutput?.succeeded ??
-                                                true)) {
-                                              if ('true' ==
-                                                  getJsonField(
-                                                    (_model.upsertOutput
-                                                            ?.jsonBody ??
-                                                        ''),
-                                                    r'''$..slot_thread_is_created_now''',
-                                                  ).toString()) {
-                                                _model.notificationoutput =
-                                                    await NotificationGroup
-                                                        .sendNotificationCall
-                                                        .call(
-                                                  title:
-                                                      '${widget!.venueName} invited you',
-                                                  description:
-                                                      '${widget!.venueName} invited you to perform. Check details.',
-                                                  sendToList: (int var1) {
-                                                    return List<String>.from(
-                                                        [var1.toString()]);
-                                                  }(widget!.musicianId!),
-                                                  type: 'PerformerInvited',
-                                                  usertype: FFAppState()
-                                                      .userType
-                                                      ?.name,
-                                                  dataJson: <String, dynamic>{
-                                                    'musician_id':
-                                                        widget!.musicianId,
-                                                    'thread_id': getJsonField(
-                                                      (_model.upsertOutput
-                                                              ?.jsonBody ??
-                                                          ''),
-                                                      r'''$..slot_thread_id''',
+                                                context.pushNamed(
+                                                  GigOfferChooseVenueWidget
+                                                      .routeName,
+                                                  queryParameters: {
+                                                    'musicianImage':
+                                                        serializeParam(
+                                                      valueOrDefault<String>(
+                                                        getJsonField(
+                                                          venueMusicianProfile1GetPerformerDetailsResponse
+                                                              .jsonBody,
+                                                          r'''$.user.profile_photo''',
+                                                        )?.toString(),
+                                                        'https://kasnaqcqfuqnfydsjvpy.supabase.co/storage/v1/object/public/venueC/error.png',
+                                                      ),
+                                                      ParamType.String,
                                                     ),
-                                                    'is_venue': 'false',
-                                                    'image': widget!.venueImage,
-                                                  },
+                                                    'musicianName':
+                                                        serializeParam(
+                                                      getJsonField(
+                                                        venueMusicianProfile1GetPerformerDetailsResponse
+                                                            .jsonBody,
+                                                        r'''$.user.name''',
+                                                      ).toString(),
+                                                      ParamType.String,
+                                                    ),
+                                                    'musicianId':
+                                                        serializeParam(
+                                                      widget!.musicianId,
+                                                      ParamType.int,
+                                                    ),
+                                                    'venueName': serializeParam(
+                                                      widget!.venueName,
+                                                      ParamType.String,
+                                                    ),
+                                                    'venueImage':
+                                                        serializeParam(
+                                                      widget!.venueImage,
+                                                      ParamType.String,
+                                                    ),
+                                                  }.withoutNulls,
                                                 );
-
-                                                _shouldSetState = true;
-                                                await NotificationTable()
-                                                    .insert({
-                                                  'user_id': widget!.musicianId,
-                                                  'title':
-                                                      '${widget!.venueName} invited you',
-                                                  'description':
-                                                      '${widget!.venueName} invited you to perform. Check details.',
-                                                  'type': 'PerformerInvited',
-                                                  'data': <String, dynamic>{
-                                                    'musician_id':
+                                              },
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  } else {
+                                    await showDialog(
+                                      context: context,
+                                      builder: (dialogContext) {
+                                        return Dialog(
+                                          elevation: 0,
+                                          insetPadding: EdgeInsets.zero,
+                                          backgroundColor: Colors.transparent,
+                                          alignment: AlignmentDirectional(
+                                                  0.0, 0.0)
+                                              .resolve(
+                                                  Directionality.of(context)),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              FocusScope.of(dialogContext)
+                                                  .unfocus();
+                                              FocusManager.instance.primaryFocus
+                                                  ?.unfocus();
+                                            },
+                                            child: CHRDSendOfferPopUpWidget(
+                                              image: valueOrDefault<String>(
+                                                getJsonField(
+                                                  venueMusicianProfile1GetPerformerDetailsResponse
+                                                      .jsonBody,
+                                                  r'''$.user.profile_photo''',
+                                                )?.toString(),
+                                                'https://kasnaqcqfuqnfydsjvpy.supabase.co/storage/v1/object/public/venueC/error.png',
+                                              ),
+                                              musicianName: getJsonField(
+                                                venueMusicianProfile1GetPerformerDetailsResponse
+                                                    .jsonBody,
+                                                r'''$.user.name''',
+                                              ).toString(),
+                                              offerBtnAction: () async {
+                                                var _shouldSetState = false;
+                                                if (widget!.isBooked) {
+                                                  context.safePop();
+                                                  return;
+                                                } else {
+                                                  _model.upsertOutput =
+                                                      await VenueGroup
+                                                          .upsertGigsCall
+                                                          .call(
+                                                    venueId: widget!.venueId,
+                                                    musicianId:
                                                         widget!.musicianId,
-                                                    'thread_id': getJsonField(
-                                                      (_model.upsertOutput
-                                                              ?.jsonBody ??
-                                                          ''),
-                                                      r'''$..slot_thread_id''',
-                                                    ),
-                                                    'is_venue': 'false',
-                                                    'image': widget!.venueImage,
-                                                  },
-                                                  'usertype': FFAppState()
-                                                      .userType
-                                                      ?.name,
-                                                  'is_read': false,
-                                                  'created_at': supaSerialize<
-                                                          DateTime>(
-                                                      functions.toUtcTimestamp(
-                                                          getCurrentTimestamp)),
-                                                  'updated_at': supaSerialize<
-                                                          DateTime>(
-                                                      functions.toUtcTimestamp(
-                                                          getCurrentTimestamp)),
-                                                });
-                                              }
-                                              Navigator.pop(context);
+                                                    slotid: widget!.slotId,
+                                                    venueOwnerId:
+                                                        FFAppState().userId,
+                                                  );
 
-                                              context.pushNamed(
-                                                CustomChatVenueWidget.routeName,
-                                                queryParameters: {
-                                                  'threadId': serializeParam(
-                                                    getJsonField(
-                                                      (_model.upsertOutput
-                                                              ?.jsonBody ??
-                                                          ''),
-                                                      r'''$..slot_thread_id''',
-                                                    ),
-                                                    ParamType.int,
-                                                  ),
-                                                  'isVenue': serializeParam(
-                                                    true,
-                                                    ParamType.bool,
-                                                  ),
-                                                }.withoutNulls,
-                                              );
+                                                  _shouldSetState = true;
+                                                  if ((_model.upsertOutput
+                                                          ?.succeeded ??
+                                                      true)) {
+                                                    if ('true' ==
+                                                        getJsonField(
+                                                          (_model.upsertOutput
+                                                                  ?.jsonBody ??
+                                                              ''),
+                                                          r'''$..slot_thread_is_created_now''',
+                                                        ).toString()) {
+                                                      _model.notificationoutput =
+                                                          await NotificationGroup
+                                                              .sendNotificationCall
+                                                              .call(
+                                                        title:
+                                                            '${widget!.venueName} invited you',
+                                                        description:
+                                                            '${widget!.venueName} invited you to perform. Check details.',
+                                                        sendToList: (int var1) {
+                                                          return List<
+                                                              String>.from([
+                                                            var1.toString()
+                                                          ]);
+                                                        }(widget!.musicianId!),
+                                                        type:
+                                                            'PerformerInvited',
+                                                        usertype: FFAppState()
+                                                            .userType
+                                                            ?.name,
+                                                        dataJson: <String,
+                                                            dynamic>{
+                                                          'musician_id': widget!
+                                                              .musicianId,
+                                                          'thread_id':
+                                                              getJsonField(
+                                                            (_model.upsertOutput
+                                                                    ?.jsonBody ??
+                                                                ''),
+                                                            r'''$..slot_thread_id''',
+                                                          ),
+                                                          'is_venue': 'false',
+                                                          'image': widget!
+                                                              .venueImage,
+                                                        },
+                                                      );
 
-                                              return;
-                                            } else {
-                                              return;
-                                            }
-                                          }
-                                        },
-                                      ),
-                                    ),
-                                  );
+                                                      _shouldSetState = true;
+                                                      await NotificationTable()
+                                                          .insert({
+                                                        'user_id':
+                                                            widget!.musicianId,
+                                                        'title':
+                                                            '${widget!.venueName} invited you',
+                                                        'description':
+                                                            '${widget!.venueName} invited you to perform. Check details.',
+                                                        'type':
+                                                            'PerformerInvited',
+                                                        'data':
+                                                            <String, dynamic>{
+                                                          'musician_id': widget!
+                                                              .musicianId,
+                                                          'thread_id':
+                                                              getJsonField(
+                                                            (_model.upsertOutput
+                                                                    ?.jsonBody ??
+                                                                ''),
+                                                            r'''$..slot_thread_id''',
+                                                          ),
+                                                          'is_venue': 'false',
+                                                          'image': widget!
+                                                              .venueImage,
+                                                        },
+                                                        'usertype': FFAppState()
+                                                            .userType
+                                                            ?.name,
+                                                        'is_read': false,
+                                                        'created_at': supaSerialize<
+                                                                DateTime>(
+                                                            functions
+                                                                .toUtcTimestamp(
+                                                                    getCurrentTimestamp)),
+                                                        'updated_at': supaSerialize<
+                                                                DateTime>(
+                                                            functions
+                                                                .toUtcTimestamp(
+                                                                    getCurrentTimestamp)),
+                                                      });
+                                                    }
+                                                    Navigator.pop(context);
+
+                                                    context.pushNamed(
+                                                      CustomChatVenueWidget
+                                                          .routeName,
+                                                      queryParameters: {
+                                                        'threadId':
+                                                            serializeParam(
+                                                          getJsonField(
+                                                            (_model.upsertOutput
+                                                                    ?.jsonBody ??
+                                                                ''),
+                                                            r'''$..slot_thread_id''',
+                                                          ),
+                                                          ParamType.int,
+                                                        ),
+                                                        'isVenue':
+                                                            serializeParam(
+                                                          true,
+                                                          ParamType.bool,
+                                                        ),
+                                                      }.withoutNulls,
+                                                    );
+
+                                                    return;
+                                                  } else {
+                                                    return;
+                                                  }
+                                                }
+                                              },
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  }
+
+                                  safeSetState(() {});
                                 },
-                              );
-                            }
-
-                            safeSetState(() {});
-                          },
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
-                if ((widget!.venueId != null) && (widget!.slotId != null))
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(20.0, 16.0, 20.0, 0.0),
-                    child: wrapWithModel(
-                      model: _model.cHRDLabelBtnModel2,
-                      updateCallback: () => safeSetState(() {}),
-                      child: CHRDLabelBtnWidget(
-                        heading: 'Message',
-                        txtColor: FlutterFlowTheme.of(context).primaryText,
-                        btnColor: FlutterFlowTheme.of(context).primaryViolet,
-                        borderColor: FlutterFlowTheme.of(context).primaryViolet,
-                        hight: 45.0,
-                        headingFontSize: 14,
-                        isDisiable: false,
-                        onTab: () async {
-                          var _shouldSetState = false;
-                          _model.upsertOutputGenral =
-                              await VenueGroup.upsertGigsCall.call(
-                            venueId: widget!.venueId,
-                            musicianId: widget!.musicianId,
-                            slotid: widget!.slotId,
-                            venueOwnerId: FFAppState().userId,
-                          );
+                      if ((widget!.venueId != null) && (widget!.slotId != null))
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              20.0, 16.0, 20.0, 0.0),
+                          child: wrapWithModel(
+                            model: _model.cHRDLabelBtnModel2,
+                            updateCallback: () => safeSetState(() {}),
+                            child: CHRDLabelBtnWidget(
+                              heading: 'Message',
+                              txtColor:
+                                  FlutterFlowTheme.of(context).primaryText,
+                              btnColor:
+                                  FlutterFlowTheme.of(context).primaryViolet,
+                              borderColor:
+                                  FlutterFlowTheme.of(context).primaryViolet,
+                              hight: 45.0,
+                              headingFontSize: 14,
+                              isDisiable: false,
+                              onTab: () async {
+                                var _shouldSetState = false;
+                                _model.upsertOutputGenral =
+                                    await VenueGroup.upsertGigsCall.call(
+                                  venueId: widget!.venueId,
+                                  musicianId: widget!.musicianId,
+                                  slotid: widget!.slotId,
+                                  venueOwnerId: FFAppState().userId,
+                                );
 
-                          _shouldSetState = true;
-                          if ((_model.upsertOutputGenral?.succeeded ?? true)) {
-                            Navigator.pop(context);
+                                _shouldSetState = true;
+                                if ((_model.upsertOutputGenral?.succeeded ??
+                                    true)) {
+                                  Navigator.pop(context);
 
-                            context.pushNamed(
-                              CustomChatVenueWidget.routeName,
-                              queryParameters: {
-                                'threadId': serializeParam(
-                                  getJsonField(
-                                    (_model.upsertOutputGenral?.jsonBody ?? ''),
-                                    r'''$..general_thread_id''',
-                                  ),
-                                  ParamType.int,
-                                ),
-                                'isVenue': serializeParam(
-                                  true,
-                                  ParamType.bool,
-                                ),
-                              }.withoutNulls,
-                            );
+                                  context.pushNamed(
+                                    CustomChatVenueWidget.routeName,
+                                    queryParameters: {
+                                      'threadId': serializeParam(
+                                        getJsonField(
+                                          (_model.upsertOutputGenral
+                                                  ?.jsonBody ??
+                                              ''),
+                                          r'''$..general_thread_id''',
+                                        ),
+                                        ParamType.int,
+                                      ),
+                                      'isVenue': serializeParam(
+                                        true,
+                                        ParamType.bool,
+                                      ),
+                                    }.withoutNulls,
+                                  );
 
-                            if (_shouldSetState) safeSetState(() {});
-                            return;
-                          } else {
-                            if (_shouldSetState) safeSetState(() {});
-                            return;
-                          }
+                                  if (_shouldSetState) safeSetState(() {});
+                                  return;
+                                } else {
+                                  if (_shouldSetState) safeSetState(() {});
+                                  return;
+                                }
 
-                          if (_shouldSetState) safeSetState(() {});
-                        },
-                      ),
-                    ),
+                                if (_shouldSetState) safeSetState(() {});
+                              },
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
               ].addToEnd(SizedBox(height: 24.0)),
             ),

@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
 import '/custom_code/widgets/index.dart' as custom_widgets;
+import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -153,11 +154,26 @@ class _CustomChatVenueWidgetState extends State<CustomChatVenueWidget> {
                         slotType: VenueGroup.getGigThreadDetailCall.gigType(
                           customChatVenueGetGigThreadDetailResponse.jsonBody,
                         )!,
+                        stageName: VenueGroup.getGigThreadDetailCall.stageName(
+                                      customChatVenueGetGigThreadDetailResponse
+                                          .jsonBody,
+                                    ) !=
+                                    null &&
+                                VenueGroup.getGigThreadDetailCall.stageName(
+                                      customChatVenueGetGigThreadDetailResponse
+                                          .jsonBody,
+                                    ) !=
+                                    ''
+                            ? VenueGroup.getGigThreadDetailCall.stageName(
+                                customChatVenueGetGigThreadDetailResponse
+                                    .jsonBody,
+                              )!
+                            : '',
                         onSendBtnClicked: (value) async {
                           await ThreadMessagesTable().insert({
                             'message_type': 'text',
-                            'created_at':
-                                supaSerialize<DateTime>(getCurrentTimestamp),
+                            'created_at': supaSerialize<DateTime>(
+                                functions.toUtcTimestamp(getCurrentTimestamp)),
                             'thread_id': widget!.threadId,
                             'sender_id': FFAppState().userId,
                             'message_content': value,
@@ -217,7 +233,7 @@ class _CustomChatVenueWidgetState extends State<CustomChatVenueWidget> {
                         viewOtherGigAction: () async {
                           if (widget!.isVenue) {
                             context.pushNamed(
-                              VenueGigViewOverlayWidget.routeName,
+                              VenueGigContractOverlayCopyWidget.routeName,
                               queryParameters: {
                                 'slotId': serializeParam(
                                   _model.acceptRejectGigOutput?.firstOrNull?.id,
@@ -226,6 +242,14 @@ class _CustomChatVenueWidgetState extends State<CustomChatVenueWidget> {
                                 'threadId': serializeParam(
                                   widget!.threadId,
                                   ParamType.int,
+                                ),
+                                'musicianName': serializeParam(
+                                  VenueGroup.getGigThreadDetailCall
+                                      .musicianName(
+                                    customChatVenueGetGigThreadDetailResponse
+                                        .jsonBody,
+                                  ),
+                                  ParamType.String,
                                 ),
                               }.withoutNulls,
                             );
@@ -249,28 +273,7 @@ class _CustomChatVenueWidgetState extends State<CustomChatVenueWidget> {
                             return;
                           }
                         },
-                        showGigDetailAction: () async {
-                          context.pushNamed(
-                            VenueGigContractOverlayCopyWidget.routeName,
-                            queryParameters: {
-                              'slotId': serializeParam(
-                                _model.acceptRejectGigOutput?.firstOrNull?.id,
-                                ParamType.int,
-                              ),
-                              'threadId': serializeParam(
-                                widget!.threadId,
-                                ParamType.int,
-                              ),
-                              'musicianName': serializeParam(
-                                VenueGroup.getGigThreadDetailCall.musicianName(
-                                  customChatVenueGetGigThreadDetailResponse
-                                      .jsonBody,
-                                ),
-                                ParamType.String,
-                              ),
-                            }.withoutNulls,
-                          );
-                        },
+                        showGigDetailAction: () async {},
                         viewProfileAction: () async {
                           if (widget!.isVenue) {
                             context.pushNamed(

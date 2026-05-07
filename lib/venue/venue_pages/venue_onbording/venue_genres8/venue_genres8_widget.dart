@@ -570,20 +570,6 @@ class _VenueGenres8WidgetState extends State<VenueGenres8Widget> {
                       if (_shouldSetState) safeSetState(() {});
                       return;
                     } else if (FFAppState().userType == Type.Fan) {
-                      FFAppState().updateFanUserDataStruct(
-                        (e) => e..fanGenreId = _model.selectedGenres.toList(),
-                      );
-                      safeSetState(() {});
-
-                      context.pushNamed(
-                        NavPageWidget.routeName,
-                        queryParameters: {
-                          'index': serializeParam(
-                            0,
-                            ParamType.int,
-                          ),
-                        }.withoutNulls,
-                      );
                     } else {
                       FFAppState().updateVenueAccountCreateStruct(
                         (e) => e..genreId = _model.selectedGenres.toList(),

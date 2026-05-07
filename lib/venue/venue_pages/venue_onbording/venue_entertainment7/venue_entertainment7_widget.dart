@@ -120,12 +120,22 @@ class _VenueEntertainment7WidgetState extends State<VenueEntertainment7Widget> {
                             return true;
                           } else if (widget!.musicianID != null) {
                             return true;
+                          } else if (FFAppState().userType == Type.Fan) {
+                            return true;
                           } else {
                             return false;
                           }
                         }(),
                         count: widget!.musicianID != null ? 6 : 8,
-                        isEdit: widget!.venueId != null ? true : false,
+                        isEdit: () {
+                          if (widget!.venueId != null) {
+                            return true;
+                          } else if (FFAppState().userType == Type.Fan) {
+                            return true;
+                          } else {
+                            return false;
+                          }
+                        }(),
                         onNavBack: () async {
                           context.safePop();
                         },
@@ -143,7 +153,7 @@ class _VenueEntertainment7WidgetState extends State<VenueEntertainment7Widget> {
                       updateCallback: () => safeSetState(() {}),
                       child: CHRDLabelColumnTextWidget(
                         heading:
-                            'Select entertainment for ${widget!.musicianID != null ? FFAppState().AdminName : FFAppState().vanueName}',
+                            'Select performance type for${widget!.musicianID != null ? FFAppState().AdminName : FFAppState().vanueName}',
                         subHeading: ' ',
                       ),
                     ),
@@ -523,7 +533,15 @@ class _VenueEntertainment7WidgetState extends State<VenueEntertainment7Widget> {
                       );
                       safeSetState(() {});
 
-                      context.pushNamed(VenueGenres8Widget.routeName);
+                      context.pushNamed(
+                        NavPageWidget.routeName,
+                        queryParameters: {
+                          'index': serializeParam(
+                            0,
+                            ParamType.int,
+                          ),
+                        }.withoutNulls,
+                      );
                     } else {
                       FFAppState().updateVenueAccountCreateStruct(
                         (e) => e

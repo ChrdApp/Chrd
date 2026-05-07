@@ -20,6 +20,7 @@ class OnetimeGigsModelStruct extends BaseStruct {
     List<EntertainmentsModelStruct>? entertainments,
     List<GenreModelStruct>? genres,
     int? venueOwnerId,
+    bool? isInquired,
   })  : _slotId = slotId,
         _startDate = startDate,
         _startTime = startTime,
@@ -31,7 +32,8 @@ class OnetimeGigsModelStruct extends BaseStruct {
         _repeatType = repeatType,
         _entertainments = entertainments,
         _genres = genres,
-        _venueOwnerId = venueOwnerId;
+        _venueOwnerId = venueOwnerId,
+        _isInquired = isInquired;
 
   // "slot_id" field.
   int? _slotId;
@@ -135,6 +137,13 @@ class OnetimeGigsModelStruct extends BaseStruct {
 
   bool hasVenueOwnerId() => _venueOwnerId != null;
 
+  // "is_inquired" field.
+  bool? _isInquired;
+  bool get isInquired => _isInquired ?? false;
+  set isInquired(bool? val) => _isInquired = val;
+
+  bool hasIsInquired() => _isInquired != null;
+
   static OnetimeGigsModelStruct fromMap(Map<String, dynamic> data) =>
       OnetimeGigsModelStruct(
         slotId: castToType<int>(data['slot_id']),
@@ -155,6 +164,7 @@ class OnetimeGigsModelStruct extends BaseStruct {
           GenreModelStruct.fromMap,
         ),
         venueOwnerId: castToType<int>(data['venue_owner_id']),
+        isInquired: data['is_inquired'] as bool?,
       );
 
   static OnetimeGigsModelStruct? maybeFromMap(dynamic data) => data is Map
@@ -174,6 +184,7 @@ class OnetimeGigsModelStruct extends BaseStruct {
         'entertainments': _entertainments?.map((e) => e.toMap()).toList(),
         'genres': _genres?.map((e) => e.toMap()).toList(),
         'venue_owner_id': _venueOwnerId,
+        'is_inquired': _isInquired,
       }.withoutNulls;
 
   @override
@@ -227,6 +238,10 @@ class OnetimeGigsModelStruct extends BaseStruct {
         'venue_owner_id': serializeParam(
           _venueOwnerId,
           ParamType.int,
+        ),
+        'is_inquired': serializeParam(
+          _isInquired,
+          ParamType.bool,
         ),
       }.withoutNulls;
 
@@ -295,6 +310,11 @@ class OnetimeGigsModelStruct extends BaseStruct {
           ParamType.int,
           false,
         ),
+        isInquired: deserializeParam(
+          data['is_inquired'],
+          ParamType.bool,
+          false,
+        ),
       );
 
   @override
@@ -315,7 +335,8 @@ class OnetimeGigsModelStruct extends BaseStruct {
         repeatType == other.repeatType &&
         listEquality.equals(entertainments, other.entertainments) &&
         listEquality.equals(genres, other.genres) &&
-        venueOwnerId == other.venueOwnerId;
+        venueOwnerId == other.venueOwnerId &&
+        isInquired == other.isInquired;
   }
 
   @override
@@ -331,7 +352,8 @@ class OnetimeGigsModelStruct extends BaseStruct {
         repeatType,
         entertainments,
         genres,
-        venueOwnerId
+        venueOwnerId,
+        isInquired
       ]);
 }
 
@@ -346,6 +368,7 @@ OnetimeGigsModelStruct createOnetimeGigsModelStruct({
   String? groupUuid,
   String? repeatType,
   int? venueOwnerId,
+  bool? isInquired,
 }) =>
     OnetimeGigsModelStruct(
       slotId: slotId,
@@ -358,4 +381,5 @@ OnetimeGigsModelStruct createOnetimeGigsModelStruct({
       groupUuid: groupUuid,
       repeatType: repeatType,
       venueOwnerId: venueOwnerId,
+      isInquired: isInquired,
     );

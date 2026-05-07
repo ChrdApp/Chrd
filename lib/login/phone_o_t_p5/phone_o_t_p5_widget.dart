@@ -316,6 +316,10 @@ class _PhoneOTP5WidgetState extends State<PhoneOTP5Widget> {
                                     .isPhoneExist?.firstOrNull?.userType ==
                                 Type.Venue.name) {
                               return Type.Venue;
+                            } else if (_model
+                                    .isPhoneExist?.firstOrNull?.userType ==
+                                Type.Fan.name) {
+                              return Type.Fan;
                             } else {
                               return null;
                             }

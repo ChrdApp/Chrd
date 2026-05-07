@@ -1,8 +1,4 @@
-import '/auth/supabase_auth/auth_util.dart';
-import '/backend/schema/enums/enums.dart';
-import '/backend/schema/structs/index.dart';
 import '/backend/supabase/supabase.dart';
-import '/components/confirmation_dialog_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -10,9 +6,7 @@ import '/musician/components/c_h_r_d_back_btn/c_h_r_d_back_btn_widget.dart';
 import '/musician/components/c_h_r_d_label_btn/c_h_r_d_label_btn_widget.dart';
 import '/musician/components/c_h_r_d_label_text_field_with_border/c_h_r_d_label_text_field_with_border_widget.dart';
 import 'dart:ui';
-import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
-import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -438,140 +432,6 @@ class _LoginSecurityWidgetState extends State<LoginSecurityWidget> {
                                       inputFormatters: [
                                         _model.phoneTextFieldMask
                                       ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Builder(
-                                builder: (context) => InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () async {
-                                    await showDialog(
-                                      context: context,
-                                      builder: (dialogContext) {
-                                        return Dialog(
-                                          elevation: 0,
-                                          insetPadding: EdgeInsets.zero,
-                                          backgroundColor: Colors.transparent,
-                                          alignment: AlignmentDirectional(
-                                                  0.0, 0.0)
-                                              .resolve(
-                                                  Directionality.of(context)),
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              FocusScope.of(dialogContext)
-                                                  .unfocus();
-                                              FocusManager.instance.primaryFocus
-                                                  ?.unfocus();
-                                            },
-                                            child: Container(
-                                              width: MediaQuery.sizeOf(context)
-                                                      .width *
-                                                  0.8,
-                                              child: ConfirmationDialogWidget(
-                                                acceptbtnText: 'Logout',
-                                                title:
-                                                    'Are you sure you want to Logout?',
-                                                acceptBtnAction: () async {
-                                                  FFAppState().venueId = 0;
-                                                  FFAppState().userId = 0;
-                                                  FFAppState().step = 0;
-                                                  FFAppState().userType = null;
-                                                  FFAppState().vanueName = '';
-                                                  FFAppState().AdminName = '';
-                                                  FFAppState().venueProfilePic =
-                                                      '';
-                                                  FFAppState()
-                                                      .venueContentVenueList = [];
-                                                  FFAppState()
-                                                          .venueAccountCreate =
-                                                      VenueAccountCreateStruct();
-                                                  FFAppState()
-                                                      .performanceStagesContentList = [];
-                                                  FFAppState().startTime = null;
-                                                  FFAppState().endTime = null;
-                                                  FFAppState().slotRepeatType =
-                                                      'None';
-                                                  FFAppState().slotEndDate =
-                                                      null;
-                                                  FFAppState().accountType = '';
-                                                  FFAppState()
-                                                      .musicianAddImages = [];
-                                                  FFAppState()
-                                                      .ProfileHighlight = [];
-                                                  FFAppState().gigOffer =
-                                                      GigOfferStruct();
-                                                  FFAppState().json = jsonDecode(
-                                                      '[{\"sender\":\"venue\",\"text\":\"Hey! We\'ve been following your shows and would love to have you DJ for us! How much money would you want for each show?\",\"timestamp\":\"9:41am\",\"date\":\"Oct 23rd, 2025\",\"isProposal\":true},{\"sender\":\"musician\",\"text\":\"Hi there! I would love to perform. I am not available Wednesday, Nov 26th. I am still interested in doing the other 3 shows for \$400 each.\",\"timestamp\":\"10:54am\"}]');
-                                                  safeSetState(() {});
-                                                  await actions
-                                                      .oneSignalLogout();
-                                                  GoRouter.of(context)
-                                                      .prepareAuthEvent();
-                                                  await authManager.signOut();
-                                                  GoRouter.of(context)
-                                                      .clearRedirectLocation();
-
-                                                  context.goNamedAuth(
-                                                      SplashScreenWidget
-                                                          .routeName,
-                                                      context.mounted);
-                                                },
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  },
-                                  child: Container(
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .neutralDark900,
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          12.0, 10.0, 12.0, 10.0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            'Log out',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  font: GoogleFonts.montserrat(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontStyle,
-                                                  ),
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryText,
-                                                  fontSize: 14.0,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontStyle,
-                                                ),
-                                          ),
-                                        ].divide(SizedBox(height: 4.0)),
-                                      ),
                                     ),
                                   ),
                                 ),

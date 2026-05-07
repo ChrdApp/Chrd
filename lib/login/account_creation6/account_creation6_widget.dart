@@ -106,26 +106,24 @@ class _AccountCreation6WidgetState extends State<AccountCreation6Widget> {
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    if (false)
-                      InkWell(
-                        splashColor: Colors.transparent,
-                        focusColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onTap: () async {
-                          FFAppState().userType = Type.Fan;
-                          safeSetState(() {});
-                        },
-                        child: wrapWithModel(
-                          model: _model.fanCreationModel,
-                          updateCallback: () => safeSetState(() {}),
-                          child: FanCreationWidget(
-                            isSelected: FFAppState().userType == Type.Fan
-                                ? true
-                                : false,
-                          ),
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        FFAppState().userType = Type.Fan;
+                        safeSetState(() {});
+                      },
+                      child: wrapWithModel(
+                        model: _model.fanCreationModel,
+                        updateCallback: () => safeSetState(() {}),
+                        child: FanCreationWidget(
+                          isSelected:
+                              FFAppState().userType == Type.Fan ? true : false,
                         ),
                       ),
+                    ),
                     InkWell(
                       splashColor: Colors.transparent,
                       focusColor: Colors.transparent,

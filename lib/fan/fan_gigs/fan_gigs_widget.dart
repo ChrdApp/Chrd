@@ -107,6 +107,12 @@ class _FanGigsWidgetState extends State<FanGigsWidget> {
                       width: 63.0,
                       height: 63.0,
                       fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) => Image.asset(
+                        'assets/images/error_image.jpg',
+                        width: 63.0,
+                        height: 63.0,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
@@ -124,12 +130,26 @@ class _FanGigsWidgetState extends State<FanGigsWidget> {
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Text(
-                                widget!.lastseen!,
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      font: GoogleFonts.montserrat(
+                              if (false)
+                                Text(
+                                  widget!.lastseen!,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        font: GoogleFonts.montserrat(
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
+                                        ),
+                                        color: FlutterFlowTheme.of(context)
+                                            .neutralLight300,
+                                        fontSize: 12.0,
+                                        letterSpacing: 0.0,
                                         fontWeight: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .fontWeight,
@@ -137,18 +157,7 @@ class _FanGigsWidgetState extends State<FanGigsWidget> {
                                             .bodyMedium
                                             .fontStyle,
                                       ),
-                                      color: FlutterFlowTheme.of(context)
-                                          .neutralLight300,
-                                      fontSize: 12.0,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                              ),
+                                ),
                             ],
                           ),
                         ),

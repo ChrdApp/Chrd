@@ -105,7 +105,7 @@ class _FanCreationWidgetState extends State<FanCreationWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Performer',
+                        'Fan',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               font: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w600,
@@ -123,7 +123,7 @@ class _FanCreationWidgetState extends State<FanCreationWidget> {
                             ),
                       ),
                       Text(
-                        'Share your gigs, promote new releases, and connect with venues and fans.',
+                        'Follow musicians, stay updated on events, and discover new performances.',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               font: GoogleFonts.montserrat(
                                 fontWeight: FlutterFlowTheme.of(context)

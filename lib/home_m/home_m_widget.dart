@@ -274,30 +274,83 @@ class _HomeMWidgetState extends State<HomeMWidget> {
                                       ),
                                     ],
                                   ),
-                                  Text(
-                                    'You have ${getJsonField(
-                                      (_model.offerCountOutput?.jsonBody ?? ''),
-                                      r'''$.open_offer_count''',
-                                    ).toString()} gig offers to respond to!',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          font: GoogleFonts.montserrat(
-                                            fontWeight: FontWeight.w600,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
-                                          ),
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w600,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Text(
+                                        'You have ',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              font: GoogleFonts.montserrat(
+                                                fontWeight: FontWeight.w600,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontStyle,
+                                              ),
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w600,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                      ),
+                                      Text(
+                                        '${getJsonField(
+                                          (_model.offerCountOutput?.jsonBody ??
+                                              ''),
+                                          r'''$.open_offer_count''',
+                                        ).toString()} gig offers',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              font: GoogleFonts.montserrat(
+                                                fontWeight: FontWeight.bold,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontStyle,
+                                              ),
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.bold,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                      ),
+                                      Text(
+                                        ' to respond to!',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              font: GoogleFonts.montserrat(
+                                                fontWeight: FontWeight.w600,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontStyle,
+                                              ),
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w600,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                      ),
+                                    ],
                                   ),
                                   FFButtonWidget(
                                     onPressed: () async {
@@ -869,7 +922,6 @@ class _HomeMWidgetState extends State<HomeMWidget> {
                                             },
                                             child: Container(
                                               width: double.infinity,
-                                              height: 74.0,
                                               decoration: BoxDecoration(
                                                 color: Color(0x24FFFFFF),
                                                 borderRadius:
@@ -887,109 +939,64 @@ class _HomeMWidgetState extends State<HomeMWidget> {
                                                         BorderRadius.circular(
                                                             8.0),
                                                   ),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      Container(
-                                                        width: 45.0,
-                                                        height: 45.0,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          gradient:
-                                                              LinearGradient(
-                                                            colors: [
-                                                              Color(0xFF01CDD0),
-                                                              Color(0xFF04C8D0),
-                                                              Color(0xFF0EBCD1),
-                                                              Color(0xFF20A7D4),
-                                                              Color(0xFF3A89D8),
-                                                              Color(0xFF6951DC),
-                                                              Color(0xFF8D28E3)
-                                                            ],
-                                                            stops: [
-                                                              0.0,
-                                                              0.3,
-                                                              0.4,
-                                                              0.5,
-                                                              0.6,
-                                                              0.7,
-                                                              1.0
-                                                            ],
-                                                            begin:
-                                                                AlignmentDirectional(
-                                                                    -1.0, 0.0),
-                                                            end:
-                                                                AlignmentDirectional(
-                                                                    1.0, 0),
-                                                          ),
-                                                          shape:
-                                                              BoxShape.circle,
-                                                        ),
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                0.0, 0.0),
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            ClipRRect(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          500.0),
-                                                              child:
-                                                                  CachedNetworkImage(
-                                                                fadeInDuration:
-                                                                    Duration(
-                                                                        milliseconds:
-                                                                            500),
-                                                                fadeOutDuration:
-                                                                    Duration(
-                                                                        milliseconds:
-                                                                            500),
-                                                                imageUrl:
-                                                                    valueOrDefault<
-                                                                        String>(
-                                                                  getJsonField(
-                                                                    openSlotsListItemsItem,
-                                                                    r'''$.venue_photo''',
-                                                                  )?.toString(),
-                                                                  'https://kasnaqcqfuqnfydsjvpy.supabase.co/storage/v1/object/public/venueC/error.png',
-                                                                ),
-                                                                width: 43.0,
-                                                                height: 43.0,
-                                                                fit: BoxFit
-                                                                    .cover,
-                                                                errorWidget: (context,
-                                                                        error,
-                                                                        stackTrace) =>
-                                                                    Image.asset(
-                                                                  'assets/images/error_image.jpg',
-                                                                  width: 43.0,
-                                                                  height: 43.0,
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      Expanded(
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      21.0,
-                                                                      0.0,
-                                                                      0.0,
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 2.0,
+                                                                0.0, 2.0),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Container(
+                                                          width: 45.0,
+                                                          height: 45.0,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            gradient:
+                                                                LinearGradient(
+                                                              colors: [
+                                                                Color(
+                                                                    0xFF01CDD0),
+                                                                Color(
+                                                                    0xFF04C8D0),
+                                                                Color(
+                                                                    0xFF0EBCD1),
+                                                                Color(
+                                                                    0xFF20A7D4),
+                                                                Color(
+                                                                    0xFF3A89D8),
+                                                                Color(
+                                                                    0xFF6951DC),
+                                                                Color(
+                                                                    0xFF8D28E3)
+                                                              ],
+                                                              stops: [
+                                                                0.0,
+                                                                0.3,
+                                                                0.4,
+                                                                0.5,
+                                                                0.6,
+                                                                0.7,
+                                                                1.0
+                                                              ],
+                                                              begin:
+                                                                  AlignmentDirectional(
+                                                                      -1.0,
                                                                       0.0),
+                                                              end:
+                                                                  AlignmentDirectional(
+                                                                      1.0, 0),
+                                                            ),
+                                                            shape:
+                                                                BoxShape.circle,
+                                                          ),
+                                                          alignment:
+                                                              AlignmentDirectional(
+                                                                  0.0, 0.0),
                                                           child: Column(
                                                             mainAxisSize:
                                                                 MainAxisSize
@@ -997,96 +1004,160 @@ class _HomeMWidgetState extends State<HomeMWidget> {
                                                             mainAxisAlignment:
                                                                 MainAxisAlignment
                                                                     .center,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
                                                             children: [
-                                                              Text(
-                                                                getJsonField(
-                                                                  openSlotsListItemsItem,
-                                                                  r'''$.venue_name''',
-                                                                ).toString(),
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .montserrat(
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .primaryText,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .fontStyle,
-                                                                    ),
+                                                              ClipRRect(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            500.0),
+                                                                child:
+                                                                    CachedNetworkImage(
+                                                                  fadeInDuration:
+                                                                      Duration(
+                                                                          milliseconds:
+                                                                              500),
+                                                                  fadeOutDuration:
+                                                                      Duration(
+                                                                          milliseconds:
+                                                                              500),
+                                                                  imageUrl:
+                                                                      valueOrDefault<
+                                                                          String>(
+                                                                    getJsonField(
+                                                                      openSlotsListItemsItem,
+                                                                      r'''$.venue_photo''',
+                                                                    )?.toString(),
+                                                                    'https://kasnaqcqfuqnfydsjvpy.supabase.co/storage/v1/object/public/venueC/error.png',
+                                                                  ),
+                                                                  width: 43.0,
+                                                                  height: 43.0,
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                  errorWidget: (context,
+                                                                          error,
+                                                                          stackTrace) =>
+                                                                      Image
+                                                                          .asset(
+                                                                    'assets/images/error_image.jpg',
+                                                                    width: 43.0,
+                                                                    height:
+                                                                        43.0,
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                  ),
+                                                                ),
                                                               ),
-                                                              RichText(
-                                                                textScaler: MediaQuery.of(
-                                                                        context)
-                                                                    .textScaler,
-                                                                text: TextSpan(
-                                                                  children: [
-                                                                    TextSpan(
-                                                                      text:
-                                                                          getJsonField(
-                                                                        openSlotsListItemsItem,
-                                                                        r'''$.start_time''',
-                                                                      ).toString(),
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .override(
-                                                                            font:
-                                                                                GoogleFonts.montserrat(
-                                                                              fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                            ),
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).primaryText,
-                                                                            fontSize:
-                                                                                11.0,
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                            fontWeight:
-                                                                                FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                            fontStyle:
-                                                                                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                          ),
-                                                                    ),
-                                                                    TextSpan(
-                                                                      text:
-                                                                          ' | ',
-                                                                      style:
-                                                                          TextStyle(),
-                                                                    ),
-                                                                    TextSpan(
-                                                                      text:
-                                                                          getJsonField(
-                                                                        openSlotsListItemsItem,
-                                                                        r'''$.stage_name''',
-                                                                      ).toString(),
-                                                                      style:
-                                                                          TextStyle(),
-                                                                    )
-                                                                  ],
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        21.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0),
+                                                            child: Column(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Text(
+                                                                  getJsonField(
+                                                                    openSlotsListItemsItem,
+                                                                    r'''$.venue_name''',
+                                                                  ).toString(),
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
                                                                       .bodyMedium
                                                                       .override(
                                                                         font: GoogleFonts
                                                                             .montserrat(
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                          fontStyle: FlutterFlowTheme.of(context)
+                                                                              .bodyMedium
+                                                                              .fontStyle,
+                                                                        ),
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .primaryText,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontStyle: FlutterFlowTheme.of(context)
+                                                                            .bodyMedium
+                                                                            .fontStyle,
+                                                                      ),
+                                                                ),
+                                                                RichText(
+                                                                  textScaler: MediaQuery.of(
+                                                                          context)
+                                                                      .textScaler,
+                                                                  text:
+                                                                      TextSpan(
+                                                                    children: [
+                                                                      TextSpan(
+                                                                        text:
+                                                                            getJsonField(
+                                                                          openSlotsListItemsItem,
+                                                                          r'''$.start_time''',
+                                                                        ).toString(),
+                                                                        style: FlutterFlowTheme.of(context)
+                                                                            .bodyMedium
+                                                                            .override(
+                                                                              font: GoogleFonts.montserrat(
+                                                                                fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                                                                                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                              ),
+                                                                              color: FlutterFlowTheme.of(context).primaryText,
+                                                                              fontSize: 11.0,
+                                                                              letterSpacing: 0.0,
+                                                                              fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                            ),
+                                                                      ),
+                                                                      TextSpan(
+                                                                        text:
+                                                                            ' | ',
+                                                                        style:
+                                                                            TextStyle(),
+                                                                      ),
+                                                                      TextSpan(
+                                                                        text:
+                                                                            getJsonField(
+                                                                          openSlotsListItemsItem,
+                                                                          r'''$.stage_name''',
+                                                                        ).toString(),
+                                                                        style:
+                                                                            TextStyle(),
+                                                                      )
+                                                                    ],
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          font:
+                                                                              GoogleFonts.montserrat(
+                                                                            fontWeight:
+                                                                                FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                                                                            fontStyle:
+                                                                                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                          ),
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryText,
+                                                                          fontSize:
+                                                                              11.0,
+                                                                          letterSpacing:
+                                                                              0.0,
                                                                           fontWeight: FlutterFlowTheme.of(context)
                                                                               .bodyMedium
                                                                               .fontWeight,
@@ -1094,48 +1165,78 @@ class _HomeMWidgetState extends State<HomeMWidget> {
                                                                               .bodyMedium
                                                                               .fontStyle,
                                                                         ),
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .primaryText,
-                                                                        fontSize:
-                                                                            11.0,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .fontWeight,
-                                                                        fontStyle: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .fontStyle,
-                                                                      ),
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                            ].divide(SizedBox(
-                                                                height: 6.0)),
+                                                                if (true ==
+                                                                        getJsonField(
+                                                                          openSlotsListItemsItem,
+                                                                          r'''$.is_inquired''',
+                                                                        )
+                                                                    ? true
+                                                                    : false)
+                                                                  Container(
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryViolet,
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              8.0),
+                                                                    ),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          4.0,
+                                                                          2.0,
+                                                                          4.0,
+                                                                          2.0),
+                                                                      child:
+                                                                          Text(
+                                                                        'Inquired',
+                                                                        style: FlutterFlowTheme.of(context)
+                                                                            .bodyMedium
+                                                                            .override(
+                                                                              font: GoogleFonts.montserrat(
+                                                                                fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                                                                                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                              ),
+                                                                              fontSize: 8.0,
+                                                                              letterSpacing: 0.0,
+                                                                              fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                            ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                              ].divide(SizedBox(
+                                                                  height: 6.0)),
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    0.0,
-                                                                    8.0,
-                                                                    0.0),
-                                                        child: Icon(
-                                                          Icons
-                                                              .arrow_forward_ios,
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryText,
-                                                          size: 24.0,
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      0.0,
+                                                                      0.0,
+                                                                      8.0,
+                                                                      0.0),
+                                                          child: Icon(
+                                                            Icons
+                                                                .arrow_forward_ios,
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primaryText,
+                                                            size: 24.0,
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ]
-                                                        .addToStart(SizedBox(
-                                                            width: 6.0))
-                                                        .addToEnd(SizedBox(
-                                                            width: 6.0)),
+                                                      ]
+                                                          .addToStart(SizedBox(
+                                                              width: 6.0))
+                                                          .addToEnd(SizedBox(
+                                                              width: 6.0)),
+                                                    ),
                                                   ),
                                                 ),
                                               ),

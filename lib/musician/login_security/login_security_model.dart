@@ -1,8 +1,4 @@
-import '/auth/supabase_auth/auth_util.dart';
-import '/backend/schema/enums/enums.dart';
-import '/backend/schema/structs/index.dart';
 import '/backend/supabase/supabase.dart';
-import '/components/confirmation_dialog_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -10,9 +6,7 @@ import '/musician/components/c_h_r_d_back_btn/c_h_r_d_back_btn_widget.dart';
 import '/musician/components/c_h_r_d_label_btn/c_h_r_d_label_btn_widget.dart';
 import '/musician/components/c_h_r_d_label_text_field_with_border/c_h_r_d_label_text_field_with_border_widget.dart';
 import 'dart:ui';
-import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
-import '/index.dart';
 import 'login_security_widget.dart' show LoginSecurityWidget;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';

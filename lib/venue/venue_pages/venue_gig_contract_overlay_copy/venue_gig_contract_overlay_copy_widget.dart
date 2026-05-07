@@ -401,7 +401,7 @@ class _VenueGigContractOverlayCopyWidgetState
                                   );
                                 },
                                 text: _model.addedPrice != null
-                                    ? '\$${_model.addedPrice?.toString()}'
+                                    ? '\$${((_model.addedPrice!).toInt()).toString()}'
                                     : 'Add Price +',
                                 options: FFButtonOptions(
                                   height: 28.0,

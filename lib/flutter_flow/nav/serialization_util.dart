@@ -256,42 +256,44 @@ dynamic deserializeParam<T>(
       case ParamType.SupabaseRow:
         final data = json.decode(param) as Map<String, dynamic>;
         switch (T) {
-          case GigsRow:
-            return GigsRow(data);
-          case NotificationRow:
-            return NotificationRow(data);
-          case VenueFavoritesRow:
-            return VenueFavoritesRow(data);
-          case ThreadMessagesRow:
-            return ThreadMessagesRow(data);
-          case GenresRow:
-            return GenresRow(data);
           case BandsRow:
             return BandsRow(data);
-          case GigContractsRow:
-            return GigContractsRow(data);
-          case PerformanceStagesRow:
-            return PerformanceStagesRow(data);
-          case VenueOpenSlotsRow:
-            return VenueOpenSlotsRow(data);
-          case MusicianContentRow:
-            return MusicianContentRow(data);
-          case GigOffersRow:
-            return GigOffersRow(data);
-          case SocialMediaRow:
-            return SocialMediaRow(data);
-          case GigThreadsRow:
-            return GigThreadsRow(data);
-          case MusicianOpenSlotsRow:
-            return MusicianOpenSlotsRow(data);
           case EntertainmentRow:
             return EntertainmentRow(data);
+          case FanBookmarksRow:
+            return FanBookmarksRow(data);
+          case GenresRow:
+            return GenresRow(data);
+          case GigContractsRow:
+            return GigContractsRow(data);
+          case GigOffersRow:
+            return GigOffersRow(data);
+          case GigThreadsRow:
+            return GigThreadsRow(data);
+          case GigsRow:
+            return GigsRow(data);
+          case HighlightsRow:
+            return HighlightsRow(data);
+          case MusicianContentRow:
+            return MusicianContentRow(data);
+          case MusicianOpenSlotsRow:
+            return MusicianOpenSlotsRow(data);
+          case NotificationRow:
+            return NotificationRow(data);
+          case PerformanceStagesRow:
+            return PerformanceStagesRow(data);
+          case SocialMediaRow:
+            return SocialMediaRow(data);
+          case ThreadMessagesRow:
+            return ThreadMessagesRow(data);
           case UsersRow:
             return UsersRow(data);
           case VenueContentRow:
             return VenueContentRow(data);
-          case HighlightsRow:
-            return HighlightsRow(data);
+          case VenueFavoritesRow:
+            return VenueFavoritesRow(data);
+          case VenueOpenSlotsRow:
+            return VenueOpenSlotsRow(data);
           case VenuesRow:
             return VenuesRow(data);
           default:

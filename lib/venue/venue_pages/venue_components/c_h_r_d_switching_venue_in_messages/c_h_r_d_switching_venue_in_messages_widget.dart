@@ -1,6 +1,7 @@
 import '/backend/schema/structs/index.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/empty_list_image_widget.dart';
+import '/components/loader_placeholder_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -347,6 +348,49 @@ class _CHRDSwitchingVenueInMessagesWidgetState
                                                 ),
                                               ].divide(SizedBox(height: 4.0)),
                                             ),
+                                          ),
+                                          FutureBuilder<List<GigsRow>>(
+                                            future: GigsTable().queryRows(
+                                              queryFn: (q) => q.eqOrNull(
+                                                'venue_id',
+                                                listViewVenuesRow.id,
+                                              ),
+                                            ),
+                                            builder: (context, snapshot) {
+                                              // Customize what your widget looks like when it's loading.
+                                              if (!snapshot.hasData) {
+                                                return LoaderPlaceholderWidget();
+                                              }
+                                              List<GigsRow>
+                                                  containerGigsRowList =
+                                                  snapshot.data!;
+
+                                              return Container(
+                                                decoration: BoxDecoration(),
+                                                child: Visibility(
+                                                  visible: containerGigsRowList
+                                                          .where((e) => e
+                                                              .hasAnyThreadMessageUnread!)
+                                                          .toList()
+                                                          .length !=
+                                                      0,
+                                                  child: Container(
+                                                    width: 12.0,
+                                                    height: 12.0,
+                                                    decoration: BoxDecoration(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryCyan,
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            0.0, 0.0),
+                                                  ),
+                                                ),
+                                              );
+                                            },
                                           ),
                                         ].divide(SizedBox(width: 8.0)),
                                       ),

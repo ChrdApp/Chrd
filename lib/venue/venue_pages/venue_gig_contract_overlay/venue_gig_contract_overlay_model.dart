@@ -64,6 +64,8 @@ class VenueGigContractOverlayModel
   ApiCallResponse? backOutOutput;
   // Stores action output result for [Backend Call - Query Rows] action in CHRD_Label_Btn widget.
   List<UsersRow>? userOutput;
+  // Model for CHRD_Label_Btn component.
+  late CHRDLabelBtnModel cHRDLabelBtnModel5;
 
   @override
   void initState(BuildContext context) {
@@ -75,6 +77,7 @@ class VenueGigContractOverlayModel
     cHRDLabelBtnModel2 = createModel(context, () => CHRDLabelBtnModel());
     cHRDLabelBtnModel3 = createModel(context, () => CHRDLabelBtnModel());
     cHRDLabelBtnModel4 = createModel(context, () => CHRDLabelBtnModel());
+    cHRDLabelBtnModel5 = createModel(context, () => CHRDLabelBtnModel());
   }
 
   @override
@@ -87,5 +90,6 @@ class VenueGigContractOverlayModel
     cHRDLabelBtnModel2.dispose();
     cHRDLabelBtnModel3.dispose();
     cHRDLabelBtnModel4.dispose();
+    cHRDLabelBtnModel5.dispose();
   }
 }

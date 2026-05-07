@@ -96,10 +96,19 @@ class _CustobarWidgetState extends State<CustobarWidget> {
             mainAxisSize: MainAxisSize.max,
             children: [
               if (widget!.index != 1)
-                Icon(
-                  Icons.bookmark_border,
-                  color: FlutterFlowTheme.of(context).primaryText,
-                  size: 24.0,
+                InkWell(
+                  splashColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onTap: () async {
+                    context.pushNamed(BookamrkedFanWidget.routeName);
+                  },
+                  child: Icon(
+                    Icons.bookmark_border,
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    size: 24.0,
+                  ),
                 ),
               if (widget!.index == 1)
                 Icon(
@@ -113,10 +122,19 @@ class _CustobarWidgetState extends State<CustobarWidget> {
             mainAxisSize: MainAxisSize.max,
             children: [
               if (widget!.index != 2)
-                Icon(
-                  Icons.person_outline,
-                  color: FlutterFlowTheme.of(context).primaryText,
-                  size: 24.0,
+                InkWell(
+                  splashColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onTap: () async {
+                    context.pushNamed(FanUserWidget.routeName);
+                  },
+                  child: Icon(
+                    Icons.person_outline,
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    size: 24.0,
+                  ),
                 ),
               if (widget!.index == 2)
                 Icon(

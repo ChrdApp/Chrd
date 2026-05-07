@@ -86,6 +86,18 @@ class _NavPageWidgetState extends State<NavPageWidget> {
                     ),
                   ),
                 ),
+              if (FFAppState().userType == Type.Fan)
+                Expanded(
+                  child: Container(
+                    width: MediaQuery.sizeOf(context).width * 1.0,
+                    height: MediaQuery.sizeOf(context).height * 1.0,
+                    child: custom_widgets.FanNavbar(
+                      width: MediaQuery.sizeOf(context).width * 1.0,
+                      height: MediaQuery.sizeOf(context).height * 1.0,
+                      currentIndex: widget!.index != null ? widget!.index! : 0,
+                    ),
+                  ),
+                ),
             ],
           ),
         ),

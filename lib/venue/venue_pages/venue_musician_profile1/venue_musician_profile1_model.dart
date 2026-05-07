@@ -1,4 +1,5 @@
 import '/backend/api_requests/api_calls.dart';
+import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/c_h_r_d_profile_post_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';

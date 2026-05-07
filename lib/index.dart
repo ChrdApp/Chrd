@@ -151,4 +151,4 @@ export '/fan/fan_info/fan_info_widget.dart' show FanInfoWidget;
 export '/fan/home_fan/home_fan_widget.dart' show HomeFanWidget;
 export '/fan/bookamrked_fan/bookamrked_fan_widget.dart'
     show BookamrkedFanWidget;
-export '/fan/home_fan_copy/home_fan_copy_widget.dart' show HomeFanCopyWidget;
+export '/fan/fan_user/fan_user_widget.dart' show FanUserWidget;

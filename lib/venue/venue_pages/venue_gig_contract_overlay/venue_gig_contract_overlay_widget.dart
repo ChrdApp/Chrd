@@ -27,11 +27,13 @@ class VenueGigContractOverlayWidget extends StatefulWidget {
     required this.slotId,
     required this.threadId,
     this.musicianName,
-  });
+    bool? isViewOnly,
+  }) : this.isViewOnly = isViewOnly ?? false;
 
   final int? slotId;
   final int? threadId;
   final String? musicianName;
+  final bool isViewOnly;
 
   static String routeName = 'venue_gig_contract_overlay';
   static String routePath = '/venueGigContractOverlay';
@@ -349,6 +351,87 @@ class _VenueGigContractOverlayWidgetState
                             text: _model.addedPrice != null
                                 ? '\$${_model.addedPrice?.toString()}'
                                 : 'Add Price +',
+                            options: FFButtonOptions(
+                              height: 28.0,
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  20.0, 0.0, 20.0, 0.0),
+                              iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              color: FlutterFlowTheme.of(context).primaryViolet,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .override(
+                                    font: GoogleFonts.interTight(
+                                      fontWeight: FontWeight.normal,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .fontStyle,
+                                    ),
+                                    color: Colors.white,
+                                    fontSize: 12.0,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.normal,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .fontStyle,
+                                  ),
+                              elevation: 0.0,
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                          ),
+                        ),
+                      if (widget!.isViewOnly &&
+                          ('${FFAppState().userId.toString()}' ==
+                              getJsonField(
+                                venueGigContractOverlayGetSingleSlotDetailsResponse
+                                    .jsonBody,
+                                r'''$..created_by''',
+                              ).toString()))
+                        Builder(
+                          builder: (context) => FFButtonWidget(
+                            onPressed: () async {
+                              await showDialog(
+                                context: context,
+                                builder: (dialogContext) {
+                                  return Dialog(
+                                    elevation: 0,
+                                    insetPadding: EdgeInsets.zero,
+                                    backgroundColor: Colors.transparent,
+                                    alignment: AlignmentDirectional(0.0, 0.0)
+                                        .resolve(Directionality.of(context)),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        FocusScope.of(dialogContext).unfocus();
+                                        FocusManager.instance.primaryFocus
+                                            ?.unfocus();
+                                      },
+                                      child: Container(
+                                        width:
+                                            MediaQuery.sizeOf(context).width *
+                                                0.8,
+                                        child: CHRDPriceAmountWidget(
+                                          confirmAction: (priceValue) async {
+                                            _model.addedPrice = (String value) {
+                                              return double.tryParse(value
+                                                      .replaceAll('\$', '')
+                                                      .trim()) ??
+                                                  0.0;
+                                            }(priceValue);
+                                            safeSetState(() {});
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            text: getJsonField(
+                              venueGigContractOverlayGetSingleSlotDetailsResponse
+                                  .jsonBody,
+                              r'''$..contract_price''',
+                            ).toString(),
                             options: FFButtonOptions(
                               height: 28.0,
                               padding: EdgeInsetsDirectional.fromSTEB(
@@ -1383,6 +1466,27 @@ class _VenueGigContractOverlayWidgetState
                               safeSetState(() {});
                             },
                           ),
+                        ),
+                      ),
+                    ),
+                  if (widget!.isViewOnly)
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+                      child: wrapWithModel(
+                        model: _model.cHRDLabelBtnModel5,
+                        updateCallback: () => safeSetState(() {}),
+                        child: CHRDLabelBtnWidget(
+                          heading: 'Close',
+                          txtColor: FlutterFlowTheme.of(context).primaryText,
+                          btnColor: FlutterFlowTheme.of(context).primaryViolet,
+                          borderColor: FlutterFlowTheme.of(context).btnColor,
+                          hight: 45.0,
+                          headingFontSize: 14,
+                          isDisiable: false,
+                          onTab: () async {
+                            context.safePop();
+                          },
                         ),
                       ),
                     ),

@@ -12,6 +12,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/musician/components/c_h_r_d_icon_with_text/c_h_r_d_icon_with_text_widget.dart';
 import 'dart:ui';
+import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -56,7 +57,9 @@ class _DiscoverWidgetState extends State<DiscoverWidget> {
     context.watch<FFAppState>();
 
     return FutureBuilder<ApiCallResponse>(
-      future: MusicianGroup.discoverOpenGigsCall.call(),
+      future: MusicianGroup.discoverOpenGigsCall.call(
+        pCurrentUserId: FFAppState().userId,
+      ),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -289,7 +292,7 @@ class _DiscoverWidgetState extends State<DiscoverWidget> {
                                                 ?.length !=
                                             0)
                                           Text(
-                                            'Last minute gigs tonight',
+                                            'Last Minute Gigs This Week',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -482,7 +485,7 @@ class _DiscoverWidgetState extends State<DiscoverWidget> {
                                                                           CrossAxisAlignment
                                                                               .start,
                                                                       children: [
-                                                                        Expanded(
+                                                                        Flexible(
                                                                           child:
                                                                               Row(
                                                                             mainAxisSize:
@@ -545,20 +548,50 @@ class _DiscoverWidgetState extends State<DiscoverWidget> {
                                                                                   ],
                                                                                 ),
                                                                               ),
-                                                                              Expanded(
-                                                                                child: Text(
-                                                                                  lastMinuteGigsListItem.venueName,
-                                                                                  style: FlutterFlowTheme.of(context).headlineSmall.override(
-                                                                                        font: GoogleFonts.interTight(
-                                                                                          fontWeight: FlutterFlowTheme.of(context).headlineSmall.fontWeight,
-                                                                                          fontStyle: FlutterFlowTheme.of(context).headlineSmall.fontStyle,
+                                                                              Flexible(
+                                                                                child: Column(
+                                                                                  mainAxisSize: MainAxisSize.max,
+                                                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      lastMinuteGigsListItem.venueName,
+                                                                                      style: FlutterFlowTheme.of(context).headlineSmall.override(
+                                                                                            font: GoogleFonts.interTight(
+                                                                                              fontWeight: FlutterFlowTheme.of(context).headlineSmall.fontWeight,
+                                                                                              fontStyle: FlutterFlowTheme.of(context).headlineSmall.fontStyle,
+                                                                                            ),
+                                                                                            color: FlutterFlowTheme.of(context).primaryText,
+                                                                                            fontSize: 16.0,
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FlutterFlowTheme.of(context).headlineSmall.fontWeight,
+                                                                                            fontStyle: FlutterFlowTheme.of(context).headlineSmall.fontStyle,
+                                                                                          ),
+                                                                                    ),
+                                                                                    if (lastMinuteGigsListItem.isInquired)
+                                                                                      Container(
+                                                                                        decoration: BoxDecoration(
+                                                                                          color: FlutterFlowTheme.of(context).primaryViolet,
+                                                                                          borderRadius: BorderRadius.circular(8.0),
                                                                                         ),
-                                                                                        color: FlutterFlowTheme.of(context).primaryText,
-                                                                                        fontSize: 16.0,
-                                                                                        letterSpacing: 0.0,
-                                                                                        fontWeight: FlutterFlowTheme.of(context).headlineSmall.fontWeight,
-                                                                                        fontStyle: FlutterFlowTheme.of(context).headlineSmall.fontStyle,
+                                                                                        child: Padding(
+                                                                                          padding: EdgeInsetsDirectional.fromSTEB(4.0, 2.0, 4.0, 2.0),
+                                                                                          child: Text(
+                                                                                            'Inquired',
+                                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                  font: GoogleFonts.montserrat(
+                                                                                                    fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                                  ),
+                                                                                                  fontSize: 8.0,
+                                                                                                  letterSpacing: 0.0,
+                                                                                                  fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                                                                                                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                                ),
+                                                                                          ),
+                                                                                        ),
                                                                                       ),
+                                                                                  ].divide(SizedBox(height: 4.0)),
                                                                                 ),
                                                                               ),
                                                                             ].divide(SizedBox(width: 18.0)),
@@ -584,7 +617,7 @@ class _DiscoverWidgetState extends State<DiscoverWidget> {
                                                                                 MainAxisAlignment.center,
                                                                             children: [
                                                                               Text(
-                                                                                dateTimeFormat("E", getCurrentTimestamp),
+                                                                                dateTimeFormat("MMM", functions.parseDate(lastMinuteGigsListItem.startDate)),
                                                                                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                       font: GoogleFonts.montserrat(
                                                                                         fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
@@ -598,7 +631,7 @@ class _DiscoverWidgetState extends State<DiscoverWidget> {
                                                                                     ),
                                                                               ),
                                                                               Text(
-                                                                                dateTimeFormat("d", getCurrentTimestamp),
+                                                                                dateTimeFormat("d", functions.parseDate(lastMinuteGigsListItem.startDate)),
                                                                                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                       font: GoogleFonts.montserrat(
                                                                                         fontWeight: FontWeight.w600,
@@ -793,233 +826,218 @@ class _DiscoverWidgetState extends State<DiscoverWidget> {
                                                     final recurringGigsListItem =
                                                         recurringGigsList[
                                                             recurringGigsListIndex];
-                                                    return InkWell(
-                                                      splashColor:
-                                                          Colors.transparent,
-                                                      focusColor:
-                                                          Colors.transparent,
-                                                      hoverColor:
-                                                          Colors.transparent,
-                                                      highlightColor:
-                                                          Colors.transparent,
-                                                      onTap: () async {
-                                                        context.pushNamed(
-                                                          MusicianGigOverLayWidget
-                                                              .routeName,
-                                                          queryParameters: {
-                                                            'slotId':
-                                                                serializeParam(
-                                                              recurringGigsListItem
-                                                                  .slotId,
-                                                              ParamType.int,
-                                                            ),
-                                                            'venueId':
-                                                                serializeParam(
-                                                              recurringGigsListItem
-                                                                  .venueId,
-                                                              ParamType.int,
-                                                            ),
-                                                            'venueOwnerId':
-                                                                serializeParam(
-                                                              recurringGigsListItem
-                                                                  .venueOwnerId,
-                                                              ParamType.int,
-                                                            ),
-                                                          }.withoutNulls,
-                                                        );
-                                                      },
-                                                      child: Container(
-                                                        width: 162.0,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          image:
-                                                              DecorationImage(
-                                                            fit: BoxFit.cover,
-                                                            image: Image.asset(
-                                                              'assets/images/Frame_482962.png',
-                                                            ).image,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      12.0),
-                                                        ),
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      12.0,
-                                                                      0.0,
-                                                                      12.0,
-                                                                      0.0),
-                                                          child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .min,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .start,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Container(
-                                                                width: 65.0,
-                                                                height: 65.0,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  gradient:
-                                                                      LinearGradient(
-                                                                    colors: [
-                                                                      Color(
-                                                                          0xFF01CDD0),
-                                                                      Color(
-                                                                          0xFF04C8D0),
-                                                                      Color(
-                                                                          0xFF0EBCD1),
-                                                                      Color(
-                                                                          0xFF20A7D4),
-                                                                      Color(
-                                                                          0xFF3A89D8),
-                                                                      Color(
-                                                                          0xFF6951DC),
-                                                                      Color(
-                                                                          0xFF8D28E3)
-                                                                    ],
-                                                                    stops: [
-                                                                      0.0,
-                                                                      0.3,
-                                                                      0.4,
-                                                                      0.5,
-                                                                      0.6,
-                                                                      0.7,
-                                                                      1.0
-                                                                    ],
-                                                                    begin:
-                                                                        AlignmentDirectional(
-                                                                            -1.0,
-                                                                            0.0),
-                                                                    end:
-                                                                        AlignmentDirectional(
-                                                                            1.0,
-                                                                            0),
+                                                    return Container(
+                                                      width: 162.0,
+                                                      height: 190.0,
+                                                      child: Stack(
+                                                        children: [
+                                                          InkWell(
+                                                            splashColor: Colors
+                                                                .transparent,
+                                                            focusColor: Colors
+                                                                .transparent,
+                                                            hoverColor: Colors
+                                                                .transparent,
+                                                            highlightColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            onTap: () async {
+                                                              context.pushNamed(
+                                                                MusicianGigOverLayWidget
+                                                                    .routeName,
+                                                                queryParameters:
+                                                                    {
+                                                                  'slotId':
+                                                                      serializeParam(
+                                                                    recurringGigsListItem
+                                                                        .slotId,
+                                                                    ParamType
+                                                                        .int,
                                                                   ),
-                                                                  shape: BoxShape
-                                                                      .circle,
+                                                                  'venueId':
+                                                                      serializeParam(
+                                                                    recurringGigsListItem
+                                                                        .venueId,
+                                                                    ParamType
+                                                                        .int,
+                                                                  ),
+                                                                  'venueOwnerId':
+                                                                      serializeParam(
+                                                                    recurringGigsListItem
+                                                                        .venueOwnerId,
+                                                                    ParamType
+                                                                        .int,
+                                                                  ),
+                                                                }.withoutNulls,
+                                                              );
+                                                            },
+                                                            child: Container(
+                                                              width: 162.0,
+                                                              height: 190.0,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                image:
+                                                                    DecorationImage(
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                  image: Image
+                                                                      .asset(
+                                                                    'assets/images/Frame_482962.png',
+                                                                  ).image,
                                                                 ),
-                                                                alignment:
-                                                                    AlignmentDirectional(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            12.0),
+                                                              ),
+                                                              child: Padding(
+                                                                padding: EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        12.0,
                                                                         0.0,
+                                                                        12.0,
                                                                         0.0),
                                                                 child: Column(
                                                                   mainAxisSize:
                                                                       MainAxisSize
-                                                                          .max,
+                                                                          .min,
                                                                   mainAxisAlignment:
                                                                       MainAxisAlignment
+                                                                          .start,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
                                                                           .center,
                                                                   children: [
-                                                                    ClipRRect(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              500.0),
+                                                                    Container(
+                                                                      width:
+                                                                          65.0,
+                                                                      height:
+                                                                          65.0,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        gradient:
+                                                                            LinearGradient(
+                                                                          colors: [
+                                                                            Color(0xFF01CDD0),
+                                                                            Color(0xFF04C8D0),
+                                                                            Color(0xFF0EBCD1),
+                                                                            Color(0xFF20A7D4),
+                                                                            Color(0xFF3A89D8),
+                                                                            Color(0xFF6951DC),
+                                                                            Color(0xFF8D28E3)
+                                                                          ],
+                                                                          stops: [
+                                                                            0.0,
+                                                                            0.3,
+                                                                            0.4,
+                                                                            0.5,
+                                                                            0.6,
+                                                                            0.7,
+                                                                            1.0
+                                                                          ],
+                                                                          begin: AlignmentDirectional(
+                                                                              -1.0,
+                                                                              0.0),
+                                                                          end: AlignmentDirectional(
+                                                                              1.0,
+                                                                              0),
+                                                                        ),
+                                                                        shape: BoxShape
+                                                                            .circle,
+                                                                      ),
+                                                                      alignment:
+                                                                          AlignmentDirectional(
+                                                                              0.0,
+                                                                              0.0),
                                                                       child:
-                                                                          CachedNetworkImage(
-                                                                        fadeInDuration:
-                                                                            Duration(milliseconds: 500),
-                                                                        fadeOutDuration:
-                                                                            Duration(milliseconds: 500),
-                                                                        imageUrl:
-                                                                            valueOrDefault<String>(
-                                                                          recurringGigsListItem
-                                                                              .venuePhoto,
-                                                                          'https://kasnaqcqfuqnfydsjvpy.supabase.co/storage/v1/object/public/venueC/error.png',
-                                                                        ),
-                                                                        width:
-                                                                            63.0,
-                                                                        height:
-                                                                            63.0,
-                                                                        fit: BoxFit
-                                                                            .cover,
-                                                                        errorWidget: (context,
-                                                                                error,
-                                                                                stackTrace) =>
-                                                                            Image.asset(
-                                                                          'assets/images/error_image.jpg',
-                                                                          width:
-                                                                              63.0,
-                                                                          height:
-                                                                              63.0,
-                                                                          fit: BoxFit
-                                                                              .cover,
-                                                                        ),
+                                                                          Column(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.max,
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.center,
+                                                                        children: [
+                                                                          ClipRRect(
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(500.0),
+                                                                            child:
+                                                                                CachedNetworkImage(
+                                                                              fadeInDuration: Duration(milliseconds: 500),
+                                                                              fadeOutDuration: Duration(milliseconds: 500),
+                                                                              imageUrl: valueOrDefault<String>(
+                                                                                recurringGigsListItem.venuePhoto,
+                                                                                'https://kasnaqcqfuqnfydsjvpy.supabase.co/storage/v1/object/public/venueC/error.png',
+                                                                              ),
+                                                                              width: 63.0,
+                                                                              height: 63.0,
+                                                                              fit: BoxFit.cover,
+                                                                              errorWidget: (context, error, stackTrace) => Image.asset(
+                                                                                'assets/images/error_image.jpg',
+                                                                                width: 63.0,
+                                                                                height: 63.0,
+                                                                                fit: BoxFit.cover,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
                                                                       ),
                                                                     ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                              Expanded(
-                                                                child: Column(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .min,
-                                                                  children: [
-                                                                    Text(
-                                                                      recurringGigsListItem
-                                                                          .venueName,
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .center,
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .override(
-                                                                            font:
-                                                                                GoogleFonts.montserrat(
+                                                                    Padding(
+                                                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          0.0,
+                                                                          8.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                      child:
+                                                                          Text(
+                                                                        recurringGigsListItem
+                                                                            .venueName,
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        style: FlutterFlowTheme.of(context)
+                                                                            .bodyMedium
+                                                                            .override(
+                                                                              font: GoogleFonts.montserrat(
+                                                                                fontWeight: FontWeight.w600,
+                                                                                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                              ),
+                                                                              color: FlutterFlowTheme.of(context).primaryText,
+                                                                              letterSpacing: 0.0,
                                                                               fontWeight: FontWeight.w600,
                                                                               fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                                                                             ),
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).primaryText,
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                          ),
-                                                                    ),
-                                                                    Text(
-                                                                      recurringGigsListItem
-                                                                          .startDate,
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .center,
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .override(
-                                                                            font:
-                                                                                GoogleFonts.montserrat(
-                                                                              fontWeight: FontWeight.normal,
-                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                            ),
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).primaryText,
-                                                                            fontSize:
-                                                                                12.0,
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                            fontWeight:
-                                                                                FontWeight.normal,
-                                                                            fontStyle:
-                                                                                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                          ),
+                                                                      ),
                                                                     ),
                                                                     Padding(
                                                                       padding: EdgeInsetsDirectional.fromSTEB(
                                                                           0.0,
                                                                           4.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                      child:
+                                                                          Text(
+                                                                        recurringGigsListItem
+                                                                            .startDate,
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        style: FlutterFlowTheme.of(context)
+                                                                            .bodyMedium
+                                                                            .override(
+                                                                              font: GoogleFonts.montserrat(
+                                                                                fontWeight: FontWeight.normal,
+                                                                                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                              ),
+                                                                              color: FlutterFlowTheme.of(context).primaryText,
+                                                                              fontSize: 12.0,
+                                                                              letterSpacing: 0.0,
+                                                                              fontWeight: FontWeight.normal,
+                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                            ),
+                                                                      ),
+                                                                    ),
+                                                                    Padding(
+                                                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          0.0,
+                                                                          9.0,
                                                                           0.0,
                                                                           0.0),
                                                                       child:
@@ -1046,25 +1064,76 @@ class _DiscoverWidgetState extends State<DiscoverWidget> {
                                                                             TextOverflow.ellipsis,
                                                                       ),
                                                                     ),
-                                                                  ]
-                                                                      .divide(SizedBox(
+                                                                  ].addToStart(
+                                                                      SizedBox(
                                                                           height:
-                                                                              4.0))
-                                                                      .addToStart(SizedBox(
-                                                                          height:
-                                                                              8.0)),
+                                                                              25.0)),
                                                                 ),
                                                               ),
-                                                            ]
-                                                                .addToStart(
-                                                                    SizedBox(
-                                                                        height:
-                                                                            25.0))
-                                                                .addToEnd(SizedBox(
-                                                                    height:
-                                                                        12.0)),
+                                                            ),
                                                           ),
-                                                        ),
+                                                          Align(
+                                                            alignment:
+                                                                AlignmentDirectional(
+                                                                    1.0, -1.0),
+                                                            child: Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0.0,
+                                                                          12.0,
+                                                                          12.0,
+                                                                          0.0),
+                                                              child: Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .end,
+                                                                children: [
+                                                                  if (recurringGigsListItem
+                                                                          .isInquired
+                                                                      ? true
+                                                                      : false)
+                                                                    Container(
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .primaryViolet,
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(8.0),
+                                                                      ),
+                                                                      child:
+                                                                          Padding(
+                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            4.0,
+                                                                            2.0,
+                                                                            4.0,
+                                                                            2.0),
+                                                                        child:
+                                                                            Text(
+                                                                          'Inquired',
+                                                                          style: FlutterFlowTheme.of(context)
+                                                                              .bodyMedium
+                                                                              .override(
+                                                                                font: GoogleFonts.montserrat(
+                                                                                  fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                                                                                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                ),
+                                                                                fontSize: 8.0,
+                                                                                letterSpacing: 0.0,
+                                                                                fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                                                                                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                              ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
                                                     );
                                                   }).divide(
@@ -1136,253 +1205,295 @@ class _DiscoverWidgetState extends State<DiscoverWidget> {
                                                     final onetimeGigsListItem =
                                                         onetimeGigsList[
                                                             onetimeGigsListIndex];
-                                                    return InkWell(
-                                                      splashColor:
-                                                          Colors.transparent,
-                                                      focusColor:
-                                                          Colors.transparent,
-                                                      hoverColor:
-                                                          Colors.transparent,
-                                                      highlightColor:
-                                                          Colors.transparent,
-                                                      onTap: () async {
-                                                        context.pushNamed(
-                                                          MusicianGigOverLayWidget
-                                                              .routeName,
-                                                          queryParameters: {
-                                                            'slotId':
-                                                                serializeParam(
-                                                              onetimeGigsListItem
-                                                                  .slotId,
-                                                              ParamType.int,
-                                                            ),
-                                                            'venueId':
-                                                                serializeParam(
-                                                              onetimeGigsListItem
-                                                                  .venueId,
-                                                              ParamType.int,
-                                                            ),
-                                                            'venueOwnerId':
-                                                                serializeParam(
-                                                              onetimeGigsListItem
-                                                                  .venueOwnerId,
-                                                              ParamType.int,
-                                                            ),
-                                                          }.withoutNulls,
-                                                        );
-                                                      },
-                                                      child: Container(
-                                                        width: 162.0,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          image:
-                                                              DecorationImage(
-                                                            fit: BoxFit.cover,
-                                                            image: Image.asset(
-                                                              'assets/images/Frame_482962.png',
-                                                            ).image,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      12.0),
-                                                        ),
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      12.0,
-                                                                      0.0,
-                                                                      12.0,
-                                                                      0.0),
-                                                          child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .min,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .start,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Expanded(
+                                                    return Container(
+                                                      width: 162.0,
+                                                      height: 190.0,
+                                                      child: Stack(
+                                                        children: [
+                                                          InkWell(
+                                                            splashColor: Colors
+                                                                .transparent,
+                                                            focusColor: Colors
+                                                                .transparent,
+                                                            hoverColor: Colors
+                                                                .transparent,
+                                                            highlightColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            onTap: () async {
+                                                              context.pushNamed(
+                                                                MusicianGigOverLayWidget
+                                                                    .routeName,
+                                                                queryParameters:
+                                                                    {
+                                                                  'slotId':
+                                                                      serializeParam(
+                                                                    onetimeGigsListItem
+                                                                        .slotId,
+                                                                    ParamType
+                                                                        .int,
+                                                                  ),
+                                                                  'venueId':
+                                                                      serializeParam(
+                                                                    onetimeGigsListItem
+                                                                        .venueId,
+                                                                    ParamType
+                                                                        .int,
+                                                                  ),
+                                                                  'venueOwnerId':
+                                                                      serializeParam(
+                                                                    onetimeGigsListItem
+                                                                        .venueOwnerId,
+                                                                    ParamType
+                                                                        .int,
+                                                                  ),
+                                                                }.withoutNulls,
+                                                              );
+                                                            },
+                                                            child: Container(
+                                                              width: 162.0,
+                                                              height: 190.0,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                image:
+                                                                    DecorationImage(
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                  image: Image
+                                                                      .asset(
+                                                                    'assets/images/Frame_482962.png',
+                                                                  ).image,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            12.0),
+                                                              ),
+                                                              child: Padding(
+                                                                padding: EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        12.0,
+                                                                        0.0,
+                                                                        12.0,
+                                                                        0.0),
                                                                 child: Column(
                                                                   mainAxisSize:
                                                                       MainAxisSize
                                                                           .min,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .start,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
                                                                   children: [
-                                                                    Container(
-                                                                      width:
-                                                                          65.0,
-                                                                      height:
-                                                                          65.0,
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        gradient:
-                                                                            LinearGradient(
-                                                                          colors: [
-                                                                            Color(0xFF01CDD0),
-                                                                            Color(0xFF04C8D0),
-                                                                            Color(0xFF0EBCD1),
-                                                                            Color(0xFF20A7D4),
-                                                                            Color(0xFF3A89D8),
-                                                                            Color(0xFF6951DC),
-                                                                            Color(0xFF8D28E3)
-                                                                          ],
-                                                                          stops: [
-                                                                            0.0,
-                                                                            0.3,
-                                                                            0.4,
-                                                                            0.5,
-                                                                            0.6,
-                                                                            0.7,
-                                                                            1.0
-                                                                          ],
-                                                                          begin: AlignmentDirectional(
-                                                                              -1.0,
-                                                                              0.0),
-                                                                          end: AlignmentDirectional(
-                                                                              1.0,
-                                                                              0),
-                                                                        ),
-                                                                        shape: BoxShape
-                                                                            .circle,
-                                                                      ),
-                                                                      alignment:
-                                                                          AlignmentDirectional(
-                                                                              0.0,
-                                                                              0.0),
+                                                                    Expanded(
                                                                       child:
                                                                           Column(
                                                                         mainAxisSize:
-                                                                            MainAxisSize.max,
+                                                                            MainAxisSize.min,
                                                                         mainAxisAlignment:
                                                                             MainAxisAlignment.center,
                                                                         children: [
-                                                                          ClipRRect(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(500.0),
-                                                                            child:
-                                                                                CachedNetworkImage(
-                                                                              fadeInDuration: Duration(milliseconds: 500),
-                                                                              fadeOutDuration: Duration(milliseconds: 500),
-                                                                              imageUrl: valueOrDefault<String>(
-                                                                                onetimeGigsListItem.venuePhoto,
-                                                                                'https://kasnaqcqfuqnfydsjvpy.supabase.co/storage/v1/object/public/venueC/error.png',
+                                                                          Container(
+                                                                            width:
+                                                                                65.0,
+                                                                            height:
+                                                                                65.0,
+                                                                            decoration:
+                                                                                BoxDecoration(
+                                                                              gradient: LinearGradient(
+                                                                                colors: [
+                                                                                  Color(0xFF01CDD0),
+                                                                                  Color(0xFF04C8D0),
+                                                                                  Color(0xFF0EBCD1),
+                                                                                  Color(0xFF20A7D4),
+                                                                                  Color(0xFF3A89D8),
+                                                                                  Color(0xFF6951DC),
+                                                                                  Color(0xFF8D28E3)
+                                                                                ],
+                                                                                stops: [
+                                                                                  0.0,
+                                                                                  0.3,
+                                                                                  0.4,
+                                                                                  0.5,
+                                                                                  0.6,
+                                                                                  0.7,
+                                                                                  1.0
+                                                                                ],
+                                                                                begin: AlignmentDirectional(-1.0, 0.0),
+                                                                                end: AlignmentDirectional(1.0, 0),
                                                                               ),
-                                                                              width: 63.0,
-                                                                              height: 63.0,
-                                                                              fit: BoxFit.cover,
-                                                                              errorWidget: (context, error, stackTrace) => Image.asset(
-                                                                                'assets/images/error_image.jpg',
-                                                                                width: 63.0,
-                                                                                height: 63.0,
-                                                                                fit: BoxFit.cover,
-                                                                              ),
+                                                                              shape: BoxShape.circle,
                                                                             ),
+                                                                            alignment:
+                                                                                AlignmentDirectional(0.0, 0.0),
+                                                                            child:
+                                                                                Column(
+                                                                              mainAxisSize: MainAxisSize.max,
+                                                                              mainAxisAlignment: MainAxisAlignment.center,
+                                                                              children: [
+                                                                                ClipRRect(
+                                                                                  borderRadius: BorderRadius.circular(500.0),
+                                                                                  child: CachedNetworkImage(
+                                                                                    fadeInDuration: Duration(milliseconds: 500),
+                                                                                    fadeOutDuration: Duration(milliseconds: 500),
+                                                                                    imageUrl: valueOrDefault<String>(
+                                                                                      onetimeGigsListItem.venuePhoto,
+                                                                                      'https://kasnaqcqfuqnfydsjvpy.supabase.co/storage/v1/object/public/venueC/error.png',
+                                                                                    ),
+                                                                                    width: 63.0,
+                                                                                    height: 63.0,
+                                                                                    fit: BoxFit.cover,
+                                                                                    errorWidget: (context, error, stackTrace) => Image.asset(
+                                                                                      'assets/images/error_image.jpg',
+                                                                                      width: 63.0,
+                                                                                      height: 63.0,
+                                                                                      fit: BoxFit.cover,
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                0.0,
+                                                                                8.0,
+                                                                                0.0,
+                                                                                4.0),
+                                                                            child:
+                                                                                Text(
+                                                                              onetimeGigsListItem.venueName,
+                                                                              textAlign: TextAlign.center,
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    font: GoogleFonts.montserrat(
+                                                                                      fontWeight: FontWeight.w600,
+                                                                                      fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                    ),
+                                                                                    color: FlutterFlowTheme.of(context).primaryText,
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FontWeight.w600,
+                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                  ),
+                                                                            ),
+                                                                          ),
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                0.0,
+                                                                                4.0,
+                                                                                0.0,
+                                                                                8.0),
+                                                                            child:
+                                                                                Text(
+                                                                              onetimeGigsListItem.startDate,
+                                                                              textAlign: TextAlign.center,
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    font: GoogleFonts.montserrat(
+                                                                                      fontWeight: FontWeight.normal,
+                                                                                      fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                    ),
+                                                                                    color: FlutterFlowTheme.of(context).primaryText,
+                                                                                    fontSize: 12.0,
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FontWeight.normal,
+                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                  ),
+                                                                            ),
+                                                                          ),
+                                                                          AutoSizeText(
+                                                                            onetimeGigsListItem.startTime,
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                            minFontSize:
+                                                                                6.0,
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                  font: GoogleFonts.montserrat(
+                                                                                    fontWeight: FontWeight.normal,
+                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                  ),
+                                                                                  color: FlutterFlowTheme.of(context).primaryText,
+                                                                                  fontSize: 10.0,
+                                                                                  letterSpacing: 0.0,
+                                                                                  fontWeight: FontWeight.normal,
+                                                                                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                ),
+                                                                            overflow:
+                                                                                TextOverflow.ellipsis,
                                                                           ),
                                                                         ],
                                                                       ),
                                                                     ),
-                                                                    Text(
-                                                                      onetimeGigsListItem
-                                                                          .venueName,
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .center,
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .override(
-                                                                            font:
-                                                                                GoogleFonts.montserrat(
-                                                                              fontWeight: FontWeight.w600,
-                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                            ),
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).primaryText,
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                          ),
-                                                                    ),
-                                                                    Text(
-                                                                      onetimeGigsListItem
-                                                                          .startDate,
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .center,
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .override(
-                                                                            font:
-                                                                                GoogleFonts.montserrat(
-                                                                              fontWeight: FontWeight.normal,
-                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                            ),
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).primaryText,
-                                                                            fontSize:
-                                                                                12.0,
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                            fontWeight:
-                                                                                FontWeight.normal,
-                                                                            fontStyle:
-                                                                                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                          ),
-                                                                    ),
-                                                                    Text(
-                                                                      onetimeGigsListItem
-                                                                          .startTime,
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .center,
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .override(
-                                                                            font:
-                                                                                GoogleFonts.montserrat(
-                                                                              fontWeight: FontWeight.normal,
-                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                            ),
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).primaryText,
-                                                                            fontSize:
-                                                                                10.0,
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                            fontWeight:
-                                                                                FontWeight.normal,
-                                                                            fontStyle:
-                                                                                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                          ),
-                                                                    ),
                                                                   ]
-                                                                      .divide(SizedBox(
-                                                                          height:
-                                                                              4.0))
                                                                       .addToStart(SizedBox(
                                                                           height:
-                                                                              8.0)),
+                                                                              25.0))
+                                                                      .addToEnd(SizedBox(
+                                                                          height:
+                                                                              12.0)),
                                                                 ),
                                                               ),
-                                                            ]
-                                                                .addToStart(
-                                                                    SizedBox(
-                                                                        height:
-                                                                            25.0))
-                                                                .addToEnd(SizedBox(
-                                                                    height:
-                                                                        12.0)),
+                                                            ),
                                                           ),
-                                                        ),
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        16.0,
+                                                                        16.0,
+                                                                        0.0),
+                                                            child: Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .end,
+                                                              children: [
+                                                                if (onetimeGigsListItem
+                                                                        .isInquired
+                                                                    ? true
+                                                                    : false)
+                                                                  Container(
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryViolet,
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              8.0),
+                                                                    ),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          4.0,
+                                                                          2.0,
+                                                                          4.0,
+                                                                          2.0),
+                                                                      child:
+                                                                          Text(
+                                                                        'Inquired',
+                                                                        style: FlutterFlowTheme.of(context)
+                                                                            .bodyMedium
+                                                                            .override(
+                                                                              font: GoogleFonts.montserrat(
+                                                                                fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                                                                                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                              ),
+                                                                              fontSize: 8.0,
+                                                                              letterSpacing: 0.0,
+                                                                              fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                            ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
                                                     );
                                                   }).divide(

@@ -18,8 +18,8 @@ class ThreadMessagesRow extends SupabaseDataRow {
   int get id => getField<int>('id')!;
   set id(int value) => setField<int>('id', value);
 
-  DateTime get createdAt => getField<DateTime>('created_at')!;
-  set createdAt(DateTime value) => setField<DateTime>('created_at', value);
+  DateTime? get createdAt => getField<DateTime>('created_at');
+  set createdAt(DateTime? value) => setField<DateTime>('created_at', value);
 
   int? get threadId => getField<int>('thread_id');
   set threadId(int? value) => setField<int>('thread_id', value);
@@ -37,4 +37,7 @@ class ThreadMessagesRow extends SupabaseDataRow {
   String? get alternateMessage => getField<String>('alternate_message');
   set alternateMessage(String? value) =>
       setField<String>('alternate_message', value);
+
+  List<int> get deletedBy => getListField<int>('deleted_by');
+  set deletedBy(List<int>? value) => setListField<int>('deleted_by', value);
 }

@@ -82,7 +82,19 @@ class _RealTimeGigThreadListState extends State<RealTimeGigThreadList> {
   String _formatMessageTime(DateTime? timestamp) {
     if (timestamp == null) return '';
 
-    final messageTime = timestamp.toLocal();
+    // Force to UTC first (Supabase returns no timezone info so it may be parsed as local)
+    final utcTime = DateTime.utc(
+      timestamp.year,
+      timestamp.month,
+      timestamp.day,
+      timestamp.hour,
+      timestamp.minute,
+      timestamp.second,
+      timestamp.millisecond,
+      timestamp.microsecond,
+    );
+    final messageTime = utcTime.toLocal();
+
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final msgDate =

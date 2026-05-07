@@ -14,8 +14,8 @@ class NotificationRow extends SupabaseDataRow {
   @override
   SupabaseTable get table => NotificationTable();
 
-  int get id => getField<int>('id')!;
-  set id(int value) => setField<int>('id', value);
+  int? get id => getField<int>('id');
+  set id(int? value) => setField<int>('id', value);
 
   int get userId => getField<int>('user_id')!;
   set userId(int value) => setField<int>('user_id', value);

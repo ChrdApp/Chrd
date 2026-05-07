@@ -13,6 +13,12 @@ import 'package:flutter/material.dart';
 
 import 'index.dart'; // Imports other custom widgets
 
+import 'index.dart'; // Imports other custom widgets
+
+import 'index.dart'; // Imports other custom widgets
+
+import 'index.dart'; // Imports other custom widgets
+
 import 'dart:async';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '/backend/api_requests/api_calls.dart';
@@ -29,6 +35,7 @@ class GigChatThread extends StatefulWidget {
     required this.gigStatus,
     required this.gigDate,
     required this.slotType,
+    required this.stageName,
     required this.threadId,
     required this.currentUserId,
     required this.isVenue,
@@ -49,6 +56,7 @@ class GigChatThread extends StatefulWidget {
   final String gigStatus;
   final String gigDate;
   final String slotType;
+  final String stageName;
   final int threadId;
   final int currentUserId;
   final bool isVenue;
@@ -90,11 +98,18 @@ class _GigChatThreadState extends State<GigChatThread>
   bool _isSubscribed = false;
 
   // ═══════════════════════════════════════════════════════════════
+  // DELETE STATE
+  // ═══════════════════════════════════════════════════════════════
+  int? _selectedMessageId;
+  bool _isDeleting = false;
+
+  // ═══════════════════════════════════════════════════════════════
   // LOCAL STATE - Overrides widget params after refresh
   // ═══════════════════════════════════════════════════════════════
   String? _localGigStatus;
   String? _localGigDate;
   String? _localSlotType;
+  String? _localStageName;
   String? _localVenueName;
   String? _localMusicianName;
   String? _localMusicianCategory;
@@ -103,6 +118,7 @@ class _GigChatThreadState extends State<GigChatThread>
   String get _gigStatus => _localGigStatus ?? widget.gigStatus;
   String get _gigDate => _localGigDate ?? widget.gigDate;
   String get _slotType => _localSlotType ?? widget.slotType;
+  String get _stageName => _localStageName ?? widget.stageName;
   String get _venueName => _localVenueName ?? widget.venueName;
   String get _musicianName => _localMusicianName ?? widget.musicianName;
   String get _musicianCategory =>
@@ -114,6 +130,145 @@ class _GigChatThreadState extends State<GigChatThread>
   bool get _isGeneralGig {
     final type = _slotType.toLowerCase();
     return type == 'general';
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // DELETE HELPERS
+  // ═══════════════════════════════════════════════════════════════
+
+  bool _isDeletedByMe(Map<String, dynamic> message) {
+    final deletedBy = message['deleted_by'];
+    if (deletedBy == null) return false;
+    final list = List.from(deletedBy);
+    return list.contains(widget.currentUserId);
+  }
+
+  bool _isDeletedByAnyone(Map<String, dynamic> message) {
+    final deletedBy = message['deleted_by'];
+    if (deletedBy == null) return false;
+    final list = List.from(deletedBy);
+    return list.isNotEmpty;
+  }
+
+  bool _isDeletedByOther(Map<String, dynamic> message) {
+    final deletedBy = message['deleted_by'];
+    if (deletedBy == null) return false;
+    final list = List.from(deletedBy);
+    if (list.isEmpty) return false;
+    // Deleted by someone, but not by me
+    return !list.contains(widget.currentUserId) && list.isNotEmpty;
+  }
+
+  void _showToast(String message, {bool isError = false}) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          message,
+          style: const TextStyle(color: Colors.white, fontSize: 14),
+        ),
+        backgroundColor:
+            isError ? const Color(0xFFEF4444) : const Color(0xFF22C55E),
+        behavior: SnackBarBehavior.floating,
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
+  void _clearSelection() {
+    if (_selectedMessageId != null) {
+      setState(() => _selectedMessageId = null);
+    }
+  }
+
+  Future<void> _handleDeleteMessage() async {
+    if (_selectedMessageId == null || _isDeleting) return;
+
+    final msgIndex = _messages.indexWhere((m) => m['id'] == _selectedMessageId);
+    if (msgIndex == -1) {
+      _clearSelection();
+      return;
+    }
+
+    final message = _messages[msgIndex];
+    final senderId = message['sender_id'] as int?;
+    final createdAt = message['created_at'] as String?;
+    final messageId = message['id'];
+
+    // ── Guard: Can't delete other user's messages ──
+    if (senderId != widget.currentUserId) {
+      _showToast("You can only delete your own messages", isError: true);
+      _clearSelection();
+      return;
+    }
+
+    // ── Guard: 1-hour window ──
+    if (createdAt != null) {
+      try {
+        final msgTime = DateTime.parse(createdAt).toUtc();
+        final now = DateTime.now().toUtc();
+        final diff = now.difference(msgTime);
+        if (diff.inMinutes > 60) {
+          _showToast(
+            "Messages can only be deleted within 1 hour of sending",
+            isError: true,
+          );
+          _clearSelection();
+          return;
+        }
+      } catch (_) {
+        _showToast("Unable to verify message time", isError: true);
+        _clearSelection();
+        return;
+      }
+    }
+
+    setState(() => _isDeleting = true);
+
+    try {
+      // Build updated deleted_by array
+      final existingDeletedBy = message['deleted_by'];
+      final List<int> updatedList = existingDeletedBy != null
+          ? List<int>.from(existingDeletedBy)
+          : <int>[];
+
+      if (!updatedList.contains(widget.currentUserId)) {
+        updatedList.add(widget.currentUserId);
+      }
+
+      await SupaFlow.client
+          .from('thread_messages')
+          .update({'deleted_by': updatedList}).eq('id', messageId);
+
+      // Update local state immediately
+      if (mounted) {
+        setState(() {
+          _messages[msgIndex] = {
+            ..._messages[msgIndex],
+            'deleted_by': updatedList,
+          };
+          _selectedMessageId = null;
+        });
+        _showToast("Message deleted");
+
+        // Fire the optional callback
+        if (widget.onDeleteAction != null) {
+          try {
+            await widget.onDeleteAction!();
+          } catch (_) {}
+        }
+      }
+    } catch (e) {
+      debugPrint('❌ Error deleting message: $e');
+      _showToast("Failed to delete message. Please try again.", isError: true);
+    } finally {
+      if (mounted) {
+        setState(() => _isDeleting = false);
+      }
+    }
   }
 
   @override
@@ -153,7 +308,7 @@ class _GigChatThreadState extends State<GigChatThread>
   }
 
   // ═══════════════════════════════════════════════════════════════
-  // REFRESH THREAD DATA - Re-fetch via same API the page uses
+  // REFRESH THREAD DATA
   // ═══════════════════════════════════════════════════════════════
 
   Future<void> _refreshThreadData() async {
@@ -291,7 +446,7 @@ class _GigChatThreadState extends State<GigChatThread>
   }
 
   // ═══════════════════════════════════════════════════════════════
-  // RELOAD RECENT - Gap fill after app resume
+  // RELOAD RECENT
   // ═══════════════════════════════════════════════════════════════
 
   Future<void> _reloadRecentMessages() async {
@@ -329,7 +484,7 @@ class _GigChatThreadState extends State<GigChatThread>
   }
 
   // ═══════════════════════════════════════════════════════════════
-  // LOAD MORE - Paginated older messages
+  // LOAD MORE
   // ═══════════════════════════════════════════════════════════════
 
   Future<void> _loadMoreMessages() async {
@@ -413,7 +568,6 @@ class _GigChatThreadState extends State<GigChatThread>
               final messageId = payload.newRecord['id'];
               final exists = _messages.any((m) => m['id'] == messageId);
               if (!exists) {
-                // Remove optimistic message if this is the real version
                 final newContent =
                     payload.newRecord['message_content'] as String?;
                 final newSenderId = payload.newRecord['sender_id'];
@@ -429,7 +583,6 @@ class _GigChatThreadState extends State<GigChatThread>
                 _scrollToBottom();
                 _markThreadAsRead();
 
-                // Trigger data refresh when a toast or click message arrives
                 final newMsgType = payload.newRecord['message_type'] as String?;
                 if (newMsgType == 'toast' || newMsgType == 'click') {
                   _refreshThreadData();
@@ -492,6 +645,9 @@ class _GigChatThreadState extends State<GigChatThread>
     final messageText = _messageController.text.trim();
     if (messageText.isEmpty || _isSending || _isFFActionRunning) return;
 
+    // Clear any selection when sending
+    _clearSelection();
+
     setState(() {
       _isSending = true;
       _isFFActionRunning = true;
@@ -499,7 +655,6 @@ class _GigChatThreadState extends State<GigChatThread>
 
     _messageController.clear();
 
-    // Optimistic insert so sender sees it instantly
     final optimisticId = -DateTime.now().millisecondsSinceEpoch;
     final optimisticMessage = {
       'id': optimisticId,
@@ -528,7 +683,6 @@ class _GigChatThreadState extends State<GigChatThread>
       }
     } finally {
       if (mounted) {
-        // Clean up stale optimistic msg after realtime delivers real one
         Future.delayed(const Duration(seconds: 4), () {
           if (mounted) {
             setState(() {
@@ -554,6 +708,7 @@ class _GigChatThreadState extends State<GigChatThread>
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
+        _clearSelection();
       },
       child: Container(
         width: widget.width,
@@ -561,7 +716,8 @@ class _GigChatThreadState extends State<GigChatThread>
         color: const Color(0xFF000000),
         child: Column(
           children: [
-            _buildHeader(),
+            // Show delete header when a message is selected, otherwise normal header
+            _selectedMessageId != null ? _buildDeleteHeader() : _buildHeader(),
             _divider(),
             _buildGigInfoBar(),
             _divider(),
@@ -585,6 +741,80 @@ class _GigChatThreadState extends State<GigChatThread>
   Widget _divider() {
     return Container(
         height: 1, color: const Color(0xFFFFFFFF).withOpacity(0.3));
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // DELETE HEADER - Shown when a message is selected
+  // ═══════════════════════════════════════════════════════════════
+
+  Widget _buildDeleteHeader() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      color: const Color(0xFF1A1A2E),
+      child: SafeArea(
+        bottom: false,
+        child: Row(
+          children: [
+            // Close / deselect
+            GestureDetector(
+              onTap: _clearSelection,
+              child: const Icon(Icons.close, color: Colors.white, size: 26),
+            ),
+            const SizedBox(width: 16),
+            const Expanded(
+              child: Text(
+                '1 selected',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            // Delete button
+            GestureDetector(
+              onTap: _isDeleting ? null : _handleDeleteMessage,
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                decoration: BoxDecoration(
+                  color: _isDeleting
+                      ? const Color(0xFFEF4444).withOpacity(0.5)
+                      : const Color(0xFFEF4444),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: _isDeleting
+                    ? const SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.white),
+                        ),
+                      )
+                    : const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.delete_outline,
+                              color: Colors.white, size: 18),
+                          SizedBox(width: 6),
+                          Text(
+                            'Delete',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   // ═══════════════════════════════════════════════════════════════
@@ -710,6 +940,7 @@ class _GigChatThreadState extends State<GigChatThread>
     final capitalizedVenue = _capitalizeWords(_venueName);
     final capitalizedSlotType = _capitalizeWords(_slotType);
     final capitalizedGigDate = _capitalizeWords(_gigDate);
+    final capitalizedStageName = _capitalizeWords(_stageName);
 
     if (_gigStatus.toLowerCase() == 'open') {
       containerColor = const Color(0xFFFFB140).withOpacity(0.27);
@@ -781,6 +1012,15 @@ class _GigChatThreadState extends State<GigChatThread>
                           color: Colors.white,
                           fontSize: 15,
                           fontWeight: FontWeight.w500)),
+                  // ── Stage Name after Date ──
+                  if (_stageName.isNotEmpty) ...[
+                    _verticalDivider(),
+                    Text(capitalizedStageName,
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500)),
+                  ],
                 ],
               ),
             ),
@@ -821,7 +1061,7 @@ class _GigChatThreadState extends State<GigChatThread>
   }
 
   // ═══════════════════════════════════════════════════════════════
-  // VIEW PROPOSAL - Hidden for general gigs
+  // VIEW / SEND PROPOSAL
   // ═══════════════════════════════════════════════════════════════
 
   Widget _buildViewOtherThreads() {
@@ -838,9 +1078,9 @@ class _GigChatThreadState extends State<GigChatThread>
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16),
         alignment: Alignment.center,
-        child: const Text(
-          'View proposal',
-          style: TextStyle(
+        child: Text(
+          widget.isVenue ? 'Send proposal' : 'View proposal',
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 15,
             decoration: TextDecoration.underline,
@@ -916,13 +1156,13 @@ class _GigChatThreadState extends State<GigChatThread>
   }
 
   // ═══════════════════════════════════════════════════════════════
-  // FORMAT HELPERS
+  // FORMAT HELPERS (LOCAL TIMEZONE)
   // ═══════════════════════════════════════════════════════════════
 
   String _formatTimestamp(String? createdAt) {
     if (createdAt == null) return '';
     try {
-      final dateTime = DateTime.parse(createdAt);
+      final dateTime = DateTime.parse(createdAt).toLocal();
       final hour = dateTime.hour > 12
           ? dateTime.hour - 12
           : (dateTime.hour == 0 ? 12 : dateTime.hour);
@@ -937,7 +1177,7 @@ class _GigChatThreadState extends State<GigChatThread>
   String _formatDate(String? createdAt) {
     if (createdAt == null) return '';
     try {
-      final dateTime = DateTime.parse(createdAt);
+      final dateTime = DateTime.parse(createdAt).toLocal();
       const months = [
         'Jan',
         'Feb',
@@ -981,7 +1221,7 @@ class _GigChatThreadState extends State<GigChatThread>
   }
 
   // ═══════════════════════════════════════════════════════════════
-  // PROPOSAL TEXT - Role-specific
+  // PROPOSAL TEXT
   // ═══════════════════════════════════════════════════════════════
 
   String _getProposalText(String? subType) {
@@ -1052,6 +1292,7 @@ class _GigChatThreadState extends State<GigChatThread>
     final messageType = message['message_type'] as String?;
     final subType = message['sub_type'] as String?;
     final createdAt = message['created_at'] as String?;
+    final messageId = message['id'];
 
     final rawMessageContent = message['message_content'] as String?;
     final alternateMessage = message['alternate_message'] as String?;
@@ -1062,6 +1303,12 @@ class _GigChatThreadState extends State<GigChatThread>
         : rawMessageContent;
 
     final isMyMessage = senderId == widget.currentUserId;
+    final isSelected = _selectedMessageId == messageId;
+
+    // ── Deleted message logic ──
+    final deletedByMe = _isDeletedByMe(message);
+    final deletedByOther = _isDeletedByOther(message);
+    final isDeleted = deletedByMe || deletedByOther;
 
     final showTimestamp = index == 0 ||
         _formatTimestamp(createdAt) !=
@@ -1085,7 +1332,7 @@ class _GigChatThreadState extends State<GigChatThread>
             ),
           ),
 
-        // Toast messages in #39D2C0
+        // Toast messages
         if (messageType == 'toast')
           Padding(
             padding: const EdgeInsets.only(bottom: 16),
@@ -1097,7 +1344,7 @@ class _GigChatThreadState extends State<GigChatThread>
             ),
           ),
 
-        // Click messages - now also in green (#39D2C0)
+        // Click messages
         if (messageType == 'click')
           Padding(
             padding: const EdgeInsets.only(bottom: 16),
@@ -1131,7 +1378,7 @@ class _GigChatThreadState extends State<GigChatThread>
             ),
           ),
 
-        // Proposal messages - Role-specific
+        // Proposal messages
         if (messageType == 'proposal')
           Padding(
             padding: const EdgeInsets.only(bottom: 16),
@@ -1148,7 +1395,7 @@ class _GigChatThreadState extends State<GigChatThread>
             ),
           ),
 
-        // Regular chat bubbles
+        // Regular chat bubbles (with delete support)
         if (messageType != 'toast' &&
             messageType != 'proposal' &&
             messageType != 'click') ...[
@@ -1166,23 +1413,97 @@ class _GigChatThreadState extends State<GigChatThread>
                 ),
               ),
             ),
-          Align(
-            alignment:
-                isMyMessage ? Alignment.centerRight : Alignment.centerLeft,
-            child: Container(
-              constraints: BoxConstraints(
-                  maxWidth: MediaQuery.of(context).size.width * 0.75),
+
+          // ── Long press to select (only non-deleted, non-optimistic) ──
+          GestureDetector(
+            onLongPress: () {
+              // Don't allow selecting deleted messages or optimistic messages
+              if (isDeleted) return;
+              if (messageId is int && messageId < 0) return;
+
+              setState(() {
+                // Toggle: if already selected, deselect; otherwise select this one
+                if (_selectedMessageId == messageId) {
+                  _selectedMessageId = null;
+                } else {
+                  _selectedMessageId = messageId;
+                }
+              });
+            },
+            onTap: () {
+              // Tap to deselect if something is selected
+              if (_selectedMessageId != null) {
+                _clearSelection();
+              }
+            },
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
               margin: const EdgeInsets.only(bottom: 12),
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              padding: isSelected
+                  ? const EdgeInsets.symmetric(horizontal: 4, vertical: 4)
+                  : EdgeInsets.zero,
               decoration: BoxDecoration(
-                color: isMyMessage ? Colors.white : const Color(0xFF404040),
-                borderRadius: BorderRadius.circular(16),
+                color: isSelected
+                    ? const Color(0xFF3B82F6).withOpacity(0.15)
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(20),
               ),
-              child: Text(
-                messageContent ?? '',
-                style: TextStyle(
-                  color: isMyMessage ? Colors.black : Colors.white,
-                  fontSize: 15,
+              child: Align(
+                alignment:
+                    isMyMessage ? Alignment.centerRight : Alignment.centerLeft,
+                child: Container(
+                  constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width * 0.75),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  decoration: BoxDecoration(
+                    color: isDeleted
+                        ? (isMyMessage
+                            ? Colors.white.withOpacity(0.15)
+                            : const Color(0xFF404040).withOpacity(0.4))
+                        : (isMyMessage
+                            ? Colors.white
+                            : const Color(0xFF404040)),
+                    borderRadius: BorderRadius.circular(16),
+                    border: isSelected
+                        ? Border.all(color: const Color(0xFF3B82F6), width: 1.5)
+                        : null,
+                  ),
+                  child: isDeleted
+                      ? Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.block,
+                              size: 14,
+                              color: isMyMessage
+                                  ? Colors.white.withOpacity(0.5)
+                                  : Colors.white.withOpacity(0.4),
+                            ),
+                            const SizedBox(width: 6),
+                            Flexible(
+                              child: Text(
+                                deletedByMe
+                                    ? 'You deleted this message'
+                                    : 'This message was deleted',
+                                style: TextStyle(
+                                  color: isMyMessage
+                                      ? Colors.white.withOpacity(0.5)
+                                      : Colors.white.withOpacity(0.4),
+                                  fontSize: 14,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Text(
+                          messageContent ?? '',
+                          style: TextStyle(
+                            color: isMyMessage ? Colors.black : Colors.white,
+                            fontSize: 15,
+                          ),
+                        ),
                 ),
               ),
             ),
@@ -1193,7 +1514,7 @@ class _GigChatThreadState extends State<GigChatThread>
   }
 
   // ═══════════════════════════════════════════════════════════════
-  // MESSAGE INPUT - Tap outside to dismiss keyboard (iOS friendly)
+  // MESSAGE INPUT
   // ═══════════════════════════════════════════════════════════════
 
   Widget _buildMessageInput() {

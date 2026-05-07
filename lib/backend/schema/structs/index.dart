@@ -1,5 +1,6 @@
 export '/backend/schema/util/schema_util.dart';
 
+export 'fan_filter_struct.dart';
 export 'last_minute_gig_model_struct.dart';
 export 'musician_details_struct.dart';
 export 'open_slot_this_week_model_struct.dart';

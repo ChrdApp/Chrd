@@ -736,6 +736,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'musicianName',
               ParamType.String,
             ),
+            isViewOnly: params.getParam(
+              'isViewOnly',
+              ParamType.bool,
+            ),
           ),
         ),
         FFRoute(
@@ -880,9 +884,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => BookamrkedFanWidget(),
         ),
         FFRoute(
-          name: HomeFanCopyWidget.routeName,
-          path: HomeFanCopyWidget.routePath,
-          builder: (context, params) => HomeFanCopyWidget(),
+          name: FanUserWidget.routeName,
+          path: FanUserWidget.routePath,
+          builder: (context, params) => FanUserWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],
@@ -1123,7 +1127,11 @@ class TransitionInfo {
   final Duration duration;
   final Alignment? alignment;
 
-  static TransitionInfo appDefault() => TransitionInfo(hasTransition: false);
+  static TransitionInfo appDefault() => TransitionInfo(
+        hasTransition: true,
+        transitionType: PageTransitionType.fade,
+        duration: Duration(milliseconds: 0),
+      );
 }
 
 class RootPageContext {

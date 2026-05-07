@@ -17,8 +17,8 @@ class GigContractsRow extends SupabaseDataRow {
   int get id => getField<int>('id')!;
   set id(int value) => setField<int>('id', value);
 
-  DateTime get createdAt => getField<DateTime>('created_at')!;
-  set createdAt(DateTime value) => setField<DateTime>('created_at', value);
+  DateTime? get createdAt => getField<DateTime>('created_at');
+  set createdAt(DateTime? value) => setField<DateTime>('created_at', value);
 
   int? get gigThreadId => getField<int>('gig_thread_id');
   set gigThreadId(int? value) => setField<int>('gig_thread_id', value);

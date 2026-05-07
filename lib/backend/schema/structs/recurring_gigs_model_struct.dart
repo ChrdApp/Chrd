@@ -21,6 +21,7 @@ class RecurringGigsModelStruct extends BaseStruct {
     int? sequenceCount,
     List<GenreModelStruct>? genres,
     int? venueOwnerId,
+    bool? isInquired,
   })  : _slotId = slotId,
         _startDate = startDate,
         _startTime = startTime,
@@ -33,7 +34,8 @@ class RecurringGigsModelStruct extends BaseStruct {
         _entertainments = entertainments,
         _sequenceCount = sequenceCount,
         _genres = genres,
-        _venueOwnerId = venueOwnerId;
+        _venueOwnerId = venueOwnerId,
+        _isInquired = isInquired;
 
   // "slot_id" field.
   int? _slotId;
@@ -147,6 +149,13 @@ class RecurringGigsModelStruct extends BaseStruct {
 
   bool hasVenueOwnerId() => _venueOwnerId != null;
 
+  // "is_inquired" field.
+  bool? _isInquired;
+  bool get isInquired => _isInquired ?? false;
+  set isInquired(bool? val) => _isInquired = val;
+
+  bool hasIsInquired() => _isInquired != null;
+
   static RecurringGigsModelStruct fromMap(Map<String, dynamic> data) =>
       RecurringGigsModelStruct(
         slotId: castToType<int>(data['slot_id']),
@@ -168,6 +177,7 @@ class RecurringGigsModelStruct extends BaseStruct {
           GenreModelStruct.fromMap,
         ),
         venueOwnerId: castToType<int>(data['venue_owner_id']),
+        isInquired: data['is_inquired'] as bool?,
       );
 
   static RecurringGigsModelStruct? maybeFromMap(dynamic data) => data is Map
@@ -188,6 +198,7 @@ class RecurringGigsModelStruct extends BaseStruct {
         'sequence_count': _sequenceCount,
         'genres': _genres?.map((e) => e.toMap()).toList(),
         'venue_owner_id': _venueOwnerId,
+        'is_inquired': _isInquired,
       }.withoutNulls;
 
   @override
@@ -245,6 +256,10 @@ class RecurringGigsModelStruct extends BaseStruct {
         'venue_owner_id': serializeParam(
           _venueOwnerId,
           ParamType.int,
+        ),
+        'is_inquired': serializeParam(
+          _isInquired,
+          ParamType.bool,
         ),
       }.withoutNulls;
 
@@ -318,6 +333,11 @@ class RecurringGigsModelStruct extends BaseStruct {
           ParamType.int,
           false,
         ),
+        isInquired: deserializeParam(
+          data['is_inquired'],
+          ParamType.bool,
+          false,
+        ),
       );
 
   @override
@@ -339,7 +359,8 @@ class RecurringGigsModelStruct extends BaseStruct {
         listEquality.equals(entertainments, other.entertainments) &&
         sequenceCount == other.sequenceCount &&
         listEquality.equals(genres, other.genres) &&
-        venueOwnerId == other.venueOwnerId;
+        venueOwnerId == other.venueOwnerId &&
+        isInquired == other.isInquired;
   }
 
   @override
@@ -356,7 +377,8 @@ class RecurringGigsModelStruct extends BaseStruct {
         entertainments,
         sequenceCount,
         genres,
-        venueOwnerId
+        venueOwnerId,
+        isInquired
       ]);
 }
 
@@ -372,6 +394,7 @@ RecurringGigsModelStruct createRecurringGigsModelStruct({
   String? repeatType,
   int? sequenceCount,
   int? venueOwnerId,
+  bool? isInquired,
 }) =>
     RecurringGigsModelStruct(
       slotId: slotId,
@@ -385,4 +408,5 @@ RecurringGigsModelStruct createRecurringGigsModelStruct({
       repeatType: repeatType,
       sequenceCount: sequenceCount,
       venueOwnerId: venueOwnerId,
+      isInquired: isInquired,
     );
