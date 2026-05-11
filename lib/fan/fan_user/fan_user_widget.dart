@@ -264,7 +264,10 @@ class _FanUserWidgetState extends State<FanUserWidget> {
                           model: _model.cHRDPhoneNumberInitialModel,
                           updateCallback: () => safeSetState(() {}),
                           child: CHRDPhoneNumberWidget(
-                            freezeMobileInput: false,
+                            freezeMobileInput: currentPhoneNumber != null &&
+                                    currentPhoneNumber != ''
+                                ? false
+                                : true,
                             initialValue: '',
                             onChange: () async {},
                           ),
@@ -275,7 +278,10 @@ class _FanUserWidgetState extends State<FanUserWidget> {
                           child: CHRDLabelTextFieldWithBorderWidget(
                             labelText: 'Email Address',
                             hintText: 'john.doe@livnightclub.com',
-                            freezeEmailInput: true,
+                            freezeEmailInput: currentUserEmail != null &&
+                                    currentUserEmail != ''
+                                ? false
+                                : true,
                             onChange: () async {
                               safeSetState(() {});
                             },
