@@ -11,7 +11,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/musician/components/c_h_r_d_back_btn/c_h_r_d_back_btn_widget.dart';
 import '/musician/components/c_h_r_d_label_btn/c_h_r_d_label_btn_widget.dart';
 import '/musician/components/c_h_r_d_label_column_text/c_h_r_d_label_column_text_widget.dart';
-import '/musician/components/c_h_r_d_label_text_field_with_border/c_h_r_d_label_text_field_with_border_widget.dart';
 import '/venue/venue_pages/venue_onbording/c_h_r_d_image_component/c_h_r_d_image_component_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_video_player_component/c_h_r_d_video_player_component_widget.dart';
 import 'dart:ui';
@@ -19,6 +18,7 @@ import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -62,21 +62,23 @@ class _EditStageWidgetState extends State<EditStageWidget> {
 
       if ((_model.stageDetailOutput?.succeeded ?? true)) {
         safeSetState(() {
-          _model.cHRDLabelTextFieldWithBorderModel.textController?.text =
-              getJsonField(
-            (_model.stageDetailOutput?.jsonBody ?? ''),
-            r'''$.stage.name''',
-          ).toString();
-        });
-        safeSetState(() {
           _model.descriptionTextController?.text = getJsonField(
             (_model.stageDetailOutput?.jsonBody ?? ''),
             r'''$.stage.description''',
           ).toString();
         });
+        safeSetState(() {
+          _model.titleTextController?.text = getJsonField(
+            (_model.stageDetailOutput?.jsonBody ?? ''),
+            r'''$.stage.name''',
+          ).toString();
+        });
       }
     });
 
+    _model.titleTextController ??= TextEditingController();
+    _model.titleFocusNode ??= FocusNode();
+    _model.titleFocusNode!.addListener(() => safeSetState(() {}));
     _model.descriptionTextController ??= TextEditingController();
     _model.descriptionFocusNode ??= FocusNode();
 
@@ -170,14 +172,107 @@ class _EditStageWidgetState extends State<EditStageWidget> {
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              wrapWithModel(
-                                model: _model.cHRDLabelTextFieldWithBorderModel,
-                                updateCallback: () => safeSetState(() {}),
-                                child: CHRDLabelTextFieldWithBorderWidget(
-                                  labelText: 'Title',
-                                  hintText: 'Main Stage',
-                                  freezeEmailInput: true,
-                                  onChange: () async {},
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Color(0xFF25282E),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      2.0, 9.5, 2.0, 9.5),
+                                  child: Container(
+                                    width: double.infinity,
+                                    child: TextFormField(
+                                      controller: _model.titleTextController,
+                                      focusNode: _model.titleFocusNode,
+                                      onChanged: (_) => EasyDebounce.debounce(
+                                        '_model.titleTextController',
+                                        Duration(milliseconds: 0),
+                                        () => safeSetState(() {}),
+                                      ),
+                                      autofocus: false,
+                                      textInputAction: TextInputAction.next,
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        isDense: true,
+                                        labelText: 'Title',
+                                        labelStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium
+                                            .override(
+                                              font: GoogleFonts.montserrat(
+                                                fontWeight: FontWeight.w500,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelMedium
+                                                        .fontStyle,
+                                              ),
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              fontSize: 12.0,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w500,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .fontStyle,
+                                            ),
+                                        hintText: 'Main Stage',
+                                        hintStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium
+                                            .override(
+                                              font: GoogleFonts.montserrat(
+                                                fontWeight: FontWeight.normal,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelMedium
+                                                        .fontStyle,
+                                              ),
+                                              color: Color(0x8BFFFFFF),
+                                              fontSize: 13.0,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.normal,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .fontStyle,
+                                            ),
+                                        enabledBorder: InputBorder.none,
+                                        focusedBorder: InputBorder.none,
+                                        errorBorder: InputBorder.none,
+                                        focusedErrorBorder: InputBorder.none,
+                                        filled: true,
+                                        fillColor: FlutterFlowTheme.of(context)
+                                            .neutralDark900,
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            font: GoogleFonts.montserrat(
+                                              fontWeight: FontWeight.w500,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w500,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
+                                      maxLines: null,
+                                      cursorColor: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      enableInteractiveSelection: true,
+                                      validator: _model
+                                          .titleTextControllerValidator
+                                          .asValidator(context),
+                                    ),
+                                  ),
                                 ),
                               ),
                               Padding(
@@ -1167,8 +1262,7 @@ class _EditStageWidgetState extends State<EditStageWidget> {
                     }
                     await PerformanceStagesTable().update(
                       data: {
-                        'name': _model.cHRDLabelTextFieldWithBorderModel
-                            .textController.text,
+                        'name': _model.titleTextController.text,
                         'description': _model.descriptionTextController.text,
                         'updated_at':
                             supaSerialize<DateTime>(getCurrentTimestamp),
