@@ -141,141 +141,180 @@ class _AddPerformanceStages9WidgetState
             Expanded(
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    FutureBuilder<List<PerformanceStagesRow>>(
-                      future: PerformanceStagesTable().queryRows(
-                        queryFn: (q) => q.eqOrNull(
-                          'venue_id',
-                          widget!.venueId != null
-                              ? widget!.venueId
-                              : FFAppState().venueId,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      FutureBuilder<List<PerformanceStagesRow>>(
+                        future: PerformanceStagesTable().queryRows(
+                          queryFn: (q) => q.eqOrNull(
+                            'venue_id',
+                            widget!.venueId != null
+                                ? widget!.venueId
+                                : FFAppState().venueId,
+                          ),
                         ),
-                      ),
-                      builder: (context, snapshot) {
-                        // Customize what your widget looks like when it's loading.
-                        if (!snapshot.hasData) {
-                          return Center(
-                            child: SizedBox(
-                              width: 40.0,
-                              height: 40.0,
-                              child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                ),
-                              ),
-                            ),
-                          );
-                        }
-                        List<PerformanceStagesRow>
-                            listViewPerformanceStagesRowList = snapshot.data!;
-
-                        return ListView.separated(
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          itemCount: listViewPerformanceStagesRowList.length,
-                          separatorBuilder: (_, __) => SizedBox(height: 16.0),
-                          itemBuilder: (context, listViewIndex) {
-                            final listViewPerformanceStagesRow =
-                                listViewPerformanceStagesRowList[listViewIndex];
-                            return Container(
-                              width: 100.0,
-                              height: 52.0,
-                              decoration: BoxDecoration(
-                                color:
-                                    FlutterFlowTheme.of(context).neutralDark900,
-                                borderRadius: BorderRadius.circular(13.0),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    12.0, 0.0, 12.0, 0.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      valueOrDefault<String>(
-                                        listViewPerformanceStagesRow.name,
-                                        'NA',
-                                      ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            font: GoogleFonts.montserrat(
-                                              fontWeight: FontWeight.w500,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
-                                            ),
-                                            color: FlutterFlowTheme.of(context)
-                                                .info,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w500,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
-                                          ),
-                                    ),
-                                    if (false)
-                                      Icon(
-                                        Icons.arrow_forward_ios,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        size: 24.0,
-                                      ),
-                                  ],
+                        builder: (context, snapshot) {
+                          // Customize what your widget looks like when it's loading.
+                          if (!snapshot.hasData) {
+                            return Center(
+                              child: SizedBox(
+                                width: 40.0,
+                                height: 40.0,
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                  ),
                                 ),
                               ),
                             );
-                          },
-                        );
-                      },
-                    ),
-                    Align(
-                      alignment: AlignmentDirectional(0.0, 1.0),
-                      child: InkWell(
-                        splashColor: Colors.transparent,
-                        focusColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onTap: () async {
-                          context.pushNamed(
-                            AddingPerformanceStagesWidget.routeName,
-                            queryParameters: {
-                              'venueId': serializeParam(
-                                widget!.venueId,
-                                ParamType.int,
-                              ),
-                            }.withoutNulls,
+                          }
+                          List<PerformanceStagesRow>
+                              listViewPerformanceStagesRowList = snapshot.data!;
+
+                          return ListView.separated(
+                            padding: EdgeInsets.zero,
+                            primary: false,
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            itemCount: listViewPerformanceStagesRowList.length,
+                            separatorBuilder: (_, __) => SizedBox(height: 16.0),
+                            itemBuilder: (context, listViewIndex) {
+                              final listViewPerformanceStagesRow =
+                                  listViewPerformanceStagesRowList[
+                                      listViewIndex];
+                              return InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  context.pushNamed(
+                                    EditStageWidget.routeName,
+                                    queryParameters: {
+                                      'stageId': serializeParam(
+                                        listViewPerformanceStagesRow.id,
+                                        ParamType.int,
+                                      ),
+                                    }.withoutNulls,
+                                  );
+                                },
+                                child: Container(
+                                  width: 100.0,
+                                  height: 52.0,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .neutralDark900,
+                                    borderRadius: BorderRadius.circular(13.0),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        12.0, 0.0, 12.0, 0.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          valueOrDefault<String>(
+                                            listViewPerformanceStagesRow.name,
+                                            'NA',
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                font: GoogleFonts.montserrat(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontStyle,
+                                                ),
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .info,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.w500,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontStyle,
+                                              ),
+                                        ),
+                                        if (false)
+                                          Icon(
+                                            Icons.arrow_forward_ios,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            size: 24.0,
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
                           );
                         },
-                        child: Container(
-                          width: double.infinity,
-                          height: 102.0,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context).neutralDark900,
-                            borderRadius: BorderRadius.circular(13.0),
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Icon(
-                                Icons.add_outlined,
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                size: 50.0,
-                              ),
-                              Text(
-                                'Add',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      font: GoogleFonts.montserrat(
+                      ),
+                      Align(
+                        alignment: AlignmentDirectional(0.0, 1.0),
+                        child: InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            FFAppState().performanceStagesContentList = [];
+                            safeSetState(() {});
+
+                            context.pushNamed(
+                              AddingPerformanceStagesWidget.routeName,
+                              queryParameters: {
+                                'venueId': serializeParam(
+                                  widget!.venueId,
+                                  ParamType.int,
+                                ),
+                              }.withoutNulls,
+                            );
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            height: 102.0,
+                            decoration: BoxDecoration(
+                              color:
+                                  FlutterFlowTheme.of(context).neutralDark900,
+                              borderRadius: BorderRadius.circular(13.0),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Icon(
+                                  Icons.add_outlined,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  size: 50.0,
+                                ),
+                                Text(
+                                  'Add',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        font: GoogleFonts.montserrat(
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
+                                        ),
+                                        color: FlutterFlowTheme.of(context)
+                                            .neutralLight300,
+                                        letterSpacing: 0.0,
                                         fontWeight: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .fontWeight,
@@ -283,27 +322,19 @@ class _AddPerformanceStages9WidgetState
                                             .bodyMedium
                                             .fontStyle,
                                       ),
-                                      color: FlutterFlowTheme.of(context)
-                                          .neutralLight300,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                              ),
-                            ]
-                                .divide(SizedBox(height: 6.25))
-                                .addToStart(SizedBox(height: 14.0)),
+                                ),
+                              ]
+                                  .divide(SizedBox(height: 6.25))
+                                  .addToStart(SizedBox(height: 14.0)),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ]
-                      .divide(SizedBox(height: 14.0))
-                      .addToStart(SizedBox(height: 4.0)),
+                    ]
+                        .divide(SizedBox(height: 14.0))
+                        .addToStart(SizedBox(height: 4.0))
+                        .addToEnd(SizedBox(height: 24.0)),
+                  ),
                 ),
               ),
             ),

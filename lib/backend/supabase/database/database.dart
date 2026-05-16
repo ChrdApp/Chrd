@@ -19,6 +19,7 @@ export 'tables/musician_open_slots.dart';
 export 'tables/notification.dart';
 export 'tables/performance_stages.dart';
 export 'tables/social_media.dart';
+export 'tables/stage_content.dart';
 export 'tables/thread_messages.dart';
 export 'tables/users.dart';
 export 'tables/venue_content.dart';

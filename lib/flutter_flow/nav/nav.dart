@@ -887,6 +887,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: FanUserWidget.routeName,
           path: FanUserWidget.routePath,
           builder: (context, params) => FanUserWidget(),
+        ),
+        FFRoute(
+          name: EditStageWidget.routeName,
+          path: EditStageWidget.routePath,
+          builder: (context, params) => EditStageWidget(
+            stageId: params.getParam(
+              'stageId',
+              ParamType.int,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],

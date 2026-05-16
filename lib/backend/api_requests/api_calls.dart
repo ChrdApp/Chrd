@@ -58,6 +58,9 @@ class VenueGroup {
       MarkAllNotificationsReadCall();
   static FetchStageWithSlotsCall fetchStageWithSlotsCall =
       FetchStageWithSlotsCall();
+  static InsertStageContentCall insertStageContentCall =
+      InsertStageContentCall();
+  static GetStageDetailCall getStageDetailCall = GetStageDetailCall();
 }
 
 class VenueOpenSlotsCall {
@@ -1140,6 +1143,80 @@ class FetchStageWithSlotsCall {
     return ApiManager.instance.makeApiCall(
       callName: 'Fetch Stage with Slots',
       apiUrl: '${baseUrl}/rpc/fetch_stage_with_slots',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization':
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'apikey':
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class InsertStageContentCall {
+  Future<ApiCallResponse> call({
+    int? pStageId,
+    List<String>? pContentList,
+    List<String>? pThumbnailList,
+  }) async {
+    final baseUrl = VenueGroup.getBaseUrl();
+    final pContent = _serializeList(pContentList);
+    final pThumbnail = _serializeList(pThumbnailList);
+
+    final ffApiRequestBody = '''
+{
+  "p_stage_id": ${pStageId},
+  "p_content": ${pContent},
+  "p_thumbnail": ${pThumbnail}
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Insert Stage Content',
+      apiUrl: '${baseUrl}/rpc/insert_stage_content',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization':
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'apikey':
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class GetStageDetailCall {
+  Future<ApiCallResponse> call({
+    int? pStageId,
+  }) async {
+    final baseUrl = VenueGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+{
+  "p_stage_id": ${pStageId}
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Get Stage Detail',
+      apiUrl: '${baseUrl}/rpc/get_stage_details',
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',

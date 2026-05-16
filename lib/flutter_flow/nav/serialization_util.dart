@@ -284,6 +284,8 @@ dynamic deserializeParam<T>(
             return PerformanceStagesRow(data);
           case SocialMediaRow:
             return SocialMediaRow(data);
+          case StageContentRow:
+            return StageContentRow(data);
           case ThreadMessagesRow:
             return ThreadMessagesRow(data);
           case UsersRow:

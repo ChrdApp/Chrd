@@ -152,3 +152,5 @@ export '/fan/home_fan/home_fan_widget.dart' show HomeFanWidget;
 export '/fan/bookamrked_fan/bookamrked_fan_widget.dart'
     show BookamrkedFanWidget;
 export '/fan/fan_user/fan_user_widget.dart' show FanUserWidget;
+export '/venue/venue_pages/venue_onbording/edit_stage/edit_stage_widget.dart'
+    show EditStageWidget;

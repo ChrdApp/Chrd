@@ -18,11 +18,14 @@ class UploadFileBtnWidget extends StatefulWidget {
     super.key,
     required this.uploadAction,
     bool? isContentUpload,
-  }) : this.isContentUpload = isContentUpload ?? false;
+    bool? isStageContent,
+  })  : this.isContentUpload = isContentUpload ?? false,
+        this.isStageContent = isStageContent ?? false;
 
   final Future Function(
       String uploadedImage, List<FFUploadedFile> uploadedFile)? uploadAction;
   final bool isContentUpload;
+  final bool isStageContent;
 
   @override
   State<UploadFileBtnWidget> createState() => _UploadFileBtnWidgetState();
@@ -168,7 +171,9 @@ class _UploadFileBtnWidgetState extends State<UploadFileBtnWidget> {
                         storageFolderPath:
                             FFAppState().userType == Type.Musician
                                 ? 'Musician Content'
-                                : 'venueContent',
+                                : (widget!.isStageContent
+                                    ? 'performanceStages'
+                                    : 'venueContent'),
                       );
                       downloadUrls = await uploadSupabaseStorageFiles(
                         bucketName: FFAppState().userType == Type.Musician

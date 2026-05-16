@@ -1040,7 +1040,7 @@ class _AddVenueContent5WidgetState extends State<AddVenueContent5Widget> {
                                                               CHRDVideoPlayerComponentWidget(
                                                             videoUrl:
                                                                 musicianContentListItem
-                                                                    .content!,
+                                                                    .content,
                                                             callBackAction:
                                                                 () async {},
                                                           ),

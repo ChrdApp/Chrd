@@ -15,7 +15,7 @@ export 'c_h_r_d_video_player_component_model.dart';
 class CHRDVideoPlayerComponentWidget extends StatefulWidget {
   const CHRDVideoPlayerComponentWidget({
     super.key,
-    required this.videoUrl,
+    this.videoUrl,
     this.videoThumbnail,
     this.contentId,
     bool? isHighlight,

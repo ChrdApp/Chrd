@@ -1,14 +1,17 @@
 import '/backend/api_requests/api_calls.dart';
+import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/musician/components/c_h_r_d_back_btn/c_h_r_d_back_btn_widget.dart';
 import '/musician/components/c_h_r_d_label_btn/c_h_r_d_label_btn_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_row_with_icon/c_h_r_d_row_with_icon_widget.dart';
+import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_video_player_component/c_h_r_d_video_player_component_widget.dart';
 import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'venue_gig_view_overlay_model.dart';
 export 'venue_gig_view_overlay_model.dart';
@@ -754,6 +757,222 @@ class _VenueGigViewOverlayWidgetState extends State<VenueGigViewOverlayWidget> {
                                 showArrow: false,
                                 onTap: () async {},
                               ),
+                            ),
+                            Builder(
+                              builder: (context) {
+                                final stageImages = getJsonField(
+                                  venueGigViewOverlayGetSingleSlotDetailsResponse
+                                      .jsonBody,
+                                  r'''$..stage_content''',
+                                ).toList();
+
+                                return SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: List.generate(stageImages.length,
+                                        (stageImagesIndex) {
+                                      final stageImagesItem =
+                                          stageImages[stageImagesIndex];
+                                      return Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          if (true ==
+                                              getJsonField(
+                                                stageImagesItem,
+                                                r'''$.is_video''',
+                                              ))
+                                            Builder(
+                                              builder: (context) => InkWell(
+                                                splashColor: Colors.transparent,
+                                                focusColor: Colors.transparent,
+                                                hoverColor: Colors.transparent,
+                                                highlightColor:
+                                                    Colors.transparent,
+                                                onTap: () async {
+                                                  await showDialog(
+                                                    barrierColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .primaryBackground,
+                                                    context: context,
+                                                    builder: (dialogContext) {
+                                                      return Dialog(
+                                                        elevation: 0,
+                                                        insetPadding:
+                                                            EdgeInsets.zero,
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        alignment:
+                                                            AlignmentDirectional(
+                                                                    0.0, 0.0)
+                                                                .resolve(
+                                                                    Directionality.of(
+                                                                        context)),
+                                                        child: GestureDetector(
+                                                          onTap: () {
+                                                            FocusScope.of(
+                                                                    dialogContext)
+                                                                .unfocus();
+                                                            FocusManager
+                                                                .instance
+                                                                .primaryFocus
+                                                                ?.unfocus();
+                                                          },
+                                                          child:
+                                                              CHRDVideoPlayerComponentWidget(
+                                                            videoUrl:
+                                                                '${getJsonField(
+                                                              stageImagesItem,
+                                                              r'''$.content''',
+                                                            ).toString()}',
+                                                            isViewOnly: true,
+                                                            callBackAction:
+                                                                () async {},
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                  );
+                                                },
+                                                child: Container(
+                                                  width: 110.0,
+                                                  height: 120.0,
+                                                  decoration: BoxDecoration(
+                                                    color: Color(0x693B006D),
+                                                    image: DecorationImage(
+                                                      fit: BoxFit.cover,
+                                                      image: Image.network(
+                                                        getJsonField(
+                                                          stageImagesItem,
+                                                          r'''$.content_thumbnail''',
+                                                        ).toString(),
+                                                      ).image,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12.0),
+                                                  ),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Icon(
+                                                        Icons.play_arrow,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryText,
+                                                        size: 24.0,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          if (false ==
+                                              getJsonField(
+                                                stageImagesItem,
+                                                r'''$.is_video''',
+                                              ))
+                                            Container(
+                                              width: 110.0,
+                                              height: 120.0,
+                                              child: Stack(
+                                                children: [
+                                                  InkWell(
+                                                    splashColor:
+                                                        Colors.transparent,
+                                                    focusColor:
+                                                        Colors.transparent,
+                                                    hoverColor:
+                                                        Colors.transparent,
+                                                    highlightColor:
+                                                        Colors.transparent,
+                                                    onTap: () async {
+                                                      await Navigator.push(
+                                                        context,
+                                                        PageTransition(
+                                                          type:
+                                                              PageTransitionType
+                                                                  .fade,
+                                                          child:
+                                                              FlutterFlowExpandedImageView(
+                                                            image:
+                                                                Image.network(
+                                                              getJsonField(
+                                                                stageImagesItem,
+                                                                r'''$.content_thumbnail''',
+                                                              ).toString(),
+                                                              fit: BoxFit
+                                                                  .contain,
+                                                              errorBuilder: (context,
+                                                                      error,
+                                                                      stackTrace) =>
+                                                                  Image.asset(
+                                                                'assets/images/error_image.jpg',
+                                                                fit: BoxFit
+                                                                    .contain,
+                                                              ),
+                                                            ),
+                                                            allowRotation:
+                                                                false,
+                                                            tag: getJsonField(
+                                                              stageImagesItem,
+                                                              r'''$.content_thumbnail''',
+                                                            ).toString(),
+                                                            useHeroAnimation:
+                                                                true,
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: Hero(
+                                                      tag: getJsonField(
+                                                        stageImagesItem,
+                                                        r'''$.content_thumbnail''',
+                                                      ).toString(),
+                                                      transitionOnUserGestures:
+                                                          true,
+                                                      child: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12.0),
+                                                        child: Image.network(
+                                                          getJsonField(
+                                                            stageImagesItem,
+                                                            r'''$.content_thumbnail''',
+                                                          ).toString(),
+                                                          width: 110.0,
+                                                          height: 120.0,
+                                                          fit: BoxFit.cover,
+                                                          errorBuilder: (context,
+                                                                  error,
+                                                                  stackTrace) =>
+                                                              Image.asset(
+                                                            'assets/images/error_image.jpg',
+                                                            width: 110.0,
+                                                            height: 120.0,
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                        ],
+                                      );
+                                    }).divide(SizedBox(width: 12.0)),
+                                  ),
+                                );
+                              },
                             ),
                             Divider(
                               thickness: 0.5,

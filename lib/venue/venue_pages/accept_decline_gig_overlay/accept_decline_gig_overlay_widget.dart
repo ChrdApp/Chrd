@@ -10,6 +10,7 @@ import '/musician/components/c_h_r_d_accept_gig/c_h_r_d_accept_gig_widget.dart';
 import '/musician/components/c_h_r_d_back_btn/c_h_r_d_back_btn_widget.dart';
 import '/musician/components/c_h_r_d_label_btn/c_h_r_d_label_btn_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_row_with_icon/c_h_r_d_row_with_icon_widget.dart';
+import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_video_player_component/c_h_r_d_video_player_component_widget.dart';
 import 'dart:math';
 import 'dart:ui';
 import '/flutter_flow/custom_functions.dart' as functions;
@@ -851,91 +852,234 @@ class _AcceptDeclineGigOverlayWidgetState
                                     onTap: () async {},
                                   ),
                                 ),
-                                if (false)
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 18.0, 0.0, 0.0),
-                                    child: Builder(
-                                      builder: (context) {
-                                        final stageImages = getJsonField(
-                                          acceptDeclineGigOverlayGetContractDetailsResponse
-                                              .jsonBody,
-                                          r'''$.data.stage_images''',
-                                        ).toList();
+                                Builder(
+                                  builder: (context) {
+                                    final stageImages = getJsonField(
+                                      acceptDeclineGigOverlayGetContractDetailsResponse
+                                          .jsonBody,
+                                      r'''$..stage_content''',
+                                    ).toList();
 
-                                        return SingleChildScrollView(
-                                          scrollDirection: Axis.horizontal,
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: List.generate(
-                                                stageImages.length,
+                                    return SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children:
+                                            List.generate(stageImages.length,
                                                 (stageImagesIndex) {
-                                              final stageImagesItem =
-                                                  stageImages[stageImagesIndex];
-                                              return InkWell(
-                                                splashColor: Colors.transparent,
-                                                focusColor: Colors.transparent,
-                                                hoverColor: Colors.transparent,
-                                                highlightColor:
-                                                    Colors.transparent,
-                                                onTap: () async {
-                                                  await Navigator.push(
-                                                    context,
-                                                    PageTransition(
-                                                      type: PageTransitionType
-                                                          .fade,
-                                                      child:
-                                                          FlutterFlowExpandedImageView(
-                                                        image: Image.network(
-                                                          'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHwzfHxiZWF1dGlmdWwlMjBvY2VhbnxlbnwwfHx8fDE3NzY4MzQ3MDJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
-                                                          fit: BoxFit.contain,
-                                                          errorBuilder: (context,
-                                                                  error,
-                                                                  stackTrace) =>
-                                                              Image.asset(
-                                                            'assets/images/error_image.jpg',
-                                                            fit: BoxFit.contain,
-                                                          ),
-                                                        ),
-                                                        allowRotation: false,
-                                                        tag: 'imageTag2',
-                                                        useHeroAnimation: true,
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                                child: Hero(
-                                                  tag: 'imageTag2',
-                                                  transitionOnUserGestures:
-                                                      true,
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            12.0),
-                                                    child: Image.network(
-                                                      'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHwzfHxiZWF1dGlmdWwlMjBvY2VhbnxlbnwwfHx8fDE3NzY4MzQ3MDJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
+                                          final stageImagesItem =
+                                              stageImages[stageImagesIndex];
+                                          return Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              if (true ==
+                                                  getJsonField(
+                                                    stageImagesItem,
+                                                    r'''$.is_video''',
+                                                  ))
+                                                Builder(
+                                                  builder: (context) => InkWell(
+                                                    splashColor:
+                                                        Colors.transparent,
+                                                    focusColor:
+                                                        Colors.transparent,
+                                                    hoverColor:
+                                                        Colors.transparent,
+                                                    highlightColor:
+                                                        Colors.transparent,
+                                                    onTap: () async {
+                                                      await showDialog(
+                                                        barrierColor:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryBackground,
+                                                        context: context,
+                                                        builder:
+                                                            (dialogContext) {
+                                                          return Dialog(
+                                                            elevation: 0,
+                                                            insetPadding:
+                                                                EdgeInsets.zero,
+                                                            backgroundColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            alignment: AlignmentDirectional(
+                                                                    0.0, 0.0)
+                                                                .resolve(
+                                                                    Directionality.of(
+                                                                        context)),
+                                                            child:
+                                                                GestureDetector(
+                                                              onTap: () {
+                                                                FocusScope.of(
+                                                                        dialogContext)
+                                                                    .unfocus();
+                                                                FocusManager
+                                                                    .instance
+                                                                    .primaryFocus
+                                                                    ?.unfocus();
+                                                              },
+                                                              child:
+                                                                  CHRDVideoPlayerComponentWidget(
+                                                                videoUrl:
+                                                                    '${getJsonField(
+                                                                  stageImagesItem,
+                                                                  r'''$.content''',
+                                                                ).toString()}',
+                                                                isViewOnly:
+                                                                    true,
+                                                                callBackAction:
+                                                                    () async {},
+                                                              ),
+                                                            ),
+                                                          );
+                                                        },
+                                                      );
+                                                    },
+                                                    child: Container(
                                                       width: 110.0,
                                                       height: 120.0,
-                                                      fit: BoxFit.cover,
-                                                      errorBuilder: (context,
-                                                              error,
-                                                              stackTrace) =>
-                                                          Image.asset(
-                                                        'assets/images/error_image.jpg',
-                                                        width: 110.0,
-                                                        height: 120.0,
-                                                        fit: BoxFit.cover,
+                                                      decoration: BoxDecoration(
+                                                        color:
+                                                            Color(0x693B006D),
+                                                        image: DecorationImage(
+                                                          fit: BoxFit.cover,
+                                                          image: Image.network(
+                                                            getJsonField(
+                                                              stageImagesItem,
+                                                              r'''$.content_thumbnail''',
+                                                            ).toString(),
+                                                          ).image,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12.0),
+                                                      ),
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Icon(
+                                                            Icons.play_arrow,
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primaryText,
+                                                            size: 24.0,
+                                                          ),
+                                                        ],
                                                       ),
                                                     ),
                                                   ),
                                                 ),
-                                              );
-                                            }).divide(SizedBox(width: 12.0)),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
+                                              if (false ==
+                                                  getJsonField(
+                                                    stageImagesItem,
+                                                    r'''$.is_video''',
+                                                  ))
+                                                Container(
+                                                  width: 110.0,
+                                                  height: 120.0,
+                                                  child: Stack(
+                                                    children: [
+                                                      InkWell(
+                                                        splashColor:
+                                                            Colors.transparent,
+                                                        focusColor:
+                                                            Colors.transparent,
+                                                        hoverColor:
+                                                            Colors.transparent,
+                                                        highlightColor:
+                                                            Colors.transparent,
+                                                        onTap: () async {
+                                                          await Navigator.push(
+                                                            context,
+                                                            PageTransition(
+                                                              type:
+                                                                  PageTransitionType
+                                                                      .fade,
+                                                              child:
+                                                                  FlutterFlowExpandedImageView(
+                                                                image: Image
+                                                                    .network(
+                                                                  getJsonField(
+                                                                    stageImagesItem,
+                                                                    r'''$.content_thumbnail''',
+                                                                  ).toString(),
+                                                                  fit: BoxFit
+                                                                      .contain,
+                                                                  errorBuilder: (context,
+                                                                          error,
+                                                                          stackTrace) =>
+                                                                      Image
+                                                                          .asset(
+                                                                    'assets/images/error_image.jpg',
+                                                                    fit: BoxFit
+                                                                        .contain,
+                                                                  ),
+                                                                ),
+                                                                allowRotation:
+                                                                    false,
+                                                                tag:
+                                                                    getJsonField(
+                                                                  stageImagesItem,
+                                                                  r'''$.content_thumbnail''',
+                                                                ).toString(),
+                                                                useHeroAnimation:
+                                                                    true,
+                                                              ),
+                                                            ),
+                                                          );
+                                                        },
+                                                        child: Hero(
+                                                          tag: getJsonField(
+                                                            stageImagesItem,
+                                                            r'''$.content_thumbnail''',
+                                                          ).toString(),
+                                                          transitionOnUserGestures:
+                                                              true,
+                                                          child: ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        12.0),
+                                                            child:
+                                                                Image.network(
+                                                              getJsonField(
+                                                                stageImagesItem,
+                                                                r'''$.content_thumbnail''',
+                                                              ).toString(),
+                                                              width: 110.0,
+                                                              height: 120.0,
+                                                              fit: BoxFit.cover,
+                                                              errorBuilder: (context,
+                                                                      error,
+                                                                      stackTrace) =>
+                                                                  Image.asset(
+                                                                'assets/images/error_image.jpg',
+                                                                width: 110.0,
+                                                                height: 120.0,
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                            ],
+                                          );
+                                        }).divide(SizedBox(width: 12.0)),
+                                      ),
+                                    );
+                                  },
+                                ),
                                 Divider(
                                   thickness: 0.5,
                                   color: Color(0x4DFFFFFF),

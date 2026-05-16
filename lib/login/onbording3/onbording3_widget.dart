@@ -102,7 +102,7 @@ class _Onbording3WidgetState extends State<Onbording3Widget> {
                       ),
                     ),
                     Text(
-                      'Find and attend great live experiences all around the world  ',
+                      'Find and attend great live experiences all around the world',
                       textAlign: TextAlign.center,
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             font: GoogleFonts.montserrat(
