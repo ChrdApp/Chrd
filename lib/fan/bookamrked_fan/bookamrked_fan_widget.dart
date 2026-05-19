@@ -202,19 +202,6 @@ class _BookamrkedFanWidgetState extends State<BookamrkedFanWidget> {
                                       );
                                     },
                                   ),
-                                  FlutterFlowIconButton(
-                                    borderRadius: 8.0,
-                                    buttonSize: 40.0,
-                                    icon: Icon(
-                                      FFIcons.kmore1,
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      size: 24.0,
-                                    ),
-                                    onPressed: () {
-                                      print('IconButton pressed ...');
-                                    },
-                                  ),
                                 ],
                               ),
                             ],

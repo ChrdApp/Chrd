@@ -1,6 +1,9 @@
 import '/auth/supabase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/enums/enums.dart';
+import '/backend/schema/structs/index.dart';
 import '/backend/supabase/supabase.dart';
+import '/components/confirmation_dialog_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -10,6 +13,7 @@ import '/musician/components/c_h_r_d_label_column_text/c_h_r_d_label_column_text
 import '/musician/components/c_h_r_d_label_text_field_with_border/c_h_r_d_label_text_field_with_border_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_phone_number/c_h_r_d_phone_number_widget.dart';
 import 'dart:ui';
+import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
 import 'fan_info_widget.dart' show FanInfoWidget;
 import 'package:flutter/material.dart';
@@ -46,7 +50,11 @@ class FanInfoModel extends FlutterFlowModel<FanInfoWidget> {
   // Model for EmailAddress.
   late CHRDLabelTextFieldWithBorderModel emailAddressModel;
   // Model for CHRD_Label_Btn component.
-  late CHRDLabelBtnModel cHRDLabelBtnModel;
+  late CHRDLabelBtnModel cHRDLabelBtnModel1;
+  // Stores action output result for [Backend Call - API (Deactivate user)] action in CHRD_Label_Btn widget.
+  ApiCallResponse? deactivatedUser;
+  // Model for CHRD_Label_Btn component.
+  late CHRDLabelBtnModel cHRDLabelBtnModel2;
   // Stores action output result for [Backend Call - Query Rows] action in CHRD_Label_Btn widget.
   List<UsersRow>? emailOutput;
   // Stores action output result for [Backend Call - Update Row(s)] action in CHRD_Label_Btn widget.
@@ -65,7 +73,8 @@ class FanInfoModel extends FlutterFlowModel<FanInfoWidget> {
         createModel(context, () => CHRDPhoneNumberModel());
     emailAddressModel =
         createModel(context, () => CHRDLabelTextFieldWithBorderModel());
-    cHRDLabelBtnModel = createModel(context, () => CHRDLabelBtnModel());
+    cHRDLabelBtnModel1 = createModel(context, () => CHRDLabelBtnModel());
+    cHRDLabelBtnModel2 = createModel(context, () => CHRDLabelBtnModel());
     adminNameModel.textControllerValidator = _formTextFieldValidator1;
     emailAddressModel.textControllerValidator = _formTextFieldValidator2;
   }
@@ -77,7 +86,8 @@ class FanInfoModel extends FlutterFlowModel<FanInfoWidget> {
     adminNameModel.dispose();
     cHRDPhoneNumberInitialModel.dispose();
     emailAddressModel.dispose();
-    cHRDLabelBtnModel.dispose();
+    cHRDLabelBtnModel1.dispose();
+    cHRDLabelBtnModel2.dispose();
   }
 
   /// Additional helper methods.

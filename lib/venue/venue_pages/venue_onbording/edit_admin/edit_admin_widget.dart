@@ -1,7 +1,9 @@
 import '/auth/supabase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/schema/structs/index.dart';
 import '/backend/supabase/supabase.dart';
+import '/components/confirmation_dialog_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -245,74 +247,266 @@ class _EditAdminWidgetState extends State<EditAdminWidget> {
                             },
                           ),
                         ),
+                        Builder(
+                          builder: (context) => Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 16.0),
+                            child: wrapWithModel(
+                              model: _model.cHRDLabelBtnModel1,
+                              updateCallback: () => safeSetState(() {}),
+                              child: CHRDLabelBtnWidget(
+                                heading: 'Delete Account',
+                                txtColor: FlutterFlowTheme.of(context).error,
+                                btnColor: Color(0x00030303),
+                                borderColor:
+                                    FlutterFlowTheme.of(context).primaryViolet,
+                                hight: 45.0,
+                                headingFontSize: 14,
+                                isDisiable: (_model.adminNameModel
+                                                    .textController.text !=
+                                                null &&
+                                            _model.adminNameModel.textController
+                                                    .text !=
+                                                '') &&
+                                        (_model.emailAddressModel.textController
+                                                    .text !=
+                                                null &&
+                                            _model.emailAddressModel
+                                                    .textController.text !=
+                                                '')
+                                    ? false
+                                    : true,
+                                onTab: () async {
+                                  await showDialog(
+                                    context: context,
+                                    builder: (dialogContext) {
+                                      return Dialog(
+                                        elevation: 0,
+                                        insetPadding: EdgeInsets.zero,
+                                        backgroundColor: Colors.transparent,
+                                        alignment:
+                                            AlignmentDirectional(0.0, 0.0)
+                                                .resolve(
+                                                    Directionality.of(context)),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            FocusScope.of(dialogContext)
+                                                .unfocus();
+                                            FocusManager.instance.primaryFocus
+                                                ?.unfocus();
+                                          },
+                                          child: Container(
+                                            width: MediaQuery.sizeOf(context)
+                                                    .width *
+                                                0.8,
+                                            child: ConfirmationDialogWidget(
+                                              acceptbtnText: 'Delete',
+                                              title:
+                                                  'Are you sure you want to Delete Account?',
+                                              acceptBtnAction: () async {
+                                                var _shouldSetState = false;
+                                                _model.deactivatedUser =
+                                                    await VenueGroup
+                                                        .deactivateUserCall
+                                                        .call(
+                                                  pUserId: FFAppState().userId,
+                                                );
+
+                                                _shouldSetState = true;
+                                                if ('true' ==
+                                                    getJsonField(
+                                                      (_model.deactivatedUser
+                                                              ?.jsonBody ??
+                                                          ''),
+                                                      r'''$.success''',
+                                                    ).toString()) {
+                                                  await actions
+                                                      .oneSignalLogout();
+                                                  FFAppState().venueId = 0;
+                                                  FFAppState().userId = 0;
+                                                  FFAppState().step = 0;
+                                                  FFAppState().userType = null;
+                                                  FFAppState().vanueName = '';
+                                                  FFAppState().AdminName = '';
+                                                  FFAppState().venueProfilePic =
+                                                      '';
+                                                  FFAppState()
+                                                      .venueContentVenueList = [];
+                                                  FFAppState()
+                                                          .venueAccountCreate =
+                                                      VenueAccountCreateStruct();
+                                                  FFAppState()
+                                                      .performanceStagesContentList = [];
+                                                  FFAppState().startTime = null;
+                                                  FFAppState().endTime = null;
+                                                  FFAppState().slotRepeatType =
+                                                      'None';
+                                                  FFAppState().slotEndDate =
+                                                      null;
+                                                  FFAppState().accountType = '';
+                                                  FFAppState()
+                                                      .musicianAddImages = [];
+                                                  FFAppState()
+                                                      .ProfileHighlight = [];
+                                                  FFAppState().gigOffer =
+                                                      GigOfferStruct();
+                                                  FFAppState().json = jsonDecode(
+                                                      '[{\"sender\":\"venue\",\"text\":\"Hey! We\'ve been following your shows and would love to have you DJ for us! How much money would you want for each show?\",\"timestamp\":\"9:41am\",\"date\":\"Oct 23rd, 2025\",\"isProposal\":true},{\"sender\":\"musician\",\"text\":\"Hi there! I would love to perform. I am not available Wednesday, Nov 26th. I am still interested in doing the other 3 shows for \$400 each.\",\"timestamp\":\"10:54am\"}]');
+                                                  safeSetState(() {});
+                                                  GoRouter.of(context)
+                                                      .prepareAuthEvent();
+                                                  await authManager.signOut();
+                                                  GoRouter.of(context)
+                                                      .clearRedirectLocation();
+
+                                                  context.goNamedAuth(
+                                                      SplashScreenWidget
+                                                          .routeName,
+                                                      context.mounted);
+
+                                                  return;
+                                                } else {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    SnackBar(
+                                                      content: Text(
+                                                        getJsonField(
+                                                          (_model.deactivatedUser
+                                                                  ?.jsonBody ??
+                                                              ''),
+                                                          r'''$.message''',
+                                                        ).toString(),
+                                                        style: TextStyle(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                        ),
+                                                      ),
+                                                      duration: Duration(
+                                                          milliseconds: 4000),
+                                                      backgroundColor:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondary,
+                                                    ),
+                                                  );
+                                                  Navigator.pop(context);
+                                                  return;
+                                                }
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+
+                                  safeSetState(() {});
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
                       ].divide(SizedBox(height: 14.0)),
                     ),
                   ),
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 16.0),
-              child: wrapWithModel(
-                model: _model.cHRDLabelBtnModel1,
-                updateCallback: () => safeSetState(() {}),
-                child: CHRDLabelBtnWidget(
-                  heading: 'Log out',
-                  txtColor: FlutterFlowTheme.of(context).primaryText,
-                  btnColor: Color(0x00030303),
-                  borderColor: FlutterFlowTheme.of(context).primaryViolet,
-                  hight: 45.0,
-                  headingFontSize: 14,
-                  isDisiable: (_model.adminNameModel.textController.text !=
-                                  null &&
-                              _model.adminNameModel.textController.text !=
-                                  '') &&
-                          (_model.emailAddressModel.textController.text !=
-                                  null &&
-                              _model.emailAddressModel.textController.text !=
-                                  '')
-                      ? false
-                      : true,
-                  onTab: () async {
-                    FFAppState().venueId = 0;
-                    FFAppState().userId = 0;
-                    FFAppState().step = 0;
-                    FFAppState().userType = null;
-                    FFAppState().vanueName = '';
-                    FFAppState().AdminName = '';
-                    FFAppState().venueProfilePic = '';
-                    FFAppState().venueContentVenueList = [];
-                    FFAppState().venueAccountCreate =
-                        VenueAccountCreateStruct();
-                    FFAppState().performanceStagesContentList = [];
-                    FFAppState().startTime = null;
-                    FFAppState().endTime = null;
-                    FFAppState().slotRepeatType = 'None';
-                    FFAppState().slotEndDate = null;
-                    FFAppState().accountType = '';
-                    FFAppState().musicianAddImages = [];
-                    FFAppState().ProfileHighlight = [];
-                    FFAppState().gigOffer = GigOfferStruct();
-                    FFAppState().json = jsonDecode(
-                        '[{\"sender\":\"venue\",\"text\":\"Hey! We\'ve been following your shows and would love to have you DJ for us! How much money would you want for each show?\",\"timestamp\":\"9:41am\",\"date\":\"Oct 23rd, 2025\",\"isProposal\":true},{\"sender\":\"musician\",\"text\":\"Hi there! I would love to perform. I am not available Wednesday, Nov 26th. I am still interested in doing the other 3 shows for \$400 each.\",\"timestamp\":\"10:54am\"}]');
-                    FFAppState().selectedVenueSwitch =
-                        VenueSwitchDetailStruct();
-                    safeSetState(() {});
-                    await actions.oneSignalLogout();
-                    GoRouter.of(context).prepareAuthEvent();
-                    await authManager.signOut();
-                    GoRouter.of(context).clearRedirectLocation();
+            Builder(
+              builder: (context) => Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 16.0),
+                child: wrapWithModel(
+                  model: _model.cHRDLabelBtnModel2,
+                  updateCallback: () => safeSetState(() {}),
+                  child: CHRDLabelBtnWidget(
+                    heading: 'Log out',
+                    txtColor: FlutterFlowTheme.of(context).primaryText,
+                    btnColor: Color(0x00030303),
+                    borderColor: FlutterFlowTheme.of(context).primaryViolet,
+                    hight: 45.0,
+                    headingFontSize: 14,
+                    isDisiable: (_model.adminNameModel.textController.text !=
+                                    null &&
+                                _model.adminNameModel.textController.text !=
+                                    '') &&
+                            (_model.emailAddressModel.textController.text !=
+                                    null &&
+                                _model.emailAddressModel.textController.text !=
+                                    '')
+                        ? false
+                        : true,
+                    onTab: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (dialogContext) {
+                          return Dialog(
+                            elevation: 0,
+                            insetPadding: EdgeInsets.zero,
+                            backgroundColor: Colors.transparent,
+                            alignment: AlignmentDirectional(0.0, 0.0)
+                                .resolve(Directionality.of(context)),
+                            child: GestureDetector(
+                              onTap: () {
+                                FocusScope.of(dialogContext).unfocus();
+                                FocusManager.instance.primaryFocus?.unfocus();
+                              },
+                              child: Container(
+                                width: MediaQuery.sizeOf(context).width * 0.8,
+                                child: ConfirmationDialogWidget(
+                                  acceptbtnText: 'Logout',
+                                  title: 'Are you sure you want to Logout?',
+                                  acceptBtnAction: () async {
+                                    FFAppState().venueId = 0;
+                                    FFAppState().userId = 0;
+                                    FFAppState().step = 0;
+                                    FFAppState().userType = null;
+                                    FFAppState().vanueName = '';
+                                    FFAppState().AdminName = '';
+                                    FFAppState().venueProfilePic = '';
+                                    FFAppState().venueContentVenueList = [];
+                                    FFAppState().venueAccountCreate =
+                                        VenueAccountCreateStruct();
+                                    FFAppState().performanceStagesContentList =
+                                        [];
+                                    FFAppState().startTime = null;
+                                    FFAppState().endTime = null;
+                                    FFAppState().slotRepeatType = 'None';
+                                    FFAppState().slotEndDate = null;
+                                    FFAppState().accountType = '';
+                                    FFAppState().musicianAddImages = [];
+                                    FFAppState().ProfileHighlight = [];
+                                    FFAppState().gigOffer = GigOfferStruct();
+                                    FFAppState().json = jsonDecode(
+                                        '[{\"sender\":\"venue\",\"text\":\"Hey! We\'ve been following your shows and would love to have you DJ for us! How much money would you want for each show?\",\"timestamp\":\"9:41am\",\"date\":\"Oct 23rd, 2025\",\"isProposal\":true},{\"sender\":\"musician\",\"text\":\"Hi there! I would love to perform. I am not available Wednesday, Nov 26th. I am still interested in doing the other 3 shows for \$400 each.\",\"timestamp\":\"10:54am\"}]');
+                                    FFAppState().selectedVenueSwitch =
+                                        VenueSwitchDetailStruct();
+                                    safeSetState(() {});
+                                    await actions.oneSignalLogout();
+                                    GoRouter.of(context).prepareAuthEvent();
+                                    await authManager.signOut();
+                                    GoRouter.of(context)
+                                        .clearRedirectLocation();
 
-                    context.goNamedAuth(
-                        SplashScreenWidget.routeName, context.mounted);
-                  },
+                                    context.goNamedAuth(
+                                        SplashScreenWidget.routeName,
+                                        context.mounted);
+                                  },
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
               child: wrapWithModel(
-                model: _model.cHRDLabelBtnModel2,
+                model: _model.cHRDLabelBtnModel3,
                 updateCallback: () => safeSetState(() {}),
                 child: CHRDLabelBtnWidget(
                   heading: 'Update',

@@ -63,4 +63,7 @@ class UsersRow extends SupabaseDataRow {
 
   String? get profilePhoto => getField<String>('profile_photo');
   set profilePhoto(String? value) => setField<String>('profile_photo', value);
+
+  bool? get isActive => getField<bool>('is_active');
+  set isActive(bool? value) => setField<bool>('is_active', value);
 }

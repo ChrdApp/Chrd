@@ -1,7 +1,9 @@
 import '/auth/supabase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/schema/structs/index.dart';
 import '/backend/supabase/supabase.dart';
+import '/components/confirmation_dialog_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -48,8 +50,12 @@ class EditAdminModel extends FlutterFlowModel<EditAdminWidget> {
   late CHRDLabelTextFieldWithBorderModel emailAddressModel;
   // Model for CHRD_Label_Btn component.
   late CHRDLabelBtnModel cHRDLabelBtnModel1;
+  // Stores action output result for [Backend Call - API (Deactivate user)] action in CHRD_Label_Btn widget.
+  ApiCallResponse? deactivatedUser;
   // Model for CHRD_Label_Btn component.
   late CHRDLabelBtnModel cHRDLabelBtnModel2;
+  // Model for CHRD_Label_Btn component.
+  late CHRDLabelBtnModel cHRDLabelBtnModel3;
 
   @override
   void initState(BuildContext context) {
@@ -63,6 +69,7 @@ class EditAdminModel extends FlutterFlowModel<EditAdminWidget> {
         createModel(context, () => CHRDLabelTextFieldWithBorderModel());
     cHRDLabelBtnModel1 = createModel(context, () => CHRDLabelBtnModel());
     cHRDLabelBtnModel2 = createModel(context, () => CHRDLabelBtnModel());
+    cHRDLabelBtnModel3 = createModel(context, () => CHRDLabelBtnModel());
     adminNameModel.textControllerValidator = _formTextFieldValidator1;
     emailAddressModel.textControllerValidator = _formTextFieldValidator2;
   }
@@ -76,6 +83,7 @@ class EditAdminModel extends FlutterFlowModel<EditAdminWidget> {
     emailAddressModel.dispose();
     cHRDLabelBtnModel1.dispose();
     cHRDLabelBtnModel2.dispose();
+    cHRDLabelBtnModel3.dispose();
   }
 
   /// Additional helper methods.

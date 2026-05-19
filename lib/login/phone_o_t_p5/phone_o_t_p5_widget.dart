@@ -267,14 +267,16 @@ class _PhoneOTP5WidgetState extends State<PhoneOTP5Widget> {
                       _model.pinCodeController!.text == '')
                   ? null
                   : () async {
+                      var _shouldSetState = false;
                       if (_model.formKey.currentState == null ||
                           !_model.formKey.currentState!.validate()) {
                         return;
                       }
                       _model.isOtpVerified = await actions.verifyOtp(
                         _model.pinCodeController!.text,
-                        '${functions.extractMobileNo(widget!.number!)?.lastOrNull}${functions.extractMobileNo(widget!.number!)?.firstOrNull}',
+                        '1${functions.extractMobileNo('+1${widget!.number}')?.firstOrNull}',
                       );
+                      _shouldSetState = true;
                       if (_model.isOtpVerified == true) {
                         _model.isPhoneExist = await UsersTable().queryRows(
                           queryFn: (q) => q.eqOrNull(
@@ -284,6 +286,7 @@ class _PhoneOTP5WidgetState extends State<PhoneOTP5Widget> {
                                 ?.firstOrNull,
                           ),
                         );
+                        _shouldSetState = true;
                         if (_model.isPhoneExist?.length == 0) {
                           _model.userOutput = await UsersTable().insert({
                             'phone_number': functions
@@ -295,6 +298,7 @@ class _PhoneOTP5WidgetState extends State<PhoneOTP5Widget> {
                             'step': 1,
                             'auth_id': currentUserUid,
                           });
+                          _shouldSetState = true;
                           FFAppState().userId = _model.userOutput!.id;
                           FFAppState().step = _model.userOutput!.step!;
                           FFAppState().loginType = LoginType.Phone.name;
@@ -304,35 +308,54 @@ class _PhoneOTP5WidgetState extends State<PhoneOTP5Widget> {
 
                           context.goNamed(AccountCreation6Widget.routeName);
                         } else {
-                          FFAppState().userId =
-                              _model.isPhoneExist!.firstOrNull!.id;
-                          FFAppState().step =
-                              _model.isPhoneExist!.firstOrNull!.step!;
-                          FFAppState().userType = () {
-                            if (_model.isPhoneExist?.firstOrNull?.userType ==
-                                'Musician') {
-                              return Type.Musician;
-                            } else if (_model
-                                    .isPhoneExist?.firstOrNull?.userType ==
-                                Type.Venue.name) {
-                              return Type.Venue;
-                            } else if (_model
-                                    .isPhoneExist?.firstOrNull?.userType ==
-                                Type.Fan.name) {
-                              return Type.Fan;
+                          if (_model.isPhoneExist!.firstOrNull!.isActive!) {
+                            FFAppState().userId =
+                                _model.isPhoneExist!.firstOrNull!.id;
+                            FFAppState().step =
+                                _model.isPhoneExist!.firstOrNull!.step!;
+                            FFAppState().userType = () {
+                              if (_model.isPhoneExist?.firstOrNull?.userType ==
+                                  'Musician') {
+                                return Type.Musician;
+                              } else if (_model
+                                      .isPhoneExist?.firstOrNull?.userType ==
+                                  Type.Venue.name) {
+                                return Type.Venue;
+                              } else if (_model
+                                      .isPhoneExist?.firstOrNull?.userType ==
+                                  Type.Fan.name) {
+                                return Type.Fan;
+                              } else {
+                                return null;
+                              }
+                            }();
+                            FFAppState().loginType = LoginType.Phone.name;
+                            safeSetState(() {});
+                            await actions.oneSignalLogin(
+                              FFAppState().userId.toString(),
+                            );
+                            if (FFAppState().step == 1) {
+                              context.goNamed(AccountCreation6Widget.routeName);
                             } else {
-                              return null;
+                              context.goNamed(NavPageWidget.routeName);
                             }
-                          }();
-                          FFAppState().loginType = LoginType.Phone.name;
-                          safeSetState(() {});
-                          await actions.oneSignalLogin(
-                            FFAppState().userId.toString(),
-                          );
-                          if (FFAppState().step == 1) {
-                            context.goNamed(AccountCreation6Widget.routeName);
                           } else {
-                            context.goNamed(NavPageWidget.routeName);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Your account has been deleted. Please contact support for assistance.',
+                                  style: TextStyle(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ),
+                                ),
+                                duration: Duration(milliseconds: 4000),
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).secondary,
+                              ),
+                            );
+                            if (_shouldSetState) safeSetState(() {});
+                            return;
                           }
                         }
                       } else {
@@ -350,7 +373,7 @@ class _PhoneOTP5WidgetState extends State<PhoneOTP5Widget> {
                         );
                       }
 
-                      safeSetState(() {});
+                      if (_shouldSetState) safeSetState(() {});
                     },
               text: 'Verify',
               options: FFButtonOptions(

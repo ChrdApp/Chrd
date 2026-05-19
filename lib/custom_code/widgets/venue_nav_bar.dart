@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'index.dart'; // Imports other custom widgets
+
 import '/custom_code/widgets/index.dart';
 import '/custom_code/actions/index.dart';
 import '/flutter_flow/custom_functions.dart';
@@ -43,7 +45,6 @@ class _VenueNavBarState extends State<VenueNavBar> {
   List<int> _venueIds = [];
   RealtimeChannel? _gigsChannel;
 
-  // ✅ Pages list
   List<Widget> pages = [
     HomeVWidget(),
     VenueDiscoverWidget(),
@@ -64,20 +65,17 @@ class _VenueNavBarState extends State<VenueNavBar> {
 
   @override
   void dispose() {
-    // Clean up realtime subscription
     if (_gigsChannel != null) {
       SupaFlow.client.removeChannel(_gigsChannel!);
     }
     super.dispose();
   }
 
-  /// Initialize: fetch venue IDs → fetch unread count → subscribe to realtime
   Future<void> _initUnreadListener() async {
     try {
       final userId = FFAppState().userId;
       if (userId == null || userId == 0) return;
 
-      // Step 1: Get all venue IDs for this user
       final venueRows = await SupaFlow.client
           .from('venues')
           .select('id')
@@ -87,10 +85,8 @@ class _VenueNavBarState extends State<VenueNavBar> {
 
       if (_venueIds.isEmpty) return;
 
-      // Step 2: Initial fetch
       await _fetchUnreadGigThreads();
 
-      // Step 3: Subscribe to realtime changes on gigs table
       _gigsChannel = SupaFlow.client
           .channel('venue-nav-gigs-unread')
           .onPostgresChanges(
@@ -100,8 +96,6 @@ class _VenueNavBarState extends State<VenueNavBar> {
             callback: (payload) {
               final newRow = payload.newRecord;
               final venueId = newRow['venue_id'];
-
-              // Only re-fetch if the changed gig belongs to one of our venues
               if (venueId != null && _venueIds.contains(venueId)) {
                 _fetchUnreadGigThreads();
               }
@@ -114,7 +108,6 @@ class _VenueNavBarState extends State<VenueNavBar> {
             callback: (payload) {
               final newRow = payload.newRecord;
               final venueId = newRow['venue_id'];
-
               if (venueId != null && _venueIds.contains(venueId)) {
                 _fetchUnreadGigThreads();
               }
@@ -125,7 +118,6 @@ class _VenueNavBarState extends State<VenueNavBar> {
             schema: 'public',
             table: 'gigs',
             callback: (payload) {
-              // On delete, just re-fetch to update count
               _fetchUnreadGigThreads();
             },
           )
@@ -135,7 +127,6 @@ class _VenueNavBarState extends State<VenueNavBar> {
     }
   }
 
-  /// Fetch unread gig thread count using cached venue IDs
   Future<void> _fetchUnreadGigThreads() async {
     try {
       if (_venueIds.isEmpty) {
@@ -188,7 +179,7 @@ class _VenueNavBarState extends State<VenueNavBar> {
     [30.0, 30.0],
     [25.0, 25.0],
     [30.0, 27.0],
-    [30.0, 30.0],
+    [24.0, 21.0],
   ];
 
   @override
@@ -227,7 +218,6 @@ class _VenueNavBarState extends State<VenueNavBar> {
     final double iconW = _iconSizes[index][0];
     final double iconH = _iconSizes[index][1];
 
-    // Show unread dot only on gig threads tab (index 3)
     final bool showUnreadDot = index == 3 && _unreadGigThreadCount > 0;
 
     return Expanded(
@@ -242,44 +232,47 @@ class _VenueNavBarState extends State<VenueNavBar> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Stack(
-              clipBehavior: Clip.none,
-              children: [
-                CachedNetworkImage(
-                  imageUrl: iconUrl,
-                  width: iconW,
-                  height: iconH,
-                  fit: BoxFit.contain,
-                  alignment: Alignment.center,
-                  memCacheWidth: (iconW * 2).toInt(),
-                  memCacheHeight: (iconH * 2).toInt(),
-                  fadeInDuration: Duration.zero,
-                  fadeOutDuration: Duration.zero,
-                  placeholder: (context, url) => SizedBox(
+            SizedBox(
+              height: 30, // fixed height so all labels align
+              child: Stack(
+                clipBehavior: Clip.none,
+                alignment: Alignment.center,
+                children: [
+                  CachedNetworkImage(
+                    imageUrl: iconUrl,
                     width: iconW,
                     height: iconH,
-                  ),
-                  errorWidget: (context, url, error) => SizedBox(
-                    width: iconW,
-                    height: iconH,
-                    child: const Icon(Icons.error, size: 16),
-                  ),
-                ),
-                // Purple unread dot
-                if (showUnreadDot)
-                  Positioned(
-                    top: -3,
-                    right: -3,
-                    child: Container(
-                      width: 10,
-                      height: 10,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFF8B2BE3),
-                        shape: BoxShape.circle,
-                      ),
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.center,
+                    memCacheWidth: (iconW * 2).toInt(),
+                    memCacheHeight: (iconH * 2).toInt(),
+                    fadeInDuration: Duration.zero,
+                    fadeOutDuration: Duration.zero,
+                    placeholder: (context, url) => SizedBox(
+                      width: iconW,
+                      height: iconH,
+                    ),
+                    errorWidget: (context, url, error) => SizedBox(
+                      width: iconW,
+                      height: iconH,
+                      child: const Icon(Icons.error, size: 16),
                     ),
                   ),
-              ],
+                  if (showUnreadDot)
+                    Positioned(
+                      top: -3,
+                      right: -3,
+                      child: Container(
+                        width: 10,
+                        height: 10,
+                        decoration: const BoxDecoration(
+                          color: Color(0xFF8B2BE3),
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
             ),
             const SizedBox(height: 3),
             Text(

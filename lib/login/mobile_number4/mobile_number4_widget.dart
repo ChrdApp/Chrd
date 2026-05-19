@@ -38,7 +38,7 @@ class _MobileNumber4WidgetState extends State<MobileNumber4Widget> {
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
 
-    _model.textFieldMask = MaskTextInputFormatter(mask: '+# (###) ###-####');
+    _model.textFieldMask = MaskTextInputFormatter(mask: '(###) ###-####');
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
@@ -279,7 +279,7 @@ class _MobileNumber4WidgetState extends State<MobileNumber4Widget> {
                         return;
                       }
                       _model.isOtpSent = await actions.getPhoneOtp(
-                        '${functions.extractMobileNo(_model.textController.text)?.lastOrNull}${functions.extractMobileNo(_model.textController.text)?.firstOrNull}',
+                        '1${functions.extractMobileNo('+1${_model.textController.text}')?.firstOrNull}',
                       );
                       if (_model.isOtpSent == true) {
                         context.pushNamed(

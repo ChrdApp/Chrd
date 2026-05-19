@@ -61,6 +61,7 @@ class VenueGroup {
   static InsertStageContentCall insertStageContentCall =
       InsertStageContentCall();
   static GetStageDetailCall getStageDetailCall = GetStageDetailCall();
+  static DeactivateUserCall deactivateUserCall = DeactivateUserCall();
 }
 
 class VenueOpenSlotsCall {
@@ -1217,6 +1218,40 @@ class GetStageDetailCall {
     return ApiManager.instance.makeApiCall(
       callName: 'Get Stage Detail',
       apiUrl: '${baseUrl}/rpc/get_stage_details',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization':
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'apikey':
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class DeactivateUserCall {
+  Future<ApiCallResponse> call({
+    int? pUserId,
+  }) async {
+    final baseUrl = VenueGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+{
+  "p_user_id": ${pUserId}
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Deactivate user',
+      apiUrl: '${baseUrl}/rpc/deactivate_user',
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',

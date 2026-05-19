@@ -85,6 +85,8 @@ class EditMusicianProfileModel
   late CHRDContainerModel cHRDContainerModel2;
   // Model for CHRD_Container component.
   late CHRDContainerModel cHRDContainerModel3;
+  // Stores action output result for [Backend Call - API (Deactivate user)] action in Container widget.
+  ApiCallResponse? deactivatedUserOutput;
   // Model for CHRD_Label_Btn component.
   late CHRDLabelBtnModel cHRDLabelBtnModel;
 

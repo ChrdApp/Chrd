@@ -641,99 +641,284 @@ class _EditMusicianProfileWidgetState extends State<EditMusicianProfileWidget> {
                         ),
                       ),
                     ),
-                    Builder(
-                      builder: (context) => Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 0.0, 16.0, 16.0),
-                        child: InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
-                            await showDialog(
-                              context: context,
-                              builder: (dialogContext) {
-                                return Dialog(
-                                  elevation: 0,
-                                  insetPadding: EdgeInsets.zero,
-                                  backgroundColor: Colors.transparent,
-                                  alignment: AlignmentDirectional(0.0, 0.0)
-                                      .resolve(Directionality.of(context)),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      FocusScope.of(dialogContext).unfocus();
-                                      FocusManager.instance.primaryFocus
-                                          ?.unfocus();
-                                    },
-                                    child: Container(
-                                      width: MediaQuery.sizeOf(context).width *
-                                          0.8,
-                                      child: ConfirmationDialogWidget(
-                                        acceptbtnText: 'Logout',
-                                        title:
-                                            'Are you sure you want to Logout?',
-                                        acceptBtnAction: () async {
-                                          FFAppState().venueId = 0;
-                                          FFAppState().userId = 0;
-                                          FFAppState().step = 0;
-                                          FFAppState().userType = null;
-                                          FFAppState().vanueName = '';
-                                          FFAppState().AdminName = '';
-                                          FFAppState().venueProfilePic = '';
-                                          FFAppState().venueContentVenueList =
-                                              [];
-                                          FFAppState().venueAccountCreate =
-                                              VenueAccountCreateStruct();
-                                          FFAppState()
-                                              .performanceStagesContentList = [];
-                                          FFAppState().startTime = null;
-                                          FFAppState().endTime = null;
-                                          FFAppState().slotRepeatType = 'None';
-                                          FFAppState().slotEndDate = null;
-                                          FFAppState().accountType = '';
-                                          FFAppState().musicianAddImages = [];
-                                          FFAppState().ProfileHighlight = [];
-                                          FFAppState().gigOffer =
-                                              GigOfferStruct();
-                                          FFAppState().json = jsonDecode(
-                                              '[{\"sender\":\"venue\",\"text\":\"Hey! We\'ve been following your shows and would love to have you DJ for us! How much money would you want for each show?\",\"timestamp\":\"9:41am\",\"date\":\"Oct 23rd, 2025\",\"isProposal\":true},{\"sender\":\"musician\",\"text\":\"Hi there! I would love to perform. I am not available Wednesday, Nov 26th. I am still interested in doing the other 3 shows for \$400 each.\",\"timestamp\":\"10:54am\"}]');
-                                          safeSetState(() {});
-                                          await actions.oneSignalLogout();
-                                          GoRouter.of(context)
-                                              .prepareAuthEvent();
-                                          await authManager.signOut();
-                                          GoRouter.of(context)
-                                              .clearRedirectLocation();
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 8.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: Builder(
+                        builder: (context) => Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              16.0, 0.0, 16.0, 8.0),
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              await showDialog(
+                                context: context,
+                                builder: (dialogContext) {
+                                  return Dialog(
+                                    elevation: 0,
+                                    insetPadding: EdgeInsets.zero,
+                                    backgroundColor: Colors.transparent,
+                                    alignment: AlignmentDirectional(0.0, 0.0)
+                                        .resolve(Directionality.of(context)),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        FocusScope.of(dialogContext).unfocus();
+                                        FocusManager.instance.primaryFocus
+                                            ?.unfocus();
+                                      },
+                                      child: Container(
+                                        width:
+                                            MediaQuery.sizeOf(context).width *
+                                                0.8,
+                                        child: ConfirmationDialogWidget(
+                                          acceptbtnText: 'Logout',
+                                          title:
+                                              'Are you sure you want to Logout?',
+                                          acceptBtnAction: () async {
+                                            FFAppState().venueId = 0;
+                                            FFAppState().userId = 0;
+                                            FFAppState().step = 0;
+                                            FFAppState().userType = null;
+                                            FFAppState().vanueName = '';
+                                            FFAppState().AdminName = '';
+                                            FFAppState().venueProfilePic = '';
+                                            FFAppState().venueContentVenueList =
+                                                [];
+                                            FFAppState().venueAccountCreate =
+                                                VenueAccountCreateStruct();
+                                            FFAppState()
+                                                .performanceStagesContentList = [];
+                                            FFAppState().startTime = null;
+                                            FFAppState().endTime = null;
+                                            FFAppState().slotRepeatType =
+                                                'None';
+                                            FFAppState().slotEndDate = null;
+                                            FFAppState().accountType = '';
+                                            FFAppState().musicianAddImages = [];
+                                            FFAppState().ProfileHighlight = [];
+                                            FFAppState().gigOffer =
+                                                GigOfferStruct();
+                                            FFAppState().json = jsonDecode(
+                                                '[{\"sender\":\"venue\",\"text\":\"Hey! We\'ve been following your shows and would love to have you DJ for us! How much money would you want for each show?\",\"timestamp\":\"9:41am\",\"date\":\"Oct 23rd, 2025\",\"isProposal\":true},{\"sender\":\"musician\",\"text\":\"Hi there! I would love to perform. I am not available Wednesday, Nov 26th. I am still interested in doing the other 3 shows for \$400 each.\",\"timestamp\":\"10:54am\"}]');
+                                            safeSetState(() {});
+                                            await actions.oneSignalLogout();
+                                            GoRouter.of(context)
+                                                .prepareAuthEvent();
+                                            await authManager.signOut();
+                                            GoRouter.of(context)
+                                                .clearRedirectLocation();
 
-                                          context.goNamedAuth(
-                                              SplashScreenWidget.routeName,
-                                              context.mounted);
-                                        },
+                                            context.goNamedAuth(
+                                                SplashScreenWidget.routeName,
+                                                context.mounted);
+                                          },
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                          child: Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color:
-                                  FlutterFlowTheme.of(context).neutralDark900,
-                              borderRadius: BorderRadius.circular(12.0),
+                                  );
+                                },
+                              );
+                            },
+                            child: Container(
+                              height: 44.0,
+                              decoration: BoxDecoration(
+                                color:
+                                    FlutterFlowTheme.of(context).neutralDark900,
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    12.0, 10.0, 12.0, 10.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Log out',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            font: GoogleFonts.montserrat(
+                                              fontWeight: FontWeight.w600,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            fontSize: 14.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w600,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
+                                    ),
+                                  ].divide(SizedBox(height: 4.0)),
+                                ),
+                              ),
                             ),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  12.0, 10.0, 12.0, 10.0),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Builder(
+                        builder: (context) => Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              16.0, 0.0, 16.0, 8.0),
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              await showDialog(
+                                context: context,
+                                builder: (dialogContext) {
+                                  return Dialog(
+                                    elevation: 0,
+                                    insetPadding: EdgeInsets.zero,
+                                    backgroundColor: Colors.transparent,
+                                    alignment: AlignmentDirectional(0.0, 0.0)
+                                        .resolve(Directionality.of(context)),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        FocusScope.of(dialogContext).unfocus();
+                                        FocusManager.instance.primaryFocus
+                                            ?.unfocus();
+                                      },
+                                      child: Container(
+                                        width:
+                                            MediaQuery.sizeOf(context).width *
+                                                0.8,
+                                        child: ConfirmationDialogWidget(
+                                          acceptbtnText: 'Delete',
+                                          title:
+                                              'Are you sure you want to Delete Account?',
+                                          acceptBtnAction: () async {
+                                            var _shouldSetState = false;
+                                            _model.deactivatedUserOutput =
+                                                await VenueGroup
+                                                    .deactivateUserCall
+                                                    .call(
+                                              pUserId: FFAppState().userId,
+                                            );
+
+                                            _shouldSetState = true;
+                                            if ('true' ==
+                                                getJsonField(
+                                                  (_model.deactivatedUserOutput
+                                                          ?.jsonBody ??
+                                                      ''),
+                                                  r'''$.success''',
+                                                ).toString()) {
+                                              await actions.oneSignalLogout();
+                                              FFAppState().venueId = 0;
+                                              FFAppState().userId = 0;
+                                              FFAppState().step = 0;
+                                              FFAppState().userType = null;
+                                              FFAppState().vanueName = '';
+                                              FFAppState().AdminName = '';
+                                              FFAppState().venueProfilePic = '';
+                                              FFAppState()
+                                                  .venueContentVenueList = [];
+                                              FFAppState().venueAccountCreate =
+                                                  VenueAccountCreateStruct();
+                                              FFAppState()
+                                                  .performanceStagesContentList = [];
+                                              FFAppState().startTime = null;
+                                              FFAppState().endTime = null;
+                                              FFAppState().slotRepeatType =
+                                                  'None';
+                                              FFAppState().slotEndDate = null;
+                                              FFAppState().accountType = '';
+                                              FFAppState().musicianAddImages =
+                                                  [];
+                                              FFAppState().ProfileHighlight =
+                                                  [];
+                                              FFAppState().gigOffer =
+                                                  GigOfferStruct();
+                                              FFAppState().json = jsonDecode(
+                                                  '[{\"sender\":\"venue\",\"text\":\"Hey! We\'ve been following your shows and would love to have you DJ for us! How much money would you want for each show?\",\"timestamp\":\"9:41am\",\"date\":\"Oct 23rd, 2025\",\"isProposal\":true},{\"sender\":\"musician\",\"text\":\"Hi there! I would love to perform. I am not available Wednesday, Nov 26th. I am still interested in doing the other 3 shows for \$400 each.\",\"timestamp\":\"10:54am\"}]');
+                                              safeSetState(() {});
+                                              GoRouter.of(context)
+                                                  .prepareAuthEvent();
+                                              await authManager.signOut();
+                                              GoRouter.of(context)
+                                                  .clearRedirectLocation();
+
+                                              context.goNamedAuth(
+                                                  SplashScreenWidget.routeName,
+                                                  context.mounted);
+
+                                              return;
+                                            } else {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                    getJsonField(
+                                                      (_model.deactivatedUserOutput
+                                                              ?.jsonBody ??
+                                                          ''),
+                                                      r'''$.message''',
+                                                    ).toString(),
+                                                    style: TextStyle(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                    ),
+                                                  ),
+                                                  duration: Duration(
+                                                      milliseconds: 4000),
+                                                  backgroundColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondary,
+                                                ),
+                                              );
+                                              Navigator.pop(context);
+                                              return;
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+
+                              safeSetState(() {});
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              height: 44.0,
+                              decoration: BoxDecoration(
+                                color:
+                                    FlutterFlowTheme.of(context).neutralDark900,
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
-                                    'Log out',
+                                    'Delete Account',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -745,7 +930,7 @@ class _EditMusicianProfileWidgetState extends State<EditMusicianProfileWidget> {
                                                     .fontStyle,
                                           ),
                                           color: FlutterFlowTheme.of(context)
-                                              .primaryText,
+                                              .error,
                                           fontSize: 14.0,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.w600,

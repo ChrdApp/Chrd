@@ -99,11 +99,17 @@ DateTime? tomorrowsDate() {
 }
 
 List<String>? extractMobileNo(String number) {
-  String digitsOnly = number.replaceAll(RegExp(r'[^0-9]'), '');
-  String countryCode = digitsOnly[0];
-  String mobileNo = digitsOnly.substring(1, digitsOnly.length);
+  // String digitsOnly = number.replaceAll(RegExp(r'[^0-9]'), '');
+  // String countryCode = digitsOnly[0];
+  // String mobileNo = digitsOnly.substring(1, digitsOnly.length);
+  // return [mobileNo, countryCode];
+  String cleaned = number.replaceAll(RegExp(r'[^0-9]'), '');
 
-  return [mobileNo, countryCode];
+  if (cleaned.length == 11 && cleaned.startsWith('1')) {
+    cleaned = cleaned.substring(1);
+  }
+
+  return [cleaned];
 }
 
 String? formatUSNumber(String? number) {
