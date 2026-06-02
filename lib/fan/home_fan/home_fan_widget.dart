@@ -91,7 +91,7 @@ class _HomeFanWidgetState extends State<HomeFanWidget> {
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 91.0, 0.0),
                               child: Text(
-                                'What’s Happening In',
+                                'What’s Happening',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(

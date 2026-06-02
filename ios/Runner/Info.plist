@@ -57,10 +57,11 @@
     <string>We use your camera so you can quickly share photos with support.</string>
     <!-- Start of location permission -->
     <key>NSLocationWhenInUseUsageDescription</key>
+    <string>We use your location to help users discover nearby venues, events, and relevant content.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
-	</array>    <string>We use your location to help users discover nearby venues, events, and relevant content.</string>
+	</array>    
     <!-- End of location permission -->
     <key>UILaunchStoryboardName</key>
     <string>LaunchScreen</string>

@@ -209,192 +209,184 @@ class _BookamrkedFanWidgetState extends State<BookamrkedFanWidget> {
                         ),
                         Expanded(
                           child: Container(
-                            child: Align(
-                              alignment: AlignmentDirectional(0.0, 0.0),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    20.0, 0.0, 20.0, 0.0),
-                                child: FutureBuilder<ApiCallResponse>(
-                                  future: (_model.apiRequestCompleter ??=
-                                          Completer<ApiCallResponse>()
-                                            ..complete(
-                                                FanGroup.getGigsForFanCall.call(
-                                              pCurrentTime: functions
-                                                  .toUtcTimestamp(
-                                                      getCurrentTimestamp)
-                                                  ?.toString(),
-                                              pSearch: '',
-                                              pSelectDate: '',
-                                              pEntertainmentType: '',
-                                              currentUserId:
-                                                  FFAppState().userId,
-                                              pShowBookmarked: true,
-                                            )))
-                                      .future,
-                                  builder: (context, snapshot) {
-                                    // Customize what your widget looks like when it's loading.
-                                    if (!snapshot.hasData) {
-                                      return Center(
-                                        child: SizedBox(
-                                          width: 50.0,
-                                          height: 50.0,
-                                          child: CircularProgressIndicator(
-                                            valueColor:
-                                                AlwaysStoppedAnimation<Color>(
-                                              FlutterFlowTheme.of(context)
-                                                  .primary,
-                                            ),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  20.0, 0.0, 20.0, 0.0),
+                              child: FutureBuilder<ApiCallResponse>(
+                                future: (_model.apiRequestCompleter ??=
+                                        Completer<ApiCallResponse>()
+                                          ..complete(
+                                              FanGroup.getGigsForFanCall.call(
+                                            pCurrentTime: functions
+                                                .toUtcTimestamp(
+                                                    getCurrentTimestamp)
+                                                ?.toString(),
+                                            pSearch: '',
+                                            pSelectDate: '',
+                                            pEntertainmentType: '',
+                                            currentUserId: FFAppState().userId,
+                                            pShowBookmarked: true,
+                                          )))
+                                    .future,
+                                builder: (context, snapshot) {
+                                  // Customize what your widget looks like when it's loading.
+                                  if (!snapshot.hasData) {
+                                    return Center(
+                                      child: SizedBox(
+                                        width: 50.0,
+                                        height: 50.0,
+                                        child: CircularProgressIndicator(
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                            FlutterFlowTheme.of(context)
+                                                .primary,
                                           ),
                                         ),
-                                      );
-                                    }
-                                    final listViewGetGigsForFanResponse =
-                                        snapshot.data!;
+                                      ),
+                                    );
+                                  }
+                                  final listViewGetGigsForFanResponse =
+                                      snapshot.data!;
 
-                                    return Builder(
-                                      builder: (context) {
-                                        final gigsList =
-                                            listViewGetGigsForFanResponse
-                                                .jsonBody
-                                                .toList();
-                                        if (gigsList.isEmpty) {
-                                          return EmptyListImageWidget(
-                                            msg:
-                                                'You haven’t bookmarked any gigs yet.',
-                                          );
-                                        }
+                                  return Builder(
+                                    builder: (context) {
+                                      final gigsList =
+                                          listViewGetGigsForFanResponse.jsonBody
+                                              .toList();
+                                      if (gigsList.isEmpty) {
+                                        return EmptyListImageWidget(
+                                          msg:
+                                              'You haven’t bookmarked any gigs yet.',
+                                        );
+                                      }
 
-                                        return ListView.separated(
-                                          padding: EdgeInsets.fromLTRB(
-                                            0,
-                                            34.0,
-                                            0,
-                                            47.5,
-                                          ),
-                                          shrinkWrap: true,
-                                          scrollDirection: Axis.vertical,
-                                          itemCount: gigsList.length,
-                                          separatorBuilder: (_, __) =>
-                                              SizedBox(height: 20.0),
-                                          itemBuilder:
-                                              (context, gigsListIndex) {
-                                            final gigsListItem =
-                                                gigsList[gigsListIndex];
-                                            return Builder(
-                                              builder: (context) =>
-                                                  FanGigsWidget(
-                                                key: Key(
-                                                    'Key0o4_${gigsListIndex}_of_${gigsList.length}'),
-                                                gigImage: getJsonField(
-                                                  gigsListItem,
-                                                  r'''$.venue_photo''',
-                                                ).toString(),
-                                                gifVenue: getJsonField(
-                                                  gigsListItem,
-                                                  r'''$.venue_name''',
-                                                ).toString(),
-                                                gigDate: getJsonField(
-                                                  gigsListItem,
-                                                  r'''$.start_date''',
-                                                ).toString(),
-                                                gigTime: getJsonField(
-                                                  gigsListItem,
-                                                  r'''$.start_time''',
-                                                ).toString(),
-                                                gigPerformer: getJsonField(
-                                                  gigsListItem,
-                                                  r'''$.musician_name''',
-                                                ).toString(),
-                                                gigType: getJsonField(
-                                                  gigsListItem,
-                                                  r'''$.entertainment_display''',
-                                                ).toString(),
-                                                isBookmarked: 'true' ==
-                                                        getJsonField(
-                                                          gigsListItem,
-                                                          r'''$.is_bookmarked''',
-                                                        ).toString()
-                                                    ? true
-                                                    : false,
-                                                lastseen: '2 min',
-                                                bookmarkedAction: () async {
-                                                  if ('true' ==
+                                      return ListView.separated(
+                                        padding: EdgeInsets.fromLTRB(
+                                          0,
+                                          34.0,
+                                          0,
+                                          47.5,
+                                        ),
+                                        shrinkWrap: true,
+                                        scrollDirection: Axis.vertical,
+                                        itemCount: gigsList.length,
+                                        separatorBuilder: (_, __) =>
+                                            SizedBox(height: 20.0),
+                                        itemBuilder: (context, gigsListIndex) {
+                                          final gigsListItem =
+                                              gigsList[gigsListIndex];
+                                          return Builder(
+                                            builder: (context) => FanGigsWidget(
+                                              key: Key(
+                                                  'Key0o4_${gigsListIndex}_of_${gigsList.length}'),
+                                              gigImage: getJsonField(
+                                                gigsListItem,
+                                                r'''$.venue_photo''',
+                                              ).toString(),
+                                              gifVenue: getJsonField(
+                                                gigsListItem,
+                                                r'''$.venue_name''',
+                                              ).toString(),
+                                              gigDate: getJsonField(
+                                                gigsListItem,
+                                                r'''$.start_date''',
+                                              ).toString(),
+                                              gigTime: getJsonField(
+                                                gigsListItem,
+                                                r'''$.start_time''',
+                                              ).toString(),
+                                              gigPerformer: getJsonField(
+                                                gigsListItem,
+                                                r'''$.musician_name''',
+                                              ).toString(),
+                                              gigType: getJsonField(
+                                                gigsListItem,
+                                                r'''$.entertainment_display''',
+                                              ).toString(),
+                                              isBookmarked: 'true' ==
                                                       getJsonField(
                                                         gigsListItem,
                                                         r'''$.is_bookmarked''',
-                                                      ).toString()) {
-                                                    await FanBookmarksTable()
-                                                        .delete(
-                                                      matchingRows: (rows) =>
-                                                          rows.eqOrNull(
-                                                        'group_uuid',
-                                                        getJsonField(
-                                                          gigsListItem,
-                                                          r'''$.group_uuid''',
-                                                        ).toString(),
-                                                      ),
-                                                    );
-                                                  }
-                                                  safeSetState(() => _model
-                                                          .apiRequestCompleter =
-                                                      null);
-                                                  await _model
-                                                      .waitForApiRequestCompleted();
-                                                },
-                                                infoAction: () async {
-                                                  await showDialog(
-                                                    context: context,
-                                                    builder: (dialogContext) {
-                                                      return Dialog(
-                                                        elevation: 0,
-                                                        insetPadding:
-                                                            EdgeInsets.zero,
-                                                        backgroundColor:
-                                                            Colors.transparent,
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                    0.0, 0.0)
-                                                                .resolve(
-                                                                    Directionality.of(
-                                                                        context)),
-                                                        child: GestureDetector(
-                                                          onTap: () {
-                                                            FocusScope.of(
-                                                                    dialogContext)
-                                                                .unfocus();
-                                                            FocusManager
-                                                                .instance
-                                                                .primaryFocus
-                                                                ?.unfocus();
-                                                          },
-                                                          child: Container(
-                                                            width: MediaQuery
-                                                                        .sizeOf(
-                                                                            context)
-                                                                    .width *
-                                                                0.8,
-                                                            child:
-                                                                GigDetailFanWidget(
-                                                              groupId:
-                                                                  getJsonField(
-                                                                gigsListItem,
-                                                                r'''$.group_uuid''',
-                                                              ).toString(),
-                                                            ),
+                                                      ).toString()
+                                                  ? true
+                                                  : false,
+                                              lastseen: '2 min',
+                                              bookmarkedAction: () async {
+                                                if ('true' ==
+                                                    getJsonField(
+                                                      gigsListItem,
+                                                      r'''$.is_bookmarked''',
+                                                    ).toString()) {
+                                                  await FanBookmarksTable()
+                                                      .delete(
+                                                    matchingRows: (rows) =>
+                                                        rows.eqOrNull(
+                                                      'group_uuid',
+                                                      getJsonField(
+                                                        gigsListItem,
+                                                        r'''$.group_uuid''',
+                                                      ).toString(),
+                                                    ),
+                                                  );
+                                                }
+                                                safeSetState(() =>
+                                                    _model.apiRequestCompleter =
+                                                        null);
+                                                await _model
+                                                    .waitForApiRequestCompleted();
+                                              },
+                                              infoAction: () async {
+                                                await showDialog(
+                                                  context: context,
+                                                  builder: (dialogContext) {
+                                                    return Dialog(
+                                                      elevation: 0,
+                                                      insetPadding:
+                                                          EdgeInsets.zero,
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                      alignment:
+                                                          AlignmentDirectional(
+                                                                  0.0, 0.0)
+                                                              .resolve(
+                                                                  Directionality.of(
+                                                                      context)),
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          FocusScope.of(
+                                                                  dialogContext)
+                                                              .unfocus();
+                                                          FocusManager.instance
+                                                              .primaryFocus
+                                                              ?.unfocus();
+                                                        },
+                                                        child: Container(
+                                                          width:
+                                                              MediaQuery.sizeOf(
+                                                                          context)
+                                                                      .width *
+                                                                  0.8,
+                                                          child:
+                                                              GigDetailFanWidget(
+                                                            groupId:
+                                                                getJsonField(
+                                                              gigsListItem,
+                                                              r'''$.group_uuid''',
+                                                            ).toString(),
                                                           ),
                                                         ),
-                                                      );
-                                                    },
-                                                  );
-                                                },
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      },
-                                    );
-                                  },
-                                ),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    },
+                                  );
+                                },
                               ),
                             ),
                           ),
