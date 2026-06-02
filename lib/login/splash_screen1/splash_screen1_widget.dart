@@ -136,23 +136,6 @@ class _SplashScreen1WidgetState extends State<SplashScreen1Widget> {
                     borderRadius: BorderRadius.circular(37.0),
                   ),
                 ),
-                Text(
-                  'BROWSE FIRST',
-                  textAlign: TextAlign.center,
-                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                        font: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w600,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                        ),
-                        color: FlutterFlowTheme.of(context).primaryText,
-                        fontSize: 12.0,
-                        letterSpacing: 0.0,
-                        fontWeight: FontWeight.w600,
-                        fontStyle:
-                            FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                      ),
-                ),
               ].divide(SizedBox(height: 16.0)),
             ),
           ),

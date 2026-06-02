@@ -15,3 +15,4 @@ export 'handle_notification_click.dart' show handleNotificationClick;
 export 'handle_notification_navigation.dart' show handleNotificationNavigation;
 export 'listen_for_new_banner_notifications.dart'
     show listenForNewBannerNotifications;
+export 'apple_sign_in_action.dart' show appleSignInAction;

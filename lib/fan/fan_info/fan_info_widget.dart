@@ -92,6 +92,12 @@ class _FanInfoWidgetState extends State<FanInfoWidget> {
         safeSetState(() {
           _model.emailAddressModel.textController?.text = currentUserEmail;
         });
+        if (FFAppState().firstName != null && FFAppState().firstName != '') {
+          safeSetState(() {
+            _model.adminNameModel.textController?.text =
+                '${FFAppState().firstName} ${FFAppState().lastName}';
+          });
+        }
         safeSetState(() {
           _model.cHRDPhoneNumberInitialModel.phoneNumberTextController?.text =
               _model.userData!.firstOrNull!.phoneNumber!;

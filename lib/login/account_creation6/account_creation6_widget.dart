@@ -1,3 +1,4 @@
+import '/auth/supabase_auth/auth_util.dart';
 import '/backend/schema/enums/enums.dart';
 import '/fan/fan_creation/fan_creation_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -83,7 +84,14 @@ class _AccountCreation6WidgetState extends State<AccountCreation6Widget> {
                       focusColor: Colors.transparent,
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
-                      onTap: () async {},
+                      onTap: () async {
+                        GoRouter.of(context).prepareAuthEvent();
+                        await authManager.signOut();
+                        GoRouter.of(context).clearRedirectLocation();
+
+                        context.goNamedAuth(
+                            SplashScreenWidget.routeName, context.mounted);
+                      },
                       child: wrapWithModel(
                         model: _model.cHRDLabelColumnTextModel,
                         updateCallback: () => safeSetState(() {}),

@@ -352,6 +352,9 @@ class _EditAdminWidgetState extends State<EditAdminWidget> {
                                                       GigOfferStruct();
                                                   FFAppState().json = jsonDecode(
                                                       '[{\"sender\":\"venue\",\"text\":\"Hey! We\'ve been following your shows and would love to have you DJ for us! How much money would you want for each show?\",\"timestamp\":\"9:41am\",\"date\":\"Oct 23rd, 2025\",\"isProposal\":true},{\"sender\":\"musician\",\"text\":\"Hi there! I would love to perform. I am not available Wednesday, Nov 26th. I am still interested in doing the other 3 shows for \$400 each.\",\"timestamp\":\"10:54am\"}]');
+                                                  FFAppState().email = '';
+                                                  FFAppState().firstName = '';
+                                                  FFAppState().lastName = '';
                                                   safeSetState(() {});
                                                   GoRouter.of(context)
                                                       .prepareAuthEvent();
@@ -481,6 +484,9 @@ class _EditAdminWidgetState extends State<EditAdminWidget> {
                                         '[{\"sender\":\"venue\",\"text\":\"Hey! We\'ve been following your shows and would love to have you DJ for us! How much money would you want for each show?\",\"timestamp\":\"9:41am\",\"date\":\"Oct 23rd, 2025\",\"isProposal\":true},{\"sender\":\"musician\",\"text\":\"Hi there! I would love to perform. I am not available Wednesday, Nov 26th. I am still interested in doing the other 3 shows for \$400 each.\",\"timestamp\":\"10:54am\"}]');
                                     FFAppState().selectedVenueSwitch =
                                         VenueSwitchDetailStruct();
+                                    FFAppState().email = '';
+                                    FFAppState().firstName = '';
+                                    FFAppState().lastName = '';
                                     safeSetState(() {});
                                     await actions.oneSignalLogout();
                                     GoRouter.of(context).prepareAuthEvent();

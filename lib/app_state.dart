@@ -483,6 +483,24 @@ class FFAppState extends ChangeNotifier {
     prefs.setString('ff_FanFilter', _FanFilter.serialize());
   }
 
+  String _email = '';
+  String get email => _email;
+  set email(String value) {
+    _email = value;
+  }
+
+  String _firstName = '';
+  String get firstName => _firstName;
+  set firstName(String value) {
+    _firstName = value;
+  }
+
+  String _lastName = '';
+  String get lastName => _lastName;
+  set lastName(String value) {
+    _lastName = value;
+  }
+
   final _genreQueryResponseManager = FutureRequestManager<List<GenresRow>>();
   Future<List<GenresRow>> genreQueryResponse({
     String? uniqueQueryKey,

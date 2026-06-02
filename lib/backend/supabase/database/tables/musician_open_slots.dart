@@ -27,12 +27,11 @@ class MusicianOpenSlotsRow extends SupabaseDataRow {
   String? get timeZone => getField<String>('time_zone');
   set timeZone(String? value) => setField<String>('time_zone', value);
 
-  PostgresTime? get startTime => getField<PostgresTime>('start_time');
-  set startTime(PostgresTime? value) =>
-      setField<PostgresTime>('start_time', value);
+  DateTime? get startTime => getField<DateTime>('start_time');
+  set startTime(DateTime? value) => setField<DateTime>('start_time', value);
 
-  PostgresTime? get endTime => getField<PostgresTime>('end_time');
-  set endTime(PostgresTime? value) => setField<PostgresTime>('end_time', value);
+  DateTime? get endTime => getField<DateTime>('end_time');
+  set endTime(DateTime? value) => setField<DateTime>('end_time', value);
 
   DateTime? get startDate => getField<DateTime>('start_date');
   set startDate(DateTime? value) => setField<DateTime>('start_date', value);

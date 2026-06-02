@@ -20,6 +20,9 @@ void main() async {
   GoRouter.optionURLReflectsImperativeAPIs = true;
   usePathUrlStrategy();
 
+  final environmentValues = FFDevEnvironmentValues();
+  await environmentValues.initialize();
+
   // Start initial custom actions code
   await actions.oneSignalIntegration();
   // End initial custom actions code
@@ -49,6 +52,7 @@ class MyAppScrollBehavior extends MaterialScrollBehavior {
   Set<PointerDeviceKind> get dragDevices => {
         PointerDeviceKind.touch,
         PointerDeviceKind.mouse,
+        PointerDeviceKind.trackpad,
       };
 }
 

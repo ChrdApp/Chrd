@@ -383,7 +383,7 @@ DateTime parseDate(String dateStr) {
         (match) => match.group(1)!,
       );
       // Now it looks like "Thursday May 7, 2026"
-      final formatter = DateFormat('EEEE MMMM d, yyyy');
+      final formatter = DateFormat('EEEE MMM d, yyyy');
       return formatter.parse(cleaned);
     }
   }

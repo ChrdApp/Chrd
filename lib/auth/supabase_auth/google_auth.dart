@@ -14,11 +14,8 @@ Future<User?> googleSignInFunc() async {
 
   final googleSignIn = GoogleSignIn(
     scopes: ['profile', 'email'],
-    clientId: isAndroid
-        ? null
-        : '641351784040-56kt8vlmmllo84e49hsto0albne797f7.apps.googleusercontent.com',
-    serverClientId:
-        '641351784040-03s2thd9cv961sjrhbvk19huk161k3c5.apps.googleusercontent.com',
+    clientId: isAndroid ? null : FFDevEnvironmentValues().iosClientID,
+    serverClientId: FFDevEnvironmentValues().webClientID,
   );
 
   await googleSignIn.signOut().catchError((_) => null);

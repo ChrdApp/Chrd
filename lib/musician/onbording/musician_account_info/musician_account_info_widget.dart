@@ -50,6 +50,14 @@ class _MusicianAccountInfoWidgetState extends State<MusicianAccountInfoWidget> {
         safeSetState(() {
           _model.emailModel.textController?.text = currentUserEmail;
         });
+        if (FFAppState().firstName != null && FFAppState().firstName != '') {
+          safeSetState(() {
+            _model.firstNameModel.textController?.text = FFAppState().firstName;
+          });
+          safeSetState(() {
+            _model.lastNameModel.textController?.text = FFAppState().lastName;
+          });
+        }
       }
     });
 
@@ -132,30 +140,12 @@ class _MusicianAccountInfoWidgetState extends State<MusicianAccountInfoWidget> {
                   Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 32.0, 0.0, 0.0),
-                    child: InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () async {
-                        GoRouter.of(context).prepareAuthEvent();
-                        await authManager.signOut();
-                        GoRouter.of(context).clearRedirectLocation();
-
-                        FFAppState().step = 0;
-                        FFAppState().userType = null;
-                        safeSetState(() {});
-
-                        context.goNamedAuth(
-                            SplashScreenWidget.routeName, context.mounted);
-                      },
-                      child: wrapWithModel(
-                        model: _model.cHRDLabelColumnTextModel,
-                        updateCallback: () => safeSetState(() {}),
-                        child: CHRDLabelColumnTextWidget(
-                          heading: 'Account Info',
-                          subHeading: 'Let us know how to properly address you',
-                        ),
+                    child: wrapWithModel(
+                      model: _model.cHRDLabelColumnTextModel,
+                      updateCallback: () => safeSetState(() {}),
+                      child: CHRDLabelColumnTextWidget(
+                        heading: 'Account Info',
+                        subHeading: 'Let us know how to properly address you',
                       ),
                     ),
                   ),

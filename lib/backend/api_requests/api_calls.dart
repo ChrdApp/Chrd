@@ -14,14 +14,19 @@ const _kPrivateApiFunctionName = 'ffPrivateApiCall';
 /// Start Venue Group Code
 
 class VenueGroup {
-  static String getBaseUrl() =>
-      'https://kasnaqcqfuqnfydsjvpy.supabase.co/rest/v1';
+  static String getBaseUrl({
+    String? projectURL,
+    String? anonKey,
+  }) {
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    return 'https://${projectURL}.supabase.co/rest/v1';
+  }
+
   static Map<String, String> headers = {
     'Content-Type': 'application/json',
-    'Authorization':
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-    'apikey':
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+    'Authorization': 'Bearer [anonKey]',
+    'apikey': '[anonKey]',
   };
   static VenueOpenSlotsCall venueOpenSlotsCall = VenueOpenSlotsCall();
   static UnifiedSlotCreationCall unifiedSlotCreationCall =
@@ -67,8 +72,15 @@ class VenueGroup {
 class VenueOpenSlotsCall {
   Future<ApiCallResponse> call({
     int? pUserId,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = VenueGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -80,10 +92,8 @@ class VenueOpenSlotsCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -132,8 +142,15 @@ class UnifiedSlotCreationCall {
     String? timeZone = '',
     String? endDate = '',
     String? repeatType = '',
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = VenueGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -155,15 +172,8 @@ class UnifiedSlotCreationCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -190,8 +200,15 @@ class UnifiedSlotCreationCall {
 class VenueOpenSlotsGroupedCall {
   Future<ApiCallResponse> call({
     int? venueId,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = VenueGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -203,15 +220,8 @@ class VenueOpenSlotsGroupedCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -230,8 +240,15 @@ class GetSingleSlotDetailsCall {
   Future<ApiCallResponse> call({
     int? slotId,
     int? pCurrentUserId,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = VenueGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -244,15 +261,8 @@ class GetSingleSlotDetailsCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -301,8 +311,15 @@ class GetUserVenuesCall {
   Future<ApiCallResponse> call({
     int? userId,
     String? name = '',
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = VenueGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -315,15 +332,8 @@ class GetUserVenuesCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -341,8 +351,15 @@ class GetUserVenuesCall {
 class GetMusiciansListCall {
   Future<ApiCallResponse> call({
     String? name = '',
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = VenueGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -354,10 +371,8 @@ class GetMusiciansListCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -378,8 +393,15 @@ class UpsertGigsCall {
     int? musicianId,
     int? slotid,
     int? venueOwnerId,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = VenueGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -394,10 +416,8 @@ class UpsertGigsCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -417,8 +437,15 @@ class ShowAllGigsCall {
     int? pUserId,
     String? pSearch = '',
     int? pVenueId,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = VenueGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -432,10 +459,8 @@ class ShowAllGigsCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -489,8 +514,15 @@ class GetGigThreadsCall {
     int? gigid,
     bool? general,
     int? userId,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = VenueGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -504,10 +536,8 @@ class GetGigThreadsCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -525,8 +555,15 @@ class GetGigThreadsCall {
 class GetGigThreadDetailCall {
   Future<ApiCallResponse> call({
     int? threadId,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = VenueGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -538,10 +575,8 @@ class GetGigThreadDetailCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -609,8 +644,15 @@ class GetGigThreadDetailCall {
 class GetEntertainmetCall {
   Future<ApiCallResponse> call({
     String? search = '',
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = VenueGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {"search": "${escapeStringForJson(search)}"}''';
@@ -620,10 +662,8 @@ class GetEntertainmetCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -641,8 +681,15 @@ class GetEntertainmetCall {
 class GetGenreCall {
   Future<ApiCallResponse> call({
     String? search = '',
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = VenueGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {"search": "${escapeStringForJson(search)}"}''';
@@ -652,10 +699,8 @@ class GetGenreCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -677,8 +722,15 @@ class GetVenuePlannerSlotsCall {
     String? searchText = '',
     List<int>? venueIdsList,
     String? slotStatus = '',
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = VenueGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
     final venueIds = _serializeList(venueIdsList);
 
     final ffApiRequestBody = '''
@@ -695,10 +747,8 @@ class GetVenuePlannerSlotsCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -727,8 +777,15 @@ class UpdateVenueSlotsUnifiedCall {
     String? repeatType = '',
     String? loadTime = '',
     String? loadDuration = '',
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = VenueGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -751,10 +808,8 @@ class UpdateVenueSlotsUnifiedCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -772,8 +827,15 @@ class UpdateVenueSlotsUnifiedCall {
 class GetTodaysVenueRundownCall {
   Future<ApiCallResponse> call({
     int? venueOwnerId,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = VenueGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -785,10 +847,8 @@ class GetTodaysVenueRundownCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -822,8 +882,15 @@ class GetMusicianByCategoryCall {
   Future<ApiCallResponse> call({
     String? search = '',
     int? venueOwnerId,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = VenueGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -836,10 +903,8 @@ class GetMusicianByCategoryCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -868,8 +933,15 @@ class GetMusicianByCategoryCall {
 class GetSlotDetailsCall {
   Future<ApiCallResponse> call({
     int? slotId,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = VenueGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -881,10 +953,8 @@ class GetSlotDetailsCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -960,8 +1030,15 @@ class GetSlotDetailsCall {
 class DeleteVenueAndReturnURLCall {
   Future<ApiCallResponse> call({
     int? pVenueId,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = VenueGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -973,10 +1050,8 @@ class DeleteVenueAndReturnURLCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -994,8 +1069,15 @@ class DeleteVenueAndReturnURLCall {
 class DeleteVenueOpenSlotsCall {
   Future<ApiCallResponse> call({
     int? slotId,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = VenueGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -1007,10 +1089,8 @@ class DeleteVenueOpenSlotsCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -1029,8 +1109,15 @@ class DeleteVenueCall {
   Future<ApiCallResponse> call({
     int? pVenueId,
     dynamic? pContentJsonJson,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = VenueGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final pContentJson = _serializeJson(pContentJsonJson);
     final ffApiRequestBody = '''
@@ -1045,10 +1132,8 @@ class DeleteVenueCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -1066,8 +1151,15 @@ class DeleteVenueCall {
 class GetSequenceCall {
   Future<ApiCallResponse> call({
     String? pGroupUuid = '',
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = VenueGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -1079,10 +1171,8 @@ class GetSequenceCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -1100,8 +1190,15 @@ class GetSequenceCall {
 class MarkAllNotificationsReadCall {
   Future<ApiCallResponse> call({
     int? pUserId,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = VenueGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -1113,10 +1210,8 @@ class MarkAllNotificationsReadCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -1134,8 +1229,15 @@ class MarkAllNotificationsReadCall {
 class FetchStageWithSlotsCall {
   Future<ApiCallResponse> call({
     int? pVenueId,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = VenueGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -1147,10 +1249,8 @@ class FetchStageWithSlotsCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -1170,8 +1270,15 @@ class InsertStageContentCall {
     int? pStageId,
     List<String>? pContentList,
     List<String>? pThumbnailList,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = VenueGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
     final pContent = _serializeList(pContentList);
     final pThumbnail = _serializeList(pThumbnailList);
 
@@ -1187,10 +1294,8 @@ class InsertStageContentCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -1208,8 +1313,15 @@ class InsertStageContentCall {
 class GetStageDetailCall {
   Future<ApiCallResponse> call({
     int? pStageId,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = VenueGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -1221,10 +1333,8 @@ class GetStageDetailCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -1242,8 +1352,15 @@ class GetStageDetailCall {
 class DeactivateUserCall {
   Future<ApiCallResponse> call({
     int? pUserId,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = VenueGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -1255,10 +1372,8 @@ class DeactivateUserCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -1278,14 +1393,19 @@ class DeactivateUserCall {
 /// Start Musician Group Code
 
 class MusicianGroup {
-  static String getBaseUrl() =>
-      'https://kasnaqcqfuqnfydsjvpy.supabase.co/rest/v1';
+  static String getBaseUrl({
+    String? projectURL,
+    String? anonKey,
+  }) {
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    return 'https://${projectURL}.supabase.co/rest/v1';
+  }
+
   static Map<String, String> headers = {
     'Content-Type': 'application/json',
-    'Authorization':
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-    'apikey':
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+    'Authorization': 'Bearer [anonKey]',
+    'apikey': '[anonKey]',
   };
   static GetOpenSlotsThisWeekCall getOpenSlotsThisWeekCall =
       GetOpenSlotsThisWeekCall();
@@ -1311,8 +1431,15 @@ class MusicianGroup {
 class GetOpenSlotsThisWeekCall {
   Future<ApiCallResponse> call({
     int? musicianId,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = MusicianGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = MusicianGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -1324,10 +1451,8 @@ class GetOpenSlotsThisWeekCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -1362,8 +1487,15 @@ class GetOpenSlotsThisWeekCall {
 class DiscoverOpenGigsCall {
   Future<ApiCallResponse> call({
     int? pCurrentUserId,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = MusicianGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = MusicianGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -1375,10 +1507,8 @@ class DiscoverOpenGigsCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -1429,8 +1559,15 @@ class GetPerformerDetailsCall {
   Future<ApiCallResponse> call({
     int? performerId,
     int? venueOwnerId,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = MusicianGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = MusicianGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -1443,10 +1580,8 @@ class GetPerformerDetailsCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -1470,8 +1605,15 @@ class CreateMusicianOpenSlotCall {
     String? timeZone = '',
     String? endDate = '',
     String? repeatType = '',
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = MusicianGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = MusicianGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -1489,10 +1631,8 @@ class CreateMusicianOpenSlotCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -1520,8 +1660,15 @@ class GetGigMusicianCall {
   Future<ApiCallResponse> call({
     String? pSearch = '',
     int? pUserId,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = MusicianGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = MusicianGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -1534,10 +1681,8 @@ class GetGigMusicianCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -1556,8 +1701,15 @@ class GetGenreEntertainmentTypeCall {
   Future<ApiCallResponse> call({
     List<int>? pEntertainmentIdsList,
     List<int>? pGenreIdsList,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = MusicianGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = MusicianGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
     final pEntertainmentIds = _serializeList(pEntertainmentIdsList);
     final pGenreIds = _serializeList(pGenreIdsList);
 
@@ -1572,10 +1724,8 @@ class GetGenreEntertainmentTypeCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -1613,8 +1763,15 @@ class BookGigCall {
   Future<ApiCallResponse> call({
     int? threadId,
     double? price,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = MusicianGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = MusicianGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -1627,10 +1784,8 @@ class BookGigCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -1650,8 +1805,15 @@ class GetContractDetailsCall {
     int? slotId,
     int? gigThreaadId,
     int? musicianId,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = MusicianGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = MusicianGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -1665,10 +1827,8 @@ class GetContractDetailsCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -1701,8 +1861,15 @@ class GetMusicianPlannerSlotsCall {
     int? musicianId,
     String? selectedDate = '',
     String? searchText = '',
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = MusicianGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = MusicianGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -1716,10 +1883,8 @@ class GetMusicianPlannerSlotsCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -1737,8 +1902,15 @@ class GetMusicianPlannerSlotsCall {
 class BackOutCall {
   Future<ApiCallResponse> call({
     int? pThreadId,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = MusicianGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = MusicianGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -1750,10 +1922,8 @@ class BackOutCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -1771,8 +1941,15 @@ class BackOutCall {
 class GetMusicianOfferCountCall {
   Future<ApiCallResponse> call({
     int? musicianId,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = MusicianGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = MusicianGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -1784,10 +1961,8 @@ class GetMusicianOfferCountCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -1805,8 +1980,15 @@ class GetMusicianOfferCountCall {
 class CheckBookingSlotCall {
   Future<ApiCallResponse> call({
     int? pSlotId,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = MusicianGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = MusicianGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -1818,10 +2000,8 @@ class CheckBookingSlotCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -1841,11 +2021,17 @@ class CheckBookingSlotCall {
 /// Start Notification Group Code
 
 class NotificationGroup {
-  static String getBaseUrl() =>
-      'https://kasnaqcqfuqnfydsjvpy.supabase.co/functions/v1/';
+  static String getBaseUrl({
+    String? projectURL,
+    String? anonKey,
+  }) {
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    return 'https://${projectURL}.supabase.co/functions/v1/';
+  }
+
   static Map<String, String> headers = {
-    'Authorization':
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+    'Authorization': 'Bearer [anonKey]',
     'Content-Type': 'application/json',
   };
   static SendNotificationCall sendNotificationCall = SendNotificationCall();
@@ -1864,8 +2050,15 @@ class SendNotificationCall {
     String? type = '',
     String? usertype = '',
     dynamic? dataJson,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = NotificationGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = NotificationGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
     final sendTo = _serializeList(sendToList);
     final data = _serializeJson(dataJson);
     final ffApiRequestBody = '''
@@ -1882,8 +2075,7 @@ class SendNotificationCall {
       apiUrl: '${baseUrl}send-notification',
       callType: ApiCallType.POST,
       headers: {
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
         'Content-Type': 'application/json',
       },
       params: {},
@@ -1902,8 +2094,15 @@ class SendNotificationCall {
 class SendVenueCancelledNotificationsCall {
   Future<ApiCallResponse> call({
     dynamic? jsonJson,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = NotificationGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = NotificationGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final json = _serializeJson(jsonJson);
     final ffApiRequestBody = '''
@@ -1917,8 +2116,7 @@ class SendVenueCancelledNotificationsCall {
       apiUrl: '${baseUrl}/send-venue-cancelled-notifications',
       callType: ApiCallType.POST,
       headers: {
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
         'Content-Type': 'application/json',
       },
       params: {},
@@ -1938,8 +2136,15 @@ class NotifyMusicianForVenueCall {
   Future<ApiCallResponse> call({
     int? venueId,
     int? slotId,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = NotificationGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = NotificationGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -1951,8 +2156,7 @@ class NotifyMusicianForVenueCall {
       apiUrl: '${baseUrl}/notify-new-venue-posted',
       callType: ApiCallType.POST,
       headers: {
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
         'Content-Type': 'application/json',
       },
       params: {},
@@ -1973,14 +2177,19 @@ class NotifyMusicianForVenueCall {
 /// Start Fan Group Code
 
 class FanGroup {
-  static String getBaseUrl() =>
-      'https://kasnaqcqfuqnfydsjvpy.supabase.co/rest/v1/rpc';
+  static String getBaseUrl({
+    String? projectURL,
+    String? anonKey,
+  }) {
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    return 'https://${projectURL}.supabase.co/rest/v1/rpc';
+  }
+
   static Map<String, String> headers = {
     'Content-Type': 'application/json',
-    'Authorization':
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-    'apikey':
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+    'Authorization': 'Bearer [anonKey]',
+    'apikey': '[anonKey]',
   };
   static GetGigsForFanCall getGigsForFanCall = GetGigsForFanCall();
   static GigDetailFanCall gigDetailFanCall = GigDetailFanCall();
@@ -1994,8 +2203,15 @@ class GetGigsForFanCall {
     String? pEntertainmentType = '',
     int? currentUserId,
     bool? pShowBookmarked,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = FanGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = FanGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -2012,10 +2228,8 @@ class GetGigsForFanCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -2034,8 +2248,15 @@ class GigDetailFanCall {
   Future<ApiCallResponse> call({
     String? pGroupUuid = '',
     int? pFanId,
+    String? projectURL,
+    String? anonKey,
   }) async {
-    final baseUrl = FanGroup.getBaseUrl();
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = FanGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -2048,10 +2269,8 @@ class GigDetailFanCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -2090,7 +2309,12 @@ class CreateNewVenueCall {
     String? hoursOperation = '',
     String? amenities = '',
     String? venueCapacity = '',
+    String? projectURL,
+    String? anonKey,
   }) async {
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+
     final content = _serializeList(contentList);
     final entertainmentId = _serializeList(entertainmentIdList);
     final genreId = _serializeList(genreIdList);
@@ -2120,15 +2344,12 @@ class CreateNewVenueCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'createNewVenue',
-      apiUrl:
-          'https://kasnaqcqfuqnfydsjvpy.supabase.co/rest/v1/venues?select=id',
+      apiUrl: 'https://${projectURL}.supabase.co/rest/v1/venues?select=id',
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'apikey': '${anonKey}',
+        'Authorization': 'Bearer ${anonKey}',
         'Prefer': 'return=representation',
       },
       params: {},
@@ -2165,7 +2386,12 @@ class CreateNewSlotCall {
     int? venueId,
     bool? booked,
     int? createdBy,
+    String? projectURL,
+    String? anonKey,
   }) async {
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+
     final ffApiRequestBody = '''
 {
   "time_zone": "EST",
@@ -2180,15 +2406,12 @@ class CreateNewSlotCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'createNewSlot',
-      apiUrl:
-          'https://kasnaqcqfuqnfydsjvpy.supabase.co/rest/v1/venue_open_slots',
+      apiUrl: 'https://${projectURL}.supabase.co/rest/v1/venue_open_slots',
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'apikey': '${anonKey}',
+        'Authorization': 'Bearer ${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -2206,7 +2429,12 @@ class CreateNewSlotCall {
 class ShowPlannerCall {
   static Future<ApiCallResponse> call({
     String? pDate = '',
+    String? projectURL,
+    String? anonKey,
   }) async {
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+
     final ffApiRequestBody = '''
 {
   "p_date": "${escapeStringForJson(pDate)}"
@@ -2214,14 +2442,12 @@ class ShowPlannerCall {
     return ApiManager.instance.makeApiCall(
       callName: 'Show Planner',
       apiUrl:
-          'https://kasnaqcqfuqnfydsjvpy.supabase.co/rest/v1/rpc/fetch_events_by_date',
+          'https://${projectURL}.supabase.co/rest/v1/rpc/fetch_events_by_date',
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
-        'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imthc25hcWNxZnVxbmZ5ZHNqdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NjgzODYsImV4cCI6MjA3MzU0NDM4Nn0._SPuU0odn9G5JybVI8r4gzLoDQG6hcYEmeCG-B_8ePs',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
       },
       params: {},
       body: ffApiRequestBody,

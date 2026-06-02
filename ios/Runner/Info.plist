@@ -54,11 +54,14 @@
     <key>NSMicrophoneUsageDescription</key>
     <string>In order to record audio for video, this app requires permission to access the microphone.</string>
     <key>NSPhotoLibraryUsageDescription</key>
-    <string>In order to upload data, this app requires permission to access the photo library.</string>
+    <string>We use your camera so you can quickly share photos with support.</string>
+    <!-- Start of location permission -->
+    <key>NSLocationWhenInUseUsageDescription</key>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
-	</array>
+	</array>    <string>We use your location to help users discover nearby venues, events, and relevant content.</string>
+    <!-- End of location permission -->
     <key>UILaunchStoryboardName</key>
     <string>LaunchScreen</string>
     <key>UIMainStoryboardFile</key>

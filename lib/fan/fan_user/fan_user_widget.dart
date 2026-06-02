@@ -334,6 +334,9 @@ class _FanUserWidgetState extends State<FanUserWidget> {
                     onTab: () async {
                       FFAppState().AdminName = '';
                       FFAppState().FanFilter = FanFilterStruct();
+                      FFAppState().email = '';
+                      FFAppState().firstName = '';
+                      FFAppState().lastName = '';
                       safeSetState(() {});
                       GoRouter.of(context).prepareAuthEvent();
                       await authManager.signOut();

@@ -350,6 +350,8 @@ class _VenueGenres8WidgetState extends State<VenueGenres8Widget> {
                       child: FutureBuilder<ApiCallResponse>(
                         future: VenueGroup.getGenreCall.call(
                           search: _model.textController.text,
+                          projectURL: FFDevEnvironmentValues().projectURL,
+                          anonKey: FFDevEnvironmentValues().anonKey,
                         ),
                         builder: (context, snapshot) {
                           // Customize what your widget looks like when it's loading.

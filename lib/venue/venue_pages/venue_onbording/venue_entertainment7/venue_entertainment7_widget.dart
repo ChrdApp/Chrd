@@ -297,6 +297,8 @@ class _VenueEntertainment7WidgetState extends State<VenueEntertainment7Widget> {
                       child: FutureBuilder<ApiCallResponse>(
                         future: VenueGroup.getEntertainmetCall.call(
                           search: _model.textController.text,
+                          projectURL: FFDevEnvironmentValues().projectURL,
+                          anonKey: FFDevEnvironmentValues().anonKey,
                         ),
                         builder: (context, snapshot) {
                           // Customize what your widget looks like when it's loading.

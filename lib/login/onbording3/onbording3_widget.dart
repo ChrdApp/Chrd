@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
+import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +46,8 @@ class _Onbording3WidgetState extends State<Onbording3Widget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -204,46 +207,72 @@ class _Onbording3WidgetState extends State<Onbording3Widget> {
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () async {
-                        GoRouter.of(context).prepareAuthEvent();
-                        final user = await authManager.signInWithApple(context);
-                        if (user == null) {
-                          return;
-                        }
+                        var _shouldSetState = false;
+                        _model.appleSigninOutput =
+                            await actions.appleSignInAction(
+                          context,
+                        );
+                        _shouldSetState = true;
                         _model.appleuserOutput = await UsersTable().queryRows(
                           queryFn: (q) => q.eqOrNull(
                             'email',
-                            currentUserEmail,
+                            FFAppState().email,
                           ),
                         );
+                        _shouldSetState = true;
                         if (_model.appleuserOutput?.length == 0) {
                           _model.userOutputapple = await UsersTable().insert({
                             'step': 1,
                             'auth_id': currentUserUid,
                             'email': currentUserEmail,
                           });
+                          _shouldSetState = true;
                           FFAppState().userId = _model.userOutputapple!.id;
                           FFAppState().step = _model.userOutputapple!.step!;
                           FFAppState().loginType = LoginType.Google.name;
 
-                          context.goNamedAuth(AccountCreation6Widget.routeName,
-                              context.mounted);
+                          context.goNamed(AccountCreation6Widget.routeName);
+
+                          if (_shouldSetState) safeSetState(() {});
+                          return;
                         } else {
-                          FFAppState().userId =
-                              _model.appleuserOutput!.firstOrNull!.id;
-                          FFAppState().step =
-                              _model.appleuserOutput!.firstOrNull!.step!;
-                          FFAppState().loginType = LoginType.Google.name;
-                          if (_model.appleuserOutput?.firstOrNull?.userType ==
-                              Type.Venue.name) {
-                            context.goNamedAuth(
-                                HomeVWidget.routeName, context.mounted);
+                          if (_model.appleuserOutput?.firstOrNull?.isActive ==
+                              true) {
+                            FFAppState().userId =
+                                _model.appleuserOutput!.firstOrNull!.id;
+                            FFAppState().step =
+                                _model.appleuserOutput!.firstOrNull!.step!;
+                            FFAppState().loginType = LoginType.Google.name;
+                            if (_model.appleuserOutput?.firstOrNull?.userType ==
+                                Type.Venue.name) {
+                              context.goNamed(HomeVWidget.routeName);
+                            } else {
+                              context.goNamed(HomeMWidget.routeName);
+                            }
+
+                            if (_shouldSetState) safeSetState(() {});
+                            return;
                           } else {
-                            context.goNamedAuth(
-                                HomeMWidget.routeName, context.mounted);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Your account has been deleted. Please contact support for assistance.',
+                                  style: TextStyle(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ),
+                                ),
+                                duration: Duration(milliseconds: 4000),
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).secondary,
+                              ),
+                            );
+                            if (_shouldSetState) safeSetState(() {});
+                            return;
                           }
                         }
 
-                        safeSetState(() {});
+                        if (_shouldSetState) safeSetState(() {});
                       },
                       child: Container(
                         width: double.infinity,
@@ -302,111 +331,115 @@ class _Onbording3WidgetState extends State<Onbording3Widget> {
                         ),
                       ),
                     ),
-                    InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () async {
-                        GoRouter.of(context).prepareAuthEvent();
-                        final user =
-                            await authManager.signInWithGoogle(context);
-                        if (user == null) {
-                          return;
-                        }
-                        _model.googleuserOutput = await UsersTable().queryRows(
-                          queryFn: (q) => q.eqOrNull(
-                            'email',
-                            currentUserEmail,
-                          ),
-                        );
-                        if (_model.googleuserOutput?.length == 0) {
-                          _model.userOutput = await UsersTable().insert({
-                            'step': 1,
-                            'auth_id': currentUserUid,
-                            'email': currentUserEmail,
-                          });
-                          FFAppState().userId = _model.userOutput!.id;
-                          FFAppState().step = _model.userOutput!.step!;
-                          FFAppState().loginType = LoginType.Apple.name;
-
-                          context.goNamedAuth(AccountCreation6Widget.routeName,
-                              context.mounted);
-                        } else {
-                          FFAppState().userId =
-                              _model.googleuserOutput!.firstOrNull!.id;
-                          FFAppState().step =
-                              _model.googleuserOutput!.firstOrNull!.step!;
-                          FFAppState().loginType = LoginType.Apple.name;
-                          if (_model.googleuserOutput?.firstOrNull?.userType ==
-                              Type.Venue.name) {
-                            context.goNamedAuth(
-                                HomeVWidget.routeName, context.mounted);
-                          } else {
-                            context.goNamedAuth(
-                                HomeMWidget.routeName, context.mounted);
+                    if (false)
+                      InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          GoRouter.of(context).prepareAuthEvent();
+                          final user =
+                              await authManager.signInWithGoogle(context);
+                          if (user == null) {
+                            return;
                           }
-                        }
-
-                        safeSetState(() {});
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        height: 48.0,
-                        decoration: BoxDecoration(
-                          color: Color(0xB325282E),
-                          borderRadius: BorderRadius.circular(37.0),
-                          border: Border.all(
-                            color: Color(0x37FFFFFF),
-                            width: 1.0,
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(8.0),
-                              child: Image.asset(
-                                'assets/images/Frame.png',
-                                width: 20.0,
-                                height: 20.0,
-                                fit: BoxFit.cover,
-                              ),
+                          _model.googleuserOutput =
+                              await UsersTable().queryRows(
+                            queryFn: (q) => q.eqOrNull(
+                              'email',
+                              currentUserEmail,
                             ),
-                            Expanded(
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Continue with Google',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          font: GoogleFonts.montserrat(
+                          );
+                          if (_model.googleuserOutput?.length == 0) {
+                            _model.userOutput = await UsersTable().insert({
+                              'step': 1,
+                              'auth_id': currentUserUid,
+                              'email': currentUserEmail,
+                            });
+                            FFAppState().userId = _model.userOutput!.id;
+                            FFAppState().step = _model.userOutput!.step!;
+                            FFAppState().loginType = LoginType.Apple.name;
+
+                            context.goNamedAuth(
+                                AccountCreation6Widget.routeName,
+                                context.mounted);
+                          } else {
+                            FFAppState().userId =
+                                _model.googleuserOutput!.firstOrNull!.id;
+                            FFAppState().step =
+                                _model.googleuserOutput!.firstOrNull!.step!;
+                            FFAppState().loginType = LoginType.Apple.name;
+                            if (_model
+                                    .googleuserOutput?.firstOrNull?.userType ==
+                                Type.Venue.name) {
+                              context.goNamedAuth(
+                                  HomeVWidget.routeName, context.mounted);
+                            } else {
+                              context.goNamedAuth(
+                                  HomeMWidget.routeName, context.mounted);
+                            }
+                          }
+
+                          safeSetState(() {});
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          height: 48.0,
+                          decoration: BoxDecoration(
+                            color: Color(0xB325282E),
+                            borderRadius: BorderRadius.circular(37.0),
+                            border: Border.all(
+                              color: Color(0x37FFFFFF),
+                              width: 1.0,
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(8.0),
+                                child: Image.asset(
+                                  'assets/images/Frame.png',
+                                  width: 20.0,
+                                  height: 20.0,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Expanded(
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Continue with Google',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            font: GoogleFonts.montserrat(
+                                              fontWeight: FontWeight.w500,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
                                             fontStyle:
                                                 FlutterFlowTheme.of(context)
                                                     .bodyMedium
                                                     .fontStyle,
                                           ),
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w500,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                  ),
-                                ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ].addToStart(SizedBox(width: 20.0)),
+                            ].addToStart(SizedBox(width: 20.0)),
+                          ),
                         ),
                       ),
-                    ),
                   ]
                       .divide(SizedBox(height: 12.0))
                       .addToStart(SizedBox(height: 12.0)),

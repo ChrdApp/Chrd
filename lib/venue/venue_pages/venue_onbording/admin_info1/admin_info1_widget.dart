@@ -64,6 +64,12 @@ class _AdminInfo1WidgetState extends State<AdminInfo1Widget> {
         safeSetState(() {
           _model.emailAddressModel.textController?.text = currentUserEmail;
         });
+        if (FFAppState().firstName != null && FFAppState().firstName != '') {
+          safeSetState(() {
+            _model.adminNameModel.textController?.text =
+                '${FFAppState().firstName} ${FFAppState().lastName}';
+          });
+        }
         safeSetState(() {});
       } else {
         _model.hideMobileField =
@@ -80,6 +86,12 @@ class _AdminInfo1WidgetState extends State<AdminInfo1Widget> {
         safeSetState(() {
           _model.emailAddressModel.textController?.text = currentUserEmail;
         });
+        if (FFAppState().firstName != null && FFAppState().firstName != '') {
+          safeSetState(() {
+            _model.adminNameModel.textController?.text =
+                '${FFAppState().firstName} ${FFAppState().lastName}';
+          });
+        }
       }
     });
 
@@ -319,6 +331,27 @@ class _AdminInfo1WidgetState extends State<AdminInfo1Widget> {
                             isSearchable: false,
                             isMultiSelect: false,
                           ),
+                        Text(
+                          FFAppState().firstName,
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    font: GoogleFonts.montserrat(
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                    letterSpacing: 0.0,
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
+                        ),
                       ].divide(SizedBox(height: 14.0)),
                     ),
                   ),
