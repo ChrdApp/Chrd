@@ -243,12 +243,25 @@ class _Onbording3WidgetState extends State<Onbording3Widget> {
                             FFAppState().step =
                                 _model.appleuserOutput!.firstOrNull!.step!;
                             FFAppState().loginType = LoginType.Google.name;
-                            if (_model.appleuserOutput?.firstOrNull?.userType ==
-                                Type.Venue.name) {
-                              context.goNamed(HomeVWidget.routeName);
-                            } else {
-                              context.goNamed(HomeMWidget.routeName);
-                            }
+                            FFAppState().userType = () {
+                              if (_model
+                                      .appleuserOutput?.firstOrNull?.userType ==
+                                  Type.Musician.name) {
+                                return Type.Musician;
+                              } else if (_model
+                                      .appleuserOutput?.firstOrNull?.userType ==
+                                  Type.Venue.name) {
+                                return Type.Venue;
+                              } else if (_model
+                                      .appleuserOutput?.firstOrNull?.userType ==
+                                  Type.Fan.name) {
+                                return Type.Fan;
+                              } else {
+                                return null;
+                              }
+                            }();
+
+                            context.goNamed(NavPageWidget.routeName);
 
                             if (_shouldSetState) safeSetState(() {});
                             return;
