@@ -66,8 +66,8 @@ class VenueGigContractOverlayCopyModel
   dynamic? performanceStage;
   // Model for CHRD_Label_Btn component.
   late CHRDLabelBtnModel cHRDLabelBtnModel1;
-  // Stores action output result for [Backend Call - API (Delete Venue Open Slots)] action in CHRD_Label_Btn widget.
-  ApiCallResponse? deleteGig;
+  // Stores action output result for [Backend Call - API (Hard delete venue slot)] action in CHRD_Label_Btn widget.
+  ApiCallResponse? hardDeleteOutput;
   // Model for CHRD_Label_Btn component.
   late CHRDLabelBtnModel cHRDLabelBtnModel2;
   // Model for CHRD_Label_Btn component.

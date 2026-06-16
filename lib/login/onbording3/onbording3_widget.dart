@@ -225,6 +225,7 @@ class _Onbording3WidgetState extends State<Onbording3Widget> {
                             'step': 1,
                             'auth_id': currentUserUid,
                             'email': currentUserEmail,
+                            'is_active': true,
                           });
                           _shouldSetState = true;
                           FFAppState().userId = _model.userOutputapple!.id;
@@ -369,6 +370,7 @@ class _Onbording3WidgetState extends State<Onbording3Widget> {
                               'step': 1,
                               'auth_id': currentUserUid,
                               'email': currentUserEmail,
+                              'is_active': true,
                             });
                             FFAppState().userId = _model.userOutput!.id;
                             FFAppState().step = _model.userOutput!.step!;

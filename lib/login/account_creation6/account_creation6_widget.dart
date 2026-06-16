@@ -85,6 +85,8 @@ class _AccountCreation6WidgetState extends State<AccountCreation6Widget> {
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () async {
+                        FFAppState().userType = Type.Venue;
+                        safeSetState(() {});
                         GoRouter.of(context).prepareAuthEvent();
                         await authManager.signOut();
                         GoRouter.of(context).clearRedirectLocation();

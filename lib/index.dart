@@ -154,3 +154,5 @@ export '/fan/bookamrked_fan/bookamrked_fan_widget.dart'
 export '/fan/fan_user/fan_user_widget.dart' show FanUserWidget;
 export '/venue/venue_pages/venue_onbording/edit_stage/edit_stage_widget.dart'
     show EditStageWidget;
+export '/venue/venue_pages/view_venue_planner/view_venue_planner_widget.dart'
+    show ViewVenuePlannerWidget;

@@ -273,6 +273,71 @@ class _GigDetailFanWidgetState extends State<GigDetailFanWidget> {
                                 ],
                               ),
                             ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 4.0, 0.0, 0.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      Navigator.pop(context);
+
+                                      context.pushNamed(
+                                        ViewVenuePlannerWidget.routeName,
+                                        queryParameters: {
+                                          'venueId': serializeParam(
+                                            getJsonField(
+                                              containerGigDetailFanResponse
+                                                  .jsonBody,
+                                              r'''$..venue_id''',
+                                            ),
+                                            ParamType.int,
+                                          ),
+                                          'venueOwnerId': serializeParam(
+                                            getJsonField(
+                                              containerGigDetailFanResponse
+                                                  .jsonBody,
+                                              r'''$..venue_owner_id''',
+                                            ),
+                                            ParamType.int,
+                                          ),
+                                        }.withoutNulls,
+                                      );
+                                    },
+                                    child: Text(
+                                      'View venue calendar',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            font: GoogleFonts.montserrat(
+                                              fontWeight: FontWeight.normal,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                            color: FlutterFlowTheme.of(context)
+                                                .neutralLight300,
+                                            fontSize: 12.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.normal,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                            decoration:
+                                                TextDecoration.underline,
+                                          ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),

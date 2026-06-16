@@ -222,7 +222,7 @@ class FFAppState extends ChangeNotifier {
     _slotEndDate = value;
   }
 
-  Type? _userType;
+  Type? _userType = Type.Venue;
   Type? get userType => _userType;
   set userType(Type? value) {
     _userType = value;

@@ -27,17 +27,19 @@ class VenueOpenSlotsRow extends SupabaseDataRow {
   String? get timeZone => getField<String>('time_zone');
   set timeZone(String? value) => setField<String>('time_zone', value);
 
-  DateTime? get startTime => getField<DateTime>('start_time');
-  set startTime(DateTime? value) => setField<DateTime>('start_time', value);
+  PostgresTime? get startTime => getField<PostgresTime>('start_time');
+  set startTime(PostgresTime? value) =>
+      setField<PostgresTime>('start_time', value);
 
-  DateTime? get endTime => getField<DateTime>('end_time');
-  set endTime(DateTime? value) => setField<DateTime>('end_time', value);
+  PostgresTime? get endTime => getField<PostgresTime>('end_time');
+  set endTime(PostgresTime? value) => setField<PostgresTime>('end_time', value);
 
   DateTime? get startDate => getField<DateTime>('start_date');
   set startDate(DateTime? value) => setField<DateTime>('start_date', value);
 
-  DateTime? get loadTime => getField<DateTime>('load_time');
-  set loadTime(DateTime? value) => setField<DateTime>('load_time', value);
+  PostgresTime? get loadTime => getField<PostgresTime>('load_time');
+  set loadTime(PostgresTime? value) =>
+      setField<PostgresTime>('load_time', value);
 
   String? get loadDuration => getField<String>('load_duration');
   set loadDuration(String? value) => setField<String>('load_duration', value);

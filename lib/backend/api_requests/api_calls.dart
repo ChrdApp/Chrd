@@ -67,6 +67,8 @@ class VenueGroup {
       InsertStageContentCall();
   static GetStageDetailCall getStageDetailCall = GetStageDetailCall();
   static DeactivateUserCall deactivateUserCall = DeactivateUserCall();
+  static HardDeleteVenueSlotCall hardDeleteVenueSlotCall =
+      HardDeleteVenueSlotCall();
 }
 
 class VenueOpenSlotsCall {
@@ -142,6 +144,7 @@ class UnifiedSlotCreationCall {
     String? timeZone = '',
     String? endDate = '',
     String? repeatType = '',
+    String? pNotes = '',
     String? projectURL,
     String? anonKey,
   }) async {
@@ -164,7 +167,8 @@ class UnifiedSlotCreationCall {
   "p_load_duration": "${escapeStringForJson(loadDuration)}",
   "p_created_by": ${createdBy},
   "p_end_date": "${escapeStringForJson(endDate)}",
-  "p_repeat_type": "${escapeStringForJson(repeatType)}"
+  "p_repeat_type": "${escapeStringForJson(repeatType)}",
+  "p_notes": "${escapeStringForJson(pNotes)}"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Unified  Slot Creation',
@@ -777,6 +781,7 @@ class UpdateVenueSlotsUnifiedCall {
     String? repeatType = '',
     String? loadTime = '',
     String? loadDuration = '',
+    String? notes = '',
     String? projectURL,
     String? anonKey,
   }) async {
@@ -800,7 +805,8 @@ class UpdateVenueSlotsUnifiedCall {
   "p_end_date": "${escapeStringForJson(endDate)}",
   "p_repeat_type": "${escapeStringForJson(repeatType)}",
   "p_load_time": "${escapeStringForJson(loadTime)}",
-  "p_load_duration": "${escapeStringForJson(loadDuration)}"
+  "p_load_duration": "${escapeStringForJson(loadDuration)}",
+"p_notes": "${escapeStringForJson(notes)}"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Update Venue Slots Unified',
@@ -1369,6 +1375,45 @@ class DeactivateUserCall {
     return ApiManager.instance.makeApiCall(
       callName: 'Deactivate user',
       apiUrl: '${baseUrl}/rpc/deactivate_user',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class HardDeleteVenueSlotCall {
+  Future<ApiCallResponse> call({
+    int? pSlotId,
+    String? projectURL,
+    String? anonKey,
+  }) async {
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "p_slot_id": ${pSlotId}
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Hard delete venue slot',
+      apiUrl: '${baseUrl}/rpc/hard_delete_venue_slot',
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',

@@ -44,8 +44,8 @@ class VenueDetailsOverlayModel
   late CHRDRowWithIconModel cHRDRowWithIconModel3;
   // Model for CHRD_Label_Btn component.
   late CHRDLabelBtnModel cHRDLabelBtnModel1;
-  // Stores action output result for [Backend Call - API (Delete Venue Open Slots)] action in CHRD_Label_Btn widget.
-  ApiCallResponse? deleteVenueOutput;
+  // Stores action output result for [Backend Call - API (Hard delete venue slot)] action in CHRD_Label_Btn widget.
+  ApiCallResponse? apiResult2ry;
   // Model for CHRD_Label_Btn component.
   late CHRDLabelBtnModel cHRDLabelBtnModel2;
   // Model for CHRD_Label_Btn component.

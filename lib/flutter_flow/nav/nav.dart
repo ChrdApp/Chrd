@@ -897,6 +897,20 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.int,
             ),
           ),
+        ),
+        FFRoute(
+          name: ViewVenuePlannerWidget.routeName,
+          path: ViewVenuePlannerWidget.routePath,
+          builder: (context, params) => ViewVenuePlannerWidget(
+            venueId: params.getParam(
+              'venueId',
+              ParamType.int,
+            ),
+            venueOwnerId: params.getParam(
+              'venueOwnerId',
+              ParamType.int,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],

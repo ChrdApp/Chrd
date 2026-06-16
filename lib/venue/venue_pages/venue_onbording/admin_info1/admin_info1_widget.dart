@@ -166,7 +166,7 @@ class _AdminInfo1WidgetState extends State<AdminInfo1Widget> {
                         GoRouter.of(context).clearRedirectLocation();
 
                         FFAppState().step = 0;
-                        FFAppState().userType = null;
+                        FFAppState().userType = Type.Venue;
                         safeSetState(() {});
 
                         context.goNamedAuth(

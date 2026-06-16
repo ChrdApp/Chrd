@@ -99,26 +99,30 @@ class _MusicianGigOverLayWidgetState extends State<MusicianGigOverLayWidget> {
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Align(
-                    alignment: AlignmentDirectional(-1.0, 0.0),
-                    child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 6.0, 0.0, 0.0),
-                      child: wrapWithModel(
-                        model: _model.cHRDBackBtnModel,
-                        updateCallback: () => safeSetState(() {}),
-                        child: CHRDBackBtnWidget(
-                          icon: Icon(
-                            Icons.chevron_left_rounded,
-                            color: FlutterFlowTheme.of(context).primaryText,
-                            size: 24.0,
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Align(
+                        alignment: AlignmentDirectional(-1.0, 0.0),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              20.0, 0.0, 0.0, 20.0),
+                          child: wrapWithModel(
+                            model: _model.cHRDBackBtnModel,
+                            updateCallback: () => safeSetState(() {}),
+                            child: CHRDBackBtnWidget(
+                              icon: Icon(
+                                Icons.arrow_back_rounded,
+                                color: FlutterFlowTheme.of(context).primaryText,
+                              ),
+                              btnAction: () async {
+                                context.pop();
+                              },
+                            ),
                           ),
-                          btnAction: () async {
-                            context.safePop();
-                          },
                         ),
                       ),
-                    ),
+                    ],
                   ),
                   Padding(
                     padding:
@@ -219,6 +223,50 @@ class _MusicianGigOverLayWidgetState extends State<MusicianGigOverLayWidget> {
                                           .fontStyle,
                                     ),
                               ),
+                              if (widget!.venueOwnerId != FFAppState().userId)
+                                InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    context.pushNamed(
+                                      ViewVenuePlannerWidget.routeName,
+                                      queryParameters: {
+                                        'venueId': serializeParam(
+                                          widget!.venueId,
+                                          ParamType.int,
+                                        ),
+                                        'venueOwnerId': serializeParam(
+                                          widget!.venueOwnerId,
+                                          ParamType.int,
+                                        ),
+                                      }.withoutNulls,
+                                    );
+                                  },
+                                  child: Text(
+                                    'View venue calendar',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          font: GoogleFonts.montserrat(
+                                            fontWeight: FontWeight.w600,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
+                                          fontSize: 12.0,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w600,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
+                                          decoration: TextDecoration.underline,
+                                        ),
+                                  ),
+                                ),
                             ],
                           ),
                         ),
@@ -1115,6 +1163,132 @@ class _MusicianGigOverLayWidgetState extends State<MusicianGigOverLayWidget> {
                                 },
                               ),
                             ),
+                            if (('${''}' !=
+                                    getJsonField(
+                                      musicianGigOverLayGetSingleSlotDetailsResponse
+                                          .jsonBody,
+                                      r'''$.data.notes''',
+                                    ).toString()) &&
+                                ('null' !=
+                                    getJsonField(
+                                      musicianGigOverLayGetSingleSlotDetailsResponse
+                                          .jsonBody,
+                                      r'''$.data.notes''',
+                                    ).toString()))
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 8.0, 0.0, 0.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Icon(
+                                          Icons.insert_drive_file_outlined,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          size: 24.0,
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            'Gig Notes',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  font: GoogleFonts.montserrat(
+                                                    fontWeight:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontWeight,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontStyle,
+                                                  ),
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontWeight,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontStyle,
+                                                ),
+                                          ),
+                                        ),
+                                      ].divide(SizedBox(width: 10.0)),
+                                    ),
+                                    Container(
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: Color(0x7B7B7B7B),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(12.0),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              getJsonField(
+                                                musicianGigOverLayGetSingleSlotDetailsResponse
+                                                    .jsonBody,
+                                                r'''$.data.notes''',
+                                              ).toString(),
+                                              textAlign: TextAlign.start,
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    font:
+                                                        GoogleFonts.montserrat(
+                                                      fontWeight:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .fontWeight,
+                                                      fontStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .fontStyle,
+                                                    ),
+                                                    fontSize: 12.0,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontWeight,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontStyle,
+                                                  ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ].divide(SizedBox(height: 8.0)),
+                                ),
+                              ),
                           ]
                               .addToStart(SizedBox(height: 40.0))
                               .addToEnd(SizedBox(height: 16.0)),
