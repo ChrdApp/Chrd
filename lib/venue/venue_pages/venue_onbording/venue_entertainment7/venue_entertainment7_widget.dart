@@ -153,7 +153,7 @@ class _VenueEntertainment7WidgetState extends State<VenueEntertainment7Widget> {
                       updateCallback: () => safeSetState(() {}),
                       child: CHRDLabelColumnTextWidget(
                         heading:
-                            'Select performance type for${widget!.musicianID != null ? FFAppState().AdminName : FFAppState().vanueName}',
+                            'Select performance type for ${widget!.musicianID != null ? FFAppState().AdminName : FFAppState().vanueName}',
                         subHeading: ' ',
                       ),
                     ),

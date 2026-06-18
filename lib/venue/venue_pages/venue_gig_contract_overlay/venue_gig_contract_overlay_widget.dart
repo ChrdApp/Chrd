@@ -306,55 +306,59 @@ class _VenueGigContractOverlayWidgetState
                                         .jsonBody,
                                     r'''$.data.venue_owner_id''',
                                   ).toString())
-                                InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () async {
-                                    context.pushNamed(
-                                      ViewVenuePlannerWidget.routeName,
-                                      queryParameters: {
-                                        'venueId': serializeParam(
-                                          getJsonField(
-                                            venueGigContractOverlayGetSingleSlotDetailsResponse
-                                                .jsonBody,
-                                            r'''$.data.venue_id''',
+                                Align(
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      context.pushNamed(
+                                        ViewVenuePlannerWidget.routeName,
+                                        queryParameters: {
+                                          'venueId': serializeParam(
+                                            getJsonField(
+                                              venueGigContractOverlayGetSingleSlotDetailsResponse
+                                                  .jsonBody,
+                                              r'''$.data.venue_id''',
+                                            ),
+                                            ParamType.int,
                                           ),
-                                          ParamType.int,
-                                        ),
-                                        'venueOwnerId': serializeParam(
-                                          getJsonField(
-                                            venueGigContractOverlayGetSingleSlotDetailsResponse
-                                                .jsonBody,
-                                            r'''$.data.venue_owner_id''',
+                                          'venueOwnerId': serializeParam(
+                                            getJsonField(
+                                              venueGigContractOverlayGetSingleSlotDetailsResponse
+                                                  .jsonBody,
+                                              r'''$.data.venue_owner_id''',
+                                            ),
+                                            ParamType.int,
                                           ),
-                                          ParamType.int,
-                                        ),
-                                      }.withoutNulls,
-                                    );
-                                  },
-                                  child: Text(
-                                    'View venue calendar',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          font: GoogleFonts.montserrat(
+                                        }.withoutNulls,
+                                      );
+                                    },
+                                    child: Text(
+                                      'View venue calendar',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            font: GoogleFonts.montserrat(
+                                              fontWeight: FontWeight.w600,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                            fontSize: 12.0,
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.w600,
                                             fontStyle:
                                                 FlutterFlowTheme.of(context)
                                                     .bodyMedium
                                                     .fontStyle,
+                                            decoration:
+                                                TextDecoration.underline,
                                           ),
-                                          fontSize: 12.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w600,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                          decoration: TextDecoration.underline,
-                                        ),
+                                    ),
                                   ),
                                 ),
                             ],

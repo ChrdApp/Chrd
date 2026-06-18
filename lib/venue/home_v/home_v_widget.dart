@@ -561,13 +561,19 @@ class _HomeVWidgetState extends State<HomeVWidget> {
                                                                       {
                                                                     'slotId':
                                                                         serializeParam(
-                                                                      200,
+                                                                      getJsonField(
+                                                                        slotsListItem,
+                                                                        r'''$.slot_id''',
+                                                                      ),
                                                                       ParamType
                                                                           .int,
                                                                     ),
                                                                     'threadId':
                                                                         serializeParam(
-                                                                      200,
+                                                                      getJsonField(
+                                                                        slotsListItem,
+                                                                        r'''$.gig_thread_id''',
+                                                                      ),
                                                                       ParamType
                                                                           .int,
                                                                     ),

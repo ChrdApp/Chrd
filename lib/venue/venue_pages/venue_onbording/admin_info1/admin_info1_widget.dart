@@ -331,27 +331,6 @@ class _AdminInfo1WidgetState extends State<AdminInfo1Widget> {
                             isSearchable: false,
                             isMultiSelect: false,
                           ),
-                        Text(
-                          FFAppState().firstName,
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    font: GoogleFonts.montserrat(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                  ),
-                        ),
                       ].divide(SizedBox(height: 14.0)),
                     ),
                   ),

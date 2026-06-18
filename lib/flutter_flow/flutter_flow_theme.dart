@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 abstract class FlutterFlowTheme {
+  static const double minTextScaleFactor = 1.0;
+  static const double maxTextScaleFactor = 1.0;
+  static const double defaultTextScaleFactor = 1.0;
+
   static FlutterFlowTheme of(BuildContext context) {
     return LightModeTheme();
   }
