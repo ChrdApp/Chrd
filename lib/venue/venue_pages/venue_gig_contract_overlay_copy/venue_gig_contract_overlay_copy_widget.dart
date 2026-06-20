@@ -1615,22 +1615,70 @@ class _VenueGigContractOverlayCopyWidgetState
                                                                     'Are you sure you want to remove this event?',
                                                                 acceptBtnAction:
                                                                     () async {
-                                                                  _model.hardDeleteOutput =
+                                                                  _model.fetchedMusicianList =
                                                                       await VenueGroup
-                                                                          .hardDeleteVenueSlotCall
+                                                                          .fetchMusiciansOfGigCall
                                                                           .call(
                                                                     pSlotId: widget!
                                                                         .slotId,
                                                                   );
 
                                                                   if ((_model
-                                                                          .hardDeleteOutput
+                                                                          .fetchedMusicianList
                                                                           ?.succeeded ??
                                                                       true)) {
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                    context
-                                                                        .safePop();
+                                                                    if (true ==
+                                                                        getJsonField(
+                                                                          (_model.fetchedMusicianList?.jsonBody ??
+                                                                              ''),
+                                                                          r'''$.has_musician''',
+                                                                        )) {
+                                                                      await NotificationGroup
+                                                                          .sendNotificationCall
+                                                                          .call(
+                                                                        title:
+                                                                            '${getJsonField(
+                                                                          (_model.singleSlotOutput?.jsonBody ??
+                                                                              ''),
+                                                                          r'''$.data.venue_name''',
+                                                                        ).toString()} Removed a Gig',
+                                                                        description:
+                                                                            'This gig has been removed  by the ${getJsonField(
+                                                                          (_model.singleSlotOutput?.jsonBody ??
+                                                                              ''),
+                                                                          r'''$.data.venue_name''',
+                                                                        ).toString()} and is no longer active.',
+                                                                        sendToList:
+                                                                            functions.parseStringList(getJsonField(
+                                                                          (_model.fetchedMusicianList?.jsonBody ??
+                                                                              ''),
+                                                                          r'''$.musician_ids''',
+                                                                        )),
+                                                                        usertype: FFAppState()
+                                                                            .userType
+                                                                            ?.name,
+                                                                        type:
+                                                                            'venueCancelled',
+                                                                      );
+                                                                    }
+                                                                    _model.hardDeleteGig =
+                                                                        await VenueGroup
+                                                                            .hardDeleteVenueSlotCall
+                                                                            .call(
+                                                                      pSlotId:
+                                                                          widget!
+                                                                              .slotId,
+                                                                    );
+
+                                                                    if ((_model
+                                                                            .hardDeleteGig
+                                                                            ?.succeeded ??
+                                                                        true)) {
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                      context
+                                                                          .safePop();
+                                                                    }
                                                                   }
                                                                 },
                                                               ),

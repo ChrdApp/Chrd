@@ -1517,33 +1517,73 @@ class _VenueGigContractOverlayWidgetState
                                                               'Are you sure you want to remove this event?',
                                                           acceptBtnAction:
                                                               () async {
-                                                            _model.deleteGig =
+                                                            _model.fetchedMusicianList =
                                                                 await VenueGroup
-                                                                    .deleteVenueOpenSlotsCall
+                                                                    .fetchMusiciansOfGigCall
                                                                     .call(
-                                                              slotId: widget!
+                                                              pSlotId: widget!
                                                                   .slotId,
                                                             );
 
                                                             if ((_model
-                                                                    .deleteGig
+                                                                    .fetchedMusicianList
                                                                     ?.succeeded ??
                                                                 true)) {
-                                                              await NotificationGroup
-                                                                  .sendVenueCancelledNotificationsCall
-                                                                  .call(
-                                                                jsonJson:
-                                                                    getJsonField(
-                                                                  (_model.deleteGig
-                                                                          ?.jsonBody ??
-                                                                      ''),
-                                                                  r'''$..thread_data''',
-                                                                ),
+                                                              if (true ==
+                                                                  getJsonField(
+                                                                    (_model.fetchedMusicianList
+                                                                            ?.jsonBody ??
+                                                                        ''),
+                                                                    r'''$.has_musician''',
+                                                                  )) {
+                                                                await NotificationGroup
+                                                                    .sendNotificationCall
+                                                                    .call(
+                                                                  title:
+                                                                      '${getJsonField(
+                                                                    venueGigContractOverlayGetSingleSlotDetailsResponse
+                                                                        .jsonBody,
+                                                                    r'''$.data.venue_name''',
+                                                                  ).toString()} Removed a Gig',
+                                                                  description:
+                                                                      'This gig has been removed  by the ${getJsonField(
+                                                                    venueGigContractOverlayGetSingleSlotDetailsResponse
+                                                                        .jsonBody,
+                                                                    r'''$.data.venue_name''',
+                                                                  ).toString()} and is no longer active.',
+                                                                  sendToList: functions
+                                                                      .parseStringList(
+                                                                          getJsonField(
+                                                                    (_model.fetchedMusicianList
+                                                                            ?.jsonBody ??
+                                                                        ''),
+                                                                    r'''$.musician_ids''',
+                                                                  )),
+                                                                  usertype:
+                                                                      FFAppState()
+                                                                          .userType
+                                                                          ?.name,
+                                                                  type:
+                                                                      'venueCancelled',
+                                                                );
+                                                              }
+                                                              _model.hardDeleteGig =
+                                                                  await VenueGroup
+                                                                      .hardDeleteVenueSlotCall
+                                                                      .call(
+                                                                pSlotId: widget!
+                                                                    .slotId,
                                                               );
 
-                                                              Navigator.pop(
-                                                                  context);
-                                                              context.safePop();
+                                                              if ((_model
+                                                                      .hardDeleteGig
+                                                                      ?.succeeded ??
+                                                                  true)) {
+                                                                Navigator.pop(
+                                                                    context);
+                                                                context
+                                                                    .safePop();
+                                                              }
                                                             }
                                                           },
                                                         ),

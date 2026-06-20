@@ -596,3 +596,9 @@ DateTime? parseDateTimeSafe(String? input) {
   if (input == null || input.isEmpty) return null;
   return DateTime.tryParse(input);
 }
+
+List<String> parseStringList(dynamic jsonInput) {
+  return List<String>.from(
+    (jsonInput as List).map((e) => e.toString()),
+  );
+}
