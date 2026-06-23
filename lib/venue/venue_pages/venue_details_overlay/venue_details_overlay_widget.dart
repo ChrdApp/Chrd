@@ -239,71 +239,78 @@ class _VenueDetailsOverlayWidgetState extends State<VenueDetailsOverlayWidget> {
                                         ),
                                   ),
                                 ),
-                                Align(
-                                  alignment: AlignmentDirectional(-1.0, 0.0),
-                                  child: InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    onTap: () async {
-                                      context.pushNamed(
-                                        SelectTalentWidget.routeName,
-                                        queryParameters: {
-                                          'venueId': serializeParam(
-                                            getJsonField(
-                                              venueDetailsOverlayGetSingleSlotDetailsResponse
-                                                  .jsonBody,
-                                              r'''$.data.venue_id''',
-                                            ),
-                                            ParamType.int,
-                                          ),
-                                          'slotId': serializeParam(
-                                            widget!.slotId,
-                                            ParamType.int,
-                                          ),
-                                          'venueName': serializeParam(
-                                            getJsonField(
-                                              venueDetailsOverlayGetSingleSlotDetailsResponse
-                                                  .jsonBody,
-                                              r'''$.data.venue_name''',
-                                            ).toString(),
-                                            ParamType.String,
-                                          ),
-                                        }.withoutNulls,
-                                      );
-                                    },
-                                    child: Text(
-                                      'true' ==
-                                              getJsonField(
-                                                venueDetailsOverlayGetSingleSlotDetailsResponse
-                                                    .jsonBody,
-                                                r'''$.data.is_booked''',
-                                              ).toString()
-                                          ? 'Musician\'s Name'
-                                          : 'Invite Performer',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            font: GoogleFonts.montserrat(
-                                              fontWeight: FontWeight.bold,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
-                                            ),
-                                            fontSize: 20.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.bold,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
-                                            decoration:
-                                                TextDecoration.underline,
-                                          ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Align(
+                                      alignment:
+                                          AlignmentDirectional(-1.0, 0.0),
+                                      child: InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        onTap: () async {
+                                          context.pushNamed(
+                                            SelectTalentWidget.routeName,
+                                            queryParameters: {
+                                              'venueId': serializeParam(
+                                                getJsonField(
+                                                  venueDetailsOverlayGetSingleSlotDetailsResponse
+                                                      .jsonBody,
+                                                  r'''$.data.venue_id''',
+                                                ),
+                                                ParamType.int,
+                                              ),
+                                              'slotId': serializeParam(
+                                                widget!.slotId,
+                                                ParamType.int,
+                                              ),
+                                              'venueName': serializeParam(
+                                                getJsonField(
+                                                  venueDetailsOverlayGetSingleSlotDetailsResponse
+                                                      .jsonBody,
+                                                  r'''$.data.venue_name''',
+                                                ).toString(),
+                                                ParamType.String,
+                                              ),
+                                            }.withoutNulls,
+                                          );
+                                        },
+                                        child: Text(
+                                          'true' ==
+                                                  getJsonField(
+                                                    venueDetailsOverlayGetSingleSlotDetailsResponse
+                                                        .jsonBody,
+                                                    r'''$.data.is_booked''',
+                                                  ).toString()
+                                              ? 'Musician\'s Name'
+                                              : 'Invite Performer',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                font: GoogleFonts.montserrat(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontStyle,
+                                                ),
+                                                fontSize: 20.0,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.bold,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontStyle,
+                                                decoration:
+                                                    TextDecoration.underline,
+                                              ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
                                 if ('${FFAppState().userId.toString()}' !=
                                     getJsonField(

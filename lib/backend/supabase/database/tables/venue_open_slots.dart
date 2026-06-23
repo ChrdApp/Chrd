@@ -76,4 +76,7 @@ class VenueOpenSlotsRow extends SupabaseDataRow {
 
   String? get day => getField<String>('day');
   set day(String? value) => setField<String>('day', value);
+
+  String? get notes => getField<String>('notes');
+  set notes(String? value) => setField<String>('notes', value);
 }
