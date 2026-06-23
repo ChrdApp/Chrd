@@ -343,7 +343,7 @@ class _MobileNumber4WidgetState extends State<MobileNumber4Widget> {
                   children: [
                     TextSpan(
                       text:
-                          'By tapping Continue and using the Natural app, you’re agreeing to our ',
+                          'By tapping Continue, you agree to receive SMS messages from Natural for account verification and account updates. Message frequency varies. Msg & data rates may apply. Reply HELP for support. Reply STOP to opt out. By continuing, you agree to our',
                       style: TextStyle(),
                     ),
                     TextSpan(
@@ -353,6 +353,12 @@ class _MobileNumber4WidgetState extends State<MobileNumber4Widget> {
                         fontWeight: FontWeight.w600,
                         fontSize: 12.0,
                       ),
+                      mouseCursor: SystemMouseCursors.click,
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () async {
+                          await launchURL(
+                              'https://www.chrd.app/termsconditions');
+                        },
                     ),
                     TextSpan(
                       text: 'and ',
@@ -365,6 +371,11 @@ class _MobileNumber4WidgetState extends State<MobileNumber4Widget> {
                         fontWeight: FontWeight.w600,
                         fontSize: 12.0,
                       ),
+                      mouseCursor: SystemMouseCursors.click,
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () async {
+                          await launchURL('https://www.chrd.app/privacy');
+                        },
                     )
                   ],
                   style: FlutterFlowTheme.of(context).bodyMedium.override(

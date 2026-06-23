@@ -495,6 +495,12 @@ class _Onbording3WidgetState extends State<Onbording3Widget> {
                         fontWeight: FontWeight.w600,
                         fontSize: 12.0,
                       ),
+                      mouseCursor: SystemMouseCursors.click,
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () async {
+                          await launchURL(
+                              'https://www.chrd.app/termsconditions');
+                        },
                     ),
                     TextSpan(
                       text: 'and acknowledge that you have read our ',
@@ -509,6 +515,11 @@ class _Onbording3WidgetState extends State<Onbording3Widget> {
                         fontWeight: FontWeight.w600,
                         fontSize: 12.0,
                       ),
+                      mouseCursor: SystemMouseCursors.click,
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () async {
+                          await launchURL('https://www.chrd.app/privacy');
+                        },
                     ),
                     TextSpan(
                       text: 'to learn how we collect use and share your data.',
