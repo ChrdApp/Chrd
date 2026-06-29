@@ -1136,55 +1136,57 @@ class _AcceptDeclineGigOverlayWidgetState
                                   thickness: 0.5,
                                   color: Color(0x4DFFFFFF),
                                 ),
-                                Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Venue notes',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            font: GoogleFonts.montserrat(
+                                if (false)
+                                  Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Venue notes',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              font: GoogleFonts.montserrat(
+                                                fontWeight: FontWeight.normal,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontStyle,
+                                              ),
+                                              letterSpacing: 0.0,
                                               fontWeight: FontWeight.normal,
                                               fontStyle:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMedium
                                                       .fontStyle,
                                             ),
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.normal,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
-                                          ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 55.0, 0.0),
-                                      child: Text(
-                                        getJsonField(
-                                          acceptDeclineGigOverlayGetContractDetailsResponse
-                                              .jsonBody,
-                                          r'''$.data.venue_description''',
-                                        ).toString(),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              font: GoogleFonts.montserrat(
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 55.0, 0.0),
+                                        child: Text(
+                                          getJsonField(
+                                            acceptDeclineGigOverlayGetContractDetailsResponse
+                                                .jsonBody,
+                                            r'''$.data.venue_description''',
+                                          ).toString(),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                font: GoogleFonts.montserrat(
+                                                  fontWeight: FontWeight.normal,
+                                                  fontStyle: FontStyle.italic,
+                                                ),
+                                                fontSize: 12.0,
+                                                letterSpacing: 0.0,
                                                 fontWeight: FontWeight.normal,
                                                 fontStyle: FontStyle.italic,
                                               ),
-                                              fontSize: 12.0,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.normal,
-                                              fontStyle: FontStyle.italic,
-                                            ),
+                                        ),
                                       ),
-                                    ),
-                                  ].divide(SizedBox(height: 3.0)),
-                                ),
+                                    ].divide(SizedBox(height: 3.0)),
+                                  ),
                                 if (('${''}' !=
                                         getJsonField(
                                           acceptDeclineGigOverlayGetContractDetailsResponse
@@ -1356,7 +1358,8 @@ class _AcceptDeclineGigOverlayWidgetState
                                           'contract_status':
                                               GigStatus.Declined.name,
                                           'updated_at': supaSerialize<DateTime>(
-                                              getCurrentTimestamp),
+                                              functions.toUtcTimestamp(
+                                                  getCurrentTimestamp)),
                                         },
                                         matchingRows: (rows) => rows.eqOrNull(
                                           'gig_thread_id',
@@ -1365,7 +1368,8 @@ class _AcceptDeclineGigOverlayWidgetState
                                       );
                                       await ThreadMessagesTable().insert({
                                         'created_at': supaSerialize<DateTime>(
-                                            getCurrentTimestamp),
+                                            functions.toUtcTimestamp(
+                                                getCurrentTimestamp)),
                                         'thread_id': widget!.threadId,
                                         'sender_id': FFAppState().userId,
                                         'message_type': 'toast',
@@ -1547,14 +1551,16 @@ class _AcceptDeclineGigOverlayWidgetState
                                                             'contract_status':
                                                                 GigStatus.Booked
                                                                     .name,
-                                                            'updated_at':
-                                                                supaSerialize<
-                                                                        DateTime>(
-                                                                    getCurrentTimestamp),
-                                                            'accepted_at':
-                                                                supaSerialize<
-                                                                        DateTime>(
-                                                                    getCurrentTimestamp),
+                                                            'updated_at': supaSerialize<
+                                                                    DateTime>(
+                                                                functions
+                                                                    .toUtcTimestamp(
+                                                                        getCurrentTimestamp)),
+                                                            'accepted_at': supaSerialize<
+                                                                    DateTime>(
+                                                                functions
+                                                                    .toUtcTimestamp(
+                                                                        getCurrentTimestamp)),
                                                           },
                                                           matchingRows:
                                                               (rows) =>
@@ -1565,10 +1571,11 @@ class _AcceptDeclineGigOverlayWidgetState
                                                         );
                                                         await ThreadMessagesTable()
                                                             .insert({
-                                                          'created_at':
-                                                              supaSerialize<
-                                                                      DateTime>(
-                                                                  getCurrentTimestamp),
+                                                          'created_at': supaSerialize<
+                                                                  DateTime>(
+                                                              functions
+                                                                  .toUtcTimestamp(
+                                                                      getCurrentTimestamp)),
                                                           'thread_id':
                                                               widget!.threadId,
                                                           'sender_id':

@@ -342,7 +342,7 @@ class _NotificationsWidgetState extends State<NotificationsWidget> {
                                           ),
                                         ),
                                         Text(
-                                          functions.formatMessageTime(
+                                          functions.formatNotificationTime(
                                               listViewNotificationRow
                                                   .createdAt!),
                                           style: FlutterFlowTheme.of(context)

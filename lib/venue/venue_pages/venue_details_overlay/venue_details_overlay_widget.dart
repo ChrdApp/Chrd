@@ -284,7 +284,14 @@ class _VenueDetailsOverlayWidgetState extends State<VenueDetailsOverlayWidget> {
                                                         .jsonBody,
                                                     r'''$.data.is_booked''',
                                                   ).toString()
-                                              ? 'Musician\'s Name'
+                                              ? valueOrDefault<String>(
+                                                  getJsonField(
+                                                    venueDetailsOverlayGetSingleSlotDetailsResponse
+                                                        .jsonBody,
+                                                    r'''$.data.musician_name''',
+                                                  )?.toString(),
+                                                  'Musician Name',
+                                                )
                                               : 'Invite Performer',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
@@ -310,7 +317,7 @@ class _VenueDetailsOverlayWidgetState extends State<VenueDetailsOverlayWidget> {
                                         ),
                                       ),
                                     ),
-                                  ],
+                                  ].divide(SizedBox(width: 8.0)),
                                 ),
                                 if ('${FFAppState().userId.toString()}' !=
                                     getJsonField(

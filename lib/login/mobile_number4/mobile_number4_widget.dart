@@ -138,7 +138,7 @@ class _MobileNumber4WidgetState extends State<MobileNumber4Widget> {
                             ),
                       ),
                       Text(
-                        'Customer message may be sent within iOS Notifications, Natural or via SMS',
+                        'User message may be sent within iOS Notifications, Natural or via SMS',
                         textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               font: GoogleFonts.montserrat(

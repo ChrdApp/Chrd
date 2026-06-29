@@ -10,6 +10,7 @@ import '/musician/components/c_h_r_d_back_btn/c_h_r_d_back_btn_widget.dart';
 import '/musician/components/c_h_r_d_backout_gig/c_h_r_d_backout_gig_widget.dart';
 import '/musician/components/c_h_r_d_label_btn/c_h_r_d_label_btn_widget.dart';
 import '/musician/components/c_h_r_d_price_amount/c_h_r_d_price_amount_widget.dart';
+import '/musician/components/c_h_r_d_remove_musician/c_h_r_d_remove_musician_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_performance_stages/c_h_r_d_performance_stages_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_row_with_icon/c_h_r_d_row_with_icon_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_video_player_component/c_h_r_d_video_player_component_widget.dart';
@@ -53,6 +54,8 @@ class VenueGigContractOverlayCopyModel
   ApiCallResponse? singleSlotOutput;
   // Model for CHRD_Back_Btn component.
   late CHRDBackBtnModel cHRDBackBtnModel;
+  // Stores action output result for [Backend Call - API (Remove Musician From Gig )] action in Button widget.
+  ApiCallResponse? removeMusicianOutput;
   DateTime? datePicked;
   // Model for CHRD_row_with_icon component.
   late CHRDRowWithIconModel cHRDRowWithIconModel1;

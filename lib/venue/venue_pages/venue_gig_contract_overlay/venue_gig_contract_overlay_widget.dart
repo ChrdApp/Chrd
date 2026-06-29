@@ -10,6 +10,7 @@ import '/musician/components/c_h_r_d_back_btn/c_h_r_d_back_btn_widget.dart';
 import '/musician/components/c_h_r_d_backout_gig/c_h_r_d_backout_gig_widget.dart';
 import '/musician/components/c_h_r_d_label_btn/c_h_r_d_label_btn_widget.dart';
 import '/musician/components/c_h_r_d_price_amount/c_h_r_d_price_amount_widget.dart';
+import '/musician/components/c_h_r_d_remove_musician/c_h_r_d_remove_musician_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_performance_stages/c_h_r_d_performance_stages_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_row_with_icon/c_h_r_d_row_with_icon_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_video_player_component/c_h_r_d_video_player_component_widget.dart';
@@ -224,82 +225,297 @@ class _VenueGigContractOverlayWidgetState
                                       ),
                                 ),
                               ),
-                              Align(
-                                alignment: AlignmentDirectional(-1.0, 0.0),
-                                child: InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () async {
-                                    if ('true' !=
-                                        getJsonField(
-                                          venueGigContractOverlayGetSingleSlotDetailsResponse
-                                              .jsonBody,
-                                          r'''$.data.is_booked''',
-                                        ).toString()) {
-                                      context.pushNamed(
-                                        SelectTalentWidget.routeName,
-                                        queryParameters: {
-                                          'venueId': serializeParam(
-                                            getJsonField(
-                                              venueGigContractOverlayGetSingleSlotDetailsResponse
-                                                  .jsonBody,
-                                              r'''$.data.venue_id''',
-                                            ),
-                                            ParamType.int,
-                                          ),
-                                          'slotId': serializeParam(
-                                            widget!.slotId,
-                                            ParamType.int,
-                                          ),
-                                          'venueName': serializeParam(
-                                            getJsonField(
-                                              venueGigContractOverlayGetSingleSlotDetailsResponse
-                                                  .jsonBody,
-                                              r'''$.data.venue_name''',
-                                            ).toString(),
-                                            ParamType.String,
-                                          ),
-                                        }.withoutNulls,
-                                      );
-                                    }
-                                  },
-                                  child: Text(
-                                    'true' ==
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Align(
+                                    alignment: AlignmentDirectional(-1.0, 0.0),
+                                    child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        if ('true' !=
                                             getJsonField(
                                               venueGigContractOverlayGetSingleSlotDetailsResponse
                                                   .jsonBody,
                                               r'''$.data.is_booked''',
-                                            ).toString()
-                                        ? getJsonField(
-                                            venueGigContractOverlayGetSingleSlotDetailsResponse
-                                                .jsonBody,
-                                            r'''$.data.musician_name''',
-                                          ).toString()
-                                        : 'Invite Performer',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          font: GoogleFonts.montserrat(
-                                            fontWeight: FontWeight.bold,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
-                                          ),
-                                          fontSize: 20.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.bold,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                          decoration: TextDecoration.underline,
+                                            ).toString()) {
+                                          context.pushNamed(
+                                            SelectTalentWidget.routeName,
+                                            queryParameters: {
+                                              'venueId': serializeParam(
+                                                getJsonField(
+                                                  venueGigContractOverlayGetSingleSlotDetailsResponse
+                                                      .jsonBody,
+                                                  r'''$.data.venue_id''',
+                                                ),
+                                                ParamType.int,
+                                              ),
+                                              'slotId': serializeParam(
+                                                widget!.slotId,
+                                                ParamType.int,
+                                              ),
+                                              'venueName': serializeParam(
+                                                getJsonField(
+                                                  venueGigContractOverlayGetSingleSlotDetailsResponse
+                                                      .jsonBody,
+                                                  r'''$.data.venue_name''',
+                                                ).toString(),
+                                                ParamType.String,
+                                              ),
+                                            }.withoutNulls,
+                                          );
+                                        }
+                                      },
+                                      child: Text(
+                                        'true' ==
+                                                getJsonField(
+                                                  venueGigContractOverlayGetSingleSlotDetailsResponse
+                                                      .jsonBody,
+                                                  r'''$.data.is_booked''',
+                                                ).toString()
+                                            ? getJsonField(
+                                                venueGigContractOverlayGetSingleSlotDetailsResponse
+                                                    .jsonBody,
+                                                r'''$.data.musician_name''',
+                                              ).toString()
+                                            : 'Invite Performer',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              font: GoogleFonts.montserrat(
+                                                fontWeight: FontWeight.bold,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontStyle,
+                                              ),
+                                              fontSize: 20.0,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.bold,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                              decoration:
+                                                  TextDecoration.underline,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              if (('true' ==
+                                      getJsonField(
+                                        venueGigContractOverlayGetSingleSlotDetailsResponse
+                                            .jsonBody,
+                                        r'''$.data.is_booked''',
+                                      ).toString()) &&
+                                  (FFAppState().userType == Type.Venue))
+                                Align(
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
+                                  child: Builder(
+                                    builder: (context) => Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 2.0, 0.0, 2.0),
+                                      child: FFButtonWidget(
+                                        onPressed: () async {
+                                          await showDialog(
+                                            context: context,
+                                            builder: (dialogContext) {
+                                              return Dialog(
+                                                elevation: 0,
+                                                insetPadding: EdgeInsets.zero,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                alignment: AlignmentDirectional(
+                                                        0.0, 0.0)
+                                                    .resolve(Directionality.of(
+                                                        context)),
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    FocusScope.of(dialogContext)
+                                                        .unfocus();
+                                                    FocusManager
+                                                        .instance.primaryFocus
+                                                        ?.unfocus();
+                                                  },
+                                                  child:
+                                                      CHRDRemoveMusicianWidget(
+                                                    musicianName: getJsonField(
+                                                      venueGigContractOverlayGetSingleSlotDetailsResponse
+                                                          .jsonBody,
+                                                      r'''$.data.musician_name''',
+                                                    ).toString(),
+                                                    removeBtnAction: () async {
+                                                      var _shouldSetState =
+                                                          false;
+                                                      _model.removeMusicianOutput =
+                                                          await VenueGroup
+                                                              .removeMusicianFromGigCall
+                                                              .call(
+                                                        pSenderId:
+                                                            FFAppState().userId,
+                                                        pThreadId:
+                                                            widget!.threadId,
+                                                      );
+
+                                                      _shouldSetState = true;
+                                                      if ((_model
+                                                              .removeMusicianOutput
+                                                              ?.succeeded ??
+                                                          true)) {
+                                                        await NotificationGroup
+                                                            .sendNotificationCall
+                                                            .call(
+                                                          title:
+                                                              '${getJsonField(
+                                                            venueGigContractOverlayGetSingleSlotDetailsResponse
+                                                                .jsonBody,
+                                                            r'''$.data.venue_name''',
+                                                          ).toString()} removed you from gig',
+                                                          type:
+                                                              'PerformerRemoved',
+                                                          description:
+                                                              'You have been removed from gig by ${getJsonField(
+                                                            venueGigContractOverlayGetSingleSlotDetailsResponse
+                                                                .jsonBody,
+                                                            r'''$.data.venue_name''',
+                                                          ).toString()}. Please check your gigs section for updated bookings and availability.',
+                                                          sendToList:
+                                                              (int var1) {
+                                                            return List<
+                                                                String>.from([
+                                                              var1.toString()
+                                                            ]);
+                                                          }(getJsonField(
+                                                            venueGigContractOverlayGetSingleSlotDetailsResponse
+                                                                .jsonBody,
+                                                            r'''$.data.musician_id''',
+                                                          )),
+                                                          usertype: FFAppState()
+                                                              .userType
+                                                              ?.name,
+                                                          dataJson: <String,
+                                                              dynamic>{
+                                                            'thread_id': widget!
+                                                                .threadId,
+                                                            'is_venue': 'true',
+                                                          },
+                                                        );
+
+                                                        await NotificationTable()
+                                                            .insert({
+                                                          'user_id':
+                                                              getJsonField(
+                                                            venueGigContractOverlayGetSingleSlotDetailsResponse
+                                                                .jsonBody,
+                                                            r'''$.data.musician_id''',
+                                                          ),
+                                                          'title':
+                                                              '${getJsonField(
+                                                            venueGigContractOverlayGetSingleSlotDetailsResponse
+                                                                .jsonBody,
+                                                            r'''$.data.venue_name''',
+                                                          ).toString()} removed you from gig',
+                                                          'description':
+                                                              '${getJsonField(
+                                                            venueGigContractOverlayGetSingleSlotDetailsResponse
+                                                                .jsonBody,
+                                                            r'''$.data.venue_name''',
+                                                          ).toString()} removed you from gig',
+                                                          'type':
+                                                              'PerformerRemoved',
+                                                          'data':
+                                                              <String, dynamic>{
+                                                            'thread_id': widget!
+                                                                .threadId,
+                                                            'is_venue': 'true',
+                                                          },
+                                                          'usertype':
+                                                              FFAppState()
+                                                                  .userType
+                                                                  ?.name,
+                                                          'is_read': false,
+                                                          'created_at': supaSerialize<
+                                                                  DateTime>(
+                                                              functions
+                                                                  .toUtcTimestamp(
+                                                                      getCurrentTimestamp)),
+                                                          'updated_at': supaSerialize<
+                                                                  DateTime>(
+                                                              functions
+                                                                  .toUtcTimestamp(
+                                                                      getCurrentTimestamp)),
+                                                        });
+
+                                                        context.goNamed(
+                                                          NavPageWidget
+                                                              .routeName,
+                                                          queryParameters: {
+                                                            'index':
+                                                                serializeParam(
+                                                              2,
+                                                              ParamType.int,
+                                                            ),
+                                                          }.withoutNulls,
+                                                        );
+
+                                                        return;
+                                                      } else {
+                                                        return;
+                                                      }
+                                                    },
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+
+                                          safeSetState(() {});
+                                        },
+                                        text: 'Remove',
+                                        options: FFButtonOptions(
+                                          height: 24.0,
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  16.0, 0.0, 16.0, 0.0),
+                                          iconPadding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 0.0),
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryViolet,
+                                          textStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .titleSmall
+                                              .override(
+                                                font: GoogleFonts.interTight(
+                                                  fontWeight: FontWeight.normal,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .titleSmall
+                                                          .fontStyle,
+                                                ),
+                                                color: Colors.white,
+                                                fontSize: 10.0,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.normal,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleSmall
+                                                        .fontStyle,
+                                              ),
+                                          elevation: 0.0,
+                                          borderRadius:
+                                              BorderRadius.circular(18.0),
                                         ),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
                               if ('${FFAppState().userId.toString()}' !=
                                   getJsonField(
                                     venueGigContractOverlayGetSingleSlotDetailsResponse
@@ -1691,8 +1907,8 @@ class _VenueGigContractOverlayWidgetState
                             } else {
                               await ThreadMessagesTable().insert({
                                 'message_type': 'toast',
-                                'created_at': supaSerialize<DateTime>(
-                                    getCurrentTimestamp),
+                                'created_at': supaSerialize<DateTime>(functions
+                                    .toUtcTimestamp(getCurrentTimestamp)),
                                 'thread_id': widget!.threadId,
                                 'sender_id': FFAppState().userId,
                                 'message_content':
@@ -1705,7 +1921,8 @@ class _VenueGigContractOverlayWidgetState
                                   data: {
                                     'price': _model.addedPrice,
                                     'updated_at': supaSerialize<DateTime>(
-                                        getCurrentTimestamp),
+                                        functions.toUtcTimestamp(
+                                            getCurrentTimestamp)),
                                   },
                                   matchingRows: (rows) => rows.eqOrNull(
                                     'gig_thread_id',
@@ -1715,7 +1932,8 @@ class _VenueGigContractOverlayWidgetState
                                 await ThreadMessagesTable().insert({
                                   'message_type': 'click',
                                   'created_at': supaSerialize<DateTime>(
-                                      getCurrentTimestamp),
+                                      functions
+                                          .toUtcTimestamp(getCurrentTimestamp)),
                                   'thread_id': widget!.threadId,
                                   'sender_id': FFAppState().userId,
                                   'message_content':
@@ -1799,7 +2017,8 @@ class _VenueGigContractOverlayWidgetState
                                                   GigStatus.Open.name,
                                               'updated_at':
                                                   supaSerialize<DateTime>(
-                                                      getCurrentTimestamp),
+                                                      functions.toUtcTimestamp(
+                                                          getCurrentTimestamp)),
                                               'accepted_at':
                                                   supaSerialize<DateTime>(null),
                                             },
@@ -1812,7 +2031,8 @@ class _VenueGigContractOverlayWidgetState
                                           await ThreadMessagesTable().insert({
                                             'created_at':
                                                 supaSerialize<DateTime>(
-                                                    getCurrentTimestamp),
+                                                    functions.toUtcTimestamp(
+                                                        getCurrentTimestamp)),
                                             'thread_id': widget!.threadId,
                                             'sender_id': FFAppState().userId,
                                             'message_type': 'text',
@@ -1821,7 +2041,8 @@ class _VenueGigContractOverlayWidgetState
                                           await ThreadMessagesTable().insert({
                                             'created_at':
                                                 supaSerialize<DateTime>(
-                                                    getCurrentTimestamp),
+                                                    functions.toUtcTimestamp(
+                                                        getCurrentTimestamp)),
                                             'thread_id': widget!.threadId,
                                             'sender_id': FFAppState().userId,
                                             'message_type': 'toast',

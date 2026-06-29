@@ -71,6 +71,8 @@ class VenueGroup {
       HardDeleteVenueSlotCall();
   static FetchMusiciansOfGigCall fetchMusiciansOfGigCall =
       FetchMusiciansOfGigCall();
+  static RemoveMusicianFromGigCall removeMusicianFromGigCall =
+      RemoveMusicianFromGigCall();
 }
 
 class VenueOpenSlotsCall {
@@ -1455,6 +1457,47 @@ class FetchMusiciansOfGigCall {
     return ApiManager.instance.makeApiCall(
       callName: 'Fetch musicians of gig',
       apiUrl: '${baseUrl}/rpc/fetch_slot_musician_ids',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class RemoveMusicianFromGigCall {
+  Future<ApiCallResponse> call({
+    int? pSenderId,
+    int? pThreadId,
+    String? projectURL,
+    String? anonKey,
+  }) async {
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "p_thread_id": ${pThreadId},
+  "p_sender_id": ${pSenderId}
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Remove Musician From Gig ',
+      apiUrl: '${baseUrl}/rpc/remove_musician_from_gig',
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
