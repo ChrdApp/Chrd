@@ -76,19 +76,6 @@ class _MusicianProfilePostsWidgetState
                         context.safePop();
                       },
                     ),
-                    FlutterFlowIconButton(
-                      borderRadius: 100.0,
-                      buttonSize: 42.0,
-                      fillColor: Color(0x2BFFFFFF),
-                      icon: Icon(
-                        FFIcons.k3dot,
-                        color: FlutterFlowTheme.of(context).info,
-                        size: 24.0,
-                      ),
-                      onPressed: () {
-                        print('IconButton pressed ...');
-                      },
-                    ),
                   ],
                 ),
                 Align(

@@ -363,7 +363,12 @@ class _VenueProfilePic4WidgetState extends State<VenueProfilePic4Widget> {
                                                         .error,
                                               ),
                                             );
+                                          } else {
+                                            if (_shouldSetState)
+                                              safeSetState(() {});
+                                            return;
                                           }
+
                                           if (_shouldSetState)
                                             safeSetState(() {});
                                           return;
@@ -421,6 +426,7 @@ class _VenueProfilePic4WidgetState extends State<VenueProfilePic4Widget> {
                   isDisiable: FFAppState().venueProfilePic == null ||
                       FFAppState().venueProfilePic == '',
                   onTab: () async {
+                    var _shouldSetState = false;
                     if (FFAppState().userType == Type.Musician) {
                       _model.userImageUploaded = await UsersTable().update(
                         data: {
@@ -432,8 +438,12 @@ class _VenueProfilePic4WidgetState extends State<VenueProfilePic4Widget> {
                         ),
                         returnRows: true,
                       );
+                      _shouldSetState = true;
 
                       context.pushNamed(MusicianAccountInfoWidget.routeName);
+
+                      if (_shouldSetState) safeSetState(() {});
+                      return;
                     } else {
                       FFAppState().updateVenueAccountCreateStruct(
                         (e) =>
@@ -442,9 +452,12 @@ class _VenueProfilePic4WidgetState extends State<VenueProfilePic4Widget> {
                       FFAppState().venueProfilePic = '';
 
                       context.pushNamed(AddVenueContent5Widget.routeName);
+
+                      if (_shouldSetState) safeSetState(() {});
+                      return;
                     }
 
-                    safeSetState(() {});
+                    if (_shouldSetState) safeSetState(() {});
                   },
                 ),
               ),

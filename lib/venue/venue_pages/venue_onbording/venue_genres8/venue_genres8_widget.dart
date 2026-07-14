@@ -54,6 +54,7 @@ class _VenueGenres8WidgetState extends State<VenueGenres8Widget> {
       if (widget!.genersId != null && (widget!.genersId)!.isNotEmpty) {
         _model.selectedGenres = widget!.genersId!.toList().cast<int>();
         safeSetState(() {});
+        return;
       } else {
         return;
       }
@@ -572,6 +573,8 @@ class _VenueGenres8WidgetState extends State<VenueGenres8Widget> {
                       if (_shouldSetState) safeSetState(() {});
                       return;
                     } else if (FFAppState().userType == Type.Fan) {
+                      if (_shouldSetState) safeSetState(() {});
+                      return;
                     } else {
                       FFAppState().updateVenueAccountCreateStruct(
                         (e) => e..genreId = _model.selectedGenres.toList(),

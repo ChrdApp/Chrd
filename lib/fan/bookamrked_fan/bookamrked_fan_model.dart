@@ -14,7 +14,6 @@ import '/index.dart';
 import 'bookamrked_fan_widget.dart' show BookamrkedFanWidget;
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 

@@ -234,6 +234,13 @@ class _AddVenueContent5CopyWidgetState
                                             safeSetState(() {});
                                             _model.hideSkipButton = true;
                                             safeSetState(() {});
+                                            if (_shouldSetState)
+                                              safeSetState(() {});
+                                            return;
+                                          } else {
+                                            if (_shouldSetState)
+                                              safeSetState(() {});
+                                            return;
                                           }
                                         } else {
                                           ScaffoldMessenger.of(context)
@@ -254,6 +261,9 @@ class _AddVenueContent5CopyWidgetState
                                                       .error,
                                             ),
                                           );
+                                          if (_shouldSetState)
+                                            safeSetState(() {});
+                                          return;
                                         }
                                       } else {
                                         if (functions.isVideoUrl(FFAppState()
@@ -295,6 +305,9 @@ class _AddVenueContent5CopyWidgetState
                                             },
                                           );
                                         }
+                                        if (_shouldSetState)
+                                          safeSetState(() {});
+                                        return;
                                       }
 
                                       if (_shouldSetState) safeSetState(() {});

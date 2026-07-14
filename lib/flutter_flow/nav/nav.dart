@@ -131,11 +131,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => ProfileWidget(),
         ),
         FFRoute(
-          name: TestWidget.routeName,
-          path: TestWidget.routePath,
-          builder: (context, params) => TestWidget(),
-        ),
-        FFRoute(
           name: LoginSecurityWidget.routeName,
           path: LoginSecurityWidget.routePath,
           builder: (context, params) => LoginSecurityWidget(
@@ -513,11 +508,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => MusicianAccountInfoWidget(),
         ),
         FFRoute(
-          name: Test1Widget.routeName,
-          path: Test1Widget.routePath,
-          builder: (context, params) => Test1Widget(),
-        ),
-        FFRoute(
           name: MusicianAddedContentWidget.routeName,
           path: MusicianAddedContentWidget.routePath,
           builder: (context, params) => MusicianAddedContentWidget(),
@@ -664,11 +654,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.String,
             ),
           ),
-        ),
-        FFRoute(
-          name: ChrdtestWidget.routeName,
-          path: ChrdtestWidget.routePath,
-          builder: (context, params) => ChrdtestWidget(),
         ),
         FFRoute(
           name: MusicianAddHighlightWidget.routeName,
@@ -894,6 +879,20 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => EditStageWidget(
             stageId: params.getParam(
               'stageId',
+              ParamType.int,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: ViewVenuePlannerWidget.routeName,
+          path: ViewVenuePlannerWidget.routePath,
+          builder: (context, params) => ViewVenuePlannerWidget(
+            venueId: params.getParam(
+              'venueId',
+              ParamType.int,
+            ),
+            venueOwnerId: params.getParam(
+              'venueOwnerId',
               ParamType.int,
             ),
           ),

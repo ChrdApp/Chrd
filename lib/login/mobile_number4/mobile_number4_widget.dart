@@ -138,7 +138,7 @@ class _MobileNumber4WidgetState extends State<MobileNumber4Widget> {
                             ),
                       ),
                       Text(
-                        'Customer message may be sent within iOS Notifications, Natural or via SMS',
+                        'User message may be sent within iOS Notifications, Natural or via SMS',
                         textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               font: GoogleFonts.montserrat(
@@ -206,8 +206,7 @@ class _MobileNumber4WidgetState extends State<MobileNumber4Widget> {
                                       .labelMedium
                                       .fontStyle,
                                 ),
-                            hintText:
-                                'Enter phone number following country code',
+                            hintText: 'Enter phone number',
                             hintStyle: FlutterFlowTheme.of(context)
                                 .labelMedium
                                 .override(
@@ -270,8 +269,9 @@ class _MobileNumber4WidgetState extends State<MobileNumber4Widget> {
               ),
             ),
             FFButtonWidget(
-              onPressed: (_model.textController.text == null ||
-                      _model.textController.text == '')
+              onPressed: ((_model.textController.text == null ||
+                          _model.textController.text == '') ||
+                      (_model.checkboxValue == false))
                   ? null
                   : () async {
                       if (_model.formKey.currentState == null ||
@@ -336,52 +336,107 @@ class _MobileNumber4WidgetState extends State<MobileNumber4Widget> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(23.0, 54.0, 20.0, 0.0),
-              child: RichText(
-                textScaler: MediaQuery.of(context).textScaler,
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text:
-                          'By tapping Continue and using the Natural app, you’re agreeing to our ',
-                      style: TextStyle(),
-                    ),
-                    TextSpan(
-                      text: 'Terms of Services ',
-                      style: TextStyle(
-                        color: FlutterFlowTheme.of(context).primaryCyan,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12.0,
-                      ),
-                    ),
-                    TextSpan(
-                      text: 'and ',
-                      style: TextStyle(),
-                    ),
-                    TextSpan(
-                      text: 'Privacy Policy ',
-                      style: TextStyle(
-                        color: FlutterFlowTheme.of(context).primaryCyan,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12.0,
-                      ),
-                    )
-                  ],
-                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                        font: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w500,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+              padding: EdgeInsetsDirectional.fromSTEB(4.0, 54.0, 4.0, 0.0),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Theme(
+                    data: ThemeData(
+                      checkboxTheme: CheckboxThemeData(
+                        visualDensity: VisualDensity.compact,
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4.0),
                         ),
-                        color: FlutterFlowTheme.of(context).neutralLight300,
-                        fontSize: 12.0,
-                        letterSpacing: 0.0,
-                        fontWeight: FontWeight.w500,
-                        fontStyle:
-                            FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                       ),
-                ),
-                textAlign: TextAlign.center,
+                      unselectedWidgetColor:
+                          FlutterFlowTheme.of(context).alternate,
+                    ),
+                    child: Checkbox(
+                      value: _model.checkboxValue ??= false,
+                      onChanged: (newValue) async {
+                        safeSetState(() => _model.checkboxValue = newValue!);
+                      },
+                      side: (FlutterFlowTheme.of(context).alternate != null)
+                          ? BorderSide(
+                              width: 2,
+                              color: FlutterFlowTheme.of(context).alternate!,
+                            )
+                          : null,
+                      activeColor: FlutterFlowTheme.of(context).primaryViolet,
+                      checkColor: FlutterFlowTheme.of(context).info,
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 20.0, 0.0),
+                      child: RichText(
+                        textScaler: MediaQuery.of(context).textScaler,
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text:
+                                  'I agree to receive SMS messages from CHRD for account verification (OTP), account security, and account-related notifications. Message frequency varies. Message and data rates may apply. Reply HELP for help. Reply STOP to opt out at any time. Consent is not a condition of purchase. By continuing, I also agree to the',
+                              style: TextStyle(),
+                            ),
+                            TextSpan(
+                              text: 'Terms of Services ',
+                              style: TextStyle(
+                                color: FlutterFlowTheme.of(context).primaryCyan,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12.0,
+                              ),
+                              mouseCursor: SystemMouseCursors.click,
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () async {
+                                  await launchURL(
+                                      'https://www.chrd.app/termsconditions');
+                                },
+                            ),
+                            TextSpan(
+                              text: 'and ',
+                              style: TextStyle(),
+                            ),
+                            TextSpan(
+                              text: 'Privacy Policy ',
+                              style: TextStyle(
+                                color: FlutterFlowTheme.of(context).primaryCyan,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12.0,
+                              ),
+                              mouseCursor: SystemMouseCursors.click,
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () async {
+                                  await launchURL(
+                                      'https://www.chrd.app/privacy');
+                                },
+                            )
+                          ],
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    font: GoogleFonts.montserrat(
+                                      fontWeight: FontWeight.w500,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                    color: FlutterFlowTheme.of(context)
+                                        .neutralLight300,
+                                    fontSize: 12.0,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w500,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
+                        ),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ].addToEnd(SizedBox(height: 16.0)),

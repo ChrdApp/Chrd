@@ -110,6 +110,9 @@ class _VenueAccountInfo3WidgetState extends State<VenueAccountInfo3Widget> {
           _model.websiteModel.textController?.text =
               _model.venueOutput!.firstOrNull!.website!;
         });
+        return;
+      } else {
+        return;
       }
     });
 
@@ -588,6 +591,7 @@ class _VenueAccountInfo3WidgetState extends State<VenueAccountInfo3Widget> {
                     if (_model.isReadOnly) {
                       _model.isReadOnly = false;
                       safeSetState(() {});
+                      return;
                     } else {
                       if (_model.formKey.currentState == null ||
                           !_model.formKey.currentState!.validate()) {
@@ -627,6 +631,7 @@ class _VenueAccountInfo3WidgetState extends State<VenueAccountInfo3Widget> {
                           ),
                         );
                         context.safePop();
+                        return;
                       } else {
                         FFAppState().vanueName =
                             _model.vanueNameModel.textController.text;
@@ -650,6 +655,8 @@ class _VenueAccountInfo3WidgetState extends State<VenueAccountInfo3Widget> {
                         );
 
                         context.pushNamed(VenueProfilePic4Widget.routeName);
+
+                        return;
                       }
                     }
                   },

@@ -1,13 +1,18 @@
 import '/backend/api_requests/api_calls.dart';
+import '/backend/schema/enums/enums.dart';
+import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/musician/components/c_h_r_d_back_btn/c_h_r_d_back_btn_widget.dart';
 import '/musician/components/c_h_r_d_label_btn/c_h_r_d_label_btn_widget.dart';
+import '/musician/components/c_h_r_d_remove_musician/c_h_r_d_remove_musician_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_row_with_icon/c_h_r_d_row_with_icon_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_video_player_component/c_h_r_d_video_player_component_widget.dart';
 import 'dart:ui';
+import '/flutter_flow/custom_functions.dart' as functions;
+import '/index.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -207,6 +212,306 @@ class _VenueGigViewOverlayWidgetState extends State<VenueGigViewOverlayWidget> {
                                       ),
                                 ),
                               ),
+                              if (('true' ==
+                                      getJsonField(
+                                        venueGigViewOverlayGetSingleSlotDetailsResponse
+                                            .jsonBody,
+                                        r'''$.data.is_booked''',
+                                      ).toString()) &&
+                                  (FFAppState().userType == Type.Venue))
+                                Align(
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      if ('true' !=
+                                          getJsonField(
+                                            venueGigViewOverlayGetSingleSlotDetailsResponse
+                                                .jsonBody,
+                                            r'''$.data.is_booked''',
+                                          ).toString()) {
+                                        context.pushNamed(
+                                          SelectTalentWidget.routeName,
+                                          queryParameters: {
+                                            'venueId': serializeParam(
+                                              getJsonField(
+                                                venueGigViewOverlayGetSingleSlotDetailsResponse
+                                                    .jsonBody,
+                                                r'''$.data.venue_id''',
+                                              ),
+                                              ParamType.int,
+                                            ),
+                                            'slotId': serializeParam(
+                                              widget!.slotId,
+                                              ParamType.int,
+                                            ),
+                                            'venueName': serializeParam(
+                                              getJsonField(
+                                                venueGigViewOverlayGetSingleSlotDetailsResponse
+                                                    .jsonBody,
+                                                r'''$.data.venue_name''',
+                                              ).toString(),
+                                              ParamType.String,
+                                            ),
+                                          }.withoutNulls,
+                                        );
+                                      }
+                                    },
+                                    child: Text(
+                                      getJsonField(
+                                        venueGigViewOverlayGetSingleSlotDetailsResponse
+                                            .jsonBody,
+                                        r'''$.data.musician_name''',
+                                      ).toString(),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            font: GoogleFonts.montserrat(
+                                              fontWeight: FontWeight.bold,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                            fontSize: 20.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.bold,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                            decoration:
+                                                TextDecoration.underline,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              if (('true' ==
+                                      getJsonField(
+                                        venueGigViewOverlayGetSingleSlotDetailsResponse
+                                            .jsonBody,
+                                        r'''$.data.is_booked''',
+                                      ).toString()) &&
+                                  (FFAppState().userType == Type.Venue))
+                                Align(
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
+                                  child: Builder(
+                                    builder: (context) => Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 2.0, 0.0, 2.0),
+                                      child: FFButtonWidget(
+                                        onPressed: () async {
+                                          await showDialog(
+                                            context: context,
+                                            builder: (dialogContext) {
+                                              return Dialog(
+                                                elevation: 0,
+                                                insetPadding: EdgeInsets.zero,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                alignment: AlignmentDirectional(
+                                                        0.0, 0.0)
+                                                    .resolve(Directionality.of(
+                                                        context)),
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    FocusScope.of(dialogContext)
+                                                        .unfocus();
+                                                    FocusManager
+                                                        .instance.primaryFocus
+                                                        ?.unfocus();
+                                                  },
+                                                  child: Container(
+                                                    width: MediaQuery.sizeOf(
+                                                                context)
+                                                            .width *
+                                                        0.8,
+                                                    child:
+                                                        CHRDRemoveMusicianWidget(
+                                                      musicianName:
+                                                          getJsonField(
+                                                        venueGigViewOverlayGetSingleSlotDetailsResponse
+                                                            .jsonBody,
+                                                        r'''$.data.musician_name''',
+                                                      ).toString(),
+                                                      removeBtnAction:
+                                                          () async {
+                                                        var _shouldSetState =
+                                                            false;
+                                                        _model.removeMusicianOutput =
+                                                            await VenueGroup
+                                                                .removeMusicianFromGigCall
+                                                                .call(
+                                                          pSenderId:
+                                                              FFAppState()
+                                                                  .userId,
+                                                          pThreadId:
+                                                              widget!.threadId,
+                                                        );
+
+                                                        _shouldSetState = true;
+                                                        if ((_model
+                                                                .removeMusicianOutput
+                                                                ?.succeeded ??
+                                                            true)) {
+                                                          await NotificationGroup
+                                                              .sendNotificationCall
+                                                              .call(
+                                                            title:
+                                                                '${getJsonField(
+                                                              venueGigViewOverlayGetSingleSlotDetailsResponse
+                                                                  .jsonBody,
+                                                              r'''$.data.venue_name''',
+                                                            ).toString()} removed you from gig',
+                                                            type:
+                                                                'PerformerRemoved',
+                                                            description:
+                                                                'You have been removed from gig by ${getJsonField(
+                                                              venueGigViewOverlayGetSingleSlotDetailsResponse
+                                                                  .jsonBody,
+                                                              r'''$.data.venue_name''',
+                                                            ).toString()}. Please check your gigs section for updated bookings and availability.',
+                                                            sendToList:
+                                                                (int var1) {
+                                                              return List<
+                                                                  String>.from([
+                                                                var1.toString()
+                                                              ]);
+                                                            }(getJsonField(
+                                                              venueGigViewOverlayGetSingleSlotDetailsResponse
+                                                                  .jsonBody,
+                                                              r'''$.data.musician_id''',
+                                                            )),
+                                                            usertype:
+                                                                FFAppState()
+                                                                    .userType
+                                                                    ?.name,
+                                                            dataJson: <String,
+                                                                dynamic>{
+                                                              'thread_id':
+                                                                  widget!
+                                                                      .threadId,
+                                                              'is_venue':
+                                                                  'true',
+                                                            },
+                                                          );
+
+                                                          await NotificationTable()
+                                                              .insert({
+                                                            'user_id':
+                                                                getJsonField(
+                                                              venueGigViewOverlayGetSingleSlotDetailsResponse
+                                                                  .jsonBody,
+                                                              r'''$.data.musician_id''',
+                                                            ),
+                                                            'title':
+                                                                '${getJsonField(
+                                                              venueGigViewOverlayGetSingleSlotDetailsResponse
+                                                                  .jsonBody,
+                                                              r'''$.data.venue_name''',
+                                                            ).toString()} removed you from gig',
+                                                            'description':
+                                                                'You have been removed from gig by ${getJsonField(
+                                                              venueGigViewOverlayGetSingleSlotDetailsResponse
+                                                                  .jsonBody,
+                                                              r'''$.data.venue_name''',
+                                                            ).toString()}. Please check your gigs section for updated bookings and availability.',
+                                                            'type':
+                                                                'PerformerRemoved',
+                                                            'data': <String,
+                                                                dynamic>{
+                                                              'thread_id':
+                                                                  widget!
+                                                                      .threadId,
+                                                              'is_venue':
+                                                                  'true',
+                                                            },
+                                                            'usertype':
+                                                                FFAppState()
+                                                                    .userType
+                                                                    ?.name,
+                                                            'is_read': false,
+                                                            'created_at': supaSerialize<
+                                                                    DateTime>(
+                                                                functions
+                                                                    .toUtcTimestamp(
+                                                                        getCurrentTimestamp)),
+                                                            'updated_at': supaSerialize<
+                                                                    DateTime>(
+                                                                functions
+                                                                    .toUtcTimestamp(
+                                                                        getCurrentTimestamp)),
+                                                          });
+
+                                                          context.goNamed(
+                                                            NavPageWidget
+                                                                .routeName,
+                                                            queryParameters: {
+                                                              'index':
+                                                                  serializeParam(
+                                                                2,
+                                                                ParamType.int,
+                                                              ),
+                                                            }.withoutNulls,
+                                                          );
+
+                                                          return;
+                                                        } else {
+                                                          return;
+                                                        }
+                                                      },
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+
+                                          safeSetState(() {});
+                                        },
+                                        text: 'Remove',
+                                        options: FFButtonOptions(
+                                          height: 24.0,
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  16.0, 0.0, 16.0, 0.0),
+                                          iconPadding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 0.0),
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryViolet,
+                                          textStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .titleSmall
+                                              .override(
+                                                font: GoogleFonts.interTight(
+                                                  fontWeight: FontWeight.normal,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .titleSmall
+                                                          .fontStyle,
+                                                ),
+                                                color: Colors.white,
+                                                fontSize: 10.0,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.normal,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleSmall
+                                                        .fontStyle,
+                                              ),
+                                          elevation: 0.0,
+                                          borderRadius:
+                                              BorderRadius.circular(18.0),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               Text(
                                 getJsonField(
                                   venueGigViewOverlayGetSingleSlotDetailsResponse
@@ -233,6 +538,63 @@ class _VenueGigViewOverlayWidgetState extends State<VenueGigViewOverlayWidget> {
                                           .fontStyle,
                                     ),
                               ),
+                              if ('${FFAppState().userId.toString()}' !=
+                                  getJsonField(
+                                    venueGigViewOverlayGetSingleSlotDetailsResponse
+                                        .jsonBody,
+                                    r'''$.data.venue_owner_id''',
+                                  ).toString())
+                                InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    context.pushNamed(
+                                      ViewVenuePlannerWidget.routeName,
+                                      queryParameters: {
+                                        'venueId': serializeParam(
+                                          getJsonField(
+                                            venueGigViewOverlayGetSingleSlotDetailsResponse
+                                                .jsonBody,
+                                            r'''$.data.venue_id''',
+                                          ),
+                                          ParamType.int,
+                                        ),
+                                        'venueOwnerId': serializeParam(
+                                          getJsonField(
+                                            venueGigViewOverlayGetSingleSlotDetailsResponse
+                                                .jsonBody,
+                                            r'''$.data.venue_owner_id''',
+                                          ),
+                                          ParamType.int,
+                                        ),
+                                      }.withoutNulls,
+                                    );
+                                  },
+                                  child: Text(
+                                    'View venue calendar',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          font: GoogleFonts.montserrat(
+                                            fontWeight: FontWeight.w600,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
+                                          fontSize: 12.0,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w600,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
+                                          decoration: TextDecoration.underline,
+                                        ),
+                                  ),
+                                ),
                             ],
                           ),
                         ),
@@ -978,50 +1340,169 @@ class _VenueGigViewOverlayWidgetState extends State<VenueGigViewOverlayWidget> {
                               thickness: 0.5,
                               color: Color(0x4DFFFFFF),
                             ),
-                            Column(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Venue notes',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.montserrat(
+                            if (('${''}' !=
+                                    getJsonField(
+                                      venueGigViewOverlayGetSingleSlotDetailsResponse
+                                          .jsonBody,
+                                      r'''$.data.notes''',
+                                    ).toString()) &&
+                                ('null' !=
+                                    getJsonField(
+                                      venueGigViewOverlayGetSingleSlotDetailsResponse
+                                          .jsonBody,
+                                      r'''$.data.notes''',
+                                    ).toString()))
+                              Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Icon(
+                                        Icons.insert_drive_file_outlined,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        size: 24.0,
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          'Gig Notes',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                font: GoogleFonts.montserrat(
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontWeight,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontStyle,
+                                                ),
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                letterSpacing: 0.0,
+                                                fontWeight:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontWeight,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontStyle,
+                                              ),
+                                        ),
+                                      ),
+                                    ].divide(SizedBox(width: 10.0)),
+                                  ),
+                                  Container(
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      color: Color(0x7B7B7B7B),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(12.0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            getJsonField(
+                                              venueGigViewOverlayGetSingleSlotDetailsResponse
+                                                  .jsonBody,
+                                              r'''$.data.notes''',
+                                            ).toString(),
+                                            textAlign: TextAlign.start,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  font: GoogleFonts.montserrat(
+                                                    fontWeight:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontWeight,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontStyle,
+                                                  ),
+                                                  fontSize: 12.0,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontWeight,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontStyle,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ].divide(SizedBox(height: 8.0)),
+                              ),
+                            if (false)
+                              Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Venue notes',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          font: GoogleFonts.montserrat(
+                                            fontWeight: FontWeight.normal,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.normal,
                                           fontStyle:
                                               FlutterFlowTheme.of(context)
                                                   .bodyMedium
                                                   .fontStyle,
                                         ),
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.normal,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                ),
-                                Text(
-                                  getJsonField(
-                                    venueGigViewOverlayGetSingleSlotDetailsResponse
-                                        .jsonBody,
-                                    r'''$.data.venue_description''',
-                                  ).toString(),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.montserrat(
+                                  ),
+                                  Text(
+                                    getJsonField(
+                                      venueGigViewOverlayGetSingleSlotDetailsResponse
+                                          .jsonBody,
+                                      r'''$.data.venue_description''',
+                                    ).toString(),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          font: GoogleFonts.montserrat(
+                                            fontWeight: FontWeight.normal,
+                                            fontStyle: FontStyle.italic,
+                                          ),
+                                          fontSize: 12.0,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.normal,
                                           fontStyle: FontStyle.italic,
                                         ),
-                                        fontSize: 12.0,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.normal,
-                                        fontStyle: FontStyle.italic,
-                                      ),
-                                ),
-                              ].divide(SizedBox(height: 3.0)),
-                            ),
+                                  ),
+                                ].divide(SizedBox(height: 3.0)),
+                              ),
                           ]
                               .divide(SizedBox(height: 13.0))
                               .addToStart(SizedBox(height: 28.0))

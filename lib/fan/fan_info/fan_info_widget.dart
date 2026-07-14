@@ -77,6 +77,7 @@ class _FanInfoWidgetState extends State<FanInfoWidget> {
           );
         });
         safeSetState(() {});
+        return;
       } else {
         _model.hideMobileField =
             _model.userData?.firstOrNull?.phoneNumber != null &&
@@ -108,6 +109,7 @@ class _FanInfoWidgetState extends State<FanInfoWidget> {
             ),
           );
         });
+        return;
       }
     });
 
@@ -171,30 +173,12 @@ class _FanInfoWidgetState extends State<FanInfoWidget> {
                   Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 32.0, 0.0, 0.0),
-                    child: InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () async {
-                        GoRouter.of(context).prepareAuthEvent();
-                        await authManager.signOut();
-                        GoRouter.of(context).clearRedirectLocation();
-
-                        FFAppState().step = 0;
-                        FFAppState().userType = null;
-                        safeSetState(() {});
-
-                        context.goNamedAuth(
-                            SplashScreenWidget.routeName, context.mounted);
-                      },
-                      child: wrapWithModel(
-                        model: _model.cHRDLabelColumnTextModel,
-                        updateCallback: () => safeSetState(() {}),
-                        child: CHRDLabelColumnTextWidget(
-                          heading: 'Fan Account info',
-                          subHeading: 'Let us know how to properly address you',
-                        ),
+                    child: wrapWithModel(
+                      model: _model.cHRDLabelColumnTextModel,
+                      updateCallback: () => safeSetState(() {}),
+                      child: CHRDLabelColumnTextWidget(
+                        heading: 'Fan Account info',
+                        subHeading: 'Let us know how to properly address you',
                       ),
                     ),
                   ),
@@ -363,7 +347,8 @@ class _FanInfoWidgetState extends State<FanInfoWidget> {
                                                   FFAppState().venueId = 0;
                                                   FFAppState().userId = 0;
                                                   FFAppState().step = 0;
-                                                  FFAppState().userType = null;
+                                                  FFAppState().userType =
+                                                      Type.Venue;
                                                   FFAppState().vanueName = '';
                                                   FFAppState().AdminName = '';
                                                   FFAppState().venueProfilePic =

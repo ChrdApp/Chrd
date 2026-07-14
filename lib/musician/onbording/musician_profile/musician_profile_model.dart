@@ -1,14 +1,13 @@
 import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
-import '/components/c_h_r_d_profile_post_widget.dart';
-import '/components/musician_nav_bar_widget.dart';
 import '/components/upload_file_btn_widget.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
+import '/musician/musician_components/musician_nav_bar/musician_nav_bar_widget.dart';
+import '/venue/venue_pages/venue_components/c_h_r_d_profile_post/c_h_r_d_profile_post_widget.dart';
 import '/venue/venue_pages/venue_onbording/c_h_r_d_image_component/c_h_r_d_image_component_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_video_player_component/c_h_r_d_video_player_component_widget.dart';
 import 'dart:ui';
@@ -52,13 +51,6 @@ class MusicianProfileModel extends FlutterFlowModel<MusicianProfileWidget> {
   HighlightsRow? highlightVideo;
   // Stores action output result for [Backend Call - Insert Row] action in uploadFileBtn widget.
   HighlightsRow? highlightImage;
-  // Stores action output result for [Custom Action - pickFileWithSizeLimit] action in Container widget.
-  FFUploadedFile? imageVideoPath;
-  bool isDataUploading_musicianPosts = false;
-  FFUploadedFile uploadedLocalFile_musicianPosts =
-      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
-  String uploadedFileUrl_musicianPosts = '';
-
   // Stores action output result for [Custom Action - pickFileWithSizeLimit] action in AddNewContainer widget.
   FFUploadedFile? imageVideoPathOutput;
   bool isDataUploading_musicianPostsOutput = false;

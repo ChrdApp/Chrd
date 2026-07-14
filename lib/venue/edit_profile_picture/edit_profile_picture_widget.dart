@@ -303,6 +303,8 @@ class _EditProfilePictureWidgetState extends State<EditProfilePictureWidget> {
                                   );
                                   await deleteSupabaseFileFromPublicUrl(
                                       widget!.profileImage!);
+                                  if (_shouldSetState) safeSetState(() {});
+                                  return;
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
@@ -318,6 +320,8 @@ class _EditProfilePictureWidgetState extends State<EditProfilePictureWidget> {
                                           FlutterFlowTheme.of(context).error,
                                     ),
                                   );
+                                  if (_shouldSetState) safeSetState(() {});
+                                  return;
                                 }
                               } else {
                                 if (FFAppState().errorMessage != null &&

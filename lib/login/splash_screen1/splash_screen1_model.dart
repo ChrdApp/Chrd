@@ -5,7 +5,6 @@ import 'dart:ui';
 import '/index.dart';
 import 'splash_screen1_widget.dart' show SplashScreen1Widget;
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 

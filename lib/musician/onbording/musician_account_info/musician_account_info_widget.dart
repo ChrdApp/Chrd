@@ -58,6 +58,9 @@ class _MusicianAccountInfoWidgetState extends State<MusicianAccountInfoWidget> {
             _model.lastNameModel.textController?.text = FFAppState().lastName;
           });
         }
+        return;
+      } else {
+        return;
       }
     });
 
@@ -186,21 +189,22 @@ class _MusicianAccountInfoWidgetState extends State<MusicianAccountInfoWidget> {
                             },
                           ),
                         ),
-                        wrapWithModel(
-                          model: _model.emailModel,
-                          updateCallback: () => safeSetState(() {}),
-                          child: CHRDLabelTextFieldWithBorderWidget(
-                            labelText: 'Email',
-                            hintText: 'Email',
-                            freezeEmailInput: currentUserEmail != null &&
-                                    currentUserEmail != ''
-                                ? false
-                                : true,
-                            onChange: () async {
-                              safeSetState(() {});
-                            },
+                        if (currentUserEmail == null || currentUserEmail == '')
+                          wrapWithModel(
+                            model: _model.emailModel,
+                            updateCallback: () => safeSetState(() {}),
+                            child: CHRDLabelTextFieldWithBorderWidget(
+                              labelText: 'Email',
+                              hintText: 'Email',
+                              freezeEmailInput: currentUserEmail != null &&
+                                      currentUserEmail != ''
+                                  ? false
+                                  : true,
+                              onChange: () async {
+                                safeSetState(() {});
+                              },
+                            ),
                           ),
-                        ),
                         if (false)
                           FutureBuilder<List<EntertainmentRow>>(
                             future: EntertainmentTable().queryRows(
@@ -632,7 +636,9 @@ class _MusicianAccountInfoWidgetState extends State<MusicianAccountInfoWidget> {
                     _model.authOutput = await UsersTable().queryRows(
                       queryFn: (q) => q.eqOrNull(
                         'email',
-                        _model.emailModel.textController.text,
+                        currentUserEmail != null && currentUserEmail != ''
+                            ? currentUserEmail
+                            : _model.emailModel.textController.text,
                       ),
                     );
                     _shouldSetState = true;
@@ -683,6 +689,8 @@ class _MusicianAccountInfoWidgetState extends State<MusicianAccountInfoWidget> {
                     );
                     _shouldSetState = true;
                     FFAppState().step = 2;
+                    FFAppState().AdminName =
+                        '${_model.firstNameModel.textController.text} ${_model.lastNameModel.textController.text}';
                     safeSetState(() {});
 
                     context.pushNamed(

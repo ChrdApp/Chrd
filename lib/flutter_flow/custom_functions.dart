@@ -551,7 +551,58 @@ dynamic convertToJson(List<ContentListStruct>? contentData) {
 String formatMessageTime(DateTime timestamp) {
   if (timestamp == null) return '';
 
-  final messageTime = timestamp.toLocal();
+  // Treat incoming value as UTC, then convert to device local time
+  final messageTime = DateTime.utc(
+    timestamp.year,
+    timestamp.month,
+    timestamp.day,
+    timestamp.hour,
+    timestamp.minute,
+    timestamp.second,
+    timestamp.millisecond,
+    timestamp.microsecond,
+  ).toLocal();
+
+  final now = DateTime.now();
+  final today = DateTime(now.year, now.month, now.day);
+  final msgDate =
+      DateTime(messageTime.year, messageTime.month, messageTime.day);
+  final difference = today.difference(msgDate).inDays;
+
+  String formatTime(DateTime time) {
+    int hour = time.hour;
+    int minute = time.minute;
+    String period = hour >= 12 ? 'PM' : 'AM';
+    hour = hour % 12;
+    if (hour == 0) hour = 12;
+    String minuteStr = minute.toString().padLeft(2, '0');
+    return '$hour:$minuteStr $period';
+  }
+
+  String formatDate(DateTime date) {
+    String month = date.month.toString().padLeft(2, '0');
+    String day = date.day.toString().padLeft(2, '0');
+    String year = date.year.toString().substring(2);
+    return '$month/$day/$year';
+  }
+
+  List<String> weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+  if (difference == 0) {
+    return formatTime(messageTime);
+  } else if (difference == 1) {
+    return 'Yesterday';
+  } else if (difference < 7) {
+    return weekdays[messageTime.weekday - 1];
+  } else {
+    return formatDate(messageTime);
+  }
+}
+
+String formatNotificationTime(DateTime timestamp) {
+  if (timestamp == null) return '';
+
+  final messageTime = timestamp;
   final now = DateTime.now();
   final today = DateTime(now.year, now.month, now.day);
   final msgDate =
@@ -595,4 +646,10 @@ DateTime? toUtcTimestamp(DateTime timestamp) {
 DateTime? parseDateTimeSafe(String? input) {
   if (input == null || input.isEmpty) return null;
   return DateTime.tryParse(input);
+}
+
+List<String> parseStringList(dynamic jsonInput) {
+  return List<String>.from(
+    (jsonInput as List).map((e) => e.toString()),
+  );
 }

@@ -141,30 +141,12 @@ class _EditAdminWidgetState extends State<EditAdminWidget> {
                   Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 32.0, 0.0, 0.0),
-                    child: InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () async {
-                        GoRouter.of(context).prepareAuthEvent();
-                        await authManager.signOut();
-                        GoRouter.of(context).clearRedirectLocation();
-
-                        FFAppState().step = 0;
-                        FFAppState().userType = null;
-                        safeSetState(() {});
-
-                        context.goNamedAuth(
-                            SplashScreenWidget.routeName, context.mounted);
-                      },
-                      child: wrapWithModel(
-                        model: _model.cHRDLabelColumnTextModel,
-                        updateCallback: () => safeSetState(() {}),
-                        child: CHRDLabelColumnTextWidget(
-                          heading: 'Profile Details',
-                          subHeading: 'Click Fields to edit',
-                        ),
+                    child: wrapWithModel(
+                      model: _model.cHRDLabelColumnTextModel,
+                      updateCallback: () => safeSetState(() {}),
+                      child: CHRDLabelColumnTextWidget(
+                        heading: 'Profile Details',
+                        subHeading: 'Click Fields to edit',
                       ),
                     ),
                   ),
@@ -325,7 +307,8 @@ class _EditAdminWidgetState extends State<EditAdminWidget> {
                                                   FFAppState().venueId = 0;
                                                   FFAppState().userId = 0;
                                                   FFAppState().step = 0;
-                                                  FFAppState().userType = null;
+                                                  FFAppState().userType =
+                                                      Type.Venue;
                                                   FFAppState().vanueName = '';
                                                   FFAppState().AdminName = '';
                                                   FFAppState().venueProfilePic =
@@ -463,7 +446,7 @@ class _EditAdminWidgetState extends State<EditAdminWidget> {
                                     FFAppState().venueId = 0;
                                     FFAppState().userId = 0;
                                     FFAppState().step = 0;
-                                    FFAppState().userType = null;
+                                    FFAppState().userType = Type.Venue;
                                     FFAppState().vanueName = '';
                                     FFAppState().AdminName = '';
                                     FFAppState().venueProfilePic = '';
@@ -536,7 +519,23 @@ class _EditAdminWidgetState extends State<EditAdminWidget> {
                         !_model.formKey.currentState!.validate()) {
                       return;
                     }
-                    if (_model.hideMobileField != true) {
+                    if (_model.hideMobileField == true) {
+                      await UsersTable().update(
+                        data: {
+                          'name': _model.adminNameModel.textController.text,
+                          'email': _model.emailAddressModel.textController.text,
+                        },
+                        matchingRows: (rows) => rows.eqOrNull(
+                          'id',
+                          FFAppState().userId,
+                        ),
+                      );
+                      FFAppState().AdminName =
+                          _model.adminNameModel.textController.text;
+                      safeSetState(() {});
+                      context.safePop();
+                      return;
+                    } else {
                       _model.showMobileError = (String var1) {
                         return var1.length < 17 ? false : true;
                       }(_model
@@ -544,20 +543,6 @@ class _EditAdminWidgetState extends State<EditAdminWidget> {
                       safeSetState(() {});
                       return;
                     }
-                    await UsersTable().update(
-                      data: {
-                        'name': _model.adminNameModel.textController.text,
-                        'email': _model.emailAddressModel.textController.text,
-                      },
-                      matchingRows: (rows) => rows.eqOrNull(
-                        'id',
-                        FFAppState().userId,
-                      ),
-                    );
-                    FFAppState().AdminName =
-                        _model.adminNameModel.textController.text;
-                    safeSetState(() {});
-                    context.safePop();
                   },
                 ),
               ),

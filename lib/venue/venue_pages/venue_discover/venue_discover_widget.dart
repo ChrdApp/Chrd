@@ -344,7 +344,7 @@ class _VenueDiscoverWidgetState extends State<VenueDiscoverWidget> {
                                                     image: DecorationImage(
                                                       fit: BoxFit.cover,
                                                       image: Image.network(
-                                                        'https://tse4.mm.bing.net/th/id/OIP.pr9z-vjVCHf_lmnbh_mlpwHaE7?pid=Api&P=0&h=220',
+                                                        '',
                                                       ).image,
                                                     ),
                                                     borderRadius:

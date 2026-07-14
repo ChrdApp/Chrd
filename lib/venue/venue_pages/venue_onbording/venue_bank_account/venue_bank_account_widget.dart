@@ -179,6 +179,7 @@ class _VenueBankAccountWidgetState extends State<VenueBankAccountWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(
                             20.0, 0.0, 20.0, 0.0),
                         child: SingleChildScrollView(
+                          primary: false,
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             children: [

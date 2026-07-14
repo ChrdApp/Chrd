@@ -72,6 +72,7 @@ class _VenueSocialMedia6WidgetState extends State<VenueSocialMedia6Widget> {
           _model.youtubeAccountTextController?.text =
               _model.venueResult!.firstOrNull!.youtubeId!;
         });
+        return;
       } else if (widget!.musicianId != null) {
         _model.musicianResult = await SocialMediaTable().queryRows(
           queryFn: (q) => q.eqOrNull(
@@ -95,6 +96,9 @@ class _VenueSocialMedia6WidgetState extends State<VenueSocialMedia6Widget> {
           _model.youtubeAccountTextController?.text =
               _model.musicianResult!.firstOrNull!.youtubeId!;
         });
+        return;
+      } else {
+        return;
       }
     });
 

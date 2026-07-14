@@ -1,10 +1,10 @@
 import '/backend/api_requests/api_calls.dart';
-import '/components/c_h_r_d_profile_post_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/musician/components/c_h_r_d_label_btn/c_h_r_d_label_btn_widget.dart';
+import '/venue/venue_pages/venue_components/c_h_r_d_profile_post/c_h_r_d_profile_post_widget.dart';
 import 'dart:ui';
 import '/index.dart';
 import 'package:flutter/gestures.dart';
@@ -54,8 +54,6 @@ class _MusicianProfileVenueWidgetState
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return FutureBuilder<ApiCallResponse>(
       future: MusicianGroup.getPerformerDetailsCall.call(
         performerId: widget!.musicianId,

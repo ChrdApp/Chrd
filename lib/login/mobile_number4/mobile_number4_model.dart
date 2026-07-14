@@ -39,6 +39,8 @@ class MobileNumber4Model extends FlutterFlowModel<MobileNumber4Widget> {
 
   // Stores action output result for [Custom Action - getPhoneOtp] action in Button widget.
   bool? isOtpSent;
+  // State field(s) for Checkbox widget.
+  bool? checkboxValue;
 
   @override
   void initState(BuildContext context) {

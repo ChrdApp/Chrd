@@ -1,4 +1,3 @@
-import '/auth/supabase_auth/auth_util.dart';
 import '/backend/schema/enums/enums.dart';
 import '/fan/fan_creation/fan_creation_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -79,26 +78,12 @@ class _AccountCreation6WidgetState extends State<AccountCreation6Widget> {
                   Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
-                    child: InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () async {
-                        GoRouter.of(context).prepareAuthEvent();
-                        await authManager.signOut();
-                        GoRouter.of(context).clearRedirectLocation();
-
-                        context.goNamedAuth(
-                            SplashScreenWidget.routeName, context.mounted);
-                      },
-                      child: wrapWithModel(
-                        model: _model.cHRDLabelColumnTextModel,
-                        updateCallback: () => safeSetState(() {}),
-                        child: CHRDLabelColumnTextWidget(
-                          heading: 'Choose Account Type',
-                          subHeading: 'Select your role and start your journey',
-                        ),
+                    child: wrapWithModel(
+                      model: _model.cHRDLabelColumnTextModel,
+                      updateCallback: () => safeSetState(() {}),
+                      child: CHRDLabelColumnTextWidget(
+                        heading: 'Choose Account Type',
+                        subHeading: 'Select your role and start your journey',
                       ),
                     ),
                   ),
@@ -194,10 +179,16 @@ class _AccountCreation6WidgetState extends State<AccountCreation6Widget> {
                   onTab: () async {
                     if (FFAppState().userType == Type.Musician) {
                       context.pushNamed(VenueProfilePic4Widget.routeName);
+
+                      return;
                     } else if (FFAppState().userType == Type.Fan) {
                       context.pushNamed(FanInfoWidget.routeName);
+
+                      return;
                     } else {
                       context.pushNamed(AdminInfo1Widget.routeName);
+
+                      return;
                     }
                   },
                 ),

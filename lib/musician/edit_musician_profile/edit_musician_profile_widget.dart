@@ -687,7 +687,7 @@ class _EditMusicianProfileWidgetState extends State<EditMusicianProfileWidget> {
                                             FFAppState().venueId = 0;
                                             FFAppState().userId = 0;
                                             FFAppState().step = 0;
-                                            FFAppState().userType = null;
+                                            FFAppState().userType = Type.Venue;
                                             FFAppState().vanueName = '';
                                             FFAppState().AdminName = '';
                                             FFAppState().venueProfilePic = '';
@@ -832,7 +832,8 @@ class _EditMusicianProfileWidgetState extends State<EditMusicianProfileWidget> {
                                               FFAppState().venueId = 0;
                                               FFAppState().userId = 0;
                                               FFAppState().step = 0;
-                                              FFAppState().userType = null;
+                                              FFAppState().userType =
+                                                  Type.Venue;
                                               FFAppState().vanueName = '';
                                               FFAppState().AdminName = '';
                                               FFAppState().venueProfilePic = '';

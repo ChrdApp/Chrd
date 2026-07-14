@@ -17,7 +17,7 @@ import 'index.dart'; // Imports other custom actions
 import '/custom_code/actions/index.dart';
 import '/flutter_flow/custom_functions.dart';
 
-import 'package:chrd/custom_chat_venue/custom_chat_venue_widget.dart';
+import '../../venue/venue_pages/custom_chat_venue/custom_chat_venue_widget.dart';
 import 'package:chrd/musician/musician_messages/musician_messages_widget.dart';
 import 'package:chrd/venue/venue_pages/select_talent/select_talent_widget.dart';
 import 'package:chrd/venue/venue_pages/venue_gig_thread_overlay/venue_gig_thread_overlay_widget.dart';

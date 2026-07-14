@@ -1,14 +1,13 @@
 import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
-import '/components/c_h_r_d_profile_post_widget.dart';
-import '/components/musician_nav_bar_widget.dart';
 import '/components/upload_file_btn_widget.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
+import '/musician/musician_components/musician_nav_bar/musician_nav_bar_widget.dart';
+import '/venue/venue_pages/venue_components/c_h_r_d_profile_post/c_h_r_d_profile_post_widget.dart';
 import '/venue/venue_pages/venue_onbording/c_h_r_d_image_component/c_h_r_d_image_component_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_video_player_component/c_h_r_d_video_player_component_widget.dart';
 import 'dart:ui';
@@ -261,40 +260,30 @@ class _MusicianProfileWidgetState extends State<MusicianProfileWidget> {
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
-                                  InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    onTap: () async {
-                                      context.pushNamed(
-                                          MusicianAccountInfoWidget.routeName);
-                                    },
-                                    child: Text(
-                                      getJsonField(
-                                        musicianProfileGetPerformerDetailsResponse
-                                            .jsonBody,
-                                        r'''$.user.name''',
-                                      ).toString(),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            font: GoogleFonts.montserrat(
-                                              fontWeight: FontWeight.w600,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
-                                            ),
-                                            fontSize: 24.0,
-                                            letterSpacing: 0.0,
+                                  Text(
+                                    getJsonField(
+                                      musicianProfileGetPerformerDetailsResponse
+                                          .jsonBody,
+                                      r'''$.user.name''',
+                                    ).toString(),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          font: GoogleFonts.montserrat(
                                             fontWeight: FontWeight.w600,
                                             fontStyle:
                                                 FlutterFlowTheme.of(context)
                                                     .bodyMedium
                                                     .fontStyle,
                                           ),
-                                    ),
+                                          fontSize: 24.0,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w600,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
+                                        ),
                                   ),
                                   if (false)
                                     Padding(
@@ -1506,408 +1495,6 @@ class _MusicianProfileWidgetState extends State<MusicianProfileWidget> {
                                       ),
                                     ),
                                   ),
-                                  if (false)
-                                    Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(-1.0, 0.0),
-                                          child: Builder(
-                                            builder: (context) {
-                                              final musician = getJsonField(
-                                                musicianProfileGetPerformerDetailsResponse
-                                                    .jsonBody,
-                                                r'''$.musician_content[0].content''',
-                                              ).toList().take(9).toList();
-
-                                              return GridView.builder(
-                                                padding: EdgeInsets.zero,
-                                                gridDelegate:
-                                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 3,
-                                                  crossAxisSpacing: 10.0,
-                                                  mainAxisSpacing: 10.0,
-                                                  childAspectRatio: 1.0,
-                                                ),
-                                                primary: false,
-                                                shrinkWrap: true,
-                                                scrollDirection: Axis.vertical,
-                                                itemCount: musician.length,
-                                                itemBuilder:
-                                                    (context, musicianIndex) {
-                                                  final musicianItem =
-                                                      musician[musicianIndex];
-                                                  return Builder(
-                                                    builder: (context) =>
-                                                        InkWell(
-                                                      splashColor:
-                                                          Colors.transparent,
-                                                      focusColor:
-                                                          Colors.transparent,
-                                                      hoverColor:
-                                                          Colors.transparent,
-                                                      highlightColor:
-                                                          Colors.transparent,
-                                                      onTap: () async {
-                                                        var _shouldSetState =
-                                                            false;
-                                                        if (musicianIndex ==
-                                                            0) {
-                                                          if (_model
-                                                                  .uploadedFileUrl_musicianPosts ==
-                                                              'true') {
-                                                            if (_shouldSetState)
-                                                              safeSetState(
-                                                                  () {});
-                                                            return;
-                                                          }
-
-                                                          _model.imageVideoPath =
-                                                              await actions
-                                                                  .pickFileWithSizeLimit(
-                                                            context,
-                                                            20.0,
-                                                            'video',
-                                                          );
-                                                          _shouldSetState =
-                                                              true;
-                                                          if (_model.imageVideoPath !=
-                                                                  null &&
-                                                              (_model
-                                                                      .imageVideoPath
-                                                                      ?.bytes
-                                                                      ?.isNotEmpty ??
-                                                                  false)) {
-                                                            {
-                                                              safeSetState(() =>
-                                                                  _model.isDataUploading_musicianPosts =
-                                                                      true);
-                                                              var selectedUploadedFiles =
-                                                                  <FFUploadedFile>[];
-                                                              var selectedMedia =
-                                                                  <SelectedFile>[];
-                                                              var downloadUrls =
-                                                                  <String>[];
-                                                              try {
-                                                                selectedUploadedFiles = _model
-                                                                        .imageVideoPath!
-                                                                        .bytes!
-                                                                        .isNotEmpty
-                                                                    ? [
-                                                                        _model
-                                                                            .imageVideoPath!
-                                                                      ]
-                                                                    : <FFUploadedFile>[];
-                                                                selectedMedia =
-                                                                    selectedFilesFromUploadedFiles(
-                                                                  selectedUploadedFiles,
-                                                                  storageFolderPath:
-                                                                      'Musician Posts',
-                                                                );
-                                                                downloadUrls =
-                                                                    await uploadSupabaseStorageFiles(
-                                                                  bucketName:
-                                                                      'musician',
-                                                                  selectedFiles:
-                                                                      selectedMedia,
-                                                                );
-                                                              } finally {
-                                                                _model.isDataUploading_musicianPosts =
-                                                                    false;
-                                                              }
-                                                              if (selectedUploadedFiles
-                                                                          .length ==
-                                                                      selectedMedia
-                                                                          .length &&
-                                                                  downloadUrls
-                                                                          .length ==
-                                                                      selectedMedia
-                                                                          .length) {
-                                                                safeSetState(
-                                                                    () {
-                                                                  _model.uploadedLocalFile_musicianPosts =
-                                                                      selectedUploadedFiles
-                                                                          .first;
-                                                                  _model.uploadedFileUrl_musicianPosts =
-                                                                      downloadUrls
-                                                                          .first;
-                                                                });
-                                                              } else {
-                                                                safeSetState(
-                                                                    () {});
-                                                                return;
-                                                              }
-                                                            }
-
-                                                            if ((_model.uploadedFileUrl_musicianPosts !=
-                                                                    FFAppState()
-                                                                        .musicianAddImages
-                                                                        .lastOrNull) &&
-                                                                (_model.uploadedFileUrl_musicianPosts !=
-                                                                        null &&
-                                                                    _model.uploadedFileUrl_musicianPosts !=
-                                                                        '')) {
-                                                              FFAppState()
-                                                                  .addToMusicianAddImages(
-                                                                      _model
-                                                                          .uploadedFileUrl_musicianPosts);
-                                                              safeSetState(
-                                                                  () {});
-                                                            }
-                                                          } else {
-                                                            ScaffoldMessenger
-                                                                    .of(context)
-                                                                .showSnackBar(
-                                                              SnackBar(
-                                                                content: Text(
-                                                                  'File size must be under 20 mb.',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primaryText,
-                                                                  ),
-                                                                ),
-                                                                duration: Duration(
-                                                                    milliseconds:
-                                                                        4000),
-                                                                backgroundColor:
-                                                                    FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .error,
-                                                              ),
-                                                            );
-                                                          }
-                                                        } else {
-                                                          if (functions.isVideoUrl(FFAppState()
-                                                                  .venueContentVenueList
-                                                                  .elementAtOrNull(
-                                                                      musicianIndex)) ==
-                                                              true) {
-                                                            await showDialog(
-                                                              barrierColor:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryBackground,
-                                                              context: context,
-                                                              builder:
-                                                                  (dialogContext) {
-                                                                return Dialog(
-                                                                  elevation: 0,
-                                                                  insetPadding:
-                                                                      EdgeInsets
-                                                                          .zero,
-                                                                  backgroundColor:
-                                                                      Colors
-                                                                          .transparent,
-                                                                  alignment: AlignmentDirectional(
-                                                                          0.0,
-                                                                          0.0)
-                                                                      .resolve(
-                                                                          Directionality.of(
-                                                                              context)),
-                                                                  child:
-                                                                      GestureDetector(
-                                                                    onTap: () {
-                                                                      FocusScope.of(
-                                                                              dialogContext)
-                                                                          .unfocus();
-                                                                      FocusManager
-                                                                          .instance
-                                                                          .primaryFocus
-                                                                          ?.unfocus();
-                                                                    },
-                                                                    child:
-                                                                        CHRDVideoPlayerComponentWidget(
-                                                                      videoUrl:
-                                                                          '${FFAppState().venueContentVenueList.elementAtOrNull(musicianIndex)}',
-                                                                      callBackAction:
-                                                                          () async {},
-                                                                    ),
-                                                                  ),
-                                                                );
-                                                              },
-                                                            );
-                                                          }
-                                                        }
-
-                                                        if (_shouldSetState)
-                                                          safeSetState(() {});
-                                                      },
-                                                      child: Container(
-                                                        width: 110.0,
-                                                        height: 120.0,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryBackground,
-                                                          image:
-                                                              DecorationImage(
-                                                            fit: BoxFit.cover,
-                                                            image:
-                                                                Image.network(
-                                                              functions.isVideoUrl(FFAppState()
-                                                                      .musicianAddImages
-                                                                      .elementAtOrNull(
-                                                                          musicianIndex))!
-                                                                  ? 'https://kasnaqcqfuqnfydsjvpy.supabase.co/storage/v1/object/public/venueC/loginGradient.png'
-                                                                  : '${musicianItem.toString()}',
-                                                            ).image,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      12.0),
-                                                        ),
-                                                        child: Stack(
-                                                          children: [
-                                                            if (musicianIndex !=
-                                                                0)
-                                                              Align(
-                                                                alignment:
-                                                                    AlignmentDirectional(
-                                                                        1.0,
-                                                                        -1.0),
-                                                                child: Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          4.0,
-                                                                          4.0,
-                                                                          0.0),
-                                                                  child:
-                                                                      FlutterFlowIconButton(
-                                                                    borderRadius:
-                                                                        100.0,
-                                                                    buttonSize:
-                                                                        32.0,
-                                                                    fillColor:
-                                                                        Color(
-                                                                            0x8D000000),
-                                                                    icon: Icon(
-                                                                      Icons
-                                                                          .close,
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .info,
-                                                                      size:
-                                                                          16.0,
-                                                                    ),
-                                                                    onPressed:
-                                                                        () async {
-                                                                      await deleteSupabaseFileFromPublicUrl(FFAppState()
-                                                                          .venueContentVenueList
-                                                                          .elementAtOrNull(
-                                                                              musicianIndex)!);
-                                                                      FFAppState()
-                                                                          .removeAtIndexFromMusicianAddImages(
-                                                                              musicianIndex);
-                                                                      safeSetState(
-                                                                          () {});
-                                                                      safeSetState(
-                                                                          () {
-                                                                        _model.isDataUploading_musicianPosts =
-                                                                            false;
-                                                                        _model.uploadedLocalFile_musicianPosts = FFUploadedFile(
-                                                                            bytes:
-                                                                                Uint8List.fromList([]),
-                                                                            originalFilename:
-                                                                                '');
-                                                                        _model.uploadedFileUrl_musicianPosts =
-                                                                            '';
-                                                                      });
-                                                                    },
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            if (functions.isVideoUrl(FFAppState()
-                                                                    .venueContentVenueList
-                                                                    .elementAtOrNull(
-                                                                        musicianIndex)) ==
-                                                                true)
-                                                              Align(
-                                                                alignment:
-                                                                    AlignmentDirectional(
-                                                                        0.0,
-                                                                        0.0),
-                                                                child: Builder(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          InkWell(
-                                                                    splashColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    focusColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    hoverColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    highlightColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    onTap:
-                                                                        () async {
-                                                                      await showDialog(
-                                                                        barrierColor:
-                                                                            FlutterFlowTheme.of(context).primaryBackground,
-                                                                        context:
-                                                                            context,
-                                                                        builder:
-                                                                            (dialogContext) {
-                                                                          return Dialog(
-                                                                            elevation:
-                                                                                0,
-                                                                            insetPadding:
-                                                                                EdgeInsets.zero,
-                                                                            backgroundColor:
-                                                                                Colors.transparent,
-                                                                            alignment:
-                                                                                AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
-                                                                            child:
-                                                                                GestureDetector(
-                                                                              onTap: () {
-                                                                                FocusScope.of(dialogContext).unfocus();
-                                                                                FocusManager.instance.primaryFocus?.unfocus();
-                                                                              },
-                                                                              child: CHRDVideoPlayerComponentWidget(
-                                                                                videoUrl: '${FFAppState().venueContentVenueList.elementAtOrNull(musicianIndex)}',
-                                                                                callBackAction: () async {},
-                                                                              ),
-                                                                            ),
-                                                                          );
-                                                                        },
-                                                                      );
-                                                                    },
-                                                                    child:
-                                                                        FaIcon(
-                                                                      FontAwesomeIcons
-                                                                          .video,
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .primaryText,
-                                                                      size:
-                                                                          40.0,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                      ]
-                                          .addToStart(SizedBox(height: 28.0))
-                                          .addToEnd(SizedBox(height: 12.0)),
-                                    ),
                                   Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [

@@ -297,6 +297,7 @@ class _PhoneOTP5WidgetState extends State<PhoneOTP5Widget> {
                                 ?.lastOrNull,
                             'step': 1,
                             'auth_id': currentUserUid,
+                            'is_active': true,
                           });
                           _shouldSetState = true;
                           FFAppState().userId = _model.userOutput!.id;

@@ -73,6 +73,9 @@ class _EditStageWidgetState extends State<EditStageWidget> {
             r'''$.stage.name''',
           ).toString();
         });
+        return;
+      } else {
+        return;
       }
     });
 

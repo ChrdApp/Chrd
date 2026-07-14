@@ -13,7 +13,6 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'bookamrked_fan_model.dart';
@@ -38,9 +37,6 @@ class _BookamrkedFanWidgetState extends State<BookamrkedFanWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => BookamrkedFanModel());
-
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {});
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -310,7 +306,7 @@ class _BookamrkedFanWidgetState extends State<BookamrkedFanWidget> {
                                                       ).toString()
                                                   ? true
                                                   : false,
-                                              lastseen: '2 min',
+                                              lastseen: ' 2 min',
                                               bookmarkedAction: () async {
                                                 if ('true' ==
                                                     getJsonField(

@@ -31,7 +31,6 @@ class VenueMessagesModel extends FlutterFlowModel<VenueMessagesWidget> {
 
   // Stores action output result for [Backend Call - Query Rows] action in venue_messages widget.
   List<VenuesRow>? venueOutput;
-  Stream<List<GigsRow>>? realTimeListViewSupabaseStream;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;

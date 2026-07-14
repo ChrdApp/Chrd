@@ -58,6 +58,7 @@ class MyAppScrollBehavior extends MaterialScrollBehavior {
 
 class _MyAppState extends State<MyApp> {
   ThemeMode _themeMode = ThemeMode.system;
+  double _textScaleFactor = 1.0;
 
   late AppStateNotifier _appStateNotifier;
   late GoRouter _router;
@@ -97,6 +98,27 @@ class _MyAppState extends State<MyApp> {
         _themeMode = mode;
       });
 
+  void setTextScaleFactor(double updatedFactor) {
+    if (updatedFactor < FlutterFlowTheme.minTextScaleFactor ||
+        updatedFactor > FlutterFlowTheme.maxTextScaleFactor) {
+      return;
+    }
+    safeSetState(() {
+      _textScaleFactor = updatedFactor;
+    });
+  }
+
+  void incrementTextScaleFactor(double incrementValue) {
+    final updatedFactor = _textScaleFactor + incrementValue;
+    if (updatedFactor < FlutterFlowTheme.minTextScaleFactor ||
+        updatedFactor > FlutterFlowTheme.maxTextScaleFactor) {
+      return;
+    }
+    safeSetState(() {
+      _textScaleFactor = updatedFactor;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
@@ -115,6 +137,21 @@ class _MyAppState extends State<MyApp> {
       ),
       themeMode: _themeMode,
       routerConfig: _router,
+      builder: (_, child) => MediaQuery(
+        data: MediaQuery.of(context).copyWith(
+          textScaler:
+              _textScaleFactor == FlutterFlowTheme.defaultTextScaleFactor
+                  ? MediaQuery.of(context).textScaler.clamp(
+                        minScaleFactor: FlutterFlowTheme.minTextScaleFactor,
+                        maxScaleFactor: FlutterFlowTheme.maxTextScaleFactor,
+                      )
+                  : TextScaler.linear(_textScaleFactor).clamp(
+                      minScaleFactor: FlutterFlowTheme.minTextScaleFactor,
+                      maxScaleFactor: FlutterFlowTheme.maxTextScaleFactor,
+                    ),
+        ),
+        child: child!,
+      ),
     );
   }
 }

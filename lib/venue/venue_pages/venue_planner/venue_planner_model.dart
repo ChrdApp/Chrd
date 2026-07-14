@@ -1,6 +1,5 @@
 import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/enums/enums.dart';
-import '/components/calendar_filter_widget.dart';
 import '/components/empty_list_image_widget.dart';
 import '/components/venue_nav_bar_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -8,6 +7,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/venue/venue_pages/venue_components/c_h_r_d_venue_planner/c_h_r_d_venue_planner_widget.dart';
+import '/venue/venue_pages/venue_components/calendar_filter/calendar_filter_widget.dart';
 import 'dart:ui';
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/index.dart';

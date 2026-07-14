@@ -55,6 +55,10 @@ class AddingVenueOpenSlotsModel
   late CHRDRowWithIconModel cHRDRowWithIconModel4;
   // Stores action output result for [Alert Dialog - Custom Dialog] action in CHRD_row_with_icon widget.
   dynamic? performanceStage;
+  // State field(s) for TextField widget.
+  FocusNode? textFieldFocusNode;
+  TextEditingController? textController;
+  String? Function(BuildContext, String?)? textControllerValidator;
   // Model for CHRD_Label_Btn component.
   late CHRDLabelBtnModel cHRDLabelBtnModel;
   // Stores action output result for [Custom Action - validateMusicianSlotFields] action in CHRD_Label_Btn widget.
@@ -86,6 +90,9 @@ class AddingVenueOpenSlotsModel
     cHRDRowWithIconModel2.dispose();
     cHRDRowWithIconModel3.dispose();
     cHRDRowWithIconModel4.dispose();
+    textFieldFocusNode?.dispose();
+    textController?.dispose();
+
     cHRDLabelBtnModel.dispose();
   }
 }

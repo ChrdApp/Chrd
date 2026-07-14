@@ -57,6 +57,7 @@ class _VenueEntertainment7WidgetState extends State<VenueEntertainment7Widget> {
         _model.entertainmentSelected =
             widget!.entertainmentId!.toList().cast<int>();
         safeSetState(() {});
+        return;
       } else {
         return;
       }
@@ -153,7 +154,7 @@ class _VenueEntertainment7WidgetState extends State<VenueEntertainment7Widget> {
                       updateCallback: () => safeSetState(() {}),
                       child: CHRDLabelColumnTextWidget(
                         heading:
-                            'Select performance type for${widget!.musicianID != null ? FFAppState().AdminName : FFAppState().vanueName}',
+                            'Select performance type for ${widget!.musicianID != null ? FFAppState().AdminName : FFAppState().vanueName}',
                         subHeading: ' ',
                       ),
                     ),
@@ -360,6 +361,7 @@ class _VenueEntertainment7WidgetState extends State<VenueEntertainment7Widget> {
                                           r'''$.entertainment_id''',
                                         ));
                                         safeSetState(() {});
+                                        return;
                                       } else {
                                         _model.addToEntertainmentSelected(
                                             getJsonField(
@@ -367,6 +369,7 @@ class _VenueEntertainment7WidgetState extends State<VenueEntertainment7Widget> {
                                           r'''$.entertainment_id''',
                                         ));
                                         safeSetState(() {});
+                                        return;
                                       }
                                     },
                                     child: Container(
@@ -506,6 +509,7 @@ class _VenueEntertainment7WidgetState extends State<VenueEntertainment7Widget> {
                         ),
                       );
                       context.safePop();
+                      return;
                     } else if (widget!.musicianID != null) {
                       await UsersTable().update(
                         data: {
@@ -527,6 +531,8 @@ class _VenueEntertainment7WidgetState extends State<VenueEntertainment7Widget> {
                           ),
                         }.withoutNulls,
                       );
+
+                      return;
                     } else if (FFAppState().userType == Type.Fan) {
                       FFAppState().updateFanUserDataStruct(
                         (e) => e
@@ -544,6 +550,8 @@ class _VenueEntertainment7WidgetState extends State<VenueEntertainment7Widget> {
                           ),
                         }.withoutNulls,
                       );
+
+                      return;
                     } else {
                       FFAppState().updateVenueAccountCreateStruct(
                         (e) => e
@@ -553,6 +561,8 @@ class _VenueEntertainment7WidgetState extends State<VenueEntertainment7Widget> {
                       safeSetState(() {});
 
                       context.pushNamed(VenueGenres8Widget.routeName);
+
+                      return;
                     }
                   },
                 ),

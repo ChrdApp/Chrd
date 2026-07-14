@@ -46,9 +46,7 @@ class MusicianGigOverLayModel
   // Model for CHRD_Icon_With_Text component.
   late CHRDIconWithTextModel cHRDIconWithTextModel5;
   // Model for CHRD_Label_Btn component.
-  late CHRDLabelBtnModel cHRDLabelBtnModel1;
-  // Model for CHRD_Label_Btn component.
-  late CHRDLabelBtnModel cHRDLabelBtnModel2;
+  late CHRDLabelBtnModel cHRDLabelBtnModel;
   // Stores action output result for [Backend Call - API (Upsert gigs)] action in CHRD_Label_Btn widget.
   ApiCallResponse? upsertOutput;
   // Stores action output result for [Backend Call - Query Rows] action in CHRD_Label_Btn widget.
@@ -69,8 +67,7 @@ class MusicianGigOverLayModel
         createModel(context, () => CHRDIconWithTextModel());
     cHRDIconWithTextModel5 =
         createModel(context, () => CHRDIconWithTextModel());
-    cHRDLabelBtnModel1 = createModel(context, () => CHRDLabelBtnModel());
-    cHRDLabelBtnModel2 = createModel(context, () => CHRDLabelBtnModel());
+    cHRDLabelBtnModel = createModel(context, () => CHRDLabelBtnModel());
   }
 
   @override
@@ -81,7 +78,6 @@ class MusicianGigOverLayModel
     cHRDIconWithTextModel3.dispose();
     cHRDIconWithTextModel4.dispose();
     cHRDIconWithTextModel5.dispose();
-    cHRDLabelBtnModel1.dispose();
-    cHRDLabelBtnModel2.dispose();
+    cHRDLabelBtnModel.dispose();
   }
 }

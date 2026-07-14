@@ -71,6 +71,7 @@ class _AdminInfo1WidgetState extends State<AdminInfo1Widget> {
           });
         }
         safeSetState(() {});
+        return;
       } else {
         _model.hideMobileField =
             _model.userData?.firstOrNull?.phoneNumber != null &&
@@ -91,6 +92,9 @@ class _AdminInfo1WidgetState extends State<AdminInfo1Widget> {
             _model.adminNameModel.textController?.text =
                 '${FFAppState().firstName} ${FFAppState().lastName}';
           });
+          return;
+        } else {
+          return;
         }
       }
     });
@@ -155,30 +159,12 @@ class _AdminInfo1WidgetState extends State<AdminInfo1Widget> {
                   Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 32.0, 0.0, 0.0),
-                    child: InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () async {
-                        GoRouter.of(context).prepareAuthEvent();
-                        await authManager.signOut();
-                        GoRouter.of(context).clearRedirectLocation();
-
-                        FFAppState().step = 0;
-                        FFAppState().userType = null;
-                        safeSetState(() {});
-
-                        context.goNamedAuth(
-                            SplashScreenWidget.routeName, context.mounted);
-                      },
-                      child: wrapWithModel(
-                        model: _model.cHRDLabelColumnTextModel,
-                        updateCallback: () => safeSetState(() {}),
-                        child: CHRDLabelColumnTextWidget(
-                          heading: 'Admin Account info',
-                          subHeading: 'Let us know how to properly address you',
-                        ),
+                    child: wrapWithModel(
+                      model: _model.cHRDLabelColumnTextModel,
+                      updateCallback: () => safeSetState(() {}),
+                      child: CHRDLabelColumnTextWidget(
+                        heading: 'Admin Account info',
+                        subHeading: 'Let us know how to properly address you',
                       ),
                     ),
                   ),
@@ -331,27 +317,6 @@ class _AdminInfo1WidgetState extends State<AdminInfo1Widget> {
                             isSearchable: false,
                             isMultiSelect: false,
                           ),
-                        Text(
-                          FFAppState().firstName,
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    font: GoogleFonts.montserrat(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                  ),
-                        ),
                       ].divide(SizedBox(height: 14.0)),
                     ),
                   ),

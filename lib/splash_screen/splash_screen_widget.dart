@@ -35,7 +35,7 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (FFAppState().userType == Type.Venue) {
         if (FFAppState().step == 0) {
-          context.goNamed(SplashScreen2Widget.routeName);
+          context.goNamed(SplashScreen1Widget.routeName);
         } else if (FFAppState().step == 1) {
           context.goNamed(AccountCreation6Widget.routeName);
         } else if (FFAppState().step == 2) {
@@ -50,14 +50,14 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
           context.goNamed(HomeVWidget.routeName);
         } else {
           if (FFAppState().step > 6) {
-            context.goNamed(SplashScreen2Widget.routeName);
+            context.goNamed(SplashScreen1Widget.routeName);
           } else {
-            context.goNamed(SplashScreen2Widget.routeName);
+            context.goNamed(SplashScreen1Widget.routeName);
           }
         }
       } else if (FFAppState().userType == Type.Musician) {
         if (FFAppState().step == 0) {
-          context.goNamed(SplashScreen2Widget.routeName);
+          context.goNamed(SplashScreen1Widget.routeName);
         } else if (FFAppState().step == 1) {
           context.goNamed(AccountCreation6Widget.routeName);
         } else {

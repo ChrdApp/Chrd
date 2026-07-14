@@ -34,10 +34,16 @@ class _LoogedInPageWidgetState extends State<LoogedInPageWidget> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (FFAppState().userType == Type.Venue) {
         context.goNamed(HomeVWidget.routeName);
+
+        return;
       } else if (FFAppState().userType == Type.Musician) {
         context.goNamed(HomeMWidget.routeName);
+
+        return;
       } else {
         context.goNamed(SplashScreen1Widget.routeName);
+
+        return;
       }
     });
 

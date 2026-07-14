@@ -9,6 +9,7 @@ import '/musician/components/c_h_r_d_label_btn/c_h_r_d_label_btn_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_row_with_icon/c_h_r_d_row_with_icon_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_video_player_component/c_h_r_d_video_player_component_widget.dart';
 import 'dart:ui';
+import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'venue_details_overlay_widget.dart' show VenueDetailsOverlayWidget;
 import 'package:cached_network_image/cached_network_image.dart';
@@ -44,8 +45,10 @@ class VenueDetailsOverlayModel
   late CHRDRowWithIconModel cHRDRowWithIconModel3;
   // Model for CHRD_Label_Btn component.
   late CHRDLabelBtnModel cHRDLabelBtnModel1;
-  // Stores action output result for [Backend Call - API (Delete Venue Open Slots)] action in CHRD_Label_Btn widget.
-  ApiCallResponse? deleteVenueOutput;
+  // Stores action output result for [Backend Call - API (Hard delete venue slot)] action in CHRD_Label_Btn widget.
+  ApiCallResponse? hardDelete;
+  // Stores action output result for [Backend Call - API (Fetch musicians of gig)] action in CHRD_Label_Btn widget.
+  ApiCallResponse? fetchedMusicianList;
   // Model for CHRD_Label_Btn component.
   late CHRDLabelBtnModel cHRDLabelBtnModel2;
   // Model for CHRD_Label_Btn component.
