@@ -480,7 +480,7 @@ class _VenueGigContractOverlayWidgetState
 
                                           safeSetState(() {});
                                         },
-                                        text: 'Remove',
+                                        text: 'Remove Performer',
                                         options: FFButtonOptions(
                                           height: 24.0,
                                           padding:
@@ -489,8 +489,7 @@ class _VenueGigContractOverlayWidgetState
                                           iconPadding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 0.0, 0.0, 0.0),
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryViolet,
+                                          color: Color(0xFFFF0000),
                                           textStyle: FlutterFlowTheme.of(
                                                   context)
                                               .titleSmall
@@ -552,6 +551,14 @@ class _VenueGigContractOverlayWidgetState
                                               r'''$.data.venue_owner_id''',
                                             ),
                                             ParamType.int,
+                                          ),
+                                          'venueName': serializeParam(
+                                            getJsonField(
+                                              venueGigContractOverlayGetSingleSlotDetailsResponse
+                                                  .jsonBody,
+                                              r'''$.data.venue_name''',
+                                            ).toString(),
+                                            ParamType.String,
                                           ),
                                         }.withoutNulls,
                                       );
@@ -1993,6 +2000,11 @@ class _VenueGigContractOverlayWidgetState
                                               .jsonBody,
                                           r'''$.data.end_time''',
                                         ).toString()}',
+                                        endDate: getJsonField(
+                                          venueGigContractOverlayGetSingleSlotDetailsResponse
+                                              .jsonBody,
+                                          r'''$.data.end_date''',
+                                        ).toString(),
                                         acceptActionBtn:
                                             (reasonFieldValue) async {
                                           _model.userOutput =

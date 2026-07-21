@@ -1,4 +1,6 @@
+import '/auth/supabase_auth/auth_util.dart';
 import '/backend/schema/enums/enums.dart';
+import '/backend/schema/structs/index.dart';
 import '/fan/fan_creation/fan_creation_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -78,12 +80,51 @@ class _AccountCreation6WidgetState extends State<AccountCreation6Widget> {
                   Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
-                    child: wrapWithModel(
-                      model: _model.cHRDLabelColumnTextModel,
-                      updateCallback: () => safeSetState(() {}),
-                      child: CHRDLabelColumnTextWidget(
-                        heading: 'Choose Account Type',
-                        subHeading: 'Select your role and start your journey',
+                    child: InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        FFAppState().venueId = 0;
+                        FFAppState().userId = 0;
+                        FFAppState().step = 0;
+                        FFAppState().userType = Type.Venue;
+                        FFAppState().vanueName = '';
+                        FFAppState().AdminName = '';
+                        FFAppState().venueProfilePic = '';
+                        FFAppState().venueContentVenueList = [];
+                        FFAppState().venueAccountCreate =
+                            VenueAccountCreateStruct();
+                        FFAppState().performanceStagesContentList = [];
+                        FFAppState().startTime = null;
+                        FFAppState().endTime = null;
+                        FFAppState().slotRepeatType = 'None';
+                        FFAppState().slotEndDate = null;
+                        FFAppState().accountType = '';
+                        FFAppState().musicianAddImages = [];
+                        FFAppState().ProfileHighlight = [];
+                        FFAppState().gigOffer = GigOfferStruct();
+                        FFAppState().json = jsonDecode(
+                            '[{\"sender\":\"venue\",\"text\":\"Hey! We\'ve been following your shows and would love to have you DJ for us! How much money would you want for each show?\",\"timestamp\":\"9:41am\",\"date\":\"Oct 23rd, 2025\",\"isProposal\":true},{\"sender\":\"musician\",\"text\":\"Hi there! I would love to perform. I am not available Wednesday, Nov 26th. I am still interested in doing the other 3 shows for \$400 each.\",\"timestamp\":\"10:54am\"}]');
+                        FFAppState().email = '';
+                        FFAppState().firstName = '';
+                        FFAppState().lastName = '';
+                        safeSetState(() {});
+                        GoRouter.of(context).prepareAuthEvent();
+                        await authManager.signOut();
+                        GoRouter.of(context).clearRedirectLocation();
+
+                        context.goNamedAuth(
+                            SplashScreenWidget.routeName, context.mounted);
+                      },
+                      child: wrapWithModel(
+                        model: _model.cHRDLabelColumnTextModel,
+                        updateCallback: () => safeSetState(() {}),
+                        child: CHRDLabelColumnTextWidget(
+                          heading: 'Choose Account Type',
+                          subHeading: 'Select your role and start your journey',
+                        ),
                       ),
                     ),
                   ),

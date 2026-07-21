@@ -895,6 +895,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'venueOwnerId',
               ParamType.int,
             ),
+            venueName: params.getParam(
+              'venueName',
+              ParamType.String,
+            ),
           ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),

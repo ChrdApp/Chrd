@@ -472,7 +472,7 @@ class _VenueGigViewOverlayWidgetState extends State<VenueGigViewOverlayWidget> {
 
                                           safeSetState(() {});
                                         },
-                                        text: 'Remove',
+                                        text: 'Remove Performer',
                                         options: FFButtonOptions(
                                           height: 24.0,
                                           padding:
@@ -481,8 +481,7 @@ class _VenueGigViewOverlayWidgetState extends State<VenueGigViewOverlayWidget> {
                                           iconPadding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 0.0, 0.0, 0.0),
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryViolet,
+                                          color: Color(0xFFFF0000),
                                           textStyle: FlutterFlowTheme.of(
                                                   context)
                                               .titleSmall
@@ -568,6 +567,14 @@ class _VenueGigViewOverlayWidgetState extends State<VenueGigViewOverlayWidget> {
                                             r'''$.data.venue_owner_id''',
                                           ),
                                           ParamType.int,
+                                        ),
+                                        'venueName': serializeParam(
+                                          getJsonField(
+                                            venueGigViewOverlayGetSingleSlotDetailsResponse
+                                                .jsonBody,
+                                            r'''$.data.venue_name''',
+                                          ).toString(),
+                                          ParamType.String,
                                         ),
                                       }.withoutNulls,
                                     );

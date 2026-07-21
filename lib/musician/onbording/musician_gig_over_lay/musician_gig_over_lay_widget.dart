@@ -241,6 +241,14 @@ class _MusicianGigOverLayWidgetState extends State<MusicianGigOverLayWidget> {
                                           widget!.venueOwnerId,
                                           ParamType.int,
                                         ),
+                                        'venueName': serializeParam(
+                                          getJsonField(
+                                            musicianGigOverLayGetSingleSlotDetailsResponse
+                                                .jsonBody,
+                                            r'''$.data.venue_name''',
+                                          ).toString(),
+                                          ParamType.String,
+                                        ),
                                       }.withoutNulls,
                                     );
                                   },

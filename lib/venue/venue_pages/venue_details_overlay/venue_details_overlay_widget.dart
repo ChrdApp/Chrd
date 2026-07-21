@@ -350,6 +350,14 @@ class _VenueDetailsOverlayWidgetState extends State<VenueDetailsOverlayWidget> {
                                             ),
                                             ParamType.int,
                                           ),
+                                          'venueName': serializeParam(
+                                            getJsonField(
+                                              venueDetailsOverlayGetSingleSlotDetailsResponse
+                                                  .jsonBody,
+                                              r'''$.data.venue_name''',
+                                            ).toString(),
+                                            ParamType.String,
+                                          ),
                                         }.withoutNulls,
                                       );
                                     },
@@ -1111,7 +1119,7 @@ class _VenueDetailsOverlayWidgetState extends State<VenueDetailsOverlayWidget> {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          'Gig Notes2',
+                                          'Gig Notes',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(

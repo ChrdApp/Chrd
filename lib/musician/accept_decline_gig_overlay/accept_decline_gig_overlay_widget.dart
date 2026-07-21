@@ -318,6 +318,14 @@ class _AcceptDeclineGigOverlayWidgetState
                                             ),
                                             ParamType.int,
                                           ),
+                                          'venueName': serializeParam(
+                                            getJsonField(
+                                              acceptDeclineGigOverlayGetContractDetailsResponse
+                                                  .jsonBody,
+                                              r'''$.data.venue_name''',
+                                            ).toString(),
+                                            ParamType.String,
+                                          ),
                                         }.withoutNulls,
                                       );
                                     },

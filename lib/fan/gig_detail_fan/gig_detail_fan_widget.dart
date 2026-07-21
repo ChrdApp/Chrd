@@ -306,6 +306,14 @@ class _GigDetailFanWidgetState extends State<GigDetailFanWidget> {
                                             ),
                                             ParamType.int,
                                           ),
+                                          'venueName': serializeParam(
+                                            getJsonField(
+                                              containerGigDetailFanResponse
+                                                  .jsonBody,
+                                              r'''$..venue_name''',
+                                            ).toString(),
+                                            ParamType.String,
+                                          ),
                                         }.withoutNulls,
                                       );
                                     },

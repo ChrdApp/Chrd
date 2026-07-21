@@ -23,10 +23,12 @@ class ViewVenuePlannerWidget extends StatefulWidget {
     super.key,
     required this.venueId,
     required this.venueOwnerId,
+    required this.venueName,
   });
 
   final int? venueId;
   final int? venueOwnerId;
+  final String? venueName;
 
   static String routeName = 'view_venue_planner';
   static String routePath = '/viewVenuePlanner';
@@ -82,7 +84,7 @@ class _ViewVenuePlannerWidgetState extends State<ViewVenuePlannerWidget> {
               ? <int>[]
               : var1.map((e) => int.tryParse(e) ?? 0).toList();
         }(FFAppState().FilteredVenueIds.toList()),
-        slotStatus: 'Booked',
+        slotStatus: FFAppState().filteredVenueStatus,
       ),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
@@ -179,7 +181,7 @@ class _ViewVenuePlannerWidgetState extends State<ViewVenuePlannerWidget> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          'Venue Calendar',
+                                          '${widget!.venueName} Calendar',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
@@ -515,12 +517,9 @@ class _ViewVenuePlannerWidgetState extends State<ViewVenuePlannerWidget> {
                                                               .trim()
                                                               .isNotEmpty)
                                                             1,
-                                                          if ((selectedDate ??
-                                                                  '')
-                                                              .toString()
-                                                              .trim()
-                                                              .isNotEmpty)
-                                                            1
+                                                          if (selectedDate !=
+                                                              null)
+                                                            1,
                                                         ].length;
                                                       }(
                                                               _model
@@ -534,23 +533,18 @@ class _ViewVenuePlannerWidgetState extends State<ViewVenuePlannerWidget> {
                                                     '0'
                                                 ? '${valueOrDefault<String>(
                                                     ((String searchField,
-                                                                String selectedDate,
-                                                                List<String>
-                                                                    filteredVenues) {
+                                                                String
+                                                                    selectedDate) {
                                                       return [
-                                                        if ((searchField ?? '')
-                                                            .toString()
-                                                            .trim()
-                                                            .isNotEmpty)
+                                                        if (searchField
+                                                                ?.trim()
+                                                                .isNotEmpty ==
+                                                            true)
                                                           1,
-                                                        if ((selectedDate ?? '')
-                                                            .toString()
-                                                            .trim()
-                                                            .isNotEmpty)
-                                                          1,
-                                                        if ((filteredVenues ??
-                                                                [])
-                                                            .isNotEmpty)
+                                                        if (selectedDate
+                                                                ?.trim()
+                                                                .isNotEmpty ==
+                                                            true)
                                                           1,
                                                       ].length;
                                                     }(
@@ -558,10 +552,7 @@ class _ViewVenuePlannerWidgetState extends State<ViewVenuePlannerWidget> {
                                                                 .textController
                                                                 .text,
                                                             FFAppState()
-                                                                .selectedCalendarDate,
-                                                            FFAppState()
-                                                                .FilteredVenueIds
-                                                                .toList()))
+                                                                .selectedCalendarDate))
                                                         .toString(),
                                                     '0',
                                                   )} Filter'
@@ -765,7 +756,7 @@ class _ViewVenuePlannerWidgetState extends State<ViewVenuePlannerWidget> {
                                         child: custom_widgets.ShowCalender(
                                           width: double.infinity,
                                           height: 350.0,
-                                          userId: FFAppState().userId,
+                                          userId: widget!.venueOwnerId!,
                                           type: 'venue',
                                           selectedDate:
                                               FFAppState().selectedCalendarDate,

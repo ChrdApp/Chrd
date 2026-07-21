@@ -137,25 +137,6 @@ class _MobileNumber4WidgetState extends State<MobileNumber4Widget> {
                                   .fontStyle,
                             ),
                       ),
-                      Text(
-                        'User message may be sent within iOS Notifications, Natural or via SMS',
-                        textAlign: TextAlign.center,
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              font: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.normal,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .fontStyle,
-                              ),
-                              color: Color(0xFFE2E4E8),
-                              fontSize: 14.0,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.normal,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .fontStyle,
-                            ),
-                      ),
                     ].divide(SizedBox(height: 6.0)),
                   ),
                 ]
@@ -262,9 +243,7 @@ class _MobileNumber4WidgetState extends State<MobileNumber4Widget> {
                         ),
                       ),
                     ),
-                  ]
-                      .divide(SizedBox(height: 12.0))
-                      .addToStart(SizedBox(height: 36.0)),
+                  ].divide(SizedBox(height: 12.0)),
                 ),
               ),
             ),

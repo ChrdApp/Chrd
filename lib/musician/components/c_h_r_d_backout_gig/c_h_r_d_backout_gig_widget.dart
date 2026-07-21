@@ -15,11 +15,13 @@ class CHRDBackoutGigWidget extends StatefulWidget {
     required this.dateTime,
     required this.price,
     required this.acceptActionBtn,
+    required this.endDate,
   });
 
   final String? dateTime;
   final String? price;
   final Future Function(String reasonFieldValue)? acceptActionBtn;
+  final String? endDate;
 
   @override
   State<CHRDBackoutGigWidget> createState() => _CHRDBackoutGigWidgetState();
@@ -86,7 +88,7 @@ class _CHRDBackoutGigWidgetState extends State<CHRDBackoutGigWidget> {
                     ),
               ),
               Text(
-                widget!.dateTime!,
+                '${widget!.dateTime} – ${widget!.endDate}',
                 textAlign: TextAlign.center,
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                       font: GoogleFonts.montserrat(
