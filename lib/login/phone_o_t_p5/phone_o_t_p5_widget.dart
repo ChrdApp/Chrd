@@ -1,7 +1,6 @@
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/musician/components/c_h_r_d_back_btn/c_h_r_d_back_btn_widget.dart';
@@ -11,6 +10,7 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:flutter/services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -292,9 +292,7 @@ class _PhoneOTP5WidgetState extends State<PhoneOTP5Widget> {
                             'phone_number': functions
                                 .extractMobileNo(widget!.number!)
                                 ?.firstOrNull,
-                            'country_code': functions
-                                .extractMobileNo(widget!.number!)
-                                ?.lastOrNull,
+                            'country_code': '91',
                             'step': 1,
                             'auth_id': currentUserUid,
                             'is_active': true,

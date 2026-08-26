@@ -1,8 +1,8 @@
 import '/backend/schema/enums/enums.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/index.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -34,10 +34,16 @@ class _LoogedInPageWidgetState extends State<LoogedInPageWidget> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (FFAppState().userType == Type.Venue) {
         context.goNamed(HomeVWidget.routeName);
+
+        return;
       } else if (FFAppState().userType == Type.Musician) {
         context.goNamed(HomeMWidget.routeName);
+
+        return;
       } else {
         context.goNamed(SplashScreen1Widget.routeName);
+
+        return;
       }
     });
 

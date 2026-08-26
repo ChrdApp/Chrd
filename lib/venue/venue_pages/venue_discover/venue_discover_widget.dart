@@ -1,18 +1,21 @@
+import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/empty_list_image_widget.dart';
+import '/components/invite_user_widget.dart';
 import '/components/notification_icon_widget.dart';
 import '/components/venue_nav_bar_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/venue/venue_pages/venue_components/c_h_r_d_pop_artists/c_h_r_d_pop_artists_widget.dart';
 import '/venue/venue_pages/venue_components/c_h_r_d_trending/c_h_r_d_trending_widget.dart';
+import 'dart:convert';
 import 'dart:ui';
 import '/index.dart';
 import 'package:easy_debounce/easy_debounce.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -119,6 +122,201 @@ class _VenueDiscoverWidgetState extends State<VenueDiscoverWidget> {
                                       .bodyMedium
                                       .fontStyle,
                                 ),
+                          ),
+                        ),
+                        FFButtonWidget(
+                          onPressed: () async {
+                            await showModalBottomSheet(
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              enableDrag: false,
+                              context: context,
+                              builder: (context) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    FocusScope.of(context).unfocus();
+                                    FocusManager.instance.primaryFocus
+                                        ?.unfocus();
+                                  },
+                                  child: Padding(
+                                    padding: MediaQuery.viewInsetsOf(context),
+                                    child: InviteUserWidget(
+                                      onTapAction: (phoneNumber) async {
+                                        _model.createGigInvite =
+                                            await VenueGroup.createGigInviteCall
+                                                .call(
+                                          pInviterId: FFAppState().userId,
+                                          pCountryCode: 91,
+                                          pInviteType: 'general',
+                                          pPhone:
+                                              int.tryParse(phoneNumber) ?? 0,
+                                          pInviteeRole: 'musician',
+                                          pSlotId: null,
+                                          pVenueId: null,
+                                        );
+
+                                        if ((_model
+                                                .createGigInvite?.succeeded ??
+                                            true)) {
+                                          if (('false' ==
+                                                  getJsonField(
+                                                    (_model.createGigInvite
+                                                            ?.jsonBody ??
+                                                        ''),
+                                                    r'''$.existing_user''',
+                                                  ).toString()) &&
+                                              ('false' ==
+                                                  getJsonField(
+                                                    (_model.createGigInvite
+                                                            ?.jsonBody ??
+                                                        ''),
+                                                    r'''$.duplicate''',
+                                                  ).toString())) {
+                                            _model.sendInvite =
+                                                await DynamicLinkGroup
+                                                    .sendGigInviteCall
+                                                    .call(
+                                              inviteToken: getJsonField(
+                                                (_model.createGigInvite
+                                                        ?.jsonBody ??
+                                                    ''),
+                                                r'''$.invite_token''',
+                                              ).toString(),
+                                              anonKey: FFDevEnvironmentValues()
+                                                  .anonKey,
+                                              token: currentJwtToken,
+                                            );
+
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  'Invite Sent!',
+                                                  style: TextStyle(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                  ),
+                                                ),
+                                                duration: Duration(
+                                                    milliseconds: 4000),
+                                                backgroundColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondary,
+                                              ),
+                                            );
+                                          } else {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  getJsonField(
+                                                    (_model.createGigInvite
+                                                            ?.jsonBody ??
+                                                        ''),
+                                                    r'''$.message''',
+                                                  ).toString(),
+                                                  style: TextStyle(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                  ),
+                                                ),
+                                                duration: Duration(
+                                                    milliseconds: 4000),
+                                                backgroundColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondary,
+                                              ),
+                                            );
+                                          }
+                                        } else {
+                                          await showDialog(
+                                            context: context,
+                                            builder: (alertDialogContext) {
+                                              return AlertDialog(
+                                                content: Text(getJsonField(
+                                                  (_model.createGigInvite
+                                                          ?.jsonBody ??
+                                                      ''),
+                                                  r'''$.message''',
+                                                ).toString()),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext),
+                                                    child: Text('Ok'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                getJsonField(
+                                                  (_model.createGigInvite
+                                                          ?.jsonBody ??
+                                                      ''),
+                                                  r'''$.message''',
+                                                ).toString(),
+                                                style: TextStyle(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                ),
+                                              ),
+                                              duration:
+                                                  Duration(milliseconds: 4000),
+                                              backgroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondary,
+                                            ),
+                                          );
+                                        }
+
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ),
+                                );
+                              },
+                            ).then((value) => safeSetState(() {}));
+
+                            safeSetState(() {});
+                          },
+                          text: 'Invite',
+                          options: FFButtonOptions(
+                            height: 30.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                16.0, 0.0, 16.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FlutterFlowTheme.of(context).primaryViolet,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  font: GoogleFonts.interTight(
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .fontStyle,
+                                  ),
+                                  color: Colors.white,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .fontStyle,
+                                ),
+                            elevation: 0.0,
+                            borderRadius: BorderRadius.circular(16.0),
                           ),
                         ),
                         FutureBuilder<List<NotificationRow>>(
@@ -344,7 +542,7 @@ class _VenueDiscoverWidgetState extends State<VenueDiscoverWidget> {
                                                     image: DecorationImage(
                                                       fit: BoxFit.cover,
                                                       image: Image.network(
-                                                        'https://tse4.mm.bing.net/th/id/OIP.pr9z-vjVCHf_lmnbh_mlpwHaE7?pid=Api&P=0&h=220',
+                                                        '',
                                                       ).image,
                                                     ),
                                                     borderRadius:

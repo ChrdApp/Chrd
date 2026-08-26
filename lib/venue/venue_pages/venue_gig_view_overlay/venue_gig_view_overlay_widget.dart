@@ -2,7 +2,6 @@ import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/musician/components/c_h_r_d_back_btn/c_h_r_d_back_btn_widget.dart';
@@ -10,10 +9,12 @@ import '/musician/components/c_h_r_d_label_btn/c_h_r_d_label_btn_widget.dart';
 import '/musician/components/c_h_r_d_remove_musician/c_h_r_d_remove_musician_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_row_with_icon/c_h_r_d_row_with_icon_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_video_player_component/c_h_r_d_video_player_component_widget.dart';
+import 'dart:convert';
 import 'dart:ui';
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
@@ -472,7 +473,7 @@ class _VenueGigViewOverlayWidgetState extends State<VenueGigViewOverlayWidget> {
 
                                           safeSetState(() {});
                                         },
-                                        text: 'Remove',
+                                        text: 'Remove Performer',
                                         options: FFButtonOptions(
                                           height: 24.0,
                                           padding:
@@ -481,8 +482,7 @@ class _VenueGigViewOverlayWidgetState extends State<VenueGigViewOverlayWidget> {
                                           iconPadding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 0.0, 0.0, 0.0),
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryViolet,
+                                          color: Color(0xFFFF0000),
                                           textStyle: FlutterFlowTheme.of(
                                                   context)
                                               .titleSmall
@@ -568,6 +568,14 @@ class _VenueGigViewOverlayWidgetState extends State<VenueGigViewOverlayWidget> {
                                             r'''$.data.venue_owner_id''',
                                           ),
                                           ParamType.int,
+                                        ),
+                                        'venueName': serializeParam(
+                                          getJsonField(
+                                            venueGigViewOverlayGetSingleSlotDetailsResponse
+                                                .jsonBody,
+                                            r'''$.data.venue_name''',
+                                          ).toString(),
+                                          ParamType.String,
                                         ),
                                       }.withoutNulls,
                                     );

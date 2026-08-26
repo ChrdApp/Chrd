@@ -12,13 +12,15 @@ import '/backend/supabase/supabase.dart';
 import '/auth/base_auth_user_provider.dart';
 
 import '/main.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/lat_lng.dart';
-import '/flutter_flow/place.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
+import 'package:ff_commons/flutter_flow/lat_lng.dart';
+import 'package:ff_commons/flutter_flow/place.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'serialization_util.dart';
 
 import '/index.dart';
+import 'package:branchio_dynamic_linking_akp5u6/index.dart'
+    as $branchio_dynamic_linking_akp5u6;
 
 export 'package:go_router/go_router.dart';
 export 'serialization_util.dart';
@@ -80,841 +82,855 @@ class AppStateNotifier extends ChangeNotifier {
   }
 }
 
-GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
-      initialLocation: '/',
-      debugLogDiagnostics: true,
-      refreshListenable: appStateNotifier,
-      navigatorKey: appNavigatorKey,
-      errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? NavPageWidget() : SplashScreenWidget(),
-      routes: [
-        FFRoute(
-          name: '_initialize',
-          path: '/',
-          builder: (context, _) => appStateNotifier.loggedIn
-              ? NavPageWidget()
-              : SplashScreenWidget(),
-        ),
-        FFRoute(
-          name: Onbording3Widget.routeName,
-          path: Onbording3Widget.routePath,
-          builder: (context, params) => Onbording3Widget(),
-        ),
-        FFRoute(
-          name: AccountCreation6Widget.routeName,
-          path: AccountCreation6Widget.routePath,
-          builder: (context, params) => AccountCreation6Widget(),
-        ),
-        FFRoute(
-          name: EditMusicianProfileWidget.routeName,
-          path: EditMusicianProfileWidget.routePath,
-          builder: (context, params) => EditMusicianProfileWidget(),
-        ),
-        FFRoute(
-          name: MessagePageWidget.routeName,
-          path: MessagePageWidget.routePath,
-          builder: (context, params) => MessagePageWidget(),
-        ),
-        FFRoute(
-          name: ContractBoardWidget.routeName,
-          path: ContractBoardWidget.routePath,
-          builder: (context, params) => ContractBoardWidget(),
-        ),
-        FFRoute(
-          name: DiscoverWidget.routeName,
-          path: DiscoverWidget.routePath,
-          builder: (context, params) => DiscoverWidget(),
-        ),
-        FFRoute(
-          name: ProfileWidget.routeName,
-          path: ProfileWidget.routePath,
-          builder: (context, params) => ProfileWidget(),
-        ),
-        FFRoute(
-          name: TestWidget.routeName,
-          path: TestWidget.routePath,
-          builder: (context, params) => TestWidget(),
-        ),
-        FFRoute(
-          name: LoginSecurityWidget.routeName,
-          path: LoginSecurityWidget.routePath,
-          builder: (context, params) => LoginSecurityWidget(
-            userData: params.getParam<UsersRow>(
-              'userData',
-              ParamType.SupabaseRow,
-            ),
+GoRouter createRouter(AppStateNotifier appStateNotifier) {
+  $branchio_dynamic_linking_akp5u6.initializeRoutes(
+    testHomePageWidgetName: 'branchio_dynamic_linking_akp5u6.TestHomePage',
+    testHomePageWidgetPath: '/testHomePage',
+    testDashboardWidgetName: 'branchio_dynamic_linking_akp5u6.TestDashboard',
+    testDashboardWidgetPath: '/dashboard/:title',
+  );
+
+  return GoRouter(
+    initialLocation: '/',
+    debugLogDiagnostics: true,
+    refreshListenable: appStateNotifier,
+    navigatorKey: appNavigatorKey,
+    errorBuilder: (context, state) =>
+        appStateNotifier.loggedIn ? NavPageWidget() : SplashScreenWidget(),
+    routes: [
+      FFRoute(
+        name: '_initialize',
+        path: '/',
+        builder: (context, _) =>
+            appStateNotifier.loggedIn ? NavPageWidget() : SplashScreenWidget(),
+      ),
+      FFRoute(
+        name: Onbording3Widget.routeName,
+        path: Onbording3Widget.routePath,
+        builder: (context, params) => Onbording3Widget(),
+      ),
+      FFRoute(
+        name: AccountCreation6Widget.routeName,
+        path: AccountCreation6Widget.routePath,
+        builder: (context, params) => AccountCreation6Widget(),
+      ),
+      FFRoute(
+        name: EditMusicianProfileWidget.routeName,
+        path: EditMusicianProfileWidget.routePath,
+        builder: (context, params) => EditMusicianProfileWidget(),
+      ),
+      FFRoute(
+        name: MessagePageWidget.routeName,
+        path: MessagePageWidget.routePath,
+        builder: (context, params) => MessagePageWidget(),
+      ),
+      FFRoute(
+        name: ContractBoardWidget.routeName,
+        path: ContractBoardWidget.routePath,
+        builder: (context, params) => ContractBoardWidget(),
+      ),
+      FFRoute(
+        name: DiscoverWidget.routeName,
+        path: DiscoverWidget.routePath,
+        builder: (context, params) => DiscoverWidget(),
+      ),
+      FFRoute(
+        name: ProfileWidget.routeName,
+        path: ProfileWidget.routePath,
+        builder: (context, params) => ProfileWidget(),
+      ),
+      FFRoute(
+        name: LoginSecurityWidget.routeName,
+        path: LoginSecurityWidget.routePath,
+        builder: (context, params) => LoginSecurityWidget(
+          userData: params.getParam<UsersRow>(
+            'userData',
+            ParamType.SupabaseRow,
           ),
         ),
-        FFRoute(
-          name: SplashScreen1Widget.routeName,
-          path: SplashScreen1Widget.routePath,
-          builder: (context, params) => SplashScreen1Widget(),
-        ),
-        FFRoute(
-          name: SplashScreen2Widget.routeName,
-          path: SplashScreen2Widget.routePath,
-          builder: (context, params) => SplashScreen2Widget(),
-        ),
-        FFRoute(
-          name: VenueBankAccountWidget.routeName,
-          path: VenueBankAccountWidget.routePath,
-          builder: (context, params) => VenueBankAccountWidget(),
-        ),
-        FFRoute(
-          name: MusicianBankAccountWidget.routeName,
-          path: MusicianBankAccountWidget.routePath,
-          builder: (context, params) => MusicianBankAccountWidget(),
-        ),
-        FFRoute(
-          name: MusicianAddBandWidget.routeName,
-          path: MusicianAddBandWidget.routePath,
-          builder: (context, params) => MusicianAddBandWidget(),
-        ),
-        FFRoute(
-          name: VenueSocialMedia6Widget.routeName,
-          path: VenueSocialMedia6Widget.routePath,
-          builder: (context, params) => VenueSocialMedia6Widget(
-            type: params.getParam(
-              'type',
-              ParamType.String,
-            ),
-            venueId: params.getParam(
-              'venueId',
-              ParamType.int,
-            ),
-            musicianId: params.getParam(
-              'musicianId',
-              ParamType.int,
-            ),
+      ),
+      FFRoute(
+        name: SplashScreen1Widget.routeName,
+        path: SplashScreen1Widget.routePath,
+        builder: (context, params) => SplashScreen1Widget(),
+      ),
+      FFRoute(
+        name: SplashScreen2Widget.routeName,
+        path: SplashScreen2Widget.routePath,
+        builder: (context, params) => SplashScreen2Widget(),
+      ),
+      FFRoute(
+        name: VenueBankAccountWidget.routeName,
+        path: VenueBankAccountWidget.routePath,
+        builder: (context, params) => VenueBankAccountWidget(),
+      ),
+      FFRoute(
+        name: MusicianBankAccountWidget.routeName,
+        path: MusicianBankAccountWidget.routePath,
+        builder: (context, params) => MusicianBankAccountWidget(),
+      ),
+      FFRoute(
+        name: MusicianAddBandWidget.routeName,
+        path: MusicianAddBandWidget.routePath,
+        builder: (context, params) => MusicianAddBandWidget(),
+      ),
+      FFRoute(
+        name: VenueSocialMedia6Widget.routeName,
+        path: VenueSocialMedia6Widget.routePath,
+        builder: (context, params) => VenueSocialMedia6Widget(
+          type: params.getParam(
+            'type',
+            ParamType.String,
+          ),
+          venueId: params.getParam(
+            'venueId',
+            ParamType.int,
+          ),
+          musicianId: params.getParam(
+            'musicianId',
+            ParamType.int,
           ),
         ),
-        FFRoute(
-          name: AddAvailableSlotsWidget.routeName,
-          path: AddAvailableSlotsWidget.routePath,
-          builder: (context, params) => AddAvailableSlotsWidget(
-            repertType: params.getParam(
-              'repertType',
-              ParamType.String,
-            ),
+      ),
+      FFRoute(
+        name: AddAvailableSlotsWidget.routeName,
+        path: AddAvailableSlotsWidget.routePath,
+        builder: (context, params) => AddAvailableSlotsWidget(
+          repertType: params.getParam(
+            'repertType',
+            ParamType.String,
           ),
         ),
-        FFRoute(
-          name: RepeatOverLayWidget.routeName,
-          path: RepeatOverLayWidget.routePath,
-          builder: (context, params) => RepeatOverLayWidget(
-            type: params.getParam(
-              'type',
-              ParamType.String,
-            ),
-            selected: params.getParam(
-              'selected',
-              ParamType.DateTime,
-            ),
+      ),
+      FFRoute(
+        name: RepeatOverLayWidget.routeName,
+        path: RepeatOverLayWidget.routePath,
+        builder: (context, params) => RepeatOverLayWidget(
+          type: params.getParam(
+            'type',
+            ParamType.String,
+          ),
+          selected: params.getParam(
+            'selected',
+            ParamType.DateTime,
           ),
         ),
-        FFRoute(
-          name: MobileNumber4Widget.routeName,
-          path: MobileNumber4Widget.routePath,
-          builder: (context, params) => MobileNumber4Widget(),
-        ),
-        FFRoute(
-          name: PhoneOTP5Widget.routeName,
-          path: PhoneOTP5Widget.routePath,
-          builder: (context, params) => PhoneOTP5Widget(
-            number: params.getParam(
-              'number',
-              ParamType.String,
-            ),
+      ),
+      FFRoute(
+        name: MobileNumber4Widget.routeName,
+        path: MobileNumber4Widget.routePath,
+        builder: (context, params) => MobileNumber4Widget(),
+      ),
+      FFRoute(
+        name: PhoneOTP5Widget.routeName,
+        path: PhoneOTP5Widget.routePath,
+        builder: (context, params) => PhoneOTP5Widget(
+          number: params.getParam(
+            'number',
+            ParamType.String,
           ),
         ),
-        FFRoute(
-          name: AdminInfo1Widget.routeName,
-          path: AdminInfo1Widget.routePath,
-          builder: (context, params) => AdminInfo1Widget(),
-        ),
-        FFRoute(
-          name: AddVenues2Widget.routeName,
-          path: AddVenues2Widget.routePath,
-          builder: (context, params) => AddVenues2Widget(),
-        ),
-        FFRoute(
-          name: VenueAccountInfo3Widget.routeName,
-          path: VenueAccountInfo3Widget.routePath,
-          builder: (context, params) => VenueAccountInfo3Widget(
-            venueId: params.getParam(
-              'venueId',
-              ParamType.int,
-            ),
-            isEdit: params.getParam(
-              'isEdit',
-              ParamType.bool,
-            ),
+      ),
+      FFRoute(
+        name: AdminInfo1Widget.routeName,
+        path: AdminInfo1Widget.routePath,
+        builder: (context, params) => AdminInfo1Widget(),
+      ),
+      FFRoute(
+        name: AddVenues2Widget.routeName,
+        path: AddVenues2Widget.routePath,
+        builder: (context, params) => AddVenues2Widget(),
+      ),
+      FFRoute(
+        name: VenueAccountInfo3Widget.routeName,
+        path: VenueAccountInfo3Widget.routePath,
+        builder: (context, params) => VenueAccountInfo3Widget(
+          venueId: params.getParam(
+            'venueId',
+            ParamType.int,
+          ),
+          isEdit: params.getParam(
+            'isEdit',
+            ParamType.bool,
           ),
         ),
-        FFRoute(
-          name: VenueProfilePic4Widget.routeName,
-          path: VenueProfilePic4Widget.routePath,
-          builder: (context, params) => VenueProfilePic4Widget(),
-        ),
-        FFRoute(
-          name: InviteVenueTeamWidget.routeName,
-          path: InviteVenueTeamWidget.routePath,
-          builder: (context, params) => InviteVenueTeamWidget(),
-        ),
-        FFRoute(
-          name: InviteTeamMemberWidget.routeName,
-          path: InviteTeamMemberWidget.routePath,
-          builder: (context, params) => InviteTeamMemberWidget(),
-        ),
-        FFRoute(
-          name: AddVenueContent5Widget.routeName,
-          path: AddVenueContent5Widget.routePath,
-          builder: (context, params) => AddVenueContent5Widget(
-            venueId: params.getParam(
-              'venueId',
-              ParamType.int,
-            ),
+      ),
+      FFRoute(
+        name: VenueProfilePic4Widget.routeName,
+        path: VenueProfilePic4Widget.routePath,
+        builder: (context, params) => VenueProfilePic4Widget(),
+      ),
+      FFRoute(
+        name: InviteVenueTeamWidget.routeName,
+        path: InviteVenueTeamWidget.routePath,
+        builder: (context, params) => InviteVenueTeamWidget(),
+      ),
+      FFRoute(
+        name: InviteTeamMemberWidget.routeName,
+        path: InviteTeamMemberWidget.routePath,
+        builder: (context, params) => InviteTeamMemberWidget(),
+      ),
+      FFRoute(
+        name: AddVenueContent5Widget.routeName,
+        path: AddVenueContent5Widget.routePath,
+        builder: (context, params) => AddVenueContent5Widget(
+          venueId: params.getParam(
+            'venueId',
+            ParamType.int,
           ),
         ),
-        FFRoute(
-          name: AddPerformanceStages9Widget.routeName,
-          path: AddPerformanceStages9Widget.routePath,
-          builder: (context, params) => AddPerformanceStages9Widget(
-            venueId: params.getParam(
-              'venueId',
-              ParamType.int,
-            ),
+      ),
+      FFRoute(
+        name: AddPerformanceStages9Widget.routeName,
+        path: AddPerformanceStages9Widget.routePath,
+        builder: (context, params) => AddPerformanceStages9Widget(
+          venueId: params.getParam(
+            'venueId',
+            ParamType.int,
           ),
         ),
-        FFRoute(
-          name: AddingPerformanceStagesWidget.routeName,
-          path: AddingPerformanceStagesWidget.routePath,
-          builder: (context, params) => AddingPerformanceStagesWidget(
-            venueId: params.getParam(
-              'venueId',
-              ParamType.int,
-            ),
+      ),
+      FFRoute(
+        name: AddingPerformanceStagesWidget.routeName,
+        path: AddingPerformanceStagesWidget.routePath,
+        builder: (context, params) => AddingPerformanceStagesWidget(
+          venueId: params.getParam(
+            'venueId',
+            ParamType.int,
           ),
         ),
-        FFRoute(
-          name: AddVenueOpenSlots10Widget.routeName,
-          path: AddVenueOpenSlots10Widget.routePath,
-          builder: (context, params) => AddVenueOpenSlots10Widget(),
-        ),
-        FFRoute(
-          name: AddingVenueOpenSlotsWidget.routeName,
-          path: AddingVenueOpenSlotsWidget.routePath,
-          builder: (context, params) => AddingVenueOpenSlotsWidget(
-            timeSelected: params.getParam(
-              'timeSelected',
-              ParamType.String,
-            ),
-            venueId: params.getParam(
-              'venueId',
-              ParamType.int,
-            ),
-            isMusician: params.getParam(
-              'isMusician',
-              ParamType.bool,
-            ),
-            slotId: params.getParam(
-              'slotId',
-              ParamType.int,
-            ),
+      ),
+      FFRoute(
+        name: AddVenueOpenSlots10Widget.routeName,
+        path: AddVenueOpenSlots10Widget.routePath,
+        builder: (context, params) => AddVenueOpenSlots10Widget(),
+      ),
+      FFRoute(
+        name: AddingVenueOpenSlotsWidget.routeName,
+        path: AddingVenueOpenSlotsWidget.routePath,
+        builder: (context, params) => AddingVenueOpenSlotsWidget(
+          timeSelected: params.getParam(
+            'timeSelected',
+            ParamType.String,
+          ),
+          venueId: params.getParam(
+            'venueId',
+            ParamType.int,
+          ),
+          isMusician: params.getParam(
+            'isMusician',
+            ParamType.bool,
+          ),
+          slotId: params.getParam(
+            'slotId',
+            ParamType.int,
           ),
         ),
-        FFRoute(
-          name: VenueEntertainment7Widget.routeName,
-          path: VenueEntertainment7Widget.routePath,
-          builder: (context, params) => VenueEntertainment7Widget(
-            entertainmentId: params.getParam<int>(
-              'entertainmentId',
-              ParamType.int,
-              isList: true,
-            ),
-            venueId: params.getParam(
-              'venueId',
-              ParamType.int,
-            ),
-            musicianID: params.getParam(
-              'musicianID',
-              ParamType.int,
-            ),
+      ),
+      FFRoute(
+        name: VenueEntertainment7Widget.routeName,
+        path: VenueEntertainment7Widget.routePath,
+        builder: (context, params) => VenueEntertainment7Widget(
+          entertainmentId: params.getParam<int>(
+            'entertainmentId',
+            ParamType.int,
+            isList: true,
+          ),
+          venueId: params.getParam(
+            'venueId',
+            ParamType.int,
+          ),
+          musicianID: params.getParam(
+            'musicianID',
+            ParamType.int,
           ),
         ),
-        FFRoute(
-          name: VenueGenres8Widget.routeName,
-          path: VenueGenres8Widget.routePath,
-          builder: (context, params) => VenueGenres8Widget(
-            venueId: params.getParam(
-              'venueId',
-              ParamType.int,
-            ),
-            genersId: params.getParam<int>(
-              'genersId',
-              ParamType.int,
-              isList: true,
-            ),
-            musicianID: params.getParam(
-              'musicianID',
-              ParamType.int,
-            ),
+      ),
+      FFRoute(
+        name: VenueGenres8Widget.routeName,
+        path: VenueGenres8Widget.routePath,
+        builder: (context, params) => VenueGenres8Widget(
+          venueId: params.getParam(
+            'venueId',
+            ParamType.int,
+          ),
+          genersId: params.getParam<int>(
+            'genersId',
+            ParamType.int,
+            isList: true,
+          ),
+          musicianID: params.getParam(
+            'musicianID',
+            ParamType.int,
           ),
         ),
-        FFRoute(
-          name: OpenSlotDashboardWidget.routeName,
-          path: OpenSlotDashboardWidget.routePath,
-          builder: (context, params) => OpenSlotDashboardWidget(),
-        ),
-        FFRoute(
-          name: VenueDiscoverWidget.routeName,
-          path: VenueDiscoverWidget.routePath,
-          builder: (context, params) => VenueDiscoverWidget(),
-        ),
-        FFRoute(
-          name: VenuesWidget.routeName,
-          path: VenuesWidget.routePath,
-          builder: (context, params) => VenuesWidget(),
-        ),
-        FFRoute(
-          name: VenuesProfileViewWidget.routeName,
-          path: VenuesProfileViewWidget.routePath,
-          builder: (context, params) => VenuesProfileViewWidget(
-            venueId: params.getParam(
-              'venueId',
-              ParamType.int,
-            ),
+      ),
+      FFRoute(
+        name: OpenSlotDashboardWidget.routeName,
+        path: OpenSlotDashboardWidget.routePath,
+        builder: (context, params) => OpenSlotDashboardWidget(),
+      ),
+      FFRoute(
+        name: VenueDiscoverWidget.routeName,
+        path: VenueDiscoverWidget.routePath,
+        builder: (context, params) => VenueDiscoverWidget(),
+      ),
+      FFRoute(
+        name: VenuesWidget.routeName,
+        path: VenuesWidget.routePath,
+        builder: (context, params) => VenuesWidget(),
+      ),
+      FFRoute(
+        name: VenuesProfileViewWidget.routeName,
+        path: VenuesProfileViewWidget.routePath,
+        builder: (context, params) => VenuesProfileViewWidget(
+          venueId: params.getParam(
+            'venueId',
+            ParamType.int,
           ),
         ),
-        FFRoute(
-          name: VenueDetailsOverlayWidget.routeName,
-          path: VenueDetailsOverlayWidget.routePath,
-          builder: (context, params) => VenueDetailsOverlayWidget(
-            slotId: params.getParam(
-              'slotId',
-              ParamType.int,
-            ),
+      ),
+      FFRoute(
+        name: VenueDetailsOverlayWidget.routeName,
+        path: VenueDetailsOverlayWidget.routePath,
+        builder: (context, params) => VenueDetailsOverlayWidget(
+          slotId: params.getParam(
+            'slotId',
+            ParamType.int,
           ),
         ),
-        FFRoute(
-          name: VenueOpenSlotsWidget.routeName,
-          path: VenueOpenSlotsWidget.routePath,
-          builder: (context, params) => VenueOpenSlotsWidget(
-            venueId: params.getParam(
-              'venueId',
-              ParamType.int,
-            ),
+      ),
+      FFRoute(
+        name: VenueOpenSlotsWidget.routeName,
+        path: VenueOpenSlotsWidget.routePath,
+        builder: (context, params) => VenueOpenSlotsWidget(
+          venueId: params.getParam(
+            'venueId',
+            ParamType.int,
           ),
         ),
-        FFRoute(
-          name: SelectTalentWidget.routeName,
-          path: SelectTalentWidget.routePath,
-          builder: (context, params) => SelectTalentWidget(
-            venueId: params.getParam(
-              'venueId',
-              ParamType.int,
-            ),
-            slotId: params.getParam(
-              'slotId',
-              ParamType.int,
-            ),
-            venueName: params.getParam(
-              'venueName',
-              ParamType.String,
-            ),
-            venueImage: params.getParam(
-              'venueImage',
-              ParamType.String,
-            ),
+      ),
+      FFRoute(
+        name: SelectTalentWidget.routeName,
+        path: SelectTalentWidget.routePath,
+        builder: (context, params) => SelectTalentWidget(
+          venueId: params.getParam(
+            'venueId',
+            ParamType.int,
+          ),
+          slotId: params.getParam(
+            'slotId',
+            ParamType.int,
+          ),
+          venueName: params.getParam(
+            'venueName',
+            ParamType.String,
+          ),
+          venueImage: params.getParam(
+            'venueImage',
+            ParamType.String,
           ),
         ),
-        FFRoute(
-          name: SplashScreenWidget.routeName,
-          path: SplashScreenWidget.routePath,
-          builder: (context, params) => SplashScreenWidget(),
-        ),
-        FFRoute(
-          name: GigOfferVenueNotesWidget.routeName,
-          path: GigOfferVenueNotesWidget.routePath,
-          builder: (context, params) => GigOfferVenueNotesWidget(),
-        ),
-        FFRoute(
-          name: GigOfferChooseSlotWidget.routeName,
-          path: GigOfferChooseSlotWidget.routePath,
-          builder: (context, params) => GigOfferChooseSlotWidget(
-            musicianImage: params.getParam(
-              'musicianImage',
-              ParamType.String,
-            ),
-            musicinaName: params.getParam(
-              'musicinaName',
-              ParamType.String,
-            ),
-            musicianId: params.getParam(
-              'musicianId',
-              ParamType.int,
-            ),
+      ),
+      FFRoute(
+        name: SplashScreenWidget.routeName,
+        path: SplashScreenWidget.routePath,
+        builder: (context, params) => SplashScreenWidget(),
+      ),
+      FFRoute(
+        name: GigOfferVenueNotesWidget.routeName,
+        path: GigOfferVenueNotesWidget.routePath,
+        builder: (context, params) => GigOfferVenueNotesWidget(),
+      ),
+      FFRoute(
+        name: GigOfferChooseSlotWidget.routeName,
+        path: GigOfferChooseSlotWidget.routePath,
+        builder: (context, params) => GigOfferChooseSlotWidget(
+          musicianImage: params.getParam(
+            'musicianImage',
+            ParamType.String,
+          ),
+          musicinaName: params.getParam(
+            'musicinaName',
+            ParamType.String,
+          ),
+          musicianId: params.getParam(
+            'musicianId',
+            ParamType.int,
           ),
         ),
-        FFRoute(
-          name: VenuePlannerWidget.routeName,
-          path: VenuePlannerWidget.routePath,
-          builder: (context, params) => VenuePlannerWidget(),
-        ),
-        FFRoute(
-          name: MusicianProfileVenueWidget.routeName,
-          path: MusicianProfileVenueWidget.routePath,
-          builder: (context, params) => MusicianProfileVenueWidget(
-            musicianId: params.getParam(
-              'musicianId',
-              ParamType.int,
-            ),
+      ),
+      FFRoute(
+        name: VenuePlannerWidget.routeName,
+        path: VenuePlannerWidget.routePath,
+        builder: (context, params) => VenuePlannerWidget(),
+      ),
+      FFRoute(
+        name: MusicianProfileVenueWidget.routeName,
+        path: MusicianProfileVenueWidget.routePath,
+        builder: (context, params) => MusicianProfileVenueWidget(
+          musicianId: params.getParam(
+            'musicianId',
+            ParamType.int,
           ),
         ),
-        FFRoute(
-          name: VenueMusicianProfilePostsWidget.routeName,
-          path: VenueMusicianProfilePostsWidget.routePath,
-          builder: (context, params) => VenueMusicianProfilePostsWidget(),
-        ),
-        FFRoute(
-          name: GigOfferChooseVenueWidget.routeName,
-          path: GigOfferChooseVenueWidget.routePath,
-          builder: (context, params) => GigOfferChooseVenueWidget(
-            musicianImage: params.getParam(
-              'musicianImage',
-              ParamType.String,
-            ),
-            musicianName: params.getParam(
-              'musicianName',
-              ParamType.String,
-            ),
-            musicianId: params.getParam(
-              'musicianId',
-              ParamType.int,
-            ),
-            venueName: params.getParam(
-              'venueName',
-              ParamType.String,
-            ),
-            venueImage: params.getParam(
-              'venueImage',
-              ParamType.String,
-            ),
+      ),
+      FFRoute(
+        name: VenueMusicianProfilePostsWidget.routeName,
+        path: VenueMusicianProfilePostsWidget.routePath,
+        builder: (context, params) => VenueMusicianProfilePostsWidget(),
+      ),
+      FFRoute(
+        name: GigOfferChooseVenueWidget.routeName,
+        path: GigOfferChooseVenueWidget.routePath,
+        builder: (context, params) => GigOfferChooseVenueWidget(
+          musicianImage: params.getParam(
+            'musicianImage',
+            ParamType.String,
+          ),
+          musicianName: params.getParam(
+            'musicianName',
+            ParamType.String,
+          ),
+          musicianId: params.getParam(
+            'musicianId',
+            ParamType.int,
+          ),
+          venueName: params.getParam(
+            'venueName',
+            ParamType.String,
+          ),
+          venueImage: params.getParam(
+            'venueImage',
+            ParamType.String,
           ),
         ),
-        FFRoute(
-          name: GigOfferChooseDayWidget.routeName,
-          path: GigOfferChooseDayWidget.routePath,
-          builder: (context, params) => GigOfferChooseDayWidget(),
-        ),
-        FFRoute(
-          name: MusicianAccountInfoWidget.routeName,
-          path: MusicianAccountInfoWidget.routePath,
-          builder: (context, params) => MusicianAccountInfoWidget(),
-        ),
-        FFRoute(
-          name: Test1Widget.routeName,
-          path: Test1Widget.routePath,
-          builder: (context, params) => Test1Widget(),
-        ),
-        FFRoute(
-          name: MusicianAddedContentWidget.routeName,
-          path: MusicianAddedContentWidget.routePath,
-          builder: (context, params) => MusicianAddedContentWidget(),
-        ),
-        FFRoute(
-          name: MusicianAddContentWidget.routeName,
-          path: MusicianAddContentWidget.routePath,
-          builder: (context, params) => MusicianAddContentWidget(),
-        ),
-        FFRoute(
-          name: VenueMessagesWidget.routeName,
-          path: VenueMessagesWidget.routePath,
-          builder: (context, params) => VenueMessagesWidget(),
-        ),
-        FFRoute(
-          name: EditProfilePictureWidget.routeName,
-          path: EditProfilePictureWidget.routePath,
-          builder: (context, params) => EditProfilePictureWidget(
-            profileImage: params.getParam(
-              'profileImage',
-              ParamType.String,
-            ),
-            venueId: params.getParam(
-              'venueId',
-              ParamType.int,
-            ),
-            musicianId: params.getParam(
-              'musicianId',
-              ParamType.int,
-            ),
+      ),
+      FFRoute(
+        name: GigOfferChooseDayWidget.routeName,
+        path: GigOfferChooseDayWidget.routePath,
+        builder: (context, params) => GigOfferChooseDayWidget(),
+      ),
+      FFRoute(
+        name: MusicianAccountInfoWidget.routeName,
+        path: MusicianAccountInfoWidget.routePath,
+        builder: (context, params) => MusicianAccountInfoWidget(),
+      ),
+      FFRoute(
+        name: MusicianAddedContentWidget.routeName,
+        path: MusicianAddedContentWidget.routePath,
+        builder: (context, params) => MusicianAddedContentWidget(),
+      ),
+      FFRoute(
+        name: MusicianAddContentWidget.routeName,
+        path: MusicianAddContentWidget.routePath,
+        builder: (context, params) => MusicianAddContentWidget(),
+      ),
+      FFRoute(
+        name: VenueMessagesWidget.routeName,
+        path: VenueMessagesWidget.routePath,
+        builder: (context, params) => VenueMessagesWidget(),
+      ),
+      FFRoute(
+        name: EditProfilePictureWidget.routeName,
+        path: EditProfilePictureWidget.routePath,
+        builder: (context, params) => EditProfilePictureWidget(
+          profileImage: params.getParam(
+            'profileImage',
+            ParamType.String,
+          ),
+          venueId: params.getParam(
+            'venueId',
+            ParamType.int,
+          ),
+          musicianId: params.getParam(
+            'musicianId',
+            ParamType.int,
           ),
         ),
-        FFRoute(
-          name: AddVenueContent5CopyWidget.routeName,
-          path: AddVenueContent5CopyWidget.routePath,
-          builder: (context, params) => AddVenueContent5CopyWidget(),
-        ),
-        FFRoute(
-          name: VenueMusicianReviewsWidget.routeName,
-          path: VenueMusicianReviewsWidget.routePath,
-          builder: (context, params) => VenueMusicianReviewsWidget(),
-        ),
-        FFRoute(
-          name: VenueReocurringGigChatWidget.routeName,
-          path: VenueReocurringGigChatWidget.routePath,
-          builder: (context, params) => VenueReocurringGigChatWidget(),
-        ),
-        FFRoute(
-          name: MusicianProfileWidget.routeName,
-          path: MusicianProfileWidget.routePath,
-          builder: (context, params) => MusicianProfileWidget(),
-        ),
-        FFRoute(
-          name: MusicianProfilePostsWidget.routeName,
-          path: MusicianProfilePostsWidget.routePath,
-          builder: (context, params) => MusicianProfilePostsWidget(),
-        ),
-        FFRoute(
-          name: MusicianGigOverLayWidget.routeName,
-          path: MusicianGigOverLayWidget.routePath,
-          builder: (context, params) => MusicianGigOverLayWidget(
-            slotId: params.getParam(
-              'slotId',
-              ParamType.int,
-            ),
-            venueId: params.getParam(
-              'venueId',
-              ParamType.int,
-            ),
-            venueOwnerId: params.getParam(
-              'venueOwnerId',
-              ParamType.int,
-            ),
+      ),
+      FFRoute(
+        name: AddVenueContent5CopyWidget.routeName,
+        path: AddVenueContent5CopyWidget.routePath,
+        builder: (context, params) => AddVenueContent5CopyWidget(),
+      ),
+      FFRoute(
+        name: VenueMusicianReviewsWidget.routeName,
+        path: VenueMusicianReviewsWidget.routePath,
+        builder: (context, params) => VenueMusicianReviewsWidget(),
+      ),
+      FFRoute(
+        name: VenueReocurringGigChatWidget.routeName,
+        path: VenueReocurringGigChatWidget.routePath,
+        builder: (context, params) => VenueReocurringGigChatWidget(),
+      ),
+      FFRoute(
+        name: MusicianProfileWidget.routeName,
+        path: MusicianProfileWidget.routePath,
+        builder: (context, params) => MusicianProfileWidget(),
+      ),
+      FFRoute(
+        name: MusicianProfilePostsWidget.routeName,
+        path: MusicianProfilePostsWidget.routePath,
+        builder: (context, params) => MusicianProfilePostsWidget(),
+      ),
+      FFRoute(
+        name: MusicianGigOverLayWidget.routeName,
+        path: MusicianGigOverLayWidget.routePath,
+        builder: (context, params) => MusicianGigOverLayWidget(
+          slotId: params.getParam(
+            'slotId',
+            ParamType.int,
+          ),
+          venueId: params.getParam(
+            'venueId',
+            ParamType.int,
+          ),
+          venueOwnerId: params.getParam(
+            'venueOwnerId',
+            ParamType.int,
           ),
         ),
-        FFRoute(
-          name: LoogedInPageWidget.routeName,
-          path: LoogedInPageWidget.routePath,
-          builder: (context, params) => LoogedInPageWidget(),
-        ),
-        FFRoute(
-          name: MusicianProfileHighlightsWidget.routeName,
-          path: MusicianProfileHighlightsWidget.routePath,
-          builder: (context, params) => MusicianProfileHighlightsWidget(
-            id: params.getParam(
-              'id',
-              ParamType.int,
-            ),
-            isVideo: params.getParam(
-              'isVideo',
-              ParamType.bool,
-            ),
-            imageVideo: params.getParam(
-              'imageVideo',
-              ParamType.String,
-            ),
+      ),
+      FFRoute(
+        name: LoogedInPageWidget.routeName,
+        path: LoogedInPageWidget.routePath,
+        builder: (context, params) => LoogedInPageWidget(),
+      ),
+      FFRoute(
+        name: MusicianProfileHighlightsWidget.routeName,
+        path: MusicianProfileHighlightsWidget.routePath,
+        builder: (context, params) => MusicianProfileHighlightsWidget(
+          id: params.getParam(
+            'id',
+            ParamType.int,
+          ),
+          isVideo: params.getParam(
+            'isVideo',
+            ParamType.bool,
+          ),
+          imageVideo: params.getParam(
+            'imageVideo',
+            ParamType.String,
           ),
         ),
-        FFRoute(
-          name: HomeVWidget.routeName,
-          path: HomeVWidget.routePath,
-          builder: (context, params) => HomeVWidget(),
-        ),
-        FFRoute(
-          name: HomeMWidget.routeName,
-          path: HomeMWidget.routePath,
-          builder: (context, params) => HomeMWidget(),
-        ),
-        FFRoute(
-          name: AddAvailableSlotWidget.routeName,
-          path: AddAvailableSlotWidget.routePath,
-          builder: (context, params) => AddAvailableSlotWidget(),
-        ),
-        FFRoute(
-          name: VenueMusicianProfile1Widget.routeName,
-          path: VenueMusicianProfile1Widget.routePath,
-          builder: (context, params) => VenueMusicianProfile1Widget(
-            musicianId: params.getParam(
-              'musicianId',
-              ParamType.int,
-            ),
-            venueId: params.getParam(
-              'venueId',
-              ParamType.int,
-            ),
-            slotId: params.getParam(
-              'slotId',
-              ParamType.int,
-            ),
-            isBooked: params.getParam(
-              'isBooked',
-              ParamType.bool,
-            ),
-            venueName: params.getParam(
-              'venueName',
-              ParamType.String,
-            ),
-            isDiscoverFlow: params.getParam(
-              'isDiscoverFlow',
-              ParamType.bool,
-            ),
-            venueImage: params.getParam(
-              'venueImage',
-              ParamType.String,
-            ),
+      ),
+      FFRoute(
+        name: HomeVWidget.routeName,
+        path: HomeVWidget.routePath,
+        builder: (context, params) => HomeVWidget(),
+      ),
+      FFRoute(
+        name: HomeMWidget.routeName,
+        path: HomeMWidget.routePath,
+        builder: (context, params) => HomeMWidget(),
+      ),
+      FFRoute(
+        name: AddAvailableSlotWidget.routeName,
+        path: AddAvailableSlotWidget.routePath,
+        builder: (context, params) => AddAvailableSlotWidget(),
+      ),
+      FFRoute(
+        name: VenueMusicianProfile1Widget.routeName,
+        path: VenueMusicianProfile1Widget.routePath,
+        builder: (context, params) => VenueMusicianProfile1Widget(
+          musicianId: params.getParam(
+            'musicianId',
+            ParamType.int,
+          ),
+          venueId: params.getParam(
+            'venueId',
+            ParamType.int,
+          ),
+          slotId: params.getParam(
+            'slotId',
+            ParamType.int,
+          ),
+          isBooked: params.getParam(
+            'isBooked',
+            ParamType.bool,
+          ),
+          venueName: params.getParam(
+            'venueName',
+            ParamType.String,
+          ),
+          isDiscoverFlow: params.getParam(
+            'isDiscoverFlow',
+            ParamType.bool,
+          ),
+          venueImage: params.getParam(
+            'venueImage',
+            ParamType.String,
           ),
         ),
-        FFRoute(
-          name: ChrdtestWidget.routeName,
-          path: ChrdtestWidget.routePath,
-          builder: (context, params) => ChrdtestWidget(),
-        ),
-        FFRoute(
-          name: MusicianAddHighlightWidget.routeName,
-          path: MusicianAddHighlightWidget.routePath,
-          builder: (context, params) => MusicianAddHighlightWidget(),
-        ),
-        FFRoute(
-          name: VenueGigThreadOverlayWidget.routeName,
-          path: VenueGigThreadOverlayWidget.routePath,
-          builder: (context, params) => VenueGigThreadOverlayWidget(
-            gigID: params.getParam(
-              'gigID',
-              ParamType.int,
-            ),
-            venueName: params.getParam(
-              'venueName',
-              ParamType.String,
-            ),
-            gigName: params.getParam(
-              'gigName',
-              ParamType.String,
-            ),
-            isVenue: params.getParam(
-              'isVenue',
-              ParamType.bool,
-            ),
-            image: params.getParam(
-              'image',
-              ParamType.String,
-            ),
+      ),
+      FFRoute(
+        name: MusicianAddHighlightWidget.routeName,
+        path: MusicianAddHighlightWidget.routePath,
+        builder: (context, params) => MusicianAddHighlightWidget(),
+      ),
+      FFRoute(
+        name: VenueGigThreadOverlayWidget.routeName,
+        path: VenueGigThreadOverlayWidget.routePath,
+        builder: (context, params) => VenueGigThreadOverlayWidget(
+          gigID: params.getParam(
+            'gigID',
+            ParamType.int,
+          ),
+          venueName: params.getParam(
+            'venueName',
+            ParamType.String,
+          ),
+          gigName: params.getParam(
+            'gigName',
+            ParamType.String,
+          ),
+          isVenue: params.getParam(
+            'isVenue',
+            ParamType.bool,
+          ),
+          image: params.getParam(
+            'image',
+            ParamType.String,
           ),
         ),
-        FFRoute(
-          name: MusicianMessagesWidget.routeName,
-          path: MusicianMessagesWidget.routePath,
-          builder: (context, params) => MusicianMessagesWidget(),
-        ),
-        FFRoute(
-          name: CustomChatVenueWidget.routeName,
-          path: CustomChatVenueWidget.routePath,
-          builder: (context, params) => CustomChatVenueWidget(
-            threadId: params.getParam(
-              'threadId',
-              ParamType.int,
-            ),
-            isVenue: params.getParam(
-              'isVenue',
-              ParamType.bool,
-            ),
+      ),
+      FFRoute(
+        name: MusicianMessagesWidget.routeName,
+        path: MusicianMessagesWidget.routePath,
+        builder: (context, params) => MusicianMessagesWidget(),
+      ),
+      FFRoute(
+        name: CustomChatVenueWidget.routeName,
+        path: CustomChatVenueWidget.routePath,
+        builder: (context, params) => CustomChatVenueWidget(
+          threadId: params.getParam(
+            'threadId',
+            ParamType.int,
+          ),
+          isVenue: params.getParam(
+            'isVenue',
+            ParamType.bool,
           ),
         ),
-        FFRoute(
-          name: VenueGigContractOverlayWidget.routeName,
-          path: VenueGigContractOverlayWidget.routePath,
-          builder: (context, params) => VenueGigContractOverlayWidget(
-            slotId: params.getParam(
-              'slotId',
-              ParamType.int,
-            ),
-            threadId: params.getParam(
-              'threadId',
-              ParamType.int,
-            ),
-            musicianName: params.getParam(
-              'musicianName',
-              ParamType.String,
-            ),
-            isViewOnly: params.getParam(
-              'isViewOnly',
-              ParamType.bool,
-            ),
+      ),
+      FFRoute(
+        name: VenueGigContractOverlayWidget.routeName,
+        path: VenueGigContractOverlayWidget.routePath,
+        builder: (context, params) => VenueGigContractOverlayWidget(
+          slotId: params.getParam(
+            'slotId',
+            ParamType.int,
+          ),
+          threadId: params.getParam(
+            'threadId',
+            ParamType.int,
+          ),
+          musicianName: params.getParam(
+            'musicianName',
+            ParamType.String,
+          ),
+          isViewOnly: params.getParam(
+            'isViewOnly',
+            ParamType.bool,
           ),
         ),
-        FFRoute(
-          name: AcceptDeclineGigOverlayWidget.routeName,
-          path: AcceptDeclineGigOverlayWidget.routePath,
-          builder: (context, params) => AcceptDeclineGigOverlayWidget(
-            slotId: params.getParam(
-              'slotId',
-              ParamType.int,
-            ),
-            threadId: params.getParam(
-              'threadId',
-              ParamType.int,
-            ),
+      ),
+      FFRoute(
+        name: AcceptDeclineGigOverlayWidget.routeName,
+        path: AcceptDeclineGigOverlayWidget.routePath,
+        builder: (context, params) => AcceptDeclineGigOverlayWidget(
+          slotId: params.getParam(
+            'slotId',
+            ParamType.int,
+          ),
+          threadId: params.getParam(
+            'threadId',
+            ParamType.int,
           ),
         ),
-        FFRoute(
-          name: VenueGigViewOverlayWidget.routeName,
-          path: VenueGigViewOverlayWidget.routePath,
-          builder: (context, params) => VenueGigViewOverlayWidget(
-            slotId: params.getParam(
-              'slotId',
-              ParamType.int,
-            ),
-            threadId: params.getParam(
-              'threadId',
-              ParamType.int,
-            ),
+      ),
+      FFRoute(
+        name: VenueGigViewOverlayWidget.routeName,
+        path: VenueGigViewOverlayWidget.routePath,
+        builder: (context, params) => VenueGigViewOverlayWidget(
+          slotId: params.getParam(
+            'slotId',
+            ParamType.int,
+          ),
+          threadId: params.getParam(
+            'threadId',
+            ParamType.int,
           ),
         ),
-        FFRoute(
-          name: EditAdminWidget.routeName,
-          path: EditAdminWidget.routePath,
-          builder: (context, params) => EditAdminWidget(),
-        ),
-        FFRoute(
-          name: EditingVenueOpenSlotsWidget.routeName,
-          path: EditingVenueOpenSlotsWidget.routePath,
-          builder: (context, params) => EditingVenueOpenSlotsWidget(
-            slotId: params.getParam(
-              'slotId',
-              ParamType.int,
-            ),
+      ),
+      FFRoute(
+        name: EditAdminWidget.routeName,
+        path: EditAdminWidget.routePath,
+        builder: (context, params) => EditAdminWidget(),
+      ),
+      FFRoute(
+        name: EditingVenueOpenSlotsWidget.routeName,
+        path: EditingVenueOpenSlotsWidget.routePath,
+        builder: (context, params) => EditingVenueOpenSlotsWidget(
+          slotId: params.getParam(
+            'slotId',
+            ParamType.int,
           ),
         ),
-        FFRoute(
-          name: ContractBoardVenueViewWidget.routeName,
-          path: ContractBoardVenueViewWidget.routePath,
-          builder: (context, params) => ContractBoardVenueViewWidget(
-            musicianId: params.getParam(
-              'musicianId',
-              ParamType.int,
-            ),
-            musicianName: params.getParam(
-              'musicianName',
-              ParamType.String,
-            ),
-            venueId: params.getParam(
-              'venueId',
-              ParamType.int,
-            ),
-            slotId: params.getParam(
-              'slotId',
-              ParamType.int,
-            ),
+      ),
+      FFRoute(
+        name: ContractBoardVenueViewWidget.routeName,
+        path: ContractBoardVenueViewWidget.routePath,
+        builder: (context, params) => ContractBoardVenueViewWidget(
+          musicianId: params.getParam(
+            'musicianId',
+            ParamType.int,
+          ),
+          musicianName: params.getParam(
+            'musicianName',
+            ParamType.String,
+          ),
+          venueId: params.getParam(
+            'venueId',
+            ParamType.int,
+          ),
+          slotId: params.getParam(
+            'slotId',
+            ParamType.int,
           ),
         ),
-        FFRoute(
-          name: ViewSequenceWidget.routeName,
-          path: ViewSequenceWidget.routePath,
-          builder: (context, params) => ViewSequenceWidget(
-            groupId: params.getParam(
-              'groupId',
-              ParamType.String,
-            ),
+      ),
+      FFRoute(
+        name: ViewSequenceWidget.routeName,
+        path: ViewSequenceWidget.routePath,
+        builder: (context, params) => ViewSequenceWidget(
+          groupId: params.getParam(
+            'groupId',
+            ParamType.String,
           ),
         ),
-        FFRoute(
-          name: NavPageWidget.routeName,
-          path: NavPageWidget.routePath,
-          builder: (context, params) => NavPageWidget(
-            index: params.getParam(
-              'index',
-              ParamType.int,
-            ),
+      ),
+      FFRoute(
+        name: NavPageWidget.routeName,
+        path: NavPageWidget.routePath,
+        builder: (context, params) => NavPageWidget(
+          index: params.getParam(
+            'index',
+            ParamType.int,
           ),
         ),
-        FFRoute(
-          name: NotificationsWidget.routeName,
-          path: NotificationsWidget.routePath,
-          builder: (context, params) => NotificationsWidget(),
-        ),
-        FFRoute(
-          name: VenueGigContractOverlayCopyWidget.routeName,
-          path: VenueGigContractOverlayCopyWidget.routePath,
-          builder: (context, params) => VenueGigContractOverlayCopyWidget(
-            slotId: params.getParam(
-              'slotId',
-              ParamType.int,
-            ),
-            threadId: params.getParam(
-              'threadId',
-              ParamType.int,
-            ),
-            musicianName: params.getParam(
-              'musicianName',
-              ParamType.String,
-            ),
+      ),
+      FFRoute(
+        name: NotificationsWidget.routeName,
+        path: NotificationsWidget.routePath,
+        builder: (context, params) => NotificationsWidget(),
+      ),
+      FFRoute(
+        name: VenueGigContractOverlayCopyWidget.routeName,
+        path: VenueGigContractOverlayCopyWidget.routePath,
+        builder: (context, params) => VenueGigContractOverlayCopyWidget(
+          slotId: params.getParam(
+            'slotId',
+            ParamType.int,
+          ),
+          threadId: params.getParam(
+            'threadId',
+            ParamType.int,
+          ),
+          musicianName: params.getParam(
+            'musicianName',
+            ParamType.String,
           ),
         ),
-        FFRoute(
-          name: GigOfferChooseSlotCopyWidget.routeName,
-          path: GigOfferChooseSlotCopyWidget.routePath,
-          builder: (context, params) => GigOfferChooseSlotCopyWidget(
-            musicianImage: params.getParam(
-              'musicianImage',
-              ParamType.String,
-            ),
-            musicinaName: params.getParam(
-              'musicinaName',
-              ParamType.String,
-            ),
-            musicianId: params.getParam(
-              'musicianId',
-              ParamType.int,
-            ),
+      ),
+      FFRoute(
+        name: GigOfferChooseSlotCopyWidget.routeName,
+        path: GigOfferChooseSlotCopyWidget.routePath,
+        builder: (context, params) => GigOfferChooseSlotCopyWidget(
+          musicianImage: params.getParam(
+            'musicianImage',
+            ParamType.String,
+          ),
+          musicinaName: params.getParam(
+            'musicinaName',
+            ParamType.String,
+          ),
+          musicianId: params.getParam(
+            'musicianId',
+            ParamType.int,
           ),
         ),
-        FFRoute(
-          name: FanInfoWidget.routeName,
-          path: FanInfoWidget.routePath,
-          builder: (context, params) => FanInfoWidget(),
-        ),
-        FFRoute(
-          name: HomeFanWidget.routeName,
-          path: HomeFanWidget.routePath,
-          builder: (context, params) => HomeFanWidget(),
-        ),
-        FFRoute(
-          name: BookamrkedFanWidget.routeName,
-          path: BookamrkedFanWidget.routePath,
-          builder: (context, params) => BookamrkedFanWidget(),
-        ),
-        FFRoute(
-          name: FanUserWidget.routeName,
-          path: FanUserWidget.routePath,
-          builder: (context, params) => FanUserWidget(),
-        ),
-        FFRoute(
-          name: EditStageWidget.routeName,
-          path: EditStageWidget.routePath,
-          builder: (context, params) => EditStageWidget(
-            stageId: params.getParam(
-              'stageId',
-              ParamType.int,
-            ),
+      ),
+      FFRoute(
+        name: FanInfoWidget.routeName,
+        path: FanInfoWidget.routePath,
+        builder: (context, params) => FanInfoWidget(),
+      ),
+      FFRoute(
+        name: HomeFanWidget.routeName,
+        path: HomeFanWidget.routePath,
+        builder: (context, params) => HomeFanWidget(),
+      ),
+      FFRoute(
+        name: BookamrkedFanWidget.routeName,
+        path: BookamrkedFanWidget.routePath,
+        builder: (context, params) => BookamrkedFanWidget(),
+      ),
+      FFRoute(
+        name: FanUserWidget.routeName,
+        path: FanUserWidget.routePath,
+        builder: (context, params) => FanUserWidget(),
+      ),
+      FFRoute(
+        name: EditStageWidget.routeName,
+        path: EditStageWidget.routePath,
+        builder: (context, params) => EditStageWidget(
+          stageId: params.getParam(
+            'stageId',
+            ParamType.int,
           ),
         ),
-        FFRoute(
-          name: ViewVenuePlannerWidget.routeName,
-          path: ViewVenuePlannerWidget.routePath,
-          builder: (context, params) => ViewVenuePlannerWidget(
-            venueId: params.getParam(
-              'venueId',
-              ParamType.int,
-            ),
-            venueOwnerId: params.getParam(
-              'venueOwnerId',
-              ParamType.int,
-            ),
+      ),
+      FFRoute(
+        name: ViewVenuePlannerWidget.routeName,
+        path: ViewVenuePlannerWidget.routePath,
+        builder: (context, params) => ViewVenuePlannerWidget(
+          venueId: params.getParam(
+            'venueId',
+            ParamType.int,
           ),
-        )
-      ].map((r) => r.toRoute(appStateNotifier)).toList(),
-      observers: [routeObserver],
-    );
+          venueOwnerId: params.getParam(
+            'venueOwnerId',
+            ParamType.int,
+          ),
+          venueName: params.getParam(
+            'venueName',
+            ParamType.String,
+          ),
+        ),
+      ),
+      FFRoute(
+        name: $branchio_dynamic_linking_akp5u6.TestHomePageWidget.routeName,
+        path: $branchio_dynamic_linking_akp5u6.TestHomePageWidget.routePath,
+        builder: (context, params) =>
+            $branchio_dynamic_linking_akp5u6.TestHomePageWidget(),
+      ),
+      FFRoute(
+        name: $branchio_dynamic_linking_akp5u6.TestDashboardWidget.routeName,
+        path: $branchio_dynamic_linking_akp5u6.TestDashboardWidget.routePath,
+        builder: (context, params) =>
+            $branchio_dynamic_linking_akp5u6.TestDashboardWidget(
+          title: params.getParam(
+            'title',
+            ParamType.String,
+          ),
+        ),
+      )
+    ].map((r) => r.toRoute(appStateNotifier)).toList(),
+    observers: [routeObserver],
+  );
+}
 
 extension NavParamExtensions on Map<String, String?> {
   Map<String, String> get withoutNulls => Map.fromEntries(
@@ -990,9 +1006,18 @@ extension _GoRouterStateExtensions on GoRouterState {
     ..addAll(pathParameters)
     ..addAll(uri.queryParameters)
     ..addAll(extraMap);
-  TransitionInfo get transitionInfo => extraMap.containsKey(kTransitionInfoKey)
-      ? extraMap[kTransitionInfoKey] as TransitionInfo
-      : TransitionInfo.appDefault();
+  TransitionInfo get transitionInfo {
+    final possibleKeys = [
+      '__transition_info__',
+      '__transition_info__branchio_dynamic_linking_akp5u6'
+    ];
+    for (final key in possibleKeys) {
+      if (extraMap.containsKey(key)) {
+        return extraMap[key] as TransitionInfo;
+      }
+    }
+    return TransitionInfo.appDefault();
+  }
 }
 
 class FFParameters {

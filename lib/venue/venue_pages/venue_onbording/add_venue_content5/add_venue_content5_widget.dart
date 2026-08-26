@@ -5,22 +5,21 @@ import '/backend/supabase/supabase.dart';
 import '/components/upload_file_btn_widget.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/upload_data.dart';
 import '/musician/components/c_h_r_d_label_btn/c_h_r_d_label_btn_widget.dart';
 import '/musician/components/c_h_r_d_label_column_text/c_h_r_d_label_column_text_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_app_bar2/c_h_r_d_app_bar2_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_video_player_component/c_h_r_d_video_player_component_widget.dart';
+import 'dart:convert';
 import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -173,364 +172,6 @@ class _AddVenueContent5WidgetState extends State<AddVenueContent5Widget> {
                     .addToEnd(SizedBox(height: 20.0)),
               ),
             ),
-            if (false)
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Expanded(
-                        child: Builder(
-                          builder: (context) {
-                            final contentList = FFAppState()
-                                .venueContentVenueList
-                                .map((e) => e)
-                                .toList();
-
-                            return GridView.builder(
-                              padding: EdgeInsets.fromLTRB(
-                                0,
-                                0,
-                                0,
-                                12.0,
-                              ),
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3,
-                                crossAxisSpacing: 10.0,
-                                mainAxisSpacing: 10.0,
-                                childAspectRatio: 1.0,
-                              ),
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              itemCount: contentList.length,
-                              itemBuilder: (context, contentListIndex) {
-                                final contentListItem =
-                                    contentList[contentListIndex];
-                                return Align(
-                                  alignment: AlignmentDirectional(-0.27, 0.24),
-                                  child: Builder(
-                                    builder: (context) => InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        var _shouldSetState = false;
-                                        if (contentListIndex == 0) {
-                                          if (_model
-                                                  .isDataUploading_venueContentUrl ==
-                                              true) {
-                                            if (_shouldSetState)
-                                              safeSetState(() {});
-                                            return;
-                                          }
-
-                                          _model.imageVideoPath = await actions
-                                              .pickFileWithSizeLimit(
-                                            context,
-                                            20.0,
-                                            'video',
-                                          );
-                                          _shouldSetState = true;
-                                          if (_model.imageVideoPath != null &&
-                                              (_model.imageVideoPath?.bytes
-                                                      ?.isNotEmpty ??
-                                                  false)) {
-                                            {
-                                              safeSetState(() => _model
-                                                      .isDataUploading_venueContentUrl =
-                                                  true);
-                                              var selectedUploadedFiles =
-                                                  <FFUploadedFile>[];
-                                              var selectedMedia =
-                                                  <SelectedFile>[];
-                                              var downloadUrls = <String>[];
-                                              try {
-                                                selectedUploadedFiles = _model
-                                                        .imageVideoPath!
-                                                        .bytes!
-                                                        .isNotEmpty
-                                                    ? [_model.imageVideoPath!]
-                                                    : <FFUploadedFile>[];
-                                                selectedMedia =
-                                                    selectedFilesFromUploadedFiles(
-                                                  selectedUploadedFiles,
-                                                  storageFolderPath:
-                                                      FFAppState().userType ==
-                                                              Type.Musician
-                                                          ? 'Musician Content'
-                                                          : 'venueContent',
-                                                );
-                                                downloadUrls =
-                                                    await uploadSupabaseStorageFiles(
-                                                  bucketName:
-                                                      FFAppState().userType ==
-                                                              Type.Musician
-                                                          ? 'musician'
-                                                          : 'venueC',
-                                                  selectedFiles: selectedMedia,
-                                                );
-                                              } finally {
-                                                _model.isDataUploading_venueContentUrl =
-                                                    false;
-                                              }
-                                              if (selectedUploadedFiles
-                                                          .length ==
-                                                      selectedMedia.length &&
-                                                  downloadUrls.length ==
-                                                      selectedMedia.length) {
-                                                safeSetState(() {
-                                                  _model.uploadedLocalFile_venueContentUrl =
-                                                      selectedUploadedFiles
-                                                          .first;
-                                                  _model.uploadedFileUrl_venueContentUrl =
-                                                      downloadUrls.first;
-                                                });
-                                              } else {
-                                                safeSetState(() {});
-                                                return;
-                                              }
-                                            }
-
-                                            if ((_model.uploadedFileUrl_venueContentUrl !=
-                                                    FFAppState()
-                                                        .venueContentVenueList
-                                                        .lastOrNull) &&
-                                                (_model.uploadedFileUrl_venueContentUrl !=
-                                                        null &&
-                                                    _model.uploadedFileUrl_venueContentUrl !=
-                                                        '')) {
-                                              FFAppState()
-                                                  .addToVenueContentVenueList(_model
-                                                      .uploadedFileUrl_venueContentUrl);
-                                              safeSetState(() {});
-                                              _model.hideSkipButton = true;
-                                              safeSetState(() {});
-                                            }
-                                          } else {
-                                            if (_shouldSetState)
-                                              safeSetState(() {});
-                                            return;
-                                          }
-                                        } else {
-                                          if (functions.isVideoUrl(FFAppState()
-                                                  .venueContentVenueList
-                                                  .elementAtOrNull(
-                                                      contentListIndex)) ==
-                                              true) {
-                                            await showDialog(
-                                              barrierColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryBackground,
-                                              context: context,
-                                              builder: (dialogContext) {
-                                                return Dialog(
-                                                  elevation: 0,
-                                                  insetPadding: EdgeInsets.zero,
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                              0.0, 0.0)
-                                                          .resolve(
-                                                              Directionality.of(
-                                                                  context)),
-                                                  child: GestureDetector(
-                                                    onTap: () {
-                                                      FocusScope.of(
-                                                              dialogContext)
-                                                          .unfocus();
-                                                      FocusManager
-                                                          .instance.primaryFocus
-                                                          ?.unfocus();
-                                                    },
-                                                    child:
-                                                        CHRDVideoPlayerComponentWidget(
-                                                      videoUrl:
-                                                          '${FFAppState().venueContentVenueList.elementAtOrNull(contentListIndex)}',
-                                                      callBackAction:
-                                                          () async {},
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                            );
-                                          }
-                                        }
-
-                                        if (_shouldSetState)
-                                          safeSetState(() {});
-                                      },
-                                      child: Container(
-                                        width: 110.0,
-                                        height: 120.0,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .neutralDark900,
-                                          image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image: Image.network(
-                                              functions.isVideoUrl(FFAppState()
-                                                      .venueContentVenueList
-                                                      .elementAtOrNull(
-                                                          contentListIndex))!
-                                                  ? 'https://kasnaqcqfuqnfydsjvpy.supabase.co/storage/v1/object/public/venueC/loginGradient.png'
-                                                  : '${contentListItem}',
-                                            ).image,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(12.0),
-                                        ),
-                                        child: Stack(
-                                          children: [
-                                            if (contentListIndex != 0)
-                                              Align(
-                                                alignment: AlignmentDirectional(
-                                                    1.0, -1.0),
-                                                child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 4.0, 4.0, 0.0),
-                                                  child: FlutterFlowIconButton(
-                                                    borderRadius: 100.0,
-                                                    buttonSize: 32.0,
-                                                    fillColor:
-                                                        Color(0x8D000000),
-                                                    icon: Icon(
-                                                      Icons.close,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .info,
-                                                      size: 16.0,
-                                                    ),
-                                                    onPressed: () async {
-                                                      await deleteSupabaseFileFromPublicUrl(
-                                                          FFAppState()
-                                                              .venueContentVenueList
-                                                              .elementAtOrNull(
-                                                                  contentListIndex)!);
-                                                      FFAppState()
-                                                          .removeAtIndexFromVenueContentVenueList(
-                                                              contentListIndex);
-                                                      safeSetState(() {});
-                                                      if (FFAppState()
-                                                              .venueContentVenueList
-                                                              .length <=
-                                                          1) {
-                                                        _model.hideSkipButton =
-                                                            false;
-                                                        safeSetState(() {});
-                                                      }
-                                                      safeSetState(() {
-                                                        _model.isDataUploading_venueContentUrl =
-                                                            false;
-                                                        _model.uploadedLocalFile_venueContentUrl =
-                                                            FFUploadedFile(
-                                                                bytes: Uint8List
-                                                                    .fromList(
-                                                                        []),
-                                                                originalFilename:
-                                                                    '');
-                                                        _model.uploadedFileUrl_venueContentUrl =
-                                                            '';
-                                                      });
-                                                    },
-                                                  ),
-                                                ),
-                                              ),
-                                            if (functions.isVideoUrl(FFAppState()
-                                                    .venueContentVenueList
-                                                    .elementAtOrNull(
-                                                        contentListIndex)) ==
-                                                true)
-                                              Align(
-                                                alignment: AlignmentDirectional(
-                                                    0.0, 0.0),
-                                                child: Builder(
-                                                  builder: (context) => InkWell(
-                                                    splashColor:
-                                                        Colors.transparent,
-                                                    focusColor:
-                                                        Colors.transparent,
-                                                    hoverColor:
-                                                        Colors.transparent,
-                                                    highlightColor:
-                                                        Colors.transparent,
-                                                    onTap: () async {
-                                                      await showDialog(
-                                                        barrierColor:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryBackground,
-                                                        context: context,
-                                                        builder:
-                                                            (dialogContext) {
-                                                          return Dialog(
-                                                            elevation: 0,
-                                                            insetPadding:
-                                                                EdgeInsets.zero,
-                                                            backgroundColor:
-                                                                Colors
-                                                                    .transparent,
-                                                            alignment: AlignmentDirectional(
-                                                                    0.0, 0.0)
-                                                                .resolve(
-                                                                    Directionality.of(
-                                                                        context)),
-                                                            child:
-                                                                GestureDetector(
-                                                              onTap: () {
-                                                                FocusScope.of(
-                                                                        dialogContext)
-                                                                    .unfocus();
-                                                                FocusManager
-                                                                    .instance
-                                                                    .primaryFocus
-                                                                    ?.unfocus();
-                                                              },
-                                                              child:
-                                                                  CHRDVideoPlayerComponentWidget(
-                                                                videoUrl:
-                                                                    '${FFAppState().venueContentVenueList.elementAtOrNull(contentListIndex)}',
-                                                                callBackAction:
-                                                                    () async {},
-                                                              ),
-                                                            ),
-                                                          );
-                                                        },
-                                                      );
-                                                    },
-                                                    child: FaIcon(
-                                                      FontAwesomeIcons.video,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      size: 40.0,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                        ),
-                      ),
-                    ]
-                        .divide(SizedBox(height: 14.0))
-                        .addToStart(SizedBox(height: 20.0)),
-                  ),
-                ),
-              ),
             if (FFAppState().userType == Type.Venue)
               Expanded(
                 child: Container(
@@ -1475,6 +1116,7 @@ class _AddVenueContent5WidgetState extends State<AddVenueContent5Widget> {
                   hight: 45.0,
                   headingFontSize: 14,
                   onTab: () async {
+                    var _shouldSetState = false;
                     if (widget!.venueId != null) {
                       if (FFAppState().userType == Type.Venue) {
                         _model.apiResultev9 =
@@ -1484,7 +1126,13 @@ class _AddVenueContent5WidgetState extends State<AddVenueContent5Widget> {
                               .convertToJson(FFAppState().contentList.toList()),
                         );
 
+                        _shouldSetState = true;
                         context.safePop();
+                        if (_shouldSetState) safeSetState(() {});
+                        return;
+                      } else {
+                        if (_shouldSetState) safeSetState(() {});
+                        return;
                       }
                     } else {
                       if (FFAppState().userType == Type.Musician) {
@@ -1519,6 +1167,9 @@ class _AddVenueContent5WidgetState extends State<AddVenueContent5Widget> {
                             ),
                           }.withoutNulls,
                         );
+
+                        if (_shouldSetState) safeSetState(() {});
+                        return;
                       } else {
                         FFAppState().updateVenueAccountCreateStruct(
                           (e) => e
@@ -1536,10 +1187,13 @@ class _AddVenueContent5WidgetState extends State<AddVenueContent5Widget> {
                             ),
                           }.withoutNulls,
                         );
+
+                        if (_shouldSetState) safeSetState(() {});
+                        return;
                       }
                     }
 
-                    safeSetState(() {});
+                    if (_shouldSetState) safeSetState(() {});
                   },
                 ),
               ),

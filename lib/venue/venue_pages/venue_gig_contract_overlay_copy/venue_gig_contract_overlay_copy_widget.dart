@@ -3,7 +3,6 @@ import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/confirmation_dialog_widget.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/musician/components/c_h_r_d_back_btn/c_h_r_d_back_btn_widget.dart';
@@ -14,12 +13,14 @@ import '/musician/components/c_h_r_d_remove_musician/c_h_r_d_remove_musician_wid
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_performance_stages/c_h_r_d_performance_stages_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_row_with_icon/c_h_r_d_row_with_icon_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_video_player_component/c_h_r_d_video_player_component_widget.dart';
+import 'dart:convert';
 import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -541,7 +542,7 @@ class _VenueGigContractOverlayCopyWidgetState
 
                                               safeSetState(() {});
                                             },
-                                            text: 'Remove',
+                                            text: 'Remove Performer',
                                             options: FFButtonOptions(
                                               height: 24.0,
                                               padding: EdgeInsetsDirectional
@@ -549,9 +550,7 @@ class _VenueGigContractOverlayCopyWidgetState
                                                       16.0, 0.0, 16.0, 0.0),
                                               iconPadding: EdgeInsetsDirectional
                                                   .fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryViolet,
+                                              color: Color(0xFFFF0000),
                                               textStyle: FlutterFlowTheme.of(
                                                       context)
                                                   .titleSmall
@@ -617,6 +616,15 @@ class _VenueGigContractOverlayCopyWidgetState
                                                 r'''$.data.venue_owner_id''',
                                               ),
                                               ParamType.int,
+                                            ),
+                                            'venueName': serializeParam(
+                                              getJsonField(
+                                                (_model.singleSlotOutput
+                                                        ?.jsonBody ??
+                                                    ''),
+                                                r'''$.data.venue_name''',
+                                              ).toString(),
+                                              ParamType.String,
                                             ),
                                           }.withoutNulls,
                                         );
@@ -892,91 +900,15 @@ class _VenueGigContractOverlayCopyWidgetState
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Expanded(
-                                          child: InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () async {},
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  'Date',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        font: GoogleFonts
-                                                            .montserrat(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontStyle,
-                                                        ),
-                                                        color:
-                                                            Color(0x98FFFFFF),
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontStyle,
-                                                      ),
-                                                ),
-                                                Text(
-                                                  getJsonField(
-                                                    (_model.singleSlotOutput
-                                                            ?.jsonBody ??
-                                                        ''),
-                                                    r'''$.data.start_date''',
-                                                  ).toString(),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        font: GoogleFonts
-                                                            .montserrat(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontStyle,
-                                                        ),
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontStyle,
-                                                      ),
-                                                ),
-                                                if (false)
-                                                  Text(
-                                                    'in ${_model.days}',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Date',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
                                                         .bodyMedium
                                                         .override(
                                                           font: GoogleFonts
@@ -1006,37 +938,44 @@ class _VenueGigContractOverlayCopyWidgetState
                                                                   .bodyMedium
                                                                   .fontStyle,
                                                         ),
-                                                  ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 4.0, 0.0, 4.0),
-                                          child: Container(
-                                            width: 0.2,
-                                            height: 82.0,
-                                            decoration: BoxDecoration(
-                                              color: Color(0x19FFFFFF),
-                                            ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () async {},
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
+                                              ),
+                                              Text(
+                                                getJsonField(
+                                                  (_model.singleSlotOutput
+                                                          ?.jsonBody ??
+                                                      ''),
+                                                  r'''$.data.start_date''',
+                                                ).toString(),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          font: GoogleFonts
+                                                              .montserrat(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontStyle,
+                                                          ),
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontStyle,
+                                                        ),
+                                              ),
+                                              if (false)
                                                 Text(
-                                                  'Time (EST)',
+                                                  'in ${_model.days}',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -1069,123 +1008,170 @@ class _VenueGigContractOverlayCopyWidgetState
                                                                 .fontStyle,
                                                       ),
                                                 ),
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Text(
-                                                      FFAppState().startTime !=
-                                                              null
-                                                          ? dateTimeFormat(
-                                                              "jm",
-                                                              FFAppState()
-                                                                  .startTime)
-                                                          : getJsonField(
-                                                              (_model.singleSlotOutput
-                                                                      ?.jsonBody ??
-                                                                  ''),
-                                                              r'''$.data.start_time''',
-                                                            ).toString(),
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                font: GoogleFonts
-                                                                    .montserrat(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                              ),
-                                                    ),
-                                                    Text(
-                                                      '-',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                font: GoogleFonts
-                                                                    .montserrat(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                              ),
-                                                    ),
-                                                    Text(
-                                                      getJsonField(
-                                                        (_model.singleSlotOutput
-                                                                ?.jsonBody ??
-                                                            ''),
-                                                        r'''$.data.end_time''',
-                                                      ).toString(),
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                font: GoogleFonts
-                                                                    .montserrat(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                              ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 4.0, 0.0, 4.0),
+                                          child: Container(
+                                            width: 0.2,
+                                            height: 82.0,
+                                            decoration: BoxDecoration(
+                                              color: Color(0x19FFFFFF),
                                             ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Time (EST)',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          font: GoogleFonts
+                                                              .montserrat(
+                                                            fontWeight:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontStyle,
+                                                          ),
+                                                          color:
+                                                              Color(0x98FFFFFF),
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontStyle,
+                                                        ),
+                                              ),
+                                              Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Text(
+                                                    FFAppState().startTime !=
+                                                            null
+                                                        ? dateTimeFormat(
+                                                            "jm",
+                                                            FFAppState()
+                                                                .startTime)
+                                                        : getJsonField(
+                                                            (_model.singleSlotOutput
+                                                                    ?.jsonBody ??
+                                                                ''),
+                                                            r'''$.data.start_time''',
+                                                          ).toString(),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          font: GoogleFonts
+                                                              .montserrat(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontStyle,
+                                                          ),
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontStyle,
+                                                        ),
+                                                  ),
+                                                  Text(
+                                                    '-',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          font: GoogleFonts
+                                                              .montserrat(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontStyle,
+                                                          ),
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontStyle,
+                                                        ),
+                                                  ),
+                                                  Text(
+                                                    getJsonField(
+                                                      (_model.singleSlotOutput
+                                                              ?.jsonBody ??
+                                                          ''),
+                                                      r'''$.data.end_time''',
+                                                    ).toString(),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          font: GoogleFonts
+                                                              .montserrat(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontStyle,
+                                                          ),
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontStyle,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ],
@@ -1247,6 +1233,9 @@ class _VenueGigContractOverlayCopyWidgetState
                                             "jm", _model.selectedTimeContract);
                                         _model.isEdited = true;
                                         safeSetState(() {});
+                                        if (_shouldSetState)
+                                          safeSetState(() {});
+                                        return;
                                       } else {
                                         if (_shouldSetState)
                                           safeSetState(() {});
@@ -1319,6 +1308,7 @@ class _VenueGigContractOverlayCopyWidgetState
                                       showArrow:
                                           FFAppState().userType == Type.Venue,
                                       onTap: () async {
+                                        var _shouldSetState = false;
                                         if (FFAppState().userType ==
                                             Type.Venue) {
                                           await showDialog(
@@ -1359,15 +1349,24 @@ class _VenueGigContractOverlayCopyWidgetState
                                           ).then((value) => safeSetState(() =>
                                               _model.performanceStage = value));
 
+                                          _shouldSetState = true;
                                           _model.isEdited = true;
                                           _model.selectedStageId = getJsonField(
                                             _model.performanceStage,
                                             r'''$.id''',
                                           );
                                           safeSetState(() {});
+                                          if (_shouldSetState)
+                                            safeSetState(() {});
+                                          return;
+                                        } else {
+                                          if (_shouldSetState)
+                                            safeSetState(() {});
+                                          return;
                                         }
 
-                                        safeSetState(() {});
+                                        if (_shouldSetState)
+                                          safeSetState(() {});
                                       },
                                     ),
                                   ),
@@ -1852,6 +1851,8 @@ class _VenueGigContractOverlayCopyWidgetState
                                                                     'Are you sure you want to remove this event?',
                                                                 acceptBtnAction:
                                                                     () async {
+                                                                  var _shouldSetState =
+                                                                      false;
                                                                   _model.fetchedMusicianList =
                                                                       await VenueGroup
                                                                           .fetchMusiciansOfGigCall
@@ -1860,6 +1861,8 @@ class _VenueGigContractOverlayCopyWidgetState
                                                                         .slotId,
                                                                   );
 
+                                                                  _shouldSetState =
+                                                                      true;
                                                                   if ((_model
                                                                           .fetchedMusicianList
                                                                           ?.succeeded ??
@@ -1907,6 +1910,8 @@ class _VenueGigContractOverlayCopyWidgetState
                                                                               .slotId,
                                                                     );
 
+                                                                    _shouldSetState =
+                                                                        true;
                                                                     if ((_model
                                                                             .hardDeleteGig
                                                                             ?.succeeded ??
@@ -1915,7 +1920,12 @@ class _VenueGigContractOverlayCopyWidgetState
                                                                           context);
                                                                       context
                                                                           .safePop();
+                                                                      return;
+                                                                    } else {
+                                                                      return;
                                                                     }
+                                                                  } else {
+                                                                    return;
                                                                   }
                                                                 },
                                                               ),
@@ -2181,6 +2191,8 @@ class _VenueGigContractOverlayCopyWidgetState
                                   }
 
                                   context.safePop();
+                                  if (_shouldSetState) safeSetState(() {});
+                                  return;
                                 }
 
                                 if (_shouldSetState) safeSetState(() {});
@@ -2249,6 +2261,12 @@ class _VenueGigContractOverlayCopyWidgetState
                                                   ''),
                                               r'''$.data.end_time''',
                                             ).toString()}',
+                                            endDate: getJsonField(
+                                              (_model.singleSlotOutput
+                                                      ?.jsonBody ??
+                                                  ''),
+                                              r'''$.data.end_date''',
+                                            ).toString(),
                                             acceptActionBtn:
                                                 (reasonFieldValue) async {
                                               await GigContractsTable().update(

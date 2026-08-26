@@ -1,9 +1,8 @@
-import '/backend/schema/enums/enums.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
+import '/components/navbar_component_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'dart:ui';
 import '/custom_code/widgets/index.dart' as custom_widgets;
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -47,8 +46,6 @@ class _NavPageWidgetState extends State<NavPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -59,46 +56,16 @@ class _NavPageWidgetState extends State<NavPageWidget> {
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: SafeArea(
           top: true,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              if (FFAppState().userType == Type.Venue)
-                Expanded(
-                  child: Container(
-                    width: MediaQuery.sizeOf(context).width * 1.0,
-                    height: MediaQuery.sizeOf(context).height * 1.0,
-                    child: custom_widgets.VenueNavBar(
-                      width: MediaQuery.sizeOf(context).width * 1.0,
-                      height: MediaQuery.sizeOf(context).height * 1.0,
-                      currentIndex: widget!.index != null ? widget!.index! : 0,
-                    ),
-                  ),
-                ),
-              if (FFAppState().userType == Type.Musician)
-                Expanded(
-                  child: Container(
-                    width: MediaQuery.sizeOf(context).width * 1.0,
-                    height: MediaQuery.sizeOf(context).height * 1.0,
-                    child: custom_widgets.MusicianNavBar(
-                      width: MediaQuery.sizeOf(context).width * 1.0,
-                      height: MediaQuery.sizeOf(context).height * 1.0,
-                      currentIndex: widget!.index != null ? widget!.index! : 0,
-                    ),
-                  ),
-                ),
-              if (FFAppState().userType == Type.Fan)
-                Expanded(
-                  child: Container(
-                    width: MediaQuery.sizeOf(context).width * 1.0,
-                    height: MediaQuery.sizeOf(context).height * 1.0,
-                    child: custom_widgets.FanNavbar(
-                      width: MediaQuery.sizeOf(context).width * 1.0,
-                      height: MediaQuery.sizeOf(context).height * 1.0,
-                      currentIndex: widget!.index != null ? widget!.index! : 0,
-                    ),
-                  ),
-                ),
-            ],
+          child: Container(
+            width: double.infinity,
+            height: MediaQuery.sizeOf(context).height * 1.0,
+            child: custom_widgets.ForceUpdateAlert(
+              width: double.infinity,
+              height: MediaQuery.sizeOf(context).height * 1.0,
+              child: () => NavbarComponentWidget(
+                parameter1: 0,
+              ),
+            ),
           ),
         ),
       ),

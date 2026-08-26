@@ -1,15 +1,15 @@
 import '/backend/api_requests/api_calls.dart';
-import '/components/calendar_filter_widget.dart';
 import '/components/empty_list_image_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/musician/components/c_h_r_d_back_btn/c_h_r_d_back_btn_widget.dart';
 import '/venue/venue_pages/venue_components/c_h_r_d_venue_planner/c_h_r_d_venue_planner_widget.dart';
+import '/venue/venue_pages/venue_components/calendar_filter/calendar_filter_widget.dart';
 import 'dart:ui';
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:easy_debounce/easy_debounce.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -23,10 +23,12 @@ class ViewVenuePlannerWidget extends StatefulWidget {
     super.key,
     required this.venueId,
     required this.venueOwnerId,
+    required this.venueName,
   });
 
   final int? venueId;
   final int? venueOwnerId;
+  final String? venueName;
 
   static String routeName = 'view_venue_planner';
   static String routePath = '/viewVenuePlanner';
@@ -82,7 +84,7 @@ class _ViewVenuePlannerWidgetState extends State<ViewVenuePlannerWidget> {
               ? <int>[]
               : var1.map((e) => int.tryParse(e) ?? 0).toList();
         }(FFAppState().FilteredVenueIds.toList()),
-        slotStatus: 'Booked',
+        slotStatus: FFAppState().filteredVenueStatus,
       ),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
@@ -179,7 +181,7 @@ class _ViewVenuePlannerWidgetState extends State<ViewVenuePlannerWidget> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          'Venue Calendar',
+                                          '${widget!.venueName} Calendar',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
@@ -515,12 +517,9 @@ class _ViewVenuePlannerWidgetState extends State<ViewVenuePlannerWidget> {
                                                               .trim()
                                                               .isNotEmpty)
                                                             1,
-                                                          if ((selectedDate ??
-                                                                  '')
-                                                              .toString()
-                                                              .trim()
-                                                              .isNotEmpty)
-                                                            1
+                                                          if (selectedDate !=
+                                                              null)
+                                                            1,
                                                         ].length;
                                                       }(
                                                               _model
@@ -534,23 +533,18 @@ class _ViewVenuePlannerWidgetState extends State<ViewVenuePlannerWidget> {
                                                     '0'
                                                 ? '${valueOrDefault<String>(
                                                     ((String searchField,
-                                                                String selectedDate,
-                                                                List<String>
-                                                                    filteredVenues) {
+                                                                String
+                                                                    selectedDate) {
                                                       return [
-                                                        if ((searchField ?? '')
-                                                            .toString()
-                                                            .trim()
-                                                            .isNotEmpty)
+                                                        if (searchField
+                                                                ?.trim()
+                                                                .isNotEmpty ==
+                                                            true)
                                                           1,
-                                                        if ((selectedDate ?? '')
-                                                            .toString()
-                                                            .trim()
-                                                            .isNotEmpty)
-                                                          1,
-                                                        if ((filteredVenues ??
-                                                                [])
-                                                            .isNotEmpty)
+                                                        if (selectedDate
+                                                                ?.trim()
+                                                                .isNotEmpty ==
+                                                            true)
                                                           1,
                                                       ].length;
                                                     }(
@@ -558,10 +552,7 @@ class _ViewVenuePlannerWidgetState extends State<ViewVenuePlannerWidget> {
                                                                 .textController
                                                                 .text,
                                                             FFAppState()
-                                                                .selectedCalendarDate,
-                                                            FFAppState()
-                                                                .FilteredVenueIds
-                                                                .toList()))
+                                                                .selectedCalendarDate))
                                                         .toString(),
                                                     '0',
                                                   )} Filter'
@@ -765,7 +756,7 @@ class _ViewVenuePlannerWidgetState extends State<ViewVenuePlannerWidget> {
                                         child: custom_widgets.ShowCalender(
                                           width: double.infinity,
                                           height: 350.0,
-                                          userId: FFAppState().userId,
+                                          userId: widget!.venueOwnerId!,
                                           type: 'venue',
                                           selectedDate:
                                               FFAppState().selectedCalendarDate,
@@ -922,55 +913,43 @@ class _ViewVenuePlannerWidgetState extends State<ViewVenuePlannerWidget> {
                                                         final slotsListItem =
                                                             slotsList[
                                                                 slotsListIndex];
-                                                        return InkWell(
-                                                          splashColor: Colors
-                                                              .transparent,
-                                                          focusColor: Colors
-                                                              .transparent,
-                                                          hoverColor: Colors
-                                                              .transparent,
-                                                          highlightColor: Colors
-                                                              .transparent,
-                                                          onTap: () async {},
-                                                          child:
-                                                              CHRDVenuePlannerWidget(
-                                                            key: Key(
-                                                                'Keyncy_${slotsListIndex}_of_${slotsList.length}'),
-                                                            venueName: getJsonField(
-                                                                      slotsListItem,
-                                                                      r'''$.musician_name''',
-                                                                    ) ==
-                                                                    null
-                                                                ? 'Open Slots'
-                                                                : getJsonField(
+                                                        return CHRDVenuePlannerWidget(
+                                                          key: Key(
+                                                              'Keyncy_${slotsListIndex}_of_${slotsList.length}'),
+                                                          venueName: getJsonField(
                                                                     slotsListItem,
                                                                     r'''$.musician_name''',
-                                                                  ).toString(),
-                                                            time: getJsonField(
-                                                              slotsListItem,
-                                                              r'''$.start_time''',
-                                                            ).toString(),
-                                                            stageName:
-                                                                getJsonField(
-                                                              slotsListItem,
-                                                              r'''$.stage_name''',
-                                                            ).toString(),
-                                                            venueImage:
-                                                                '${getJsonField(
-                                                                      slotsListItem,
-                                                                      r'''$.musician_profile_photo''',
-                                                                    ) == null ? 'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/c-h-r-d-m-v-p-musician-p-o-v-qiusbj/assets/c7i9br13v5fk/error.png' : getJsonField(
+                                                                  ) ==
+                                                                  null
+                                                              ? 'Open Slots'
+                                                              : getJsonField(
+                                                                  slotsListItem,
+                                                                  r'''$.musician_name''',
+                                                                ).toString(),
+                                                          time: getJsonField(
+                                                            slotsListItem,
+                                                            r'''$.start_time''',
+                                                          ).toString(),
+                                                          stageName:
+                                                              getJsonField(
+                                                            slotsListItem,
+                                                            r'''$.stage_name''',
+                                                          ).toString(),
+                                                          venueImage:
+                                                              '${getJsonField(
                                                                     slotsListItem,
                                                                     r'''$.musician_profile_photo''',
-                                                                  ).toString()}',
-                                                            isBooked: 'Booked' ==
-                                                                    getJsonField(
-                                                                      slotsListItem,
-                                                                      r'''$.booking_status''',
-                                                                    ).toString()
-                                                                ? true
-                                                                : false,
-                                                          ),
+                                                                  ) == null ? 'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/c-h-r-d-m-v-p-musician-p-o-v-qiusbj/assets/c7i9br13v5fk/error.png' : getJsonField(
+                                                                  slotsListItem,
+                                                                  r'''$.musician_profile_photo''',
+                                                                ).toString()}',
+                                                          isBooked: 'Booked' ==
+                                                                  getJsonField(
+                                                                    slotsListItem,
+                                                                    r'''$.booking_status''',
+                                                                  ).toString()
+                                                              ? true
+                                                              : false,
                                                         );
                                                       },
                                                     );

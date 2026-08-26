@@ -1,4 +1,4 @@
-export '../../../flutter_flow/lat_lng.dart';
+export 'package:ff_commons/flutter_flow/lat_lng.dart';
 export 'package:supabase_flutter/supabase_flutter.dart' hide Provider;
 
 export '../supabase.dart';
@@ -10,10 +10,12 @@ export 'tables/entertainment.dart';
 export 'tables/fan_bookmarks.dart';
 export 'tables/genres.dart';
 export 'tables/gig_contracts.dart';
+export 'tables/gig_invites.dart';
 export 'tables/gig_offers.dart';
 export 'tables/gig_threads.dart';
 export 'tables/gigs.dart';
 export 'tables/highlights.dart';
+export 'tables/invite_events.dart';
 export 'tables/musician_content.dart';
 export 'tables/musician_open_slots.dart';
 export 'tables/notification.dart';

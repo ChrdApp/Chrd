@@ -5,7 +5,6 @@ import '/components/notification_icon_widget.dart';
 import '/fan/fan_gigs/fan_gigs_widget.dart';
 import '/fan/gig_detail_fan/gig_detail_fan_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
@@ -13,8 +12,8 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'bookamrked_fan_widget.dart' show BookamrkedFanWidget;
 import 'dart:async';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 

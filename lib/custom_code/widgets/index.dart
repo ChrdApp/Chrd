@@ -7,3 +7,4 @@ export 'venue_nav_bar.dart' show VenueNavBar;
 export 'musician_nav_bar.dart' show MusicianNavBar;
 export 'real_time_gig_thread_list.dart' show RealTimeGigThreadList;
 export 'fan_navbar.dart' show FanNavbar;
+export 'force_update_alert.dart' show ForceUpdateAlert;

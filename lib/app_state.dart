@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'flutter_flow/request_manager.dart';
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
-import '/backend/api_requests/api_manager.dart';
+import 'package:ff_commons/api_requests/api_manager.dart';
 import 'backend/supabase/supabase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'flutter_flow/flutter_flow_util.dart';
@@ -73,6 +73,10 @@ class FFAppState extends ChangeNotifier {
           print("Can't decode persisted data type. Error: $e.");
         }
       }
+    });
+    _safeInit(() {
+      _lastHandledInviteToken = prefs.getString('ff_lastHandledInviteToken') ??
+          _lastHandledInviteToken;
     });
   }
 
@@ -499,6 +503,67 @@ class FFAppState extends ChangeNotifier {
   String get lastName => _lastName;
   set lastName(String value) {
     _lastName = value;
+  }
+
+  String _pendingInviteToken = '';
+  String get pendingInviteToken => _pendingInviteToken;
+  set pendingInviteToken(String value) {
+    _pendingInviteToken = value;
+  }
+
+  int _pendingInviteId = 0;
+  int get pendingInviteId => _pendingInviteId;
+  set pendingInviteId(int value) {
+    _pendingInviteId = value;
+  }
+
+  String _pendingInviteRole = '';
+  String get pendingInviteRole => _pendingInviteRole;
+  set pendingInviteRole(String value) {
+    _pendingInviteRole = value;
+  }
+
+  String _pendingInviteType = '';
+  String get pendingInviteType => _pendingInviteType;
+  set pendingInviteType(String value) {
+    _pendingInviteType = value;
+  }
+
+  int _pendingVenueId = 0;
+  int get pendingVenueId => _pendingVenueId;
+  set pendingVenueId(int value) {
+    _pendingVenueId = value;
+  }
+
+  int _pendingSlotId = 0;
+  int get pendingSlotId => _pendingSlotId;
+  set pendingSlotId(int value) {
+    _pendingSlotId = value;
+  }
+
+  int _pendingVenueOwnerId = 0;
+  int get pendingVenueOwnerId => _pendingVenueOwnerId;
+  set pendingVenueOwnerId(int value) {
+    _pendingVenueOwnerId = value;
+  }
+
+  String _inviteConfirmToken = '';
+  String get inviteConfirmToken => _inviteConfirmToken;
+  set inviteConfirmToken(String value) {
+    _inviteConfirmToken = value;
+  }
+
+  String _inviteConfirmInviterName = '';
+  String get inviteConfirmInviterName => _inviteConfirmInviterName;
+  set inviteConfirmInviterName(String value) {
+    _inviteConfirmInviterName = value;
+  }
+
+  String _lastHandledInviteToken = '';
+  String get lastHandledInviteToken => _lastHandledInviteToken;
+  set lastHandledInviteToken(String value) {
+    _lastHandledInviteToken = value;
+    prefs.setString('ff_lastHandledInviteToken', value);
   }
 
   final _genreQueryResponseManager = FutureRequestManager<List<GenresRow>>();

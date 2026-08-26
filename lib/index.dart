@@ -9,7 +9,6 @@ export '/musician/contract_board/contract_board_widget.dart'
     show ContractBoardWidget;
 export '/musician/discover/discover_widget.dart' show DiscoverWidget;
 export '/musician/profile/profile_widget.dart' show ProfileWidget;
-export '/test/test_widget.dart' show TestWidget;
 export '/musician/login_security/login_security_widget.dart'
     show LoginSecurityWidget;
 export '/login/splash_screen1/splash_screen1_widget.dart'
@@ -87,7 +86,6 @@ export '/venue/gig_offer_choose_day/gig_offer_choose_day_widget.dart'
     show GigOfferChooseDayWidget;
 export '/musician/onbording/musician_account_info/musician_account_info_widget.dart'
     show MusicianAccountInfoWidget;
-export '/test1/test1_widget.dart' show Test1Widget;
 export '/musician/onbording/musician_added_content/musician_added_content_widget.dart'
     show MusicianAddedContentWidget;
 export '/musician/onbording/musician_add_content/musician_add_content_widget.dart'
@@ -112,23 +110,22 @@ export '/looged_in_page/looged_in_page_widget.dart' show LoogedInPageWidget;
 export '/musician/onbording/musician_profile_highlights/musician_profile_highlights_widget.dart'
     show MusicianProfileHighlightsWidget;
 export '/venue/home_v/home_v_widget.dart' show HomeVWidget;
-export '/home_m/home_m_widget.dart' show HomeMWidget;
+export '/musician/home_m/home_m_widget.dart' show HomeMWidget;
 export '/musician/onbording/add_available_slot/add_available_slot_widget.dart'
     show AddAvailableSlotWidget;
 export '/venue/venue_pages/venue_musician_profile1/venue_musician_profile1_widget.dart'
     show VenueMusicianProfile1Widget;
-export '/chrdtest/chrdtest_widget.dart' show ChrdtestWidget;
 export '/musician/onbording/musician_add_highlight/musician_add_highlight_widget.dart'
     show MusicianAddHighlightWidget;
 export '/venue/venue_pages/venue_gig_thread_overlay/venue_gig_thread_overlay_widget.dart'
     show VenueGigThreadOverlayWidget;
 export '/musician/musician_messages/musician_messages_widget.dart'
     show MusicianMessagesWidget;
-export '/custom_chat_venue/custom_chat_venue_widget.dart'
+export '/venue/venue_pages/custom_chat_venue/custom_chat_venue_widget.dart'
     show CustomChatVenueWidget;
 export '/venue/venue_pages/venue_gig_contract_overlay/venue_gig_contract_overlay_widget.dart'
     show VenueGigContractOverlayWidget;
-export '/venue/venue_pages/accept_decline_gig_overlay/accept_decline_gig_overlay_widget.dart'
+export '/musician/accept_decline_gig_overlay/accept_decline_gig_overlay_widget.dart'
     show AcceptDeclineGigOverlayWidget;
 export '/venue/venue_pages/venue_gig_view_overlay/venue_gig_view_overlay_widget.dart'
     show VenueGigViewOverlayWidget;

@@ -25,6 +25,8 @@ class FFDevEnvironmentValues {
       _anonKey = data['anonKey'];
       _iosClientID = data['iosClientID'];
       _webClientID = data['webClientID'];
+      _termsAndCondition = data['termsAndCondition'];
+      _privacyPolicy = data['privacyPolicy'];
     } catch (e) {
       print('Error loading environment values: $e');
     }
@@ -41,4 +43,10 @@ class FFDevEnvironmentValues {
 
   String _webClientID = '';
   String get webClientID => _webClientID;
+
+  String _termsAndCondition = '';
+  String get termsAndCondition => _termsAndCondition;
+
+  String _privacyPolicy = '';
+  String get privacyPolicy => _privacyPolicy;
 }

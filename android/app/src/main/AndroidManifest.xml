@@ -49,9 +49,28 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="chrd" android:host="chrd.com" />
+                <data android:scheme="chrd" android:host="joinchrd.app.link" />
             </intent-filter>
 
+     <!-- Start of Support for App Links Android -->
+       <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="https" android:host="joinchrd.app.link"/>
+</intent-filter>
+      <!-- End of Support for App Links Android -->
+      
+     <!-- Start of Support for Alternate Link Domains -->
+      <!-- Support for Alternate Branch Link Domain -->
+<intent-filter android:autoVerify="true">
+  <action android:name="android.intent.action.VIEW"/>
+  <category android:name="android.intent.category.DEFAULT"/>
+  <category android:name="android.intent.category.BROWSABLE"/>
+  <data android:scheme="https" android:host="joinchrd-alternate.app.link"/>
+</intent-filter>
+      <!-- End of Support for Alternate Link Domains -->
+      
         </activity>
 
         <!-- Don't delete the meta-data below.
@@ -63,5 +82,10 @@
 
 
 
+     <!-- Start of Branchio Key Android -->
+      <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_dEzQEHwyZFbqj8Me6FifjhgnuvnMZpZz"/>
+<meta-data android:name="io.branch.sdk.TestMode" android:value="false"/>
+      <!-- End of Branchio Key Android -->
+      
     </application>
 </manifest>

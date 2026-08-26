@@ -7,9 +7,9 @@ import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 
-import '../../flutter_flow/lat_lng.dart';
-import '../../flutter_flow/place.dart';
-import '../../flutter_flow/uploaded_file.dart';
+import 'package:ff_commons/flutter_flow/lat_lng.dart';
+import 'package:ff_commons/flutter_flow/place.dart';
+import 'package:ff_commons/flutter_flow/uploaded_file.dart';
 
 /// SERIALIZATION HELPERS
 
@@ -266,6 +266,8 @@ dynamic deserializeParam<T>(
             return GenresRow(data);
           case GigContractsRow:
             return GigContractsRow(data);
+          case GigInvitesRow:
+            return GigInvitesRow(data);
           case GigOffersRow:
             return GigOffersRow(data);
           case GigThreadsRow:
@@ -274,6 +276,8 @@ dynamic deserializeParam<T>(
             return GigsRow(data);
           case HighlightsRow:
             return HighlightsRow(data);
+          case InviteEventsRow:
+            return InviteEventsRow(data);
           case MusicianContentRow:
             return MusicianContentRow(data);
           case MusicianOpenSlotsRow:

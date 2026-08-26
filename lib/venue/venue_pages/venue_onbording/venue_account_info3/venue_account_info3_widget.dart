@@ -1,6 +1,5 @@
 import '/backend/schema/structs/index.dart';
 import '/backend/supabase/supabase.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/musician/components/c_h_r_d_back_btn/c_h_r_d_back_btn_widget.dart';
@@ -13,6 +12,7 @@ import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_phone_no_ven
 import 'dart:ui';
 import '/index.dart';
 import 'package:easy_debounce/easy_debounce.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -110,6 +110,9 @@ class _VenueAccountInfo3WidgetState extends State<VenueAccountInfo3Widget> {
           _model.websiteModel.textController?.text =
               _model.venueOutput!.firstOrNull!.website!;
         });
+        return;
+      } else {
+        return;
       }
     });
 
@@ -588,6 +591,7 @@ class _VenueAccountInfo3WidgetState extends State<VenueAccountInfo3Widget> {
                     if (_model.isReadOnly) {
                       _model.isReadOnly = false;
                       safeSetState(() {});
+                      return;
                     } else {
                       if (_model.formKey.currentState == null ||
                           !_model.formKey.currentState!.validate()) {
@@ -627,6 +631,7 @@ class _VenueAccountInfo3WidgetState extends State<VenueAccountInfo3Widget> {
                           ),
                         );
                         context.safePop();
+                        return;
                       } else {
                         FFAppState().vanueName =
                             _model.vanueNameModel.textController.text;
@@ -650,6 +655,8 @@ class _VenueAccountInfo3WidgetState extends State<VenueAccountInfo3Widget> {
                         );
 
                         context.pushNamed(VenueProfilePic4Widget.routeName);
+
+                        return;
                       }
                     }
                   },

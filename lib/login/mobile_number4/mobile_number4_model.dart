@@ -1,4 +1,3 @@
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/musician/components/c_h_r_d_back_btn/c_h_r_d_back_btn_widget.dart';
@@ -8,6 +7,7 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'mobile_number4_widget.dart' show MobileNumber4Widget;
 import 'package:easy_debounce/easy_debounce.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -39,6 +39,8 @@ class MobileNumber4Model extends FlutterFlowModel<MobileNumber4Widget> {
 
   // Stores action output result for [Custom Action - getPhoneOtp] action in Button widget.
   bool? isOtpSent;
+  // State field(s) for Checkbox widget.
+  bool? checkboxValue;
 
   @override
   void initState(BuildContext context) {

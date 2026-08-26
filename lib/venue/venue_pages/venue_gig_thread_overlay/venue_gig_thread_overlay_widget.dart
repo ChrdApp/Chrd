@@ -1,6 +1,5 @@
 import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/enums/enums.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/musician/components/c_h_r_d_back_btn/c_h_r_d_back_btn_widget.dart';
@@ -8,6 +7,7 @@ import 'dart:ui';
 import '/index.dart';
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -313,193 +313,6 @@ class _VenueGigThreadOverlayWidgetState
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          if (false)
-                            Container(
-                              width: double.infinity,
-                              height: 0.5,
-                              decoration: BoxDecoration(
-                                color: Color(0x4CFFFFFF),
-                              ),
-                            ),
-                          if (false)
-                            FutureBuilder<ApiCallResponse>(
-                              future: VenueGroup.getGigThreadsCall.call(
-                                gigid: widget!.gigID,
-                                general: true,
-                                userId: FFAppState().userId,
-                              ),
-                              builder: (context, snapshot) {
-                                // Customize what your widget looks like when it's loading.
-                                if (!snapshot.hasData) {
-                                  return Center(
-                                    child: SizedBox(
-                                      width: 50.0,
-                                      height: 50.0,
-                                      child: CircularProgressIndicator(
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                          FlutterFlowTheme.of(context).primary,
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }
-                                final containerGetGigThreadsResponse =
-                                    snapshot.data!;
-
-                                return InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () async {
-                                    context.pushNamed(
-                                      CustomChatVenueWidget.routeName,
-                                      queryParameters: {
-                                        'threadId': serializeParam(
-                                          getJsonField(
-                                            containerGetGigThreadsResponse
-                                                .jsonBody,
-                                            r'''$[0].id''',
-                                          ),
-                                          ParamType.int,
-                                        ),
-                                        'isVenue': serializeParam(
-                                          widget!.isVenue,
-                                          ParamType.bool,
-                                        ),
-                                      }.withoutNulls,
-                                    );
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Expanded(
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'General Messaging',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          font: GoogleFonts
-                                                              .montserrat(
-                                                            fontWeight:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontWeight,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                          ),
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontStyle,
-                                                        ),
-                                              ),
-                                              Text(
-                                                getJsonField(
-                                                          containerGetGigThreadsResponse
-                                                              .jsonBody,
-                                                          r'''$[0].last_message_content''',
-                                                        ) !=
-                                                        null
-                                                    ? getJsonField(
-                                                        containerGetGigThreadsResponse
-                                                            .jsonBody,
-                                                        r'''$[0].last_message_content''',
-                                                      ).toString()
-                                                    : 'Say Hi!',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          font: GoogleFonts
-                                                              .montserrat(
-                                                            fontWeight:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontWeight,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                          ),
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .neutralDark500,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontStyle,
-                                                        ),
-                                              ),
-                                            ].divide(SizedBox(height: 4.0)),
-                                          ),
-                                        ),
-                                        if ('true' ==
-                                                getJsonField(
-                                                  containerGetGigThreadsResponse
-                                                      .jsonBody,
-                                                  r'''$[0].has_any_message_unread''',
-                                                ).toString()
-                                            ? true
-                                            : false)
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    2.0, 0.0, 0.0, 0.0),
-                                            child: Icon(
-                                              Icons.circle_rounded,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryCyan,
-                                              size: 12.0,
-                                            ),
-                                          ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  2.0, 0.0, 0.0, 0.0),
-                                          child: Icon(
-                                            Icons.arrow_forward_ios,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 14.0,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
                           Container(
                             width: double.infinity,
                             height: 0.5,

@@ -5,7 +5,6 @@ import '/backend/supabase/supabase.dart';
 import '/components/upload_file_btn_widget.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
@@ -14,10 +13,12 @@ import '/musician/components/c_h_r_d_label_btn/c_h_r_d_label_btn_widget.dart';
 import '/musician/components/c_h_r_d_label_column_text/c_h_r_d_label_column_text_widget.dart';
 import '/musician/components/c_h_r_d_label_text_field_with_border/c_h_r_d_label_text_field_with_border_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_video_player_component/c_h_r_d_video_player_component_widget.dart';
+import 'dart:convert';
 import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/custom_functions.dart' as functions;
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -414,6 +415,8 @@ class _AddingPerformanceStagesWidgetState
                                                             _model
                                                                 .uploadedFileUrl_performanceStagesUrl);
                                                     safeSetState(() {});
+                                                  } else {
+                                                    return;
                                                   }
                                                 } else {
                                                   if (functions.isVideoUrl(FFAppState()
@@ -462,6 +465,8 @@ class _AddingPerformanceStagesWidgetState
                                                         );
                                                       },
                                                     );
+                                                  } else {
+                                                    return;
                                                   }
                                                 }
                                               },
@@ -615,276 +620,6 @@ class _AddingPerformanceStagesWidgetState
                                               ),
                                             ),
                                           ),
-                                        );
-                                      },
-                                    );
-                                  },
-                                ),
-                              ),
-                            ]
-                                .divide(SizedBox(height: 11.0))
-                                .addToStart(SizedBox(height: 8.0)),
-                          ),
-                        if (false)
-                          Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional(-1.0, 0.0),
-                                child: Text(
-                                  'Images',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.montserrat(
-                                          fontWeight: FontWeight.w500,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontSize: 12.0,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w500,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                ),
-                              ),
-                              Container(
-                                child: Builder(
-                                  builder: (context) {
-                                    final performanceStages = FFAppState()
-                                        .performanceStagesContentList
-                                        .toList();
-
-                                    return GridView.builder(
-                                      padding: EdgeInsets.zero,
-                                      gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 3,
-                                        crossAxisSpacing: 10.0,
-                                        mainAxisSpacing: 10.0,
-                                        childAspectRatio: 1.0,
-                                      ),
-                                      primary: false,
-                                      shrinkWrap: true,
-                                      scrollDirection: Axis.vertical,
-                                      itemCount: performanceStages.length,
-                                      itemBuilder:
-                                          (context, performanceStagesIndex) {
-                                        final performanceStagesItem =
-                                            performanceStages[
-                                                performanceStagesIndex];
-                                        return Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Expanded(
-                                              child: Stack(
-                                                children: [
-                                                  ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            12.0),
-                                                    child: Image.network(
-                                                      'https://picsum.photos/seed/868/600',
-                                                      width: 100.0,
-                                                      height: 100.0,
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                  if (performanceStagesIndex !=
-                                                      0)
-                                                    Align(
-                                                      alignment:
-                                                          AlignmentDirectional(
-                                                              1.0, -1.0),
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    4.0,
-                                                                    4.0,
-                                                                    0.0),
-                                                        child:
-                                                            FlutterFlowIconButton(
-                                                          borderRadius: 100.0,
-                                                          buttonSize: 32.0,
-                                                          fillColor:
-                                                              Color(0x8D000000),
-                                                          icon: Icon(
-                                                            Icons.close,
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .info,
-                                                            size: 16.0,
-                                                          ),
-                                                          onPressed: () {
-                                                            print(
-                                                                'IconButton pressed ...');
-                                                          },
-                                                        ),
-                                                      ),
-                                                    ),
-                                                ],
-                                              ),
-                                            ),
-                                            if (false)
-                                              Align(
-                                                alignment: AlignmentDirectional(
-                                                    -0.27, 0.24),
-                                                child: Container(
-                                                  width: 110.0,
-                                                  height: 120.0,
-                                                  decoration: BoxDecoration(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .neutralDark900,
-                                                    image: DecorationImage(
-                                                      fit: BoxFit.cover,
-                                                      image: Image.network(
-                                                        functions.isVideoUrl(FFAppState()
-                                                                .performanceStagesContentList
-                                                                .elementAtOrNull(
-                                                                    performanceStagesIndex))!
-                                                            ? 'https://kasnaqcqfuqnfydsjvpy.supabase.co/storage/v1/object/public/venueC/loginGradient.png'
-                                                            : '${performanceStagesItem}',
-                                                      ).image,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            12.0),
-                                                  ),
-                                                  child: Stack(
-                                                    children: [
-                                                      if (performanceStagesIndex !=
-                                                          0)
-                                                        Align(
-                                                          alignment:
-                                                              AlignmentDirectional(
-                                                                  1.0, -1.0),
-                                                          child: Padding(
-                                                            padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0.0,
-                                                                        4.0,
-                                                                        4.0,
-                                                                        0.0),
-                                                            child:
-                                                                FlutterFlowIconButton(
-                                                              borderRadius:
-                                                                  100.0,
-                                                              buttonSize: 32.0,
-                                                              fillColor: Color(
-                                                                  0x8D000000),
-                                                              icon: Icon(
-                                                                Icons.close,
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .info,
-                                                                size: 16.0,
-                                                              ),
-                                                              onPressed: () {
-                                                                print(
-                                                                    'IconButton pressed ...');
-                                                              },
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      Align(
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                0.0, 0.0),
-                                                        child: Builder(
-                                                          builder: (context) =>
-                                                              InkWell(
-                                                            splashColor: Colors
-                                                                .transparent,
-                                                            focusColor: Colors
-                                                                .transparent,
-                                                            hoverColor: Colors
-                                                                .transparent,
-                                                            highlightColor:
-                                                                Colors
-                                                                    .transparent,
-                                                            onTap: () async {
-                                                              await showDialog(
-                                                                barrierColor:
-                                                                    FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primaryBackground,
-                                                                context:
-                                                                    context,
-                                                                builder:
-                                                                    (dialogContext) {
-                                                                  return Dialog(
-                                                                    elevation:
-                                                                        0,
-                                                                    insetPadding:
-                                                                        EdgeInsets
-                                                                            .zero,
-                                                                    backgroundColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    alignment: AlignmentDirectional(
-                                                                            0.0,
-                                                                            0.0)
-                                                                        .resolve(
-                                                                            Directionality.of(context)),
-                                                                    child:
-                                                                        GestureDetector(
-                                                                      onTap:
-                                                                          () {
-                                                                        FocusScope.of(dialogContext)
-                                                                            .unfocus();
-                                                                        FocusManager
-                                                                            .instance
-                                                                            .primaryFocus
-                                                                            ?.unfocus();
-                                                                      },
-                                                                      child:
-                                                                          CHRDVideoPlayerComponentWidget(
-                                                                        videoUrl:
-                                                                            '',
-                                                                        callBackAction:
-                                                                            () async {},
-                                                                      ),
-                                                                    ),
-                                                                  );
-                                                                },
-                                                              );
-                                                            },
-                                                            child: FaIcon(
-                                                              FontAwesomeIcons
-                                                                  .video,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryText,
-                                                              size: 40.0,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            if (false)
-                                              Container(
-                                                width: 100.0,
-                                                height: 100.0,
-                                                decoration: BoxDecoration(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondaryBackground,
-                                                ),
-                                              ),
-                                          ],
                                         );
                                       },
                                     );
@@ -1420,6 +1155,7 @@ class _AddingPerformanceStagesWidgetState
                   headingFontSize: 14,
                   isDisiable: FFAppState().performanceStageContent.length < 1,
                   onTab: () async {
+                    var _shouldSetState = false;
                     if (_model.formKey.currentState == null ||
                         !_model.formKey.currentState!.validate()) {
                       return;
@@ -1435,6 +1171,7 @@ class _AddingPerformanceStagesWidgetState
                       'updated_at':
                           supaSerialize<DateTime>(getCurrentTimestamp),
                     });
+                    _shouldSetState = true;
                     _model.stageContentInsertion =
                         await VenueGroup.insertStageContentCall.call(
                       pStageId: _model.addedPerformanceStage?.id,
@@ -1448,8 +1185,11 @@ class _AddingPerformanceStagesWidgetState
                           .toList(),
                     );
 
+                    _shouldSetState = true;
                     if ((_model.stageContentInsertion?.succeeded ?? true)) {
                       context.safePop();
+                      if (_shouldSetState) safeSetState(() {});
+                      return;
                     } else {
                       await showDialog(
                         context: context,
@@ -1470,9 +1210,11 @@ class _AddingPerformanceStagesWidgetState
                           );
                         },
                       );
+                      if (_shouldSetState) safeSetState(() {});
+                      return;
                     }
 
-                    safeSetState(() {});
+                    if (_shouldSetState) safeSetState(() {});
                   },
                 ),
               ),

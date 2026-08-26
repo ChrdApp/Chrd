@@ -66,4 +66,7 @@ class UsersRow extends SupabaseDataRow {
 
   bool? get isActive => getField<bool>('is_active');
   set isActive(bool? value) => setField<bool>('is_active', value);
+
+  String? get phoneNorm => getField<String>('phone_norm');
+  set phoneNorm(String? value) => setField<String>('phone_norm', value);
 }

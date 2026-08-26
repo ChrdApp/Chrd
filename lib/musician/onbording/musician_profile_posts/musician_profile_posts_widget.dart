@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -74,19 +74,6 @@ class _MusicianProfilePostsWidgetState
                       ),
                       onPressed: () async {
                         context.safePop();
-                      },
-                    ),
-                    FlutterFlowIconButton(
-                      borderRadius: 100.0,
-                      buttonSize: 42.0,
-                      fillColor: Color(0x2BFFFFFF),
-                      icon: Icon(
-                        FFIcons.k3dot,
-                        color: FlutterFlowTheme.of(context).info,
-                        size: 24.0,
-                      ),
-                      onPressed: () {
-                        print('IconButton pressed ...');
                       },
                     ),
                   ],

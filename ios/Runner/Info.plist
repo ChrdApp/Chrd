@@ -34,7 +34,7 @@
         <key>CFBundleTypeRole</key>
         <string>Editor</string>
         <key>CFBundleURLName</key>
-        <string>chrd.com</string>
+        <string>joinchrd.app.link</string>
         <key>CFBundleURLSchemes</key>
         <array>
           <string>chrd</string>
@@ -63,6 +63,10 @@
 		<string>remote-notification</string>
 	</array>    
     <!-- End of location permission -->
+    <!-- Start of Branch Key -->
+    <key>branch_key</key>
+    <string>key_live_dEzQEHwyZFbqj8Me6FifjhgnuvnMZpZz</string>
+    <!-- End of Branch Key -->
     <key>UILaunchStoryboardName</key>
     <string>LaunchScreen</string>
     <key>UIMainStoryboardFile</key>

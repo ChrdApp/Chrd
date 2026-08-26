@@ -3,7 +3,6 @@ import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/confirmation_dialog_widget.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/musician/components/c_h_r_d_back_btn/c_h_r_d_back_btn_widget.dart';
@@ -14,10 +13,12 @@ import '/musician/components/c_h_r_d_remove_musician/c_h_r_d_remove_musician_wid
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_performance_stages/c_h_r_d_performance_stages_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_row_with_icon/c_h_r_d_row_with_icon_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_video_player_component/c_h_r_d_video_player_component_widget.dart';
+import 'dart:convert';
 import 'dart:ui';
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
@@ -236,38 +237,42 @@ class _VenueGigContractOverlayWidgetState
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        if ('true' !=
+                                        if ('true' ==
                                             getJsonField(
                                               venueGigContractOverlayGetSingleSlotDetailsResponse
                                                   .jsonBody,
                                               r'''$.data.is_booked''',
                                             ).toString()) {
-                                          context.pushNamed(
-                                            SelectTalentWidget.routeName,
-                                            queryParameters: {
-                                              'venueId': serializeParam(
-                                                getJsonField(
-                                                  venueGigContractOverlayGetSingleSlotDetailsResponse
-                                                      .jsonBody,
-                                                  r'''$.data.venue_id''',
-                                                ),
-                                                ParamType.int,
-                                              ),
-                                              'slotId': serializeParam(
-                                                widget!.slotId,
-                                                ParamType.int,
-                                              ),
-                                              'venueName': serializeParam(
-                                                getJsonField(
-                                                  venueGigContractOverlayGetSingleSlotDetailsResponse
-                                                      .jsonBody,
-                                                  r'''$.data.venue_name''',
-                                                ).toString(),
-                                                ParamType.String,
-                                              ),
-                                            }.withoutNulls,
-                                          );
+                                          return;
                                         }
+
+                                        context.pushNamed(
+                                          SelectTalentWidget.routeName,
+                                          queryParameters: {
+                                            'venueId': serializeParam(
+                                              getJsonField(
+                                                venueGigContractOverlayGetSingleSlotDetailsResponse
+                                                    .jsonBody,
+                                                r'''$.data.venue_id''',
+                                              ),
+                                              ParamType.int,
+                                            ),
+                                            'slotId': serializeParam(
+                                              widget!.slotId,
+                                              ParamType.int,
+                                            ),
+                                            'venueName': serializeParam(
+                                              getJsonField(
+                                                venueGigContractOverlayGetSingleSlotDetailsResponse
+                                                    .jsonBody,
+                                                r'''$.data.venue_name''',
+                                              ).toString(),
+                                              ParamType.String,
+                                            ),
+                                          }.withoutNulls,
+                                        );
+
+                                        return;
                                       },
                                       child: Text(
                                         'true' ==
@@ -476,7 +481,7 @@ class _VenueGigContractOverlayWidgetState
 
                                           safeSetState(() {});
                                         },
-                                        text: 'Remove',
+                                        text: 'Remove Performer',
                                         options: FFButtonOptions(
                                           height: 24.0,
                                           padding:
@@ -485,8 +490,7 @@ class _VenueGigContractOverlayWidgetState
                                           iconPadding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 0.0, 0.0, 0.0),
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryViolet,
+                                          color: Color(0xFFFF0000),
                                           textStyle: FlutterFlowTheme.of(
                                                   context)
                                               .titleSmall
@@ -548,6 +552,14 @@ class _VenueGigContractOverlayWidgetState
                                               r'''$.data.venue_owner_id''',
                                             ),
                                             ParamType.int,
+                                          ),
+                                          'venueName': serializeParam(
+                                            getJsonField(
+                                              venueGigContractOverlayGetSingleSlotDetailsResponse
+                                                  .jsonBody,
+                                              r'''$.data.venue_name''',
+                                            ).toString(),
+                                            ParamType.String,
                                           ),
                                         }.withoutNulls,
                                       );
@@ -891,19 +903,74 @@ class _VenueGigContractOverlayWidgetState
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
-                                      child: InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () async {},
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Date',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  font: GoogleFonts.montserrat(
+                                                    fontWeight:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontWeight,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontStyle,
+                                                  ),
+                                                  color: Color(0x98FFFFFF),
+                                                  letterSpacing: 0.0,
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontWeight,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontStyle,
+                                                ),
+                                          ),
+                                          Text(
+                                            getJsonField(
+                                              venueGigContractOverlayGetSingleSlotDetailsResponse
+                                                  .jsonBody,
+                                              r'''$.data.start_date''',
+                                            ).toString(),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  font: GoogleFonts.montserrat(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontStyle,
+                                                  ),
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontStyle,
+                                                ),
+                                          ),
+                                          if (false)
                                             Text(
-                                              'Date',
+                                              'in ${_model.days}',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyMedium
@@ -935,75 +1002,7 @@ class _VenueGigContractOverlayWidgetState
                                                             .fontStyle,
                                                   ),
                                             ),
-                                            Text(
-                                              getJsonField(
-                                                venueGigContractOverlayGetSingleSlotDetailsResponse
-                                                    .jsonBody,
-                                                r'''$.data.start_date''',
-                                              ).toString(),
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    font:
-                                                        GoogleFonts.montserrat(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .fontStyle,
-                                                    ),
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryText,
-                                                    letterSpacing: 0.0,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontStyle,
-                                                  ),
-                                            ),
-                                            if (false)
-                                              Text(
-                                                'in ${_model.days}',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          font: GoogleFonts
-                                                              .montserrat(
-                                                            fontWeight:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontWeight,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                          ),
-                                                          color:
-                                                              Color(0x98FFFFFF),
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontStyle,
-                                                        ),
-                                              ),
-                                          ],
-                                        ),
+                                        ],
                                       ),
                                     ),
                                     Padding(
@@ -1018,38 +1017,17 @@ class _VenueGigContractOverlayWidgetState
                                       ),
                                     ),
                                     Expanded(
-                                      child: InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () async {},
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Time (EST)',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    font:
-                                                        GoogleFonts.montserrat(
-                                                      fontWeight:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .fontWeight,
-                                                      fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .fontStyle,
-                                                    ),
-                                                    color: Color(0x98FFFFFF),
-                                                    letterSpacing: 0.0,
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Time (EST)',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  font: GoogleFonts.montserrat(
                                                     fontWeight:
                                                         FlutterFlowTheme.of(
                                                                 context)
@@ -1061,22 +1039,47 @@ class _VenueGigContractOverlayWidgetState
                                                             .bodyMedium
                                                             .fontStyle,
                                                   ),
-                                            ),
-                                            Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Text(
-                                                  getJsonField(
-                                                    venueGigContractOverlayGetSingleSlotDetailsResponse
-                                                        .jsonBody,
-                                                    r'''$.data.start_time''',
-                                                  ).toString(),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        font: GoogleFonts
-                                                            .montserrat(
+                                                  color: Color(0x98FFFFFF),
+                                                  letterSpacing: 0.0,
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontWeight,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontStyle,
+                                                ),
+                                          ),
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Text(
+                                                getJsonField(
+                                                  venueGigContractOverlayGetSingleSlotDetailsResponse
+                                                      .jsonBody,
+                                                  r'''$.data.start_time''',
+                                                ).toString(),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          font: GoogleFonts
+                                                              .montserrat(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontStyle,
+                                                          ),
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           fontStyle:
@@ -1085,28 +1088,27 @@ class _VenueGigContractOverlayWidgetState
                                                                   .bodyMedium
                                                                   .fontStyle,
                                                         ),
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontStyle,
-                                                      ),
-                                                ),
-                                                Text(
-                                                  '-',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        font: GoogleFonts
-                                                            .montserrat(
+                                              ),
+                                              Text(
+                                                '-',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          font: GoogleFonts
+                                                              .montserrat(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontStyle,
+                                                          ),
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           fontStyle:
@@ -1115,32 +1117,31 @@ class _VenueGigContractOverlayWidgetState
                                                                   .bodyMedium
                                                                   .fontStyle,
                                                         ),
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontStyle,
-                                                      ),
-                                                ),
-                                                Text(
-                                                  getJsonField(
-                                                    venueGigContractOverlayGetSingleSlotDetailsResponse
-                                                        .jsonBody,
-                                                    r'''$.data.end_time''',
-                                                  ).toString(),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        font: GoogleFonts
-                                                            .montserrat(
+                                              ),
+                                              Text(
+                                                getJsonField(
+                                                  venueGigContractOverlayGetSingleSlotDetailsResponse
+                                                      .jsonBody,
+                                                  r'''$.data.end_time''',
+                                                ).toString(),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          font: GoogleFonts
+                                                              .montserrat(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontStyle,
+                                                          ),
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           fontStyle:
@@ -1149,24 +1150,10 @@ class _VenueGigContractOverlayWidgetState
                                                                   .bodyMedium
                                                                   .fontStyle,
                                                         ),
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontStyle,
-                                                      ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ],
@@ -1733,6 +1720,8 @@ class _VenueGigContractOverlayWidgetState
                                                               'Are you sure you want to remove this event?',
                                                           acceptBtnAction:
                                                               () async {
+                                                            var _shouldSetState =
+                                                                false;
                                                             _model.fetchedMusicianList =
                                                                 await VenueGroup
                                                                     .fetchMusiciansOfGigCall
@@ -1741,6 +1730,8 @@ class _VenueGigContractOverlayWidgetState
                                                                   .slotId,
                                                             );
 
+                                                            _shouldSetState =
+                                                                true;
                                                             if ((_model
                                                                     .fetchedMusicianList
                                                                     ?.succeeded ??
@@ -1791,6 +1782,8 @@ class _VenueGigContractOverlayWidgetState
                                                                     .slotId,
                                                               );
 
+                                                              _shouldSetState =
+                                                                  true;
                                                               if ((_model
                                                                       .hardDeleteGig
                                                                       ?.succeeded ??
@@ -1799,7 +1792,12 @@ class _VenueGigContractOverlayWidgetState
                                                                     context);
                                                                 context
                                                                     .safePop();
+                                                                return;
+                                                              } else {
+                                                                return;
                                                               }
+                                                            } else {
+                                                              return;
                                                             }
                                                           },
                                                         ),
@@ -1943,6 +1941,7 @@ class _VenueGigContractOverlayWidgetState
                                 });
                               }
                               context.safePop();
+                              return;
                             }
                           },
                         ),
@@ -2002,6 +2001,11 @@ class _VenueGigContractOverlayWidgetState
                                               .jsonBody,
                                           r'''$.data.end_time''',
                                         ).toString()}',
+                                        endDate: getJsonField(
+                                          venueGigContractOverlayGetSingleSlotDetailsResponse
+                                              .jsonBody,
+                                          r'''$.data.end_date''',
+                                        ).toString(),
                                         acceptActionBtn:
                                             (reasonFieldValue) async {
                                           _model.userOutput =

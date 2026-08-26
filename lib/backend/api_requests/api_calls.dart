@@ -5,9 +5,11 @@ import '../schema/structs/index.dart';
 import 'package:flutter/foundation.dart';
 
 import '/flutter_flow/flutter_flow_util.dart';
-import 'api_manager.dart';
+import 'package:ff_commons/api_requests/api_manager.dart';
 
-export 'api_manager.dart' show ApiCallResponse;
+import 'package:ff_commons/api_requests/api_paging_params.dart';
+
+export 'package:ff_commons/api_requests/api_manager.dart' show ApiCallResponse;
 
 const _kPrivateApiFunctionName = 'ffPrivateApiCall';
 
@@ -73,6 +75,7 @@ class VenueGroup {
       FetchMusiciansOfGigCall();
   static RemoveMusicianFromGigCall removeMusicianFromGigCall =
       RemoveMusicianFromGigCall();
+  static CreateGigInviteCall createGigInviteCall = CreateGigInviteCall();
 }
 
 class VenueOpenSlotsCall {
@@ -1517,6 +1520,57 @@ class RemoveMusicianFromGigCall {
   }
 }
 
+class CreateGigInviteCall {
+  Future<ApiCallResponse> call({
+    int? pInviterId,
+    String? pInviteType = '',
+    int? pCountryCode,
+    int? pPhone,
+    String? pInviteeRole = '',
+    int? pSlotId,
+    int? pVenueId,
+    String? projectURL,
+    String? anonKey,
+  }) async {
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "p_inviter_id": ${pInviterId},
+  "p_invite_type": "${escapeStringForJson(pInviteType)}",
+  "p_country_code": ${pCountryCode},
+  "p_phone": "${pPhone}",
+  "p_invitee_role": "${escapeStringForJson(pInviteeRole)}",
+  "p_venue_id": ${pVenueId},
+  "p_slot_id": ${pSlotId}
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Create Gig Invite',
+      apiUrl: '${baseUrl}/rpc/create_gig_invite',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
 /// End Venue Group Code
 
 /// Start Musician Group Code
@@ -2303,6 +2357,110 @@ class NotifyMusicianForVenueCall {
 
 /// End Notification Group Code
 
+/// Start Dynamic Link Group Code
+
+class DynamicLinkGroup {
+  static String getBaseUrl({
+    String? projectURL,
+    String? anonKey,
+    String? token = '',
+  }) {
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    return 'https://${projectURL}.supabase.co/functions/v1/';
+  }
+
+  static Map<String, String> headers = {
+    'Authorization': 'Bearer [token]',
+    'Content-Type': 'application/json',
+    'apikey': '[anonKey]',
+  };
+  static SendGigInviteCall sendGigInviteCall = SendGigInviteCall();
+  static ClaimInviteCall claimInviteCall = ClaimInviteCall();
+}
+
+class SendGigInviteCall {
+  Future<ApiCallResponse> call({
+    String? inviteToken = '',
+    String? projectURL,
+    String? anonKey,
+    String? token = '',
+  }) async {
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = DynamicLinkGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+      token: token,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "invite_token": "${escapeStringForJson(inviteToken)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Send Gig Invite',
+      apiUrl: '${baseUrl}/send-gig-invite',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer ${token}',
+        'Content-Type': 'application/json',
+        'apikey': '${anonKey}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class ClaimInviteCall {
+  Future<ApiCallResponse> call({
+    int? userId,
+    String? projectURL,
+    String? anonKey,
+    String? token = '',
+  }) async {
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = DynamicLinkGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+      token: token,
+    );
+
+    final ffApiRequestBody = '''
+{"user_id": ${userId}}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Claim Invite',
+      apiUrl: '${baseUrl}/claim-invites',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer ${token}',
+        'Content-Type': 'application/json',
+        'apikey': '${anonKey}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End Dynamic Link Group Code
+
 /// Start Fan Group Code
 
 class FanGroup {
@@ -2589,22 +2747,6 @@ class ShowPlannerCall {
       alwaysAllowBody: false,
     );
   }
-}
-
-class ApiPagingParams {
-  int nextPageNumber = 0;
-  int numItems = 0;
-  dynamic lastResponse;
-
-  ApiPagingParams({
-    required this.nextPageNumber,
-    required this.numItems,
-    required this.lastResponse,
-  });
-
-  @override
-  String toString() =>
-      'PagingParams(nextPageNumber: $nextPageNumber, numItems: $numItems, lastResponse: $lastResponse,)';
 }
 
 String _toEncodable(dynamic item) {

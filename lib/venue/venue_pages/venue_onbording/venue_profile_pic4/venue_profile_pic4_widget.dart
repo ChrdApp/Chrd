@@ -2,7 +2,6 @@ import '/backend/schema/enums/enums.dart';
 import '/backend/schema/structs/index.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
@@ -13,6 +12,7 @@ import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/index.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -363,7 +363,12 @@ class _VenueProfilePic4WidgetState extends State<VenueProfilePic4Widget> {
                                                         .error,
                                               ),
                                             );
+                                          } else {
+                                            if (_shouldSetState)
+                                              safeSetState(() {});
+                                            return;
                                           }
+
                                           if (_shouldSetState)
                                             safeSetState(() {});
                                           return;
@@ -421,6 +426,7 @@ class _VenueProfilePic4WidgetState extends State<VenueProfilePic4Widget> {
                   isDisiable: FFAppState().venueProfilePic == null ||
                       FFAppState().venueProfilePic == '',
                   onTab: () async {
+                    var _shouldSetState = false;
                     if (FFAppState().userType == Type.Musician) {
                       _model.userImageUploaded = await UsersTable().update(
                         data: {
@@ -432,8 +438,12 @@ class _VenueProfilePic4WidgetState extends State<VenueProfilePic4Widget> {
                         ),
                         returnRows: true,
                       );
+                      _shouldSetState = true;
 
                       context.pushNamed(MusicianAccountInfoWidget.routeName);
+
+                      if (_shouldSetState) safeSetState(() {});
+                      return;
                     } else {
                       FFAppState().updateVenueAccountCreateStruct(
                         (e) =>
@@ -442,9 +452,12 @@ class _VenueProfilePic4WidgetState extends State<VenueProfilePic4Widget> {
                       FFAppState().venueProfilePic = '';
 
                       context.pushNamed(AddVenueContent5Widget.routeName);
+
+                      if (_shouldSetState) safeSetState(() {});
+                      return;
                     }
 
-                    safeSetState(() {});
+                    if (_shouldSetState) safeSetState(() {});
                   },
                 ),
               ),

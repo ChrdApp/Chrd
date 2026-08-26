@@ -2,7 +2,6 @@ import '/auth/supabase_auth/auth_util.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
@@ -13,6 +12,7 @@ import '/musician/components/c_h_r_d_label_text_field_with_border/c_h_r_d_label_
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_phone_number/c_h_r_d_phone_number_widget.dart';
 import 'dart:ui';
 import '/index.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -71,6 +71,7 @@ class _AdminInfo1WidgetState extends State<AdminInfo1Widget> {
           });
         }
         safeSetState(() {});
+        return;
       } else {
         _model.hideMobileField =
             _model.userData?.firstOrNull?.phoneNumber != null &&
@@ -91,6 +92,9 @@ class _AdminInfo1WidgetState extends State<AdminInfo1Widget> {
             _model.adminNameModel.textController?.text =
                 '${FFAppState().firstName} ${FFAppState().lastName}';
           });
+          return;
+        } else {
+          return;
         }
       }
     });
@@ -155,30 +159,12 @@ class _AdminInfo1WidgetState extends State<AdminInfo1Widget> {
                   Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 32.0, 0.0, 0.0),
-                    child: InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () async {
-                        GoRouter.of(context).prepareAuthEvent();
-                        await authManager.signOut();
-                        GoRouter.of(context).clearRedirectLocation();
-
-                        FFAppState().step = 0;
-                        FFAppState().userType = Type.Venue;
-                        safeSetState(() {});
-
-                        context.goNamedAuth(
-                            SplashScreenWidget.routeName, context.mounted);
-                      },
-                      child: wrapWithModel(
-                        model: _model.cHRDLabelColumnTextModel,
-                        updateCallback: () => safeSetState(() {}),
-                        child: CHRDLabelColumnTextWidget(
-                          heading: 'Admin Account info',
-                          subHeading: 'Let us know how to properly address you',
-                        ),
+                    child: wrapWithModel(
+                      model: _model.cHRDLabelColumnTextModel,
+                      updateCallback: () => safeSetState(() {}),
+                      child: CHRDLabelColumnTextWidget(
+                        heading: 'Admin Account info',
+                        subHeading: 'Let us know how to properly address you',
                       ),
                     ),
                   ),

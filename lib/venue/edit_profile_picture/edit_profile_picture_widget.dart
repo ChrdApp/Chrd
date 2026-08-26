@@ -1,7 +1,6 @@
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
@@ -11,6 +10,7 @@ import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -303,6 +303,8 @@ class _EditProfilePictureWidgetState extends State<EditProfilePictureWidget> {
                                   );
                                   await deleteSupabaseFileFromPublicUrl(
                                       widget!.profileImage!);
+                                  if (_shouldSetState) safeSetState(() {});
+                                  return;
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
@@ -318,6 +320,8 @@ class _EditProfilePictureWidgetState extends State<EditProfilePictureWidget> {
                                           FlutterFlowTheme.of(context).error,
                                     ),
                                   );
+                                  if (_shouldSetState) safeSetState(() {});
+                                  return;
                                 }
                               } else {
                                 if (FFAppState().errorMessage != null &&

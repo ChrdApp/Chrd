@@ -1,16 +1,17 @@
 import '/backend/api_requests/api_calls.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/musician/components/c_h_r_d_back_btn/c_h_r_d_back_btn_widget.dart';
 import '/musician/components/c_h_r_d_icon_with_text/c_h_r_d_icon_with_text_widget.dart';
 import '/musician/components/c_h_r_d_label_btn/c_h_r_d_label_btn_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_video_player_component/c_h_r_d_video_player_component_widget.dart';
+import 'dart:convert';
 import 'dart:ui';
 import '/index.dart';
 import 'musician_gig_over_lay_widget.dart' show MusicianGigOverLayWidget;
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
@@ -46,9 +47,7 @@ class MusicianGigOverLayModel
   // Model for CHRD_Icon_With_Text component.
   late CHRDIconWithTextModel cHRDIconWithTextModel5;
   // Model for CHRD_Label_Btn component.
-  late CHRDLabelBtnModel cHRDLabelBtnModel1;
-  // Model for CHRD_Label_Btn component.
-  late CHRDLabelBtnModel cHRDLabelBtnModel2;
+  late CHRDLabelBtnModel cHRDLabelBtnModel;
   // Stores action output result for [Backend Call - API (Upsert gigs)] action in CHRD_Label_Btn widget.
   ApiCallResponse? upsertOutput;
   // Stores action output result for [Backend Call - Query Rows] action in CHRD_Label_Btn widget.
@@ -69,8 +68,7 @@ class MusicianGigOverLayModel
         createModel(context, () => CHRDIconWithTextModel());
     cHRDIconWithTextModel5 =
         createModel(context, () => CHRDIconWithTextModel());
-    cHRDLabelBtnModel1 = createModel(context, () => CHRDLabelBtnModel());
-    cHRDLabelBtnModel2 = createModel(context, () => CHRDLabelBtnModel());
+    cHRDLabelBtnModel = createModel(context, () => CHRDLabelBtnModel());
   }
 
   @override
@@ -81,7 +79,6 @@ class MusicianGigOverLayModel
     cHRDIconWithTextModel3.dispose();
     cHRDIconWithTextModel4.dispose();
     cHRDIconWithTextModel5.dispose();
-    cHRDLabelBtnModel1.dispose();
-    cHRDLabelBtnModel2.dispose();
+    cHRDLabelBtnModel.dispose();
   }
 }

@@ -2,7 +2,7 @@
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'index.dart'; // Imports other custom actions
 import '/flutter_flow/custom_functions.dart'; // Imports custom functions
@@ -10,19 +10,15 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-import 'index.dart'; // Imports other custom actions
-
-import 'index.dart'; // Imports other custom actions
-
 import '/custom_code/actions/index.dart';
 import '/flutter_flow/custom_functions.dart';
 
-import 'package:chrd/custom_chat_venue/custom_chat_venue_widget.dart';
+import '../../venue/venue_pages/custom_chat_venue/custom_chat_venue_widget.dart';
+import '../../venue/venue_pages/venue_musician_profile1/venue_musician_profile1_widget.dart';
 import 'package:chrd/musician/musician_messages/musician_messages_widget.dart';
 import 'package:chrd/venue/venue_pages/select_talent/select_talent_widget.dart';
 import 'package:chrd/venue/venue_pages/venue_gig_thread_overlay/venue_gig_thread_overlay_widget.dart';
 
-import 'index.dart';
 import 'dart:convert';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
@@ -44,49 +40,86 @@ Future<void> handleNotificationClick(BuildContext context) async {
 
     final additionalData = event.notification.additionalData!;
 
-    debugPrint("🔔 type: ${additionalData["type"]}");
-    debugPrint("🔔 usertype: ${additionalData["usertype"]}");
-    debugPrint("🔔 data raw: ${additionalData["data"]}");
-    debugPrint("🔔 thread_id direct: ${additionalData["thread_id"]}");
-    debugPrint("🔔 is_venue direct: ${additionalData["is_venue"]}");
+    // ---- Flatten: top-level keys first, then anything inside "data".
+    // OneSignal sends "data" as a Map on some platforms and a JSON String on
+    // others, so both shapes are handled.
+    final Map<String, dynamic> p = <String, dynamic>{};
+    additionalData.forEach((k, v) => p[k.toString()] = v);
 
-    final String? type = additionalData["type"]?.toString();
+    final raw = additionalData["data"];
+    if (raw is Map) {
+      raw.forEach((k, v) => p[k.toString()] = v);
+      debugPrint("✅ nested data was a Map");
+    } else if (raw is String) {
+      try {
+        final decoded = jsonDecode(raw);
+        if (decoded is Map) {
+          decoded.forEach((k, v) => p[k.toString()] = v);
+          debugPrint("✅ nested data decoded from String");
+        }
+      } catch (e) {
+        debugPrint("❌ Failed to decode nested data: $e");
+      }
+    }
+
+    final String? type = p["type"]?.toString();
     if (type == null) {
       debugPrint("❌ type is NULL — stopping");
       return;
     }
 
-    // ✅ Try reading thread_id and is_venue directly from additionalData first
-    int threadId =
-        int.tryParse(additionalData["thread_id"]?.toString() ?? "") ?? 0;
-    bool isVenue = additionalData["is_venue"]?.toString() == "true";
+    final int threadId = int.tryParse(p["thread_id"]?.toString() ?? "") ?? 0;
+    final int musicianId =
+        int.tryParse(p["musician_id"]?.toString() ?? "") ?? 0;
+    final int venueId = int.tryParse(p["venue_id"]?.toString() ?? "") ?? 0;
+    final bool isVenue = p["is_venue"]?.toString().toLowerCase() == "true";
 
-    // ✅ If not found directly, try parsing from nested "data" string
-    if (threadId == 0 && additionalData["data"] != null) {
-      try {
-        final Map<String, dynamic> data =
-            jsonDecode(additionalData["data"].toString());
-        debugPrint("✅ Parsed nested data: $data");
+    debugPrint("✅ Final — type: $type | threadId: $threadId | "
+        "musicianId: $musicianId | venueId: $venueId | isVenue: $isVenue");
 
-        threadId = int.tryParse(data["thread_id"]?.toString() ?? "") ?? 0;
-        isVenue = data["is_venue"]?.toString() == "true";
-      } catch (e) {
-        debugPrint("❌ Failed to parse nested data: $e");
-      }
+    // The context captured at registration is usually unmounted by the time a
+    // tap arrives (app resumed, page disposed). Use the global navigator.
+    final ctx = appNavigatorKey.currentContext;
+    if (ctx == null) {
+      debugPrint("❌ navigator not ready");
+      return;
     }
 
-    debugPrint(
-        "✅ Final — type: $type | threadId: $threadId | isVenue: $isVenue");
+    // ---- Invite accepted → open the musician's profile --------------------
+    if (type == 'InviteAccepted') {
+      if (musicianId == 0) {
+        debugPrint("❌ InviteAccepted has no musician_id");
+        return;
+      }
 
+      ctx.pushNamed(
+        VenueMusicianProfile1Widget.routeName,
+        queryParameters: {
+          'musicianId': serializeParam(musicianId, ParamType.int),
+          'venueId':
+              serializeParam(venueId == 0 ? null : venueId, ParamType.int),
+          'isDiscoverFlow': serializeParam(true, ParamType.bool),
+        }.withoutNulls,
+      );
+      return;
+    }
+
+    // ---- Everything else → the chat thread --------------------------------
     if (type == 'PerformerApplied' ||
         type == 'PerformerAccepted' ||
         type == 'PerformerDeclined' ||
         type == 'PerformerBackedout' ||
         type == 'PerformerInvited' ||
         type == 'PerformerMessaged' ||
+        type == 'VenueInvited' ||
         type == 'VenueMessaged' ||
         type == 'VenueCancelled') {
-      context.pushNamed(
+      if (threadId == 0) {
+        debugPrint("❌ $type has no thread_id — not navigating");
+        return;
+      }
+
+      ctx.pushNamed(
         CustomChatVenueWidget.routeName,
         queryParameters: {
           'threadId': serializeParam(threadId, ParamType.int),

@@ -1,8 +1,8 @@
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/musician/components/c_h_r_d_label_btn/c_h_r_d_label_btn_widget.dart';
 import 'dart:ui';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -15,11 +15,13 @@ class CHRDBackoutGigWidget extends StatefulWidget {
     required this.dateTime,
     required this.price,
     required this.acceptActionBtn,
+    required this.endDate,
   });
 
   final String? dateTime;
   final String? price;
   final Future Function(String reasonFieldValue)? acceptActionBtn;
+  final String? endDate;
 
   @override
   State<CHRDBackoutGigWidget> createState() => _CHRDBackoutGigWidgetState();
@@ -86,7 +88,7 @@ class _CHRDBackoutGigWidgetState extends State<CHRDBackoutGigWidget> {
                     ),
               ),
               Text(
-                widget!.dateTime!,
+                '${widget!.dateTime} – ${widget!.endDate}',
                 textAlign: TextAlign.center,
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                       font: GoogleFonts.montserrat(

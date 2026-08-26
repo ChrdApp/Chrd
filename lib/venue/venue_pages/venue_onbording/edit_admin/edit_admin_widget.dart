@@ -4,7 +4,6 @@ import '/backend/schema/enums/enums.dart';
 import '/backend/schema/structs/index.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/confirmation_dialog_widget.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/musician/components/c_h_r_d_back_btn/c_h_r_d_back_btn_widget.dart';
@@ -12,10 +11,12 @@ import '/musician/components/c_h_r_d_label_btn/c_h_r_d_label_btn_widget.dart';
 import '/musician/components/c_h_r_d_label_column_text/c_h_r_d_label_column_text_widget.dart';
 import '/musician/components/c_h_r_d_label_text_field_with_border/c_h_r_d_label_text_field_with_border_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_phone_number/c_h_r_d_phone_number_widget.dart';
+import 'dart:convert';
 import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -141,30 +142,12 @@ class _EditAdminWidgetState extends State<EditAdminWidget> {
                   Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 32.0, 0.0, 0.0),
-                    child: InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () async {
-                        GoRouter.of(context).prepareAuthEvent();
-                        await authManager.signOut();
-                        GoRouter.of(context).clearRedirectLocation();
-
-                        FFAppState().step = 0;
-                        FFAppState().userType = Type.Venue;
-                        safeSetState(() {});
-
-                        context.goNamedAuth(
-                            SplashScreenWidget.routeName, context.mounted);
-                      },
-                      child: wrapWithModel(
-                        model: _model.cHRDLabelColumnTextModel,
-                        updateCallback: () => safeSetState(() {}),
-                        child: CHRDLabelColumnTextWidget(
-                          heading: 'Profile Details',
-                          subHeading: 'Click Fields to edit',
-                        ),
+                    child: wrapWithModel(
+                      model: _model.cHRDLabelColumnTextModel,
+                      updateCallback: () => safeSetState(() {}),
+                      child: CHRDLabelColumnTextWidget(
+                        heading: 'Profile Details',
+                        subHeading: 'Click Fields to edit',
                       ),
                     ),
                   ),
@@ -537,7 +520,23 @@ class _EditAdminWidgetState extends State<EditAdminWidget> {
                         !_model.formKey.currentState!.validate()) {
                       return;
                     }
-                    if (_model.hideMobileField != true) {
+                    if (_model.hideMobileField == true) {
+                      await UsersTable().update(
+                        data: {
+                          'name': _model.adminNameModel.textController.text,
+                          'email': _model.emailAddressModel.textController.text,
+                        },
+                        matchingRows: (rows) => rows.eqOrNull(
+                          'id',
+                          FFAppState().userId,
+                        ),
+                      );
+                      FFAppState().AdminName =
+                          _model.adminNameModel.textController.text;
+                      safeSetState(() {});
+                      context.safePop();
+                      return;
+                    } else {
                       _model.showMobileError = (String var1) {
                         return var1.length < 17 ? false : true;
                       }(_model
@@ -545,20 +544,6 @@ class _EditAdminWidgetState extends State<EditAdminWidget> {
                       safeSetState(() {});
                       return;
                     }
-                    await UsersTable().update(
-                      data: {
-                        'name': _model.adminNameModel.textController.text,
-                        'email': _model.emailAddressModel.textController.text,
-                      },
-                      matchingRows: (rows) => rows.eqOrNull(
-                        'id',
-                        FFAppState().userId,
-                      ),
-                    );
-                    FFAppState().AdminName =
-                        _model.adminNameModel.textController.text;
-                    safeSetState(() {});
-                    context.safePop();
                   },
                 ),
               ),

@@ -4,7 +4,6 @@ import '/backend/schema/enums/enums.dart';
 import '/backend/schema/structs/index.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/confirmation_dialog_widget.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/musician/components/c_h_r_d_back_btn/c_h_r_d_back_btn_widget.dart';
@@ -12,9 +11,11 @@ import '/musician/components/c_h_r_d_label_btn/c_h_r_d_label_btn_widget.dart';
 import '/musician/components/c_h_r_d_label_column_text/c_h_r_d_label_column_text_widget.dart';
 import '/musician/components/c_h_r_d_label_text_field_with_border/c_h_r_d_label_text_field_with_border_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_phone_number/c_h_r_d_phone_number_widget.dart';
+import 'dart:convert';
 import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -77,6 +78,7 @@ class _FanInfoWidgetState extends State<FanInfoWidget> {
           );
         });
         safeSetState(() {});
+        return;
       } else {
         _model.hideMobileField =
             _model.userData?.firstOrNull?.phoneNumber != null &&
@@ -108,6 +110,7 @@ class _FanInfoWidgetState extends State<FanInfoWidget> {
             ),
           );
         });
+        return;
       }
     });
 
@@ -171,30 +174,12 @@ class _FanInfoWidgetState extends State<FanInfoWidget> {
                   Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 32.0, 0.0, 0.0),
-                    child: InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () async {
-                        GoRouter.of(context).prepareAuthEvent();
-                        await authManager.signOut();
-                        GoRouter.of(context).clearRedirectLocation();
-
-                        FFAppState().step = 0;
-                        FFAppState().userType = Type.Venue;
-                        safeSetState(() {});
-
-                        context.goNamedAuth(
-                            SplashScreenWidget.routeName, context.mounted);
-                      },
-                      child: wrapWithModel(
-                        model: _model.cHRDLabelColumnTextModel,
-                        updateCallback: () => safeSetState(() {}),
-                        child: CHRDLabelColumnTextWidget(
-                          heading: 'Fan Account info',
-                          subHeading: 'Let us know how to properly address you',
-                        ),
+                    child: wrapWithModel(
+                      model: _model.cHRDLabelColumnTextModel,
+                      updateCallback: () => safeSetState(() {}),
+                      child: CHRDLabelColumnTextWidget(
+                        heading: 'Fan Account info',
+                        subHeading: 'Let us know how to properly address you',
                       ),
                     ),
                   ),

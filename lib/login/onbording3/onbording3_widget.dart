@@ -1,12 +1,12 @@
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -352,6 +352,7 @@ class _Onbording3WidgetState extends State<Onbording3Widget> {
                         hoverColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         onTap: () async {
+                          var _shouldSetState = false;
                           GoRouter.of(context).prepareAuthEvent();
                           final user =
                               await authManager.signInWithGoogle(context);
@@ -365,6 +366,7 @@ class _Onbording3WidgetState extends State<Onbording3Widget> {
                               currentUserEmail,
                             ),
                           );
+                          _shouldSetState = true;
                           if (_model.googleuserOutput?.length == 0) {
                             _model.userOutput = await UsersTable().insert({
                               'step': 1,
@@ -372,6 +374,7 @@ class _Onbording3WidgetState extends State<Onbording3Widget> {
                               'email': currentUserEmail,
                               'is_active': true,
                             });
+                            _shouldSetState = true;
                             FFAppState().userId = _model.userOutput!.id;
                             FFAppState().step = _model.userOutput!.step!;
                             FFAppState().loginType = LoginType.Apple.name;
@@ -379,6 +382,9 @@ class _Onbording3WidgetState extends State<Onbording3Widget> {
                             context.goNamedAuth(
                                 AccountCreation6Widget.routeName,
                                 context.mounted);
+
+                            if (_shouldSetState) safeSetState(() {});
+                            return;
                           } else {
                             FFAppState().userId =
                                 _model.googleuserOutput!.firstOrNull!.id;
@@ -394,9 +400,12 @@ class _Onbording3WidgetState extends State<Onbording3Widget> {
                               context.goNamedAuth(
                                   HomeMWidget.routeName, context.mounted);
                             }
+
+                            if (_shouldSetState) safeSetState(() {});
+                            return;
                           }
 
-                          safeSetState(() {});
+                          if (_shouldSetState) safeSetState(() {});
                         },
                         child: Container(
                           width: double.infinity,
@@ -499,7 +508,7 @@ class _Onbording3WidgetState extends State<Onbording3Widget> {
                       recognizer: TapGestureRecognizer()
                         ..onTap = () async {
                           await launchURL(
-                              'https://www.chrd.app/termsconditions');
+                              FFDevEnvironmentValues().termsAndCondition);
                         },
                     ),
                     TextSpan(
@@ -518,7 +527,8 @@ class _Onbording3WidgetState extends State<Onbording3Widget> {
                       mouseCursor: SystemMouseCursors.click,
                       recognizer: TapGestureRecognizer()
                         ..onTap = () async {
-                          await launchURL('https://www.chrd.app/privacy');
+                          await launchURL(
+                              FFDevEnvironmentValues().privacyPolicy);
                         },
                     ),
                     TextSpan(
@@ -568,8 +578,8 @@ class _Onbording3WidgetState extends State<Onbording3Widget> {
                     children: [
                       TextSpan(
                         text: _model.isSignup
-                            ? 'Already have an account?'
-                            : 'Don\'t have an account?',
+                            ? 'Already have an account? '
+                            : 'Don\'t have an account? ',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               font: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w500,

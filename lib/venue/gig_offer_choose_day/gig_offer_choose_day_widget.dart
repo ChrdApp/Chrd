@@ -1,12 +1,12 @@
 import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_radio_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/musician/components/c_h_r_d_label_btn/c_h_r_d_label_btn_widget.dart';
 import 'dart:ui';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -331,25 +331,18 @@ class _GigOfferChooseDayWidgetState extends State<GigOfferChooseDayWidget> {
               ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
-                child: InkWell(
-                  splashColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onTap: () async {},
-                  child: wrapWithModel(
-                    model: _model.cHRDLabelBtnModel,
-                    updateCallback: () => safeSetState(() {}),
-                    child: CHRDLabelBtnWidget(
-                      heading: 'Next',
-                      txtColor: FlutterFlowTheme.of(context).primaryText,
-                      btnColor: FlutterFlowTheme.of(context).primaryViolet,
-                      borderColor: FlutterFlowTheme.of(context).primaryViolet,
-                      hight: 45.0,
-                      headingFontSize: 14,
-                      isDisiable: false,
-                      onTab: () async {},
-                    ),
+                child: wrapWithModel(
+                  model: _model.cHRDLabelBtnModel,
+                  updateCallback: () => safeSetState(() {}),
+                  child: CHRDLabelBtnWidget(
+                    heading: 'Next',
+                    txtColor: FlutterFlowTheme.of(context).primaryText,
+                    btnColor: FlutterFlowTheme.of(context).primaryViolet,
+                    borderColor: FlutterFlowTheme.of(context).primaryViolet,
+                    hight: 45.0,
+                    headingFontSize: 14,
+                    isDisiable: false,
+                    onTab: () async {},
                   ),
                 ),
               ),

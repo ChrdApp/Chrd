@@ -2,17 +2,19 @@ import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/empty_list_image_widget.dart';
-import '/components/no_venue_created_component_widget.dart';
 import '/components/notification_icon_widget.dart';
 import '/components/venue_nav_bar_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/venue/venue_pages/venue_components/c_h_r_d_venue_details/c_h_r_d_venue_details_widget.dart';
+import '/venue/venue_pages/venue_components/no_venue_created_component/no_venue_created_component_widget.dart';
 import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
+import 'package:branchio_dynamic_linking_akp5u6/custom_code/actions/index.dart'
+    as branchio_dynamic_linking_akp5u6_actions;
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -56,6 +58,26 @@ class _HomeVWidgetState extends State<HomeVWidget> {
       }
       await actions.handleNotificationClick(
         context,
+      );
+      await branchio_dynamic_linking_akp5u6_actions.handleBranchDeeplink(
+        (linkData) async {
+          context.pushNamed(
+            VenueMusicianProfile1Widget.routeName,
+            queryParameters: {
+              'musicianId': serializeParam(
+                getJsonField(
+                  linkData,
+                  r'''$.musicianId''',
+                ),
+                ParamType.int,
+              ),
+              'isDiscoverFlow': serializeParam(
+                true,
+                ParamType.bool,
+              ),
+            }.withoutNulls,
+          );
+        },
       );
       await actions.oneSignalLogin(
         FFAppState().userId.toString(),

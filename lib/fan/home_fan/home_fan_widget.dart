@@ -7,7 +7,6 @@ import '/fan/fan_filter/fan_filter_widget.dart';
 import '/fan/fan_gigs/fan_gigs_widget.dart';
 import '/fan/gig_detail_fan/gig_detail_fan_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
@@ -15,6 +14,7 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'dart:async';
 import 'package:easy_debounce/easy_debounce.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -564,182 +564,175 @@ class _HomeFanWidgetState extends State<HomeFanWidget> {
                 ),
               ),
               Expanded(
-                child: Align(
-                  alignment: AlignmentDirectional(0.0, 0.0),
-                  child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
-                    child: FutureBuilder<ApiCallResponse>(
-                      future: (_model.apiRequestCompleter ??=
-                              Completer<ApiCallResponse>()
-                                ..complete(FanGroup.getGigsForFanCall.call(
-                                  pCurrentTime: functions
-                                      .toUtcTimestamp(getCurrentTimestamp)
-                                      ?.toString(),
-                                  pSearch: _model.textController.text,
-                                  pSelectDate:
-                                      FFAppState().FanFilter.selectedDate,
-                                  pEntertainmentType: FFAppState()
-                                      .FanFilter
-                                      .selectedEntertainment,
-                                  currentUserId: FFAppState().userId,
-                                  pShowBookmarked: false,
-                                )))
-                          .future,
-                      builder: (context, snapshot) {
-                        // Customize what your widget looks like when it's loading.
-                        if (!snapshot.hasData) {
-                          return Center(
-                            child: SizedBox(
-                              width: 50.0,
-                              height: 50.0,
-                              child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  FlutterFlowTheme.of(context).primary,
-                                ),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+                  child: FutureBuilder<ApiCallResponse>(
+                    future: (_model.apiRequestCompleter ??=
+                            Completer<ApiCallResponse>()
+                              ..complete(FanGroup.getGigsForFanCall.call(
+                                pCurrentTime: functions
+                                    .toUtcTimestamp(getCurrentTimestamp)
+                                    ?.toString(),
+                                pSearch: _model.textController.text,
+                                pSelectDate:
+                                    FFAppState().FanFilter.selectedDate,
+                                pEntertainmentType: FFAppState()
+                                    .FanFilter
+                                    .selectedEntertainment,
+                                currentUserId: FFAppState().userId,
+                                pShowBookmarked: false,
+                              )))
+                        .future,
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 50.0,
+                            height: 50.0,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                FlutterFlowTheme.of(context).primary,
                               ),
                             ),
-                          );
-                        }
-                        final listViewGetGigsForFanResponse = snapshot.data!;
+                          ),
+                        );
+                      }
+                      final listViewGetGigsForFanResponse = snapshot.data!;
 
-                        return Builder(
-                          builder: (context) {
-                            final gigsList =
-                                listViewGetGigsForFanResponse.jsonBody.toList();
-                            if (gigsList.isEmpty) {
-                              return EmptyListImageWidget(
-                                msg: 'No Gigs Available',
-                              );
-                            }
+                      return Builder(
+                        builder: (context) {
+                          final gigsList =
+                              listViewGetGigsForFanResponse.jsonBody.toList();
+                          if (gigsList.isEmpty) {
+                            return EmptyListImageWidget(
+                              msg: 'No Gigs Available',
+                            );
+                          }
 
-                            return ListView.separated(
-                              padding: EdgeInsets.fromLTRB(
-                                0,
-                                34.0,
-                                0,
-                                47.5,
-                              ),
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              itemCount: gigsList.length,
-                              separatorBuilder: (_, __) =>
-                                  SizedBox(height: 20.0),
-                              itemBuilder: (context, gigsListIndex) {
-                                final gigsListItem = gigsList[gigsListIndex];
-                                return Builder(
-                                  builder: (context) => FanGigsWidget(
-                                    key: Key(
-                                        'Keyaec_${gigsListIndex}_of_${gigsList.length}'),
-                                    gigImage: getJsonField(
-                                      gigsListItem,
-                                      r'''$.venue_photo''',
-                                    ).toString(),
-                                    gifVenue: getJsonField(
-                                      gigsListItem,
-                                      r'''$.venue_name''',
-                                    ).toString(),
-                                    gigDate: getJsonField(
-                                      gigsListItem,
-                                      r'''$.start_date''',
-                                    ).toString(),
-                                    gigTime: getJsonField(
-                                      gigsListItem,
-                                      r'''$.start_time''',
-                                    ).toString(),
-                                    gigPerformer: getJsonField(
-                                      gigsListItem,
-                                      r'''$.musician_name''',
-                                    ).toString(),
-                                    gigType: getJsonField(
-                                      gigsListItem,
-                                      r'''$.entertainment_display''',
-                                    ).toString(),
-                                    isBookmarked: 'true' ==
-                                            getJsonField(
-                                              gigsListItem,
-                                              r'''$.is_bookmarked''',
-                                            ).toString()
-                                        ? true
-                                        : false,
-                                    lastseen: '2 min',
-                                    bookmarkedAction: () async {
-                                      if ('true' ==
+                          return ListView.separated(
+                            padding: EdgeInsets.fromLTRB(
+                              0,
+                              24.0,
+                              0,
+                              47.5,
+                            ),
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            itemCount: gigsList.length,
+                            separatorBuilder: (_, __) => SizedBox(height: 20.0),
+                            itemBuilder: (context, gigsListIndex) {
+                              final gigsListItem = gigsList[gigsListIndex];
+                              return Builder(
+                                builder: (context) => FanGigsWidget(
+                                  key: Key(
+                                      'Keyaec_${gigsListIndex}_of_${gigsList.length}'),
+                                  gigImage: getJsonField(
+                                    gigsListItem,
+                                    r'''$.venue_photo''',
+                                  ).toString(),
+                                  gifVenue: getJsonField(
+                                    gigsListItem,
+                                    r'''$.venue_name''',
+                                  ).toString(),
+                                  gigDate: getJsonField(
+                                    gigsListItem,
+                                    r'''$.start_date''',
+                                  ).toString(),
+                                  gigTime: getJsonField(
+                                    gigsListItem,
+                                    r'''$.start_time''',
+                                  ).toString(),
+                                  gigPerformer: getJsonField(
+                                    gigsListItem,
+                                    r'''$.musician_name''',
+                                  ).toString(),
+                                  gigType: getJsonField(
+                                    gigsListItem,
+                                    r'''$.entertainment_display''',
+                                  ).toString(),
+                                  isBookmarked: 'true' ==
                                           getJsonField(
                                             gigsListItem,
                                             r'''$.is_bookmarked''',
-                                          ).toString()) {
-                                        await FanBookmarksTable().delete(
-                                          matchingRows: (rows) => rows.eqOrNull(
-                                            'group_uuid',
-                                            getJsonField(
-                                              gigsListItem,
-                                              r'''$.group_uuid''',
-                                            ).toString(),
-                                          ),
-                                        );
-                                      } else {
-                                        await FanBookmarksTable().insert({
-                                          'created_at': supaSerialize<DateTime>(
-                                              functions.toUtcTimestamp(
-                                                  getCurrentTimestamp)),
-                                          'fan_id': FFAppState().userId,
-                                          'group_uuid': getJsonField(
+                                          ).toString()
+                                      ? true
+                                      : false,
+                                  lastseen: '2 min',
+                                  bookmarkedAction: () async {
+                                    if ('true' ==
+                                        getJsonField(
+                                          gigsListItem,
+                                          r'''$.is_bookmarked''',
+                                        ).toString()) {
+                                      await FanBookmarksTable().delete(
+                                        matchingRows: (rows) => rows.eqOrNull(
+                                          'group_uuid',
+                                          getJsonField(
                                             gigsListItem,
                                             r'''$.group_uuid''',
                                           ).toString(),
-                                        });
-                                      }
+                                        ),
+                                      );
+                                    } else {
+                                      await FanBookmarksTable().insert({
+                                        'created_at': supaSerialize<DateTime>(
+                                            functions.toUtcTimestamp(
+                                                getCurrentTimestamp)),
+                                        'fan_id': FFAppState().userId,
+                                        'group_uuid': getJsonField(
+                                          gigsListItem,
+                                          r'''$.group_uuid''',
+                                        ).toString(),
+                                      });
+                                    }
 
-                                      safeSetState(() =>
-                                          _model.apiRequestCompleter = null);
-                                      await _model.waitForApiRequestCompleted();
-                                    },
-                                    infoAction: () async {
-                                      await showDialog(
-                                        context: context,
-                                        builder: (dialogContext) {
-                                          return Dialog(
-                                            elevation: 0,
-                                            insetPadding: EdgeInsets.zero,
-                                            backgroundColor: Colors.transparent,
-                                            alignment: AlignmentDirectional(
-                                                    0.0, 0.0)
-                                                .resolve(
-                                                    Directionality.of(context)),
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                FocusScope.of(dialogContext)
-                                                    .unfocus();
-                                                FocusManager
-                                                    .instance.primaryFocus
-                                                    ?.unfocus();
-                                              },
-                                              child: Container(
-                                                width:
-                                                    MediaQuery.sizeOf(context)
-                                                            .width *
-                                                        0.8,
-                                                child: GigDetailFanWidget(
-                                                  groupId: getJsonField(
-                                                    gigsListItem,
-                                                    r'''$.group_uuid''',
-                                                  ).toString(),
-                                                ),
+                                    safeSetState(() =>
+                                        _model.apiRequestCompleter = null);
+                                    await _model.waitForApiRequestCompleted();
+                                  },
+                                  infoAction: () async {
+                                    await showDialog(
+                                      context: context,
+                                      builder: (dialogContext) {
+                                        return Dialog(
+                                          elevation: 0,
+                                          insetPadding: EdgeInsets.zero,
+                                          backgroundColor: Colors.transparent,
+                                          alignment: AlignmentDirectional(
+                                                  0.0, 0.0)
+                                              .resolve(
+                                                  Directionality.of(context)),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              FocusScope.of(dialogContext)
+                                                  .unfocus();
+                                              FocusManager.instance.primaryFocus
+                                                  ?.unfocus();
+                                            },
+                                            child: Container(
+                                              width: MediaQuery.sizeOf(context)
+                                                      .width *
+                                                  0.8,
+                                              child: GigDetailFanWidget(
+                                                groupId: getJsonField(
+                                                  gigsListItem,
+                                                  r'''$.group_uuid''',
+                                                ).toString(),
                                               ),
                                             ),
-                                          );
-                                        },
-                                      );
-                                    },
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                        );
-                      },
-                    ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      );
+                    },
                   ),
                 ),
               ),
