@@ -176,7 +176,7 @@ class _DiscoverWidgetState extends State<DiscoverWidget> {
                                                       .createGigInviteCall
                                                       .call(
                                                 pInviterId: FFAppState().userId,
-                                                pCountryCode: 91,
+                                                pCountryCode: 1,
                                                 pInviteType: 'general',
                                                 pPhone:
                                                     int.tryParse(phoneNumber) ??

@@ -146,7 +146,7 @@ class _VenueDiscoverWidgetState extends State<VenueDiscoverWidget> {
                                             await VenueGroup.createGigInviteCall
                                                 .call(
                                           pInviterId: FFAppState().userId,
-                                          pCountryCode: 91,
+                                          pCountryCode: 1,
                                           pInviteType: 'general',
                                           pPhone:
                                               int.tryParse(phoneNumber) ?? 0,

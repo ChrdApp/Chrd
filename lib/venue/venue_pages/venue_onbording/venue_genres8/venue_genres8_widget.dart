@@ -577,23 +577,6 @@ class _VenueGenres8WidgetState extends State<VenueGenres8Widget> {
                       );
 
                       _shouldSetState = true;
-                      await showDialog(
-                        context: context,
-                        builder: (alertDialogContext) {
-                          return AlertDialog(
-                            content: Text(
-                                (_model.clainInviteOutput?.jsonBody ?? '')
-                                    .toString()),
-                            actions: [
-                              TextButton(
-                                onPressed: () =>
-                                    Navigator.pop(alertDialogContext),
-                                child: Text('Ok'),
-                              ),
-                            ],
-                          );
-                        },
-                      );
 
                       context.goNamed(AddVenueContent5Widget.routeName);
 
