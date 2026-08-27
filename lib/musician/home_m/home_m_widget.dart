@@ -73,6 +73,42 @@ class _HomeMWidgetState extends State<HomeMWidget> {
       await actions.handleNotificationClick(
         context,
       );
+      await branchio_dynamic_linking_akp5u6_actions.handleBranchDeeplink(
+        (linkData) async {
+          if ('gig' ==
+              getJsonField(
+                linkData,
+                r'''$.inviteType''',
+              ).toString()) {
+            context.pushNamed(
+              MusicianGigOverLayWidget.routeName,
+              queryParameters: {
+                'slotId': serializeParam(
+                  getJsonField(
+                    linkData,
+                    r'''$.slotId''',
+                  ),
+                  ParamType.int,
+                ),
+                'venueId': serializeParam(
+                  getJsonField(
+                    linkData,
+                    r'''$.venueId''',
+                  ),
+                  ParamType.int,
+                ),
+                'venueOwnerId': serializeParam(
+                  getJsonField(
+                    linkData,
+                    r'''$.venueOwnerId''',
+                  ),
+                  ParamType.int,
+                ),
+              }.withoutNulls,
+            );
+          }
+        },
+      );
       FFAppState().clearEntertainmentMultiselectMusicianProfilePageCacheKey(
           'entertainment_multiselect_musician_profile_page');
       FFAppState().clearGenreQueryResponseCacheKey('genre_query_response');
@@ -285,95 +321,7 @@ class _HomeMWidgetState extends State<HomeMWidget> {
                                     onTap: () async {
                                       await branchio_dynamic_linking_akp5u6_actions
                                           .handleBranchDeeplink(
-                                        (linkData) async {
-                                          await showDialog(
-                                            context: context,
-                                            builder: (alertDialogContext) {
-                                              return AlertDialog(
-                                                title: Text('start'),
-                                                content:
-                                                    Text(linkData.toString()),
-                                                actions: [
-                                                  TextButton(
-                                                    onPressed: () =>
-                                                        Navigator.pop(
-                                                            alertDialogContext),
-                                                    child: Text('Ok'),
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          );
-                                          if ('gig' ==
-                                              getJsonField(
-                                                linkData,
-                                                r'''$.inviteType''',
-                                              ).toString()) {
-                                            await showDialog(
-                                              context: context,
-                                              builder: (alertDialogContext) {
-                                                return AlertDialog(
-                                                  title: Text('in true'),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () =>
-                                                          Navigator.pop(
-                                                              alertDialogContext),
-                                                      child: Text('Ok'),
-                                                    ),
-                                                  ],
-                                                );
-                                              },
-                                            );
-
-                                            context.pushNamed(
-                                              MusicianGigOverLayWidget
-                                                  .routeName,
-                                              queryParameters: {
-                                                'slotId': serializeParam(
-                                                  int.tryParse(getJsonField(
-                                                    linkData,
-                                                    r'''$.slotId''',
-                                                  ).toString()),
-                                                  ParamType.int,
-                                                ),
-                                                'venueId': serializeParam(
-                                                  int.tryParse(getJsonField(
-                                                    linkData,
-                                                    r'''$.venueId''',
-                                                  ).toString()),
-                                                  ParamType.int,
-                                                ),
-                                                'venueOwnerId': serializeParam(
-                                                  int.tryParse(getJsonField(
-                                                    linkData,
-                                                    r'''$.venueOwnerId''',
-                                                  ).toString()),
-                                                  ParamType.int,
-                                                ),
-                                              }.withoutNulls,
-                                            );
-                                          } else {
-                                            await showDialog(
-                                              context: context,
-                                              builder: (alertDialogContext) {
-                                                return AlertDialog(
-                                                  title: Text('failed'),
-                                                  content:
-                                                      Text(linkData.toString()),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () =>
-                                                          Navigator.pop(
-                                                              alertDialogContext),
-                                                      child: Text('Ok'),
-                                                    ),
-                                                  ],
-                                                );
-                                              },
-                                            );
-                                          }
-                                        },
+                                        (linkData) async {},
                                       );
                                     },
                                     child: Row(
