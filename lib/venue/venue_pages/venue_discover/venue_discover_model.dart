@@ -28,6 +28,8 @@ class VenueDiscoverModel extends FlutterFlowModel<VenueDiscoverWidget> {
   ApiCallResponse? sendInvite;
   // Stores action output result for [Backend Call - API (Create Gig Invite)] action in Button widget.
   ApiCallResponse? createGigInvite;
+  // Stores action output result for [Backend Call - Query Rows] action in Button widget.
+  List<VenuesRow>? venuesOutput;
   // Model for empty_list_image component.
   late EmptyListImageModel emptyListImageModel;
   // State field(s) for TextField widget.

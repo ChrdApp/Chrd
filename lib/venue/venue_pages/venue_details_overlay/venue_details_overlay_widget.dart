@@ -1603,7 +1603,7 @@ class _VenueDetailsOverlayWidgetState extends State<VenueDetailsOverlayWidget> {
                                           .createGigInviteCall
                                           .call(
                                         pInviterId: FFAppState().userId,
-                                        pCountryCode: 91,
+                                        pCountryCode: 1,
                                         pInviteType: 'gig',
                                         pPhone: int.tryParse(phoneNumber) ?? 0,
                                         pInviteeRole: 'musician',

@@ -142,70 +142,136 @@ class _VenueDiscoverWidgetState extends State<VenueDiscoverWidget> {
                                     padding: MediaQuery.viewInsetsOf(context),
                                     child: InviteUserWidget(
                                       onTapAction: (phoneNumber) async {
-                                        _model.createGigInvite =
-                                            await VenueGroup.createGigInviteCall
-                                                .call(
-                                          pInviterId: FFAppState().userId,
-                                          pCountryCode: 1,
-                                          pInviteType: 'general',
-                                          pPhone:
-                                              int.tryParse(phoneNumber) ?? 0,
-                                          pInviteeRole: 'musician',
-                                          pSlotId: null,
-                                          pVenueId: null,
+                                        var _shouldSetState = false;
+                                        _model.venuesOutput =
+                                            await VenuesTable().queryRows(
+                                          queryFn: (q) => q.eqOrNull(
+                                            'created_by',
+                                            FFAppState().userId,
+                                          ),
                                         );
+                                        _shouldSetState = true;
+                                        if (_model.venuesOutput != null &&
+                                            (_model.venuesOutput)!.isNotEmpty) {
+                                          _model.createGigInvite =
+                                              await VenueGroup
+                                                  .createGigInviteCall
+                                                  .call(
+                                            pInviterId: FFAppState().userId,
+                                            pCountryCode: 1,
+                                            pInviteType: 'general',
+                                            pPhone:
+                                                int.tryParse(phoneNumber) ?? 0,
+                                            pInviteeRole: 'musician',
+                                            pSlotId: null,
+                                            pVenueId: _model
+                                                .venuesOutput?.firstOrNull?.id,
+                                          );
 
-                                        if ((_model
-                                                .createGigInvite?.succeeded ??
-                                            true)) {
-                                          if (('false' ==
-                                                  getJsonField(
-                                                    (_model.createGigInvite
-                                                            ?.jsonBody ??
-                                                        ''),
-                                                    r'''$.existing_user''',
-                                                  ).toString()) &&
-                                              ('false' ==
-                                                  getJsonField(
-                                                    (_model.createGigInvite
-                                                            ?.jsonBody ??
-                                                        ''),
-                                                    r'''$.duplicate''',
-                                                  ).toString())) {
-                                            _model.sendInvite =
-                                                await DynamicLinkGroup
-                                                    .sendGigInviteCall
-                                                    .call(
-                                              inviteToken: getJsonField(
-                                                (_model.createGigInvite
-                                                        ?.jsonBody ??
-                                                    ''),
-                                                r'''$.invite_token''',
-                                              ).toString(),
-                                              anonKey: FFDevEnvironmentValues()
-                                                  .anonKey,
-                                              token: currentJwtToken,
-                                            );
+                                          _shouldSetState = true;
+                                          if ((_model
+                                                  .createGigInvite?.succeeded ??
+                                              true)) {
+                                            if (('false' ==
+                                                    getJsonField(
+                                                      (_model.createGigInvite
+                                                              ?.jsonBody ??
+                                                          ''),
+                                                      r'''$.existing_user''',
+                                                    ).toString()) &&
+                                                ('false' ==
+                                                    getJsonField(
+                                                      (_model.createGigInvite
+                                                              ?.jsonBody ??
+                                                          ''),
+                                                      r'''$.duplicate''',
+                                                    ).toString())) {
+                                              _model.sendInvite =
+                                                  await DynamicLinkGroup
+                                                      .sendGigInviteCall
+                                                      .call(
+                                                inviteToken: getJsonField(
+                                                  (_model.createGigInvite
+                                                          ?.jsonBody ??
+                                                      ''),
+                                                  r'''$.invite_token''',
+                                                ).toString(),
+                                                anonKey:
+                                                    FFDevEnvironmentValues()
+                                                        .anonKey,
+                                                token: currentJwtToken,
+                                              );
 
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                content: Text(
-                                                  'Invite Sent!',
-                                                  style: TextStyle(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryText,
+                                              _shouldSetState = true;
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                    'Invite Sent!',
+                                                    style: TextStyle(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                    ),
                                                   ),
+                                                  duration: Duration(
+                                                      milliseconds: 4000),
+                                                  backgroundColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondary,
                                                 ),
-                                                duration: Duration(
-                                                    milliseconds: 4000),
-                                                backgroundColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondary,
-                                              ),
-                                            );
+                                              );
+                                            } else {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                    getJsonField(
+                                                      (_model.createGigInvite
+                                                              ?.jsonBody ??
+                                                          ''),
+                                                      r'''$.message''',
+                                                    ).toString(),
+                                                    style: TextStyle(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                    ),
+                                                  ),
+                                                  duration: Duration(
+                                                      milliseconds: 4000),
+                                                  backgroundColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondary,
+                                                ),
+                                              );
+                                            }
                                           } else {
+                                            await showDialog(
+                                              context: context,
+                                              builder: (alertDialogContext) {
+                                                return AlertDialog(
+                                                  content: Text(getJsonField(
+                                                    (_model.createGigInvite
+                                                            ?.jsonBody ??
+                                                        ''),
+                                                    r'''$.message''',
+                                                  ).toString()),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () =>
+                                                          Navigator.pop(
+                                                              alertDialogContext),
+                                                      child: Text('Ok'),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            );
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(
                                               SnackBar(
@@ -230,17 +296,17 @@ class _VenueDiscoverWidgetState extends State<VenueDiscoverWidget> {
                                               ),
                                             );
                                           }
+
+                                          Navigator.pop(context);
+                                          return;
                                         } else {
+                                          Navigator.pop(context);
                                           await showDialog(
                                             context: context,
                                             builder: (alertDialogContext) {
                                               return AlertDialog(
-                                                content: Text(getJsonField(
-                                                  (_model.createGigInvite
-                                                          ?.jsonBody ??
-                                                      ''),
-                                                  r'''$.message''',
-                                                ).toString()),
+                                                content: Text(
+                                                    'Please add a venue first to send an invite.'),
                                                 actions: [
                                                   TextButton(
                                                     onPressed: () =>
@@ -252,32 +318,8 @@ class _VenueDiscoverWidgetState extends State<VenueDiscoverWidget> {
                                               );
                                             },
                                           );
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            SnackBar(
-                                              content: Text(
-                                                getJsonField(
-                                                  (_model.createGigInvite
-                                                          ?.jsonBody ??
-                                                      ''),
-                                                  r'''$.message''',
-                                                ).toString(),
-                                                style: TextStyle(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryText,
-                                                ),
-                                              ),
-                                              duration:
-                                                  Duration(milliseconds: 4000),
-                                              backgroundColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondary,
-                                            ),
-                                          );
+                                          return;
                                         }
-
-                                        Navigator.pop(context);
                                       },
                                     ),
                                   ),
