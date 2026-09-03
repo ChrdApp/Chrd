@@ -418,6 +418,29 @@ class _PhoneOTP5WidgetState extends State<PhoneOTP5Widget> {
                         fontWeight: FontWeight.bold,
                         fontSize: 14.0,
                       ),
+                      mouseCursor: SystemMouseCursors.click,
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () async {
+                          _model.otpOutput = await actions.resendPhoneOtp(
+                            '1${functions.extractMobileNo('+1${widget!.number}')?.firstOrNull}',
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                _model.otpOutput!,
+                                style: TextStyle(
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                ),
+                              ),
+                              duration: Duration(milliseconds: 4000),
+                              backgroundColor:
+                                  FlutterFlowTheme.of(context).secondary,
+                            ),
+                          );
+
+                          safeSetState(() {});
+                        },
                     )
                   ],
                   style: FlutterFlowTheme.of(context).bodyMedium.override(

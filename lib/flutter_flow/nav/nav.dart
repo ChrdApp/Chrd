@@ -928,7 +928,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
         ),
       )
     ].map((r) => r.toRoute(appStateNotifier)).toList(),
-    observers: [routeObserver],
+    observers: ffNavigatorObservers,
   );
 }
 

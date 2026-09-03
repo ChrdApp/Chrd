@@ -43,6 +43,8 @@ class PhoneOTP5Model extends FlutterFlowModel<PhoneOTP5Widget> {
   List<UsersRow>? isPhoneExist;
   // Stores action output result for [Backend Call - Insert Row] action in Button widget.
   UsersRow? userOutput;
+  // Stores action output result for [Custom Action - resendPhoneOtp] action in RichTextSpan widget.
+  String? otpOutput;
 
   @override
   void initState(BuildContext context) {
