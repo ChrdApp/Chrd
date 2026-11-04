@@ -31,6 +31,8 @@ dependencies:
   app_links: 6.3.2
   app_links_platform_interface: 2.0.2
   auto_size_text: 3.0.0
+  branchio_dynamic_linking_akp5u6:
+    path: ./dependencies/branchio_dynamic_linking_akp5u6 # 0.0.11
   cached_network_image: 3.4.1
   cached_network_image_platform_interface: 4.1.1
   cached_network_image_web: 1.3.1
@@ -45,13 +47,17 @@ dependencies:
       path: packages/dropdown_button2
   easy_debounce: 2.0.1
   equatable: 2.0.7
+  ff_commons:
+    path: ./dependencies/ff_commons # 1.0.3+8
+  ff_theme:
+    path: ./dependencies/ff_theme # 1.0.3+8
   file_picker: 10.1.9
   flutter_animate: 4.5.0
   flutter_cache_manager: 3.4.1
   flutter_native_splash: 2.4.1
   flutter_plugin_android_lifecycle: 2.0.28
   flutter_rating_bar: 4.0.1
-  font_awesome_flutter: 10.7.0
+  font_awesome_flutter: 11.0.0
   from_css_color: 2.0.0
   functions_client: 2.4.2
   go_router: 12.1.3
@@ -73,12 +79,12 @@ dependencies:
   image_picker_macos: 0.2.1+2
   image_picker_platform_interface: 2.10.1
   image_picker_windows: 0.2.1+1
-  intl: 0.20.2
+  intl: 0.20.3
   json_path: 0.7.2
   mask_text_input_formatter: 2.9.0
   mime_type: 1.0.0
   onesignal_flutter: ^5.3.0
-  page_transition: 2.1.0
+  page_transition: 2.2.2
   path_provider: 2.1.4
   path_provider_android: 2.2.10
   path_provider_foundation: 2.4.0
@@ -112,6 +118,7 @@ dependencies:
   table_calendar: ^3.2.0
   timeago: 3.7.1
   universal_io: 2.2.2
+  upgrader: ^13.6.0
   url_launcher: 6.3.1
   url_launcher_android: 6.3.16
   url_launcher_ios: 6.3.3
@@ -129,9 +136,9 @@ dependencies:
   wakelock_plus: 1.3.2
   wakelock_plus_platform_interface: 1.2.3
   webview_flutter: 4.13.0
-  webview_flutter_android: 4.7.0
-  webview_flutter_platform_interface: 2.13.1
-  webview_flutter_wkwebview: 3.22.0
+  webview_flutter_android: 4.10.13
+  webview_flutter_platform_interface: 2.14.0
+  webview_flutter_wkwebview: 3.23.8
   xml: 6.5.0
 
   # The following adds the Cupertino Icons font to your application.
@@ -139,10 +146,16 @@ dependencies:
   cupertino_icons: ^1.0.0
 
 dependency_overrides:
+  font_awesome_flutter: 11.0.0
   http: 1.4.0
-  intl: 0.20.2
-  rxdart: 0.27.7
+  intl: 0.20.3
+  page_transition: 2.2.2
   uuid: ^4.0.0
+  webview_flutter: 4.13.0
+  webview_flutter_android: 4.10.13
+  webview_flutter_platform_interface: 2.14.0
+  webview_flutter_wkwebview: 3.23.8
+  rxdart: 0.27.7
 
 dev_dependencies:
   flutter_launcher_icons: 0.13.1
@@ -167,6 +180,16 @@ flutter_launcher_icons:
 
 # The following section is specific to Flutter.
 flutter:
+
+  # Codegen emits the UIScene lifecycle itself where it is safe (see
+  # useUISceneLifecycle). Flutter's migrator would also rewrite the legacy
+  # AppDelegate that every other build still needs.
+  config:
+    # Flutter uses Swift Package Manager for compatible plugins and CocoaPods
+    # for the rest. Projects using the managed Firebase Analytics/GenUI graph
+    # stay CocoaPods-only so privacy behavior and wrapper versions are stable.
+    enable-swift-package-manager: true
+    enable-uiscene-migration: false
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

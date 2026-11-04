@@ -2,7 +2,6 @@ import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/upload_file_btn_widget.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
@@ -17,6 +16,7 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -1979,8 +1979,12 @@ class _MusicianProfileWidgetState extends State<MusicianProfileWidget> {
                                                                         .center,
                                                                 children: [
                                                                   FaIcon(
-                                                                    FontAwesomeIcons
-                                                                        .plus,
+                                                                    FaIconData(const IconData(
+                                                                        /* plus */ 0x2b,
+                                                                        fontFamily:
+                                                                            'FontAwesomeSolid',
+                                                                        fontPackage:
+                                                                            'font_awesome_flutter')),
                                                                     color: FlutterFlowTheme.of(
                                                                             context)
                                                                         .primaryText,

@@ -1,17 +1,20 @@
+import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/components/confirmation_dialog_widget.dart';
+import '/components/invite_user_widget.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/musician/components/c_h_r_d_back_btn/c_h_r_d_back_btn_widget.dart';
 import '/musician/components/c_h_r_d_label_btn/c_h_r_d_label_btn_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_row_with_icon/c_h_r_d_row_with_icon_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_video_player_component/c_h_r_d_video_player_component_widget.dart';
+import 'dart:convert';
 import 'dart:ui';
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
@@ -1513,7 +1516,7 @@ class _VenueDetailsOverlayWidgetState extends State<VenueDetailsOverlayWidget> {
                   ),
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 16.0),
                     child: wrapWithModel(
                       model: _model.cHRDLabelBtnModel3,
                       updateCallback: () => safeSetState(() {}),
@@ -1562,6 +1565,104 @@ class _VenueDetailsOverlayWidgetState extends State<VenueDetailsOverlayWidget> {
                               ),
                             }.withoutNulls,
                           );
+                        },
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+                    child: wrapWithModel(
+                      model: _model.cHRDLabelBtnModel4,
+                      updateCallback: () => safeSetState(() {}),
+                      child: CHRDLabelBtnWidget(
+                        heading: 'Invite Performer',
+                        txtColor: FlutterFlowTheme.of(context).primaryText,
+                        btnColor: FlutterFlowTheme.of(context).secondary,
+                        borderColor: FlutterFlowTheme.of(context).btnColor,
+                        hight: 45.0,
+                        headingFontSize: 14,
+                        isDisiable: false,
+                        onTab: () async {
+                          await showModalBottomSheet(
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            enableDrag: false,
+                            context: context,
+                            builder: (context) {
+                              return GestureDetector(
+                                onTap: () {
+                                  FocusScope.of(context).unfocus();
+                                  FocusManager.instance.primaryFocus?.unfocus();
+                                },
+                                child: Padding(
+                                  padding: MediaQuery.viewInsetsOf(context),
+                                  child: InviteUserWidget(
+                                    onTapAction: (phoneNumber) async {
+                                      _model.createGigInvite = await VenueGroup
+                                          .createGigInviteCall
+                                          .call(
+                                        pInviterId: FFAppState().userId,
+                                        pCountryCode: 91,
+                                        pInviteType: 'gig',
+                                        pPhone: int.tryParse(phoneNumber) ?? 0,
+                                        pInviteeRole: 'musician',
+                                        pSlotId: widget!.slotId,
+                                        pVenueId: getJsonField(
+                                          venueDetailsOverlayGetSingleSlotDetailsResponse
+                                              .jsonBody,
+                                          r'''$.data.venue_id''',
+                                        ),
+                                      );
+
+                                      if ((_model.createGigInvite?.succeeded ??
+                                          true)) {
+                                        _model.sendInvite =
+                                            await DynamicLinkGroup
+                                                .sendGigInviteCall
+                                                .call(
+                                          inviteToken: getJsonField(
+                                            (_model.createGigInvite?.jsonBody ??
+                                                ''),
+                                            r'''$.invite_token''',
+                                          ).toString(),
+                                          anonKey:
+                                              FFDevEnvironmentValues().anonKey,
+                                          token: currentJwtToken,
+                                        );
+                                      } else {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              content: Text(getJsonField(
+                                                (_model.createGigInvite
+                                                        ?.jsonBody ??
+                                                    ''),
+                                                r'''$.message''',
+                                              ).toString()),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: Text('Ok'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      }
+
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ),
+                              );
+                            },
+                          ).then((value) => safeSetState(() {}));
+
+                          safeSetState(() {});
                         },
                       ),
                     ),

@@ -7,7 +7,6 @@ import '/fan/fan_filter/fan_filter_widget.dart';
 import '/fan/fan_gigs/fan_gigs_widget.dart';
 import '/fan/gig_detail_fan/gig_detail_fan_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
@@ -15,6 +14,7 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'dart:async';
 import 'package:easy_debounce/easy_debounce.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -352,7 +352,9 @@ class _HomeFanWidgetState extends State<HomeFanWidget> {
                               fillColor:
                                   FlutterFlowTheme.of(context).neutralDark900,
                               icon: FaIcon(
-                                FontAwesomeIcons.slidersH,
+                                FaIconData(const IconData(/* slidersH */ 0xf1de,
+                                    fontFamily: 'FontAwesomeSolid',
+                                    fontPackage: 'font_awesome_flutter')),
                                 color: FlutterFlowTheme.of(context).info,
                                 size: 16.0,
                               ),

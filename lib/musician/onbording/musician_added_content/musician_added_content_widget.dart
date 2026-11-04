@@ -1,5 +1,4 @@
 import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/musician/components/c_h_r_d_label_btn/c_h_r_d_label_btn_widget.dart';
@@ -7,6 +6,7 @@ import '/musician/components/c_h_r_d_label_column_text/c_h_r_d_label_column_text
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_app_bar2/c_h_r_d_app_bar2_widget.dart';
 import 'dart:ui';
 import '/index.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -177,7 +177,10 @@ class _MusicianAddedContentWidgetState
                                   Align(
                                     alignment: AlignmentDirectional(0.0, 0.0),
                                     child: FaIcon(
-                                      FontAwesomeIcons.video,
+                                      FaIconData(const IconData(
+                                          /* video */ 0xf03d,
+                                          fontFamily: 'FontAwesomeSolid',
+                                          fontPackage: 'font_awesome_flutter')),
                                       color: FlutterFlowTheme.of(context)
                                           .primaryText,
                                       size: 40.0,

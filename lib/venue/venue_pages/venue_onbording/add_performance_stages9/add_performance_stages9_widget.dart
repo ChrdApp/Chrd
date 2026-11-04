@@ -1,12 +1,15 @@
+import '/auth/supabase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/backend/supabase/supabase.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/musician/components/c_h_r_d_label_btn/c_h_r_d_label_btn_widget.dart';
 import '/musician/components/c_h_r_d_label_column_text/c_h_r_d_label_column_text_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_app_bar2/c_h_r_d_app_bar2_widget.dart';
+import 'dart:convert';
 import 'dart:ui';
 import '/index.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -352,6 +355,7 @@ class _AddPerformanceStages9WidgetState
                   headingFontSize: 14,
                   isDisiable: false,
                   onTab: () async {
+                    var _shouldSetState = false;
                     if (widget!.venueId == null) {
                       await UsersTable().update(
                         data: {
@@ -362,16 +366,28 @@ class _AddPerformanceStages9WidgetState
                           FFAppState().userId,
                         ),
                       );
+                      _model.clainInviteOutput =
+                          await DynamicLinkGroup.claimInviteCall.call(
+                        userId: FFAppState().userId,
+                        anonKey: FFDevEnvironmentValues().anonKey,
+                        token: currentJwtToken,
+                      );
+
+                      _shouldSetState = true;
                       FFAppState().step = 4;
                       safeSetState(() {});
 
                       context.pushNamed(AddVenueOpenSlots10Widget.routeName);
 
+                      if (_shouldSetState) safeSetState(() {});
                       return;
                     } else {
                       context.safePop();
+                      if (_shouldSetState) safeSetState(() {});
                       return;
                     }
+
+                    if (_shouldSetState) safeSetState(() {});
                   },
                 ),
               ),

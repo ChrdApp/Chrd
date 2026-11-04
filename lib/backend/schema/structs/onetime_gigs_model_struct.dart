@@ -350,8 +350,8 @@ class OnetimeGigsModelStruct extends BaseStruct {
         venuePhoto,
         groupUuid,
         repeatType,
-        entertainments,
-        genres,
+        const ListEquality().hash(entertainments),
+        const ListEquality().hash(genres),
         venueOwnerId,
         isInquired
       ]);

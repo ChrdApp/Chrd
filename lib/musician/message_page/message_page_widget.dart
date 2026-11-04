@@ -1,9 +1,9 @@
 import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
 import '/flutter_flow/random_data_util.dart' as random_data;
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -118,7 +118,9 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                           borderRadius: 8.0,
                           buttonSize: 40.0,
                           icon: FaIcon(
-                            FontAwesomeIcons.bars,
+                            FaIconData(const IconData(/* bars */ 0xf0c9,
+                                fontFamily: 'FontAwesomeSolid',
+                                fontPackage: 'font_awesome_flutter')),
                             color: FlutterFlowTheme.of(context).primaryText,
                             size: 24.0,
                           ),
@@ -396,7 +398,9 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                           contentPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 15.0, 0.0, 0.0),
                           prefixIcon: Icon(
-                            FontAwesomeIcons.search,
+                            const IconData(/* search */ 0xf002,
+                                fontFamily: 'FontAwesomeSolid',
+                                fontPackage: 'font_awesome_flutter'),
                             color: FlutterFlowTheme.of(context).primaryText,
                             size: 22.0,
                           ),

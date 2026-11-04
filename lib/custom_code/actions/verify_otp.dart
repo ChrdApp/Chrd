@@ -2,11 +2,11 @@
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'index.dart'; // Imports other custom actions
 import '/flutter_flow/custom_functions.dart'; // Imports custom functions
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide RepeatMode;
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
@@ -20,15 +20,43 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 Future<bool> verifyOtp(String otp, String number) async {
   // Add your function code here!
   // Get a reference your Supabase client
-  final supabase = Supabase.instance.client;
+  // final supabase = Supabase.instance.client;
+  // try {
+  //   await supabase.auth.verifyOTP(
+  //     type: OtpType.sms,
+  //     token: otp,
+  //     phone: number,
+  //   );
+  //   return true;
+  // } catch (error) {
+  //   return false;
+  // }
   try {
-    await supabase.auth.verifyOTP(
+    final phone = number.trim();
+    final token = otp.trim();
+
+    print('VERIFY OTP');
+    print('Phone: $phone');
+    print('OTP: $token');
+
+    final response = await Supabase.instance.client.auth.verifyOTP(
+      phone: phone,
+      token: token,
       type: OtpType.sms,
-      token: otp,
-      phone: number,
     );
+
+    print('OTP verification successful');
+    print('User: ${response.user?.id}');
+
     return true;
-  } catch (error) {
+  } on AuthException catch (e) {
+    print('OTP ERROR CODE: ${e.code}');
+    print('OTP ERROR MESSAGE: ${e.message}');
+    print('OTP STATUS: ${e.statusCode}');
+
+    return false;
+  } catch (e) {
+    print('OTP UNKNOWN ERROR: $e');
     return false;
   }
 }

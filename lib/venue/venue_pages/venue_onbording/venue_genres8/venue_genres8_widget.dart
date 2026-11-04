@@ -1,17 +1,19 @@
+import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/schema/structs/index.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/musician/components/c_h_r_d_label_btn/c_h_r_d_label_btn_widget.dart';
 import '/musician/components/c_h_r_d_label_column_text/c_h_r_d_label_column_text_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_app_bar2/c_h_r_d_app_bar2_widget.dart';
+import 'dart:convert';
 import 'dart:ui';
 import '/index.dart';
 import 'package:easy_debounce/easy_debounce.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -305,7 +307,9 @@ class _VenueGenres8WidgetState extends State<VenueGenres8Widget> {
                           contentPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 13.0, 0.0, 0.0),
                           prefixIcon: Icon(
-                            FontAwesomeIcons.search,
+                            const IconData(/* search */ 0xf002,
+                                fontFamily: 'FontAwesomeSolid',
+                                fontPackage: 'font_awesome_flutter'),
                             color: FlutterFlowTheme.of(context).primaryText,
                             size: 20.0,
                           ),
@@ -567,6 +571,14 @@ class _VenueGenres8WidgetState extends State<VenueGenres8Widget> {
                           FFAppState().userId,
                         ),
                       );
+                      _model.clainInviteOutput =
+                          await DynamicLinkGroup.claimInviteCall.call(
+                        userId: FFAppState().userId,
+                        anonKey: FFDevEnvironmentValues().anonKey,
+                        token: currentJwtToken,
+                      );
+
+                      _shouldSetState = true;
 
                       context.goNamed(AddVenueContent5Widget.routeName);
 

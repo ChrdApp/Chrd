@@ -10,10 +10,18 @@ import 'auth/supabase_auth/supabase_user_provider.dart';
 import 'auth/supabase_auth/auth_util.dart';
 
 import '/backend/supabase/supabase.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/nav/nav.dart';
 import 'index.dart';
+
+import 'package:branchio_dynamic_linking_akp5u6/custom_code/actions/index.dart'
+    as branchio_dynamic_linking_akp5u6_actions;
+
+import 'package:branchio_dynamic_linking_akp5u6/library_values.dart'
+    as branchio_dynamic_linking_akp5u6_library_values;
+import 'package:chrd/backend/schema/enums/enums.dart';
+import 'package:chrd/backend/schema/structs/index.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,8 +31,18 @@ void main() async {
   final environmentValues = FFDevEnvironmentValues();
   await environmentValues.initialize();
 
+  branchio_dynamic_linking_akp5u6_library_values.FFLibraryValues()
+      .branchApiKey = 'key_live_dEzQEHwyZFbqj8Me6FifjhgnuvnMZpZz';
+  branchio_dynamic_linking_akp5u6_library_values.FFLibraryValues()
+      .branchLinkDomain = 'joinchrd.app.link';
+  branchio_dynamic_linking_akp5u6_library_values.FFLibraryValues().isTestMode =
+      false;
+  branchio_dynamic_linking_akp5u6_library_values.FFLibraryValues()
+      .branchAlternateLinkDomain = 'joinchrd-alternate.app.link';
+
   // Start initial custom actions code
   await actions.oneSignalIntegration();
+  await branchio_dynamic_linking_akp5u6_actions.initBranch();
   // End initial custom actions code
 
   await SupaFlow.initialize();
@@ -32,8 +50,12 @@ void main() async {
   final appState = FFAppState(); // Initialize FFAppState
   await appState.initializePersistedState();
 
-  runApp(ChangeNotifierProvider(
-    create: (context) => appState,
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(
+        create: (context) => appState,
+      ),
+    ],
     child: MyApp(),
   ));
 }

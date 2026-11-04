@@ -155,8 +155,8 @@ class FanDataStruct extends BaseStruct {
         fanName,
         fanPhoneNumber,
         fanEmailAddress,
-        fanEntertainmentId,
-        fanGenreId
+        const ListEquality().hash(fanEntertainmentId),
+        const ListEquality().hash(fanGenreId)
       ]);
 }
 

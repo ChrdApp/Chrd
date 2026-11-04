@@ -134,8 +134,11 @@ class DiscoverGigsCombineModelStruct extends BaseStruct {
   }
 
   @override
-  int get hashCode =>
-      const ListEquality().hash([lastMinuteGigs, recurringGigs, onetimeGigs]);
+  int get hashCode => const ListEquality().hash([
+        const ListEquality().hash(lastMinuteGigs),
+        const ListEquality().hash(recurringGigs),
+        const ListEquality().hash(onetimeGigs)
+      ]);
 }
 
 DiscoverGigsCombineModelStruct createDiscoverGigsCombineModelStruct() =>

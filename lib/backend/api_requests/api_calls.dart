@@ -5,9 +5,11 @@ import '../schema/structs/index.dart';
 import 'package:flutter/foundation.dart';
 
 import '/flutter_flow/flutter_flow_util.dart';
-import 'api_manager.dart';
+import 'package:ff_commons/api_requests/api_manager.dart';
 
-export 'api_manager.dart' show ApiCallResponse;
+import 'package:ff_commons/api_requests/api_paging_params.dart';
+
+export 'package:ff_commons/api_requests/api_manager.dart' show ApiCallResponse;
 
 const _kPrivateApiFunctionName = 'ffPrivateApiCall';
 
@@ -73,6 +75,7 @@ class VenueGroup {
       FetchMusiciansOfGigCall();
   static RemoveMusicianFromGigCall removeMusicianFromGigCall =
       RemoveMusicianFromGigCall();
+  static CreateGigInviteCall createGigInviteCall = CreateGigInviteCall();
 }
 
 class VenueOpenSlotsCall {
@@ -163,16 +166,16 @@ class UnifiedSlotCreationCall {
 {
   "p_stage_id": ${stageId},
   "p_venue_id": ${venueId},
-  "p_start_date": "${escapeStringForJson(startDate)}",
-  "p_start_time": "${escapeStringForJson(startTime)}",
-  "p_end_time": "${escapeStringForJson(endTime)}",
-  "p_time_zone": "${escapeStringForJson(timeZone)}",
-  "p_load_time": "${escapeStringForJson(loadTime)}",
-  "p_load_duration": "${escapeStringForJson(loadDuration)}",
+  "p_start_date": ${startDate == null ? 'null' : '"${escapeStringForJson(startDate)}"'},
+  "p_start_time": ${startTime == null ? 'null' : '"${escapeStringForJson(startTime)}"'},
+  "p_end_time": ${endTime == null ? 'null' : '"${escapeStringForJson(endTime)}"'},
+  "p_time_zone": ${timeZone == null ? 'null' : '"${escapeStringForJson(timeZone)}"'},
+  "p_load_time": ${loadTime == null ? 'null' : '"${escapeStringForJson(loadTime)}"'},
+  "p_load_duration": ${loadDuration == null ? 'null' : '"${escapeStringForJson(loadDuration)}"'},
   "p_created_by": ${createdBy},
-  "p_end_date": "${escapeStringForJson(endDate)}",
-  "p_repeat_type": "${escapeStringForJson(repeatType)}",
-  "p_notes": "${escapeStringForJson(pNotes)}"
+  "p_end_date": ${endDate == null ? 'null' : '"${escapeStringForJson(endDate)}"'},
+  "p_repeat_type": ${repeatType == null ? 'null' : '"${escapeStringForJson(repeatType)}"'},
+  "p_notes": ${pNotes == null ? 'null' : '"${escapeStringForJson(pNotes)}"'}
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Unified  Slot Creation',
@@ -332,7 +335,7 @@ class GetUserVenuesCall {
     final ffApiRequestBody = '''
 {
   "p_user_id": ${userId},
-  "p_name": "${escapeStringForJson(name)}"
+  "p_name": ${name == null ? 'null' : '"${escapeStringForJson(name)}"'}
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Get User Venues',
@@ -371,7 +374,7 @@ class GetMusiciansListCall {
 
     final ffApiRequestBody = '''
 {
-  "p_search": "${escapeStringForJson(name)}"
+  "p_search": ${name == null ? 'null' : '"${escapeStringForJson(name)}"'}
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Get Musicians List',
@@ -457,9 +460,9 @@ class ShowAllGigsCall {
 
     final ffApiRequestBody = '''
 {
-  "p_user_id": "${pUserId}",
+  "p_user_id": ${pUserId == null ? 'null' : '"${pUserId}"'},
   "p_venue_id": ${pVenueId},
-  "p_search": "${escapeStringForJson(pSearch)}"
+  "p_search": ${pSearch == null ? 'null' : '"${escapeStringForJson(pSearch)}"'}
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Show All Gigs',
@@ -663,7 +666,7 @@ class GetEntertainmetCall {
     );
 
     final ffApiRequestBody = '''
-{"search": "${escapeStringForJson(search)}"}''';
+{"search": ${search == null ? 'null' : '"${escapeStringForJson(search)}"'}}''';
     return ApiManager.instance.makeApiCall(
       callName: 'Get Entertainmet',
       apiUrl: '${baseUrl}/rpc/get_entertainment',
@@ -700,7 +703,7 @@ class GetGenreCall {
     );
 
     final ffApiRequestBody = '''
-{"search": "${escapeStringForJson(search)}"}''';
+{"search": ${search == null ? 'null' : '"${escapeStringForJson(search)}"'}}''';
     return ApiManager.instance.makeApiCall(
       callName: 'GetGenre',
       apiUrl: '${baseUrl}/rpc/get_genres',
@@ -744,10 +747,10 @@ class GetVenuePlannerSlotsCall {
     final ffApiRequestBody = '''
 {
   "venue_owner_id_param": ${venueOwnerId},
-  "selected_date": "${escapeStringForJson(selectedDate)}",
-  "search_text": "${escapeStringForJson(searchText)}",
+  "selected_date": ${selectedDate == null ? 'null' : '"${escapeStringForJson(selectedDate)}"'},
+  "search_text": ${searchText == null ? 'null' : '"${escapeStringForJson(searchText)}"'},
   "venue_ids": ${venueIds},
-  "slot_status": "${escapeStringForJson(slotStatus)}"
+  "slot_status": ${slotStatus == null ? 'null' : '"${escapeStringForJson(slotStatus)}"'}
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Get Venue Planner Slots',
@@ -801,16 +804,16 @@ class UpdateVenueSlotsUnifiedCall {
   "p_slot_id": ${slotId},
   "p_stage_id": ${stageId},
   "p_venue_id": ${venueId},
-  "p_start_date": "${escapeStringForJson(startDate)}",
-  "p_start_time": "${escapeStringForJson(startTime)}",
-  "p_end_time": "${escapeStringForJson(endTime)}",
-  "p_time_zone": "${escapeStringForJson(timeZone)}",
+  "p_start_date": ${startDate == null ? 'null' : '"${escapeStringForJson(startDate)}"'},
+  "p_start_time": ${startTime == null ? 'null' : '"${escapeStringForJson(startTime)}"'},
+  "p_end_time": ${endTime == null ? 'null' : '"${escapeStringForJson(endTime)}"'},
+  "p_time_zone": ${timeZone == null ? 'null' : '"${escapeStringForJson(timeZone)}"'},
   "p_updated_by": ${updatedBy},
-  "p_end_date": "${escapeStringForJson(endDate)}",
-  "p_repeat_type": "${escapeStringForJson(repeatType)}",
-  "p_load_time": "${escapeStringForJson(loadTime)}",
-  "p_load_duration": "${escapeStringForJson(loadDuration)}",
-"p_notes": "${escapeStringForJson(notes)}"
+  "p_end_date": ${endDate == null ? 'null' : '"${escapeStringForJson(endDate)}"'},
+  "p_repeat_type": ${repeatType == null ? 'null' : '"${escapeStringForJson(repeatType)}"'},
+  "p_load_time": ${loadTime == null ? 'null' : '"${escapeStringForJson(loadTime)}"'},
+  "p_load_duration": ${loadDuration == null ? 'null' : '"${escapeStringForJson(loadDuration)}"'},
+"p_notes": ${notes == null ? 'null' : '"${escapeStringForJson(notes)}"'}
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Update Venue Slots Unified',
@@ -904,7 +907,7 @@ class GetMusicianByCategoryCall {
 
     final ffApiRequestBody = '''
 {
-  "search": "${escapeStringForJson(search)}",
+  "search": ${search == null ? 'null' : '"${escapeStringForJson(search)}"'},
   "venue_owner_id": ${venueOwnerId}
 }''';
     return ApiManager.instance.makeApiCall(
@@ -1173,7 +1176,7 @@ class GetSequenceCall {
 
     final ffApiRequestBody = '''
 {
-    "p_group_uuid": "${escapeStringForJson(pGroupUuid)}"
+    "p_group_uuid": ${pGroupUuid == null ? 'null' : '"${escapeStringForJson(pGroupUuid)}"'}
   }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Get Sequence',
@@ -1517,6 +1520,57 @@ class RemoveMusicianFromGigCall {
   }
 }
 
+class CreateGigInviteCall {
+  Future<ApiCallResponse> call({
+    int? pInviterId,
+    String? pInviteType = '',
+    int? pCountryCode,
+    int? pPhone,
+    String? pInviteeRole = '',
+    int? pSlotId,
+    int? pVenueId,
+    String? projectURL,
+    String? anonKey,
+  }) async {
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = VenueGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "p_inviter_id": ${pInviterId},
+  "p_invite_type": ${pInviteType == null ? 'null' : '"${escapeStringForJson(pInviteType)}"'},
+  "p_country_code": ${pCountryCode},
+  "p_phone": ${pPhone == null ? 'null' : '"${pPhone}"'},
+  "p_invitee_role": ${pInviteeRole == null ? 'null' : '"${escapeStringForJson(pInviteeRole)}"'},
+  "p_venue_id": ${pVenueId},
+  "p_slot_id": ${pSlotId}
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Create Gig Invite',
+      apiUrl: '${baseUrl}/rpc/create_gig_invite',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${anonKey}',
+        'apikey': '${anonKey}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
 /// End Venue Group Code
 
 /// Start Musician Group Code
@@ -1746,13 +1800,13 @@ class CreateMusicianOpenSlotCall {
 
     final ffApiRequestBody = '''
 {
-  "p_start_date": "${escapeStringForJson(startDate)}",
-  "p_start_time": "${escapeStringForJson(startTime)}",
-  "p_end_time": "${escapeStringForJson(endTime)}",
-  "p_time_zone": "${escapeStringForJson(timeZone)}",
+  "p_start_date": ${startDate == null ? 'null' : '"${escapeStringForJson(startDate)}"'},
+  "p_start_time": ${startTime == null ? 'null' : '"${escapeStringForJson(startTime)}"'},
+  "p_end_time": ${endTime == null ? 'null' : '"${escapeStringForJson(endTime)}"'},
+  "p_time_zone": ${timeZone == null ? 'null' : '"${escapeStringForJson(timeZone)}"'},
   "p_created_by": ${createdBy},
-  "p_end_date": "${escapeStringForJson(endDate)}",
-  "p_repeat_type": "${escapeStringForJson(repeatType)}"
+  "p_end_date": ${endDate == null ? 'null' : '"${escapeStringForJson(endDate)}"'},
+  "p_repeat_type": ${repeatType == null ? 'null' : '"${escapeStringForJson(repeatType)}"'}
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Create Musician Open Slot',
@@ -1802,7 +1856,7 @@ class GetGigMusicianCall {
     final ffApiRequestBody = '''
 {
   "p_user_id": ${pUserId},
-  "p_search": "${escapeStringForJson(pSearch)}"
+  "p_search": ${pSearch == null ? 'null' : '"${escapeStringForJson(pSearch)}"'}
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Get Gig Musician',
@@ -2003,8 +2057,8 @@ class GetMusicianPlannerSlotsCall {
     final ffApiRequestBody = '''
 {
   "musician_id_param": ${musicianId},
-  "selected_date": "${escapeStringForJson(selectedDate)}",
-  "search_text": "${escapeStringForJson(searchText)}"
+  "selected_date": ${selectedDate == null ? 'null' : '"${escapeStringForJson(selectedDate)}"'},
+  "search_text": ${searchText == null ? 'null' : '"${escapeStringForJson(searchText)}"'}
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Get Musician Planner Slots',
@@ -2192,11 +2246,11 @@ class SendNotificationCall {
     final data = _serializeJson(dataJson);
     final ffApiRequestBody = '''
 {
-  "title": "${escapeStringForJson(title)}",
-  "description": "${escapeStringForJson(description)}",
+  "title": ${title == null ? 'null' : '"${escapeStringForJson(title)}"'},
+  "description": ${description == null ? 'null' : '"${escapeStringForJson(description)}"'},
   "send_to": ${sendTo},
-  "type": "${escapeStringForJson(type)}",
-  "usertype": "${escapeStringForJson(usertype)}",
+  "type": ${type == null ? 'null' : '"${escapeStringForJson(type)}"'},
+  "usertype": ${usertype == null ? 'null' : '"${escapeStringForJson(usertype)}"'},
   "data": ${data}
 }''';
     return ApiManager.instance.makeApiCall(
@@ -2303,6 +2357,110 @@ class NotifyMusicianForVenueCall {
 
 /// End Notification Group Code
 
+/// Start Dynamic Link Group Code
+
+class DynamicLinkGroup {
+  static String getBaseUrl({
+    String? projectURL,
+    String? anonKey,
+    String? token = '',
+  }) {
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    return 'https://${projectURL}.supabase.co/functions/v1/';
+  }
+
+  static Map<String, String> headers = {
+    'Authorization': 'Bearer [anonKey]',
+    'Content-Type': 'application/json',
+    'apikey': '[token]',
+  };
+  static SendGigInviteCall sendGigInviteCall = SendGigInviteCall();
+  static ClaimInviteCall claimInviteCall = ClaimInviteCall();
+}
+
+class SendGigInviteCall {
+  Future<ApiCallResponse> call({
+    String? inviteToken = '',
+    String? projectURL,
+    String? anonKey,
+    String? token = '',
+  }) async {
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = DynamicLinkGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+      token: token,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "invite_token": ${inviteToken == null ? 'null' : '"${escapeStringForJson(inviteToken)}"'}
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Send Gig Invite',
+      apiUrl: '${baseUrl}/send-gig-invite',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer ${anonKey}',
+        'Content-Type': 'application/json',
+        'apikey': '${token}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class ClaimInviteCall {
+  Future<ApiCallResponse> call({
+    int? userId,
+    String? projectURL,
+    String? anonKey,
+    String? token = '',
+  }) async {
+    projectURL ??= FFDevEnvironmentValues().projectURL;
+    anonKey ??= FFDevEnvironmentValues().anonKey;
+    final baseUrl = DynamicLinkGroup.getBaseUrl(
+      projectURL: projectURL,
+      anonKey: anonKey,
+      token: token,
+    );
+
+    final ffApiRequestBody = '''
+{"user_id": ${userId}}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Claim Invite',
+      apiUrl: '${baseUrl}/claim-invites',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer ${anonKey}',
+        'Content-Type': 'application/json',
+        'apikey': '${token}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End Dynamic Link Group Code
+
 /// Start Fan Group Code
 
 class FanGroup {
@@ -2344,12 +2502,12 @@ class GetGigsForFanCall {
 
     final ffApiRequestBody = '''
 {
-  "p_current_time": "${escapeStringForJson(pCurrentTime)}",
-  "p_fan_id": "${currentUserId}",
-  "p_search": "${escapeStringForJson(pSearch)}",
-  "p_select_date": "${escapeStringForJson(pSelectDate)}",
-  "p_entertainment_type": "${escapeStringForJson(pEntertainmentType)}",
-  "p_show_bookmarked": "${pShowBookmarked}"
+  "p_current_time": ${pCurrentTime == null ? 'null' : '"${escapeStringForJson(pCurrentTime)}"'},
+  "p_fan_id": ${currentUserId == null ? 'null' : '"${currentUserId}"'},
+  "p_search": ${pSearch == null ? 'null' : '"${escapeStringForJson(pSearch)}"'},
+  "p_select_date": ${pSelectDate == null ? 'null' : '"${escapeStringForJson(pSelectDate)}"'},
+  "p_entertainment_type": ${pEntertainmentType == null ? 'null' : '"${escapeStringForJson(pEntertainmentType)}"'},
+  "p_show_bookmarked": ${pShowBookmarked == null ? 'null' : '"${pShowBookmarked}"'}
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Get Gigs for Fan',
@@ -2389,7 +2547,7 @@ class GigDetailFanCall {
 
     final ffApiRequestBody = '''
 {
-  "p_group_uuid": "${escapeStringForJson(pGroupUuid)}",
+  "p_group_uuid": ${pGroupUuid == null ? 'null' : '"${escapeStringForJson(pGroupUuid)}"'},
   "p_fan_id": ${pFanId}
 }''';
     return ApiManager.instance.makeApiCall(
@@ -2450,26 +2608,26 @@ class CreateNewVenueCall {
 
     final ffApiRequestBody = '''
 {
-  "name": "${escapeStringForJson(name)}",
-  "email": "${escapeStringForJson(email)}",
-  "phone_number": "${escapeStringForJson(phoneNumber)}",
-  "address": "${escapeStringForJson(address)}",
-  "description": "${escapeStringForJson(description)}",
-  "services": "${escapeStringForJson(services)}",
-  "website": "${escapeStringForJson(website)}",
-  "venue_photo": "${escapeStringForJson(venuePhoto)}",
+  "name": ${name == null ? 'null' : '"${escapeStringForJson(name)}"'},
+  "email": ${email == null ? 'null' : '"${escapeStringForJson(email)}"'},
+  "phone_number": ${phoneNumber == null ? 'null' : '"${escapeStringForJson(phoneNumber)}"'},
+  "address": ${address == null ? 'null' : '"${escapeStringForJson(address)}"'},
+  "description": ${description == null ? 'null' : '"${escapeStringForJson(description)}"'},
+  "services": ${services == null ? 'null' : '"${escapeStringForJson(services)}"'},
+  "website": ${website == null ? 'null' : '"${escapeStringForJson(website)}"'},
+  "venue_photo": ${venuePhoto == null ? 'null' : '"${escapeStringForJson(venuePhoto)}"'},
   "created_by": ${createdBy},
-  "instagram_id": "${escapeStringForJson(instagramId)}",
-  "facebook_id": "${escapeStringForJson(facebookId)}",
-  "x_id": "${escapeStringForJson(xId)}",
-  "youtube_id": "${escapeStringForJson(youtubeId)}",
+  "instagram_id": ${instagramId == null ? 'null' : '"${escapeStringForJson(instagramId)}"'},
+  "facebook_id": ${facebookId == null ? 'null' : '"${escapeStringForJson(facebookId)}"'},
+  "x_id": ${xId == null ? 'null' : '"${escapeStringForJson(xId)}"'},
+  "youtube_id": ${youtubeId == null ? 'null' : '"${escapeStringForJson(youtubeId)}"'},
   "content": ${content},
   "entertainment_id": ${entertainmentId},
   "genre_id": ${genreId},
-  "age_policy": "${escapeStringForJson(agePolicy)}",
-  "hours_operation": "${escapeStringForJson(hoursOperation)}",
-  "amenities": "${escapeStringForJson(amenities)}",
-  "venue_capacity": "${escapeStringForJson(venueCapacity)}"
+  "age_policy": ${agePolicy == null ? 'null' : '"${escapeStringForJson(agePolicy)}"'},
+  "hours_operation": ${hoursOperation == null ? 'null' : '"${escapeStringForJson(hoursOperation)}"'},
+  "amenities": ${amenities == null ? 'null' : '"${escapeStringForJson(amenities)}"'},
+  "venue_capacity": ${venueCapacity == null ? 'null' : '"${escapeStringForJson(venueCapacity)}"'}
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'createNewVenue',
@@ -2524,11 +2682,11 @@ class CreateNewSlotCall {
     final ffApiRequestBody = '''
 {
   "time_zone": "EST",
-  "start_time": "${escapeStringForJson(startTime)}",
-  "end_time": "${escapeStringForJson(endTime)}",
-  "start_date": "${escapeStringForJson(startDate)}",
-  "load_time": "${escapeStringForJson(loadTime)}",
-  "load_duration": "${escapeStringForJson(loadDuration)}",
+  "start_time": ${startTime == null ? 'null' : '"${escapeStringForJson(startTime)}"'},
+  "end_time": ${endTime == null ? 'null' : '"${escapeStringForJson(endTime)}"'},
+  "start_date": ${startDate == null ? 'null' : '"${escapeStringForJson(startDate)}"'},
+  "load_time": ${loadTime == null ? 'null' : '"${escapeStringForJson(loadTime)}"'},
+  "load_duration": ${loadDuration == null ? 'null' : '"${escapeStringForJson(loadDuration)}"'},
   "stage_id": ${stageId},
   "venue_id": ${venueId},
   "created_by": ${createdBy}
@@ -2566,7 +2724,7 @@ class ShowPlannerCall {
 
     final ffApiRequestBody = '''
 {
-  "p_date": "${escapeStringForJson(pDate)}"
+  "p_date": ${pDate == null ? 'null' : '"${escapeStringForJson(pDate)}"'}
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Show Planner',
@@ -2589,22 +2747,6 @@ class ShowPlannerCall {
       alwaysAllowBody: false,
     );
   }
-}
-
-class ApiPagingParams {
-  int nextPageNumber = 0;
-  int numItems = 0;
-  dynamic lastResponse;
-
-  ApiPagingParams({
-    required this.nextPageNumber,
-    required this.numItems,
-    required this.lastResponse,
-  });
-
-  @override
-  String toString() =>
-      'PagingParams(nextPageNumber: $nextPageNumber, numItems: $numItems, lastResponse: $lastResponse,)';
 }
 
 String _toEncodable(dynamic item) {
@@ -2639,9 +2781,6 @@ String? escapeStringForJson(String? input) {
   if (input == null) {
     return null;
   }
-  return input
-      .replaceAll('\\', '\\\\')
-      .replaceAll('"', '\\"')
-      .replaceAll('\n', '\\n')
-      .replaceAll('\t', '\\t');
+  final encoded = jsonEncode(input);
+  return encoded.substring(1, encoded.length - 1);
 }

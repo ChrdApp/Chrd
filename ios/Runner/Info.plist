@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
+    <key>CADisableMinimumFrameDurationOnPhone</key>
+    <true/>
     <key>CFBundleDevelopmentRegion</key>
     <string>$(DEVELOPMENT_LANGUAGE)</string>
     <key>CFBundleDisplayName</key>
@@ -34,7 +36,7 @@
         <key>CFBundleTypeRole</key>
         <string>Editor</string>
         <key>CFBundleURLName</key>
-        <string>chrd.com</string>
+        <string>joinchrd.app.link</string>
         <key>CFBundleURLSchemes</key>
         <array>
           <string>chrd</string>
@@ -48,6 +50,8 @@
 	<key>FlutterDeepLinkingEnabled</key>
 	<true/>
     <key>LSRequiresIPhoneOS</key>
+    <true/>
+    <key>UIApplicationSupportsIndirectInputEvents</key>
     <true/>
     <key>NSCameraUsageDescription</key>
     <string>We use your camera so you can quickly share photos with support.</string>
@@ -63,6 +67,10 @@
 		<string>remote-notification</string>
 	</array>    
     <!-- End of location permission -->
+    <!-- Start of Branch Key -->
+    <key>branch_key</key>
+    <string>key_live_dEzQEHwyZFbqj8Me6FifjhgnuvnMZpZz</string>
+    <!-- End of Branch Key -->
     <key>UILaunchStoryboardName</key>
     <string>LaunchScreen</string>
     <key>UIMainStoryboardFile</key>

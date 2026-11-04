@@ -6,14 +6,17 @@ import '/components/empty_list_image_widget.dart';
 import '/components/no_data_found_widget.dart';
 import '/components/notification_icon_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/musician/musician_components/musician_nav_bar/musician_nav_bar_widget.dart';
+import 'dart:convert';
 import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
+import 'package:branchio_dynamic_linking_akp5u6/custom_code/actions/index.dart'
+    as branchio_dynamic_linking_akp5u6_actions;
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -69,6 +72,42 @@ class _HomeMWidgetState extends State<HomeMWidget> {
 
       await actions.handleNotificationClick(
         context,
+      );
+      await branchio_dynamic_linking_akp5u6_actions.handleBranchDeeplink(
+        (linkData) async {
+          if ('gig' ==
+              getJsonField(
+                linkData,
+                r'''$.inviteType''',
+              ).toString()) {
+            context.pushNamed(
+              MusicianGigOverLayWidget.routeName,
+              queryParameters: {
+                'slotId': serializeParam(
+                  getJsonField(
+                    linkData,
+                    r'''$.slotId''',
+                  ),
+                  ParamType.int,
+                ),
+                'venueId': serializeParam(
+                  getJsonField(
+                    linkData,
+                    r'''$.venueId''',
+                  ),
+                  ParamType.int,
+                ),
+                'venueOwnerId': serializeParam(
+                  getJsonField(
+                    linkData,
+                    r'''$.venueOwnerId''',
+                  ),
+                  ParamType.int,
+                ),
+              }.withoutNulls,
+            );
+          }
+        },
       );
       FFAppState().clearEntertainmentMultiselectMusicianProfilePageCacheKey(
           'entertainment_multiselect_musician_profile_page');
@@ -274,83 +313,99 @@ class _HomeMWidgetState extends State<HomeMWidget> {
                                       ),
                                     ],
                                   ),
-                                  Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Text(
-                                        'You have ',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              font: GoogleFonts.montserrat(
+                                  InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      await branchio_dynamic_linking_akp5u6_actions
+                                          .handleBranchDeeplink(
+                                        (linkData) async {},
+                                      );
+                                    },
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Text(
+                                          'You have ',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                font: GoogleFonts.montserrat(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontStyle,
+                                                ),
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                letterSpacing: 0.0,
                                                 fontWeight: FontWeight.w600,
                                                 fontStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
                                                         .fontStyle,
                                               ),
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w600,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
-                                            ),
-                                      ),
-                                      Text(
-                                        '${getJsonField(
-                                          (_model.offerCountOutput?.jsonBody ??
-                                              ''),
-                                          r'''$.open_offer_count''',
-                                        ).toString()} gig offers',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              font: GoogleFonts.montserrat(
+                                        ),
+                                        Text(
+                                          '${getJsonField(
+                                            (_model.offerCountOutput
+                                                    ?.jsonBody ??
+                                                ''),
+                                            r'''$.open_offer_count''',
+                                          ).toString()} gig offers',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                font: GoogleFonts.montserrat(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontStyle,
+                                                ),
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                letterSpacing: 0.0,
                                                 fontWeight: FontWeight.bold,
                                                 fontStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
                                                         .fontStyle,
                                               ),
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.bold,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
-                                            ),
-                                      ),
-                                      Text(
-                                        ' to respond to!',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              font: GoogleFonts.montserrat(
+                                        ),
+                                        Text(
+                                          ' to respond to!',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                font: GoogleFonts.montserrat(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontStyle,
+                                                ),
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                letterSpacing: 0.0,
                                                 fontWeight: FontWeight.w600,
                                                 fontStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
                                                         .fontStyle,
                                               ),
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w600,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
-                                            ),
-                                      ),
-                                    ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                   FFButtonWidget(
                                     onPressed: () async {

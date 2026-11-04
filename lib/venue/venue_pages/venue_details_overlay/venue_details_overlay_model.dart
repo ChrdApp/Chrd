@@ -1,18 +1,21 @@
+import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/components/confirmation_dialog_widget.dart';
+import '/components/invite_user_widget.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/musician/components/c_h_r_d_back_btn/c_h_r_d_back_btn_widget.dart';
 import '/musician/components/c_h_r_d_label_btn/c_h_r_d_label_btn_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_row_with_icon/c_h_r_d_row_with_icon_widget.dart';
 import '/venue/venue_pages/venue_onbording/venue_components/c_h_r_d_video_player_component/c_h_r_d_video_player_component_widget.dart';
+import 'dart:convert';
 import 'dart:ui';
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'venue_details_overlay_widget.dart' show VenueDetailsOverlayWidget;
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
@@ -53,6 +56,12 @@ class VenueDetailsOverlayModel
   late CHRDLabelBtnModel cHRDLabelBtnModel2;
   // Model for CHRD_Label_Btn component.
   late CHRDLabelBtnModel cHRDLabelBtnModel3;
+  // Model for CHRD_Label_Btn component.
+  late CHRDLabelBtnModel cHRDLabelBtnModel4;
+  // Stores action output result for [Backend Call - API (Send Gig Invite)] action in CHRD_Label_Btn widget.
+  ApiCallResponse? sendInvite;
+  // Stores action output result for [Backend Call - API (Create Gig Invite)] action in CHRD_Label_Btn widget.
+  ApiCallResponse? createGigInvite;
 
   @override
   void initState(BuildContext context) {
@@ -63,6 +72,7 @@ class VenueDetailsOverlayModel
     cHRDLabelBtnModel1 = createModel(context, () => CHRDLabelBtnModel());
     cHRDLabelBtnModel2 = createModel(context, () => CHRDLabelBtnModel());
     cHRDLabelBtnModel3 = createModel(context, () => CHRDLabelBtnModel());
+    cHRDLabelBtnModel4 = createModel(context, () => CHRDLabelBtnModel());
   }
 
   @override
@@ -74,5 +84,6 @@ class VenueDetailsOverlayModel
     cHRDLabelBtnModel1.dispose();
     cHRDLabelBtnModel2.dispose();
     cHRDLabelBtnModel3.dispose();
+    cHRDLabelBtnModel4.dispose();
   }
 }

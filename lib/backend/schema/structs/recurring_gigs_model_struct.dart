@@ -374,9 +374,9 @@ class RecurringGigsModelStruct extends BaseStruct {
         venuePhoto,
         groupUuid,
         repeatType,
-        entertainments,
+        const ListEquality().hash(entertainments),
         sequenceCount,
-        genres,
+        const ListEquality().hash(genres),
         venueOwnerId,
         isInquired
       ]);

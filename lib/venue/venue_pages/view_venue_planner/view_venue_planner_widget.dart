@@ -1,7 +1,6 @@
 import '/backend/api_requests/api_calls.dart';
 import '/components/empty_list_image_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/musician/components/c_h_r_d_back_btn/c_h_r_d_back_btn_widget.dart';
@@ -10,6 +9,7 @@ import '/venue/venue_pages/venue_components/calendar_filter/calendar_filter_widg
 import 'dart:ui';
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:easy_debounce/easy_debounce.dart';
+import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -423,7 +423,12 @@ class _ViewVenuePlannerWidgetState extends State<ViewVenuePlannerWidget> {
                                                               context)
                                                           .neutralDark900,
                                                   icon: FaIcon(
-                                                    FontAwesomeIcons.slidersH,
+                                                    FaIconData(const IconData(
+                                                        /* slidersH */ 0xf1de,
+                                                        fontFamily:
+                                                            'FontAwesomeSolid',
+                                                        fontPackage:
+                                                            'font_awesome_flutter')),
                                                     color: FlutterFlowTheme.of(
                                                             context)
                                                         .info,
