@@ -274,7 +274,7 @@ class _PhoneOTP5WidgetState extends State<PhoneOTP5Widget> {
                       }
                       _model.isOtpVerified = await actions.verifyOtp(
                         _model.pinCodeController!.text,
-                        '91${functions.extractMobileNo('+1${widget!.number}')?.firstOrNull}',
+                        '1${functions.extractMobileNo('+1${widget!.number}')?.firstOrNull}',
                       );
                       _shouldSetState = true;
                       if (_model.isOtpVerified == true) {
